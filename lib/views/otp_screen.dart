@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:charliechang/blocs/verify_otp_bloc.dart';
+import 'package:charliechang/models/verify_otp_response_model.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
@@ -7,7 +12,13 @@ import 'package:charliechang/views/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 
+import '../utils/common_methods.dart';
+import '../utils/common_methods.dart';
+import 'bottom_screen.dart';
+
 class OtpScreen extends StatefulWidget {
+  final String mobile;
+  OtpScreen({this.mobile});
   @override
   _OtpScreenState createState() => _OtpScreenState();
 }
@@ -39,18 +50,20 @@ class _OtpScreenState extends State<OtpScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(ENTER_OTP,style: TextStyle(fontSize: 20,fontFamily: "Manrope",fontWeight: FontWeight.bold),),
-                        Text(CHNAGE_PHONE_NO,style: TextStyle(fontSize: 15,color: fab_color,fontFamily: "Manrope",fontWeight: FontWeight.w500),),
+                        InkWell(
+                            onTap: ()=>Navigator.of(context).pop(),
+                            child: Text(CHNAGE_PHONE_NO,style: TextStyle(fontSize: 15,color: fab_color,fontFamily: "Manrope",fontWeight: FontWeight.w500),)),
                       ],
                     ),
                     SizedBox(height: 30,),
                     PinInputTextField(
-                      pinLength: 4,
+                      pinLength: 6,
                       keyboardType: TextInputType.number,
                       decoration: BoxLooseDecoration(
                         enteredColor: input_border_color,
                         strokeColor: input_border_color,
                         radius: Radius.circular(3.3),
-                        gapSpace: 30,
+                        gapSpace: 10,
                         textStyle: TextStyle(fontSize: 15,color: Colors.black),
                         obscureStyle: ObscureStyle(
                           isTextObscure: false,
@@ -75,10 +88,11 @@ class _OtpScreenState extends State<OtpScreen> {
                       children: <Widget>[
                         Text(RESEND_OTP,style: TextStyle(fontSize: 15,color: fab_color,fontFamily: "Manrope",fontWeight: FontWeight.w500),),
                         FloatingActionButton(onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => CompleteProfileScreen() ),
-                          );
+
+                          if(isValid())
+                            {
+                              callVerifyOtpAPI();
+                            }
                         },
                           elevation: 10,
                           backgroundColor: fab_color,
@@ -94,5 +108,82 @@ class _OtpScreenState extends State<OtpScreen> {
         ),
       ),
     );
+  }
+
+  VerifyOtpBloc _verifyOtpBloc;
+  final _controllerOtp = TextEditingController();
+  Map<String, dynamic> bodyData;
+  Map<String, dynamic> bodyDataResendOTP;
+  VerifyOtpResponse verifyOtpRes;
+
+   callVerifyOtpAPI() {
+   /* bodyData={
+      "mobile":widget.mobile,
+      "otp":_pinEditingController.text
+    };*/
+    final body = jsonEncode({"mobile":widget.mobile,"otp":_pinEditingController.text});
+
+    _verifyOtpBloc=VerifyOtpBloc(body);
+    _verifyOtpBloc.dataStream.listen((onData){
+      verifyOtpRes = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+        CommonMethods.displayProgressDialog(onData.message,context);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+          CommonMethods.hideDialog();
+
+          if(verifyOtpRes.completeProfile =="0")
+            {
+
+              CommonMethods.showShortToast(verifyOtpRes.msg);
+              CommonMethods.setPreference(context, "token", verifyOtpRes.token);
+              CommonMethods.setPreference(context, COUPON_CODE, verifyOtpRes.couponCode);
+              CommonMethods.setPreference(context, COMPLETE_PROFILE, verifyOtpRes.completeProfile);
+              navigateToCompleteProfile();
+            }
+          else
+            {
+              navigateToHome();
+            }
+
+
+
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.hideDialog();
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
+  }
+
+  void navigateToCompleteProfile() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CompleteProfileScreen() ),
+    );
+  }
+
+  void navigateToHome() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BottomScreen() ),
+    );
+  }
+
+  bool isValid() {
+    if(_pinEditingController.text.length==0){
+      CommonMethods.showShortToast("Please enter OTP");
+      return false;
+    }
+
+    if(_pinEditingController.text.length<6){
+      CommonMethods.showShortToast("Please enter complete OTP");
+      return false;
+    }
+    return true;
   }
 }

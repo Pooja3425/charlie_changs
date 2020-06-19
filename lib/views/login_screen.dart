@@ -1,9 +1,17 @@
+import 'dart:convert';
+
+import 'package:charliechang/blocs/register_bloc.dart';
+import 'package:charliechang/models/register_response_model.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import '../utils/common_methods.dart';
+import '../utils/common_methods.dart';
+import '../utils/common_methods.dart';
 import 'otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -65,10 +73,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                       alignment: Alignment.topRight,
                       child: FloatingActionButton(onPressed: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => OtpScreen() ),
-                        );
+                        if(isValid())
+                          {
+                            callRegisterAPI();
+                          }
+
                       },
                       elevation: 10,
                       backgroundColor: fab_color,
@@ -83,6 +92,52 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  bool isValid() {
+    if(controllerNumber.text.length==0){
+      CommonMethods.showShortToast("Please enter phone number");
+      return false;
+    }
+
+    if(controllerNumber.text.length<10){
+      CommonMethods.showShortToast("Please enter valid phone number");
+      return false;
+    }
+
+    return true;
+  }
+  RegisterBloc _registerBloc;
+  Map<String, dynamic> bodyData;
+  RegisterResponse regRes;
+
+  void callRegisterAPI() {
+      final body = jsonEncode({"mobile":controllerNumber.text});
+    _registerBloc=RegisterBloc(body);
+    _registerBloc.dataStream.listen((onData){
+      regRes = onData.data;
+      //print(onData.status);
+      if(onData.status == Status.LOADING)
+      {
+        CommonMethods.displayProgressDialog(onData.message,context);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        CommonMethods.hideDialog();
+        CommonMethods.showShortToast(regRes.msg);
+        navigationPage();
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.hideDialog();
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
+  }
+
+  void navigationPage() {
+    Navigator.push(context,MaterialPageRoute(builder: (context) => OtpScreen(mobile: controllerNumber.text,) ),);
   }
 
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'color_constants.dart';
 import 'color_constants.dart';
 import 'size_constants.dart';
 
@@ -44,6 +48,62 @@ class CommonMethods
       width: getWidth(context),
       color: switch_bg,
     );
+  }
+
+  static void showShortToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1);
+  }
+  static void showLongToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        timeInSecForIosWeb: 1);
+  }
+  static ProgressDialog pr;
+  static displayProgressDialog(String message,BuildContext context)
+  {
+    print(message);
+    pr = ProgressDialog(
+      context,
+      type: ProgressDialogType.Normal,
+      isDismissible: false,
+      customBody: Container(
+        height: 50,
+        child: Padding(
+          padding: const EdgeInsets.only(left:15.0,right: 15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              CircularProgressIndicator(
+                // semanticsLabel: message,
+                valueColor: AlwaysStoppedAnimation<Color>(button_color),
+                backgroundColor: Colors.white,
+              ),
+              SizedBox(width: 15,),
+              Text(message)
+            ],
+          ),
+        ),
+      ),
+    );
+    pr.show();
+  }
+
+
+  static hideDialog(){
+    pr.hide().then((isHidden) {
+      print(isHidden);
+    });
+  }
+
+  static setPreference(BuildContext context,String key, String value) async
+  {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(key,value);
+
   }
   static final EdgeInsets textFieldPadding = EdgeInsets.only(left:10.0,right:10.0);
   static final EdgeInsets initialPadding =  const EdgeInsets.only(left:40.0,right: 40);

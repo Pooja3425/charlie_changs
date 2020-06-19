@@ -1,7 +1,13 @@
+import 'dart:convert';
+
+import 'package:charliechang/blocs/complete_profile_bloc.dart';
+import 'package:charliechang/models/complete_profile_response_model.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/common_methods.dart';
 import 'bottom_screen.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
@@ -39,13 +45,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left:8.0,right: 8.0),
                   child: TextField(
-                    keyboardType: TextInputType.number,
-                    maxLength: 10,
+                    keyboardType: TextInputType.text,
+                    maxLength: 30,
+                    textCapitalization: TextCapitalization.words,
                     textInputAction: TextInputAction.done,
                     controller: controllerName,
                     style: TextStyle(
                       // color: heading_color,
-                        fontWeight: FontWeight.w300),
+                        fontWeight: FontWeight.w300,fontSize: 13),
                     decoration: InputDecoration(
                         hintText: "Enter your name",
                         hintStyle: TextStyle(fontSize: 13),
@@ -123,10 +130,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: FloatingActionButton(onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => BottomScreen() ),
-                  );
+
+                  if(isValid())
+                    {
+                        callAPI();
+                    }
+
                 },
                   elevation: 10,
                   backgroundColor: fab_color,
@@ -137,6 +146,62 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  bool isValid() {
+    if(controllerName.text.length==0){
+      CommonMethods.showShortToast("Please enter name");
+      return false;
+    }
+    if(controllerEmail.text.length==0){
+      CommonMethods.showShortToast("Please enter email");
+      return false;
+    }
+    return true;
+  }
+
+  CompleteProfieBloc mCompleteProfieBloc;
+  CompleteProfileResponse mCompleteProfileResponse;
+  Map<String, dynamic> bodyData;
+  callAPI() {
+   /* bodyData={
+      "name":controllerName.text,
+      "email":controllerEmail.text,
+      "referral":controllerReferral.text
+    };*/
+    final body = jsonEncode({"name":controllerName.text,"email":controllerEmail.text,"referral":controllerReferral.text});
+
+    mCompleteProfieBloc=CompleteProfieBloc(body);
+    mCompleteProfieBloc.dataStream.listen((onData){
+      mCompleteProfileResponse = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+        CommonMethods.displayProgressDialog(onData.message,context);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        CommonMethods.hideDialog();
+        CommonMethods.showShortToast(mCompleteProfileResponse.msg);
+
+        if(mCompleteProfileResponse.msg!="Token not exist!")
+          {
+            print("www");
+            navigateToHome();
+          }
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.hideDialog();
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
+  }
+  void navigateToHome() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BottomScreen()),
     );
   }
 }
