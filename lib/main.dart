@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:charliechang/utils/common_methods.dart';
+import 'package:charliechang/utils/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'views/home_screen.dart';
@@ -74,9 +76,27 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.of(context).pushReplacementNamed('/LoginScreen');
   }
 
+  void navigationHome() {
+    Navigator.of(context).pushReplacementNamed('/BottomScreen');
+  }
+  String profile_value;
   @override
   void initState() {
-    startTime();
+    Future complete_profile = CommonMethods.getPreference(context, COMPLETE_PROFILE);
+    complete_profile.then((data){
+      setState(() {
+        profile_value = data;
+      });
+      if(profile_value == "1")
+      {
+        navigationHome();
+      }
+      else
+      {
+        startTime();
+      }
+    });
+
     super.initState();
   }
   @override

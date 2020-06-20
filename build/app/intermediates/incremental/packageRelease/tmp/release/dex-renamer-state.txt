@@ -1,4 +1,4 @@
-#Fri Jun 19 23:45:23 IST 2020
+#Sat Jun 20 22:32:12 IST 2020
 base.0=/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/transforms/r8/release/0/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

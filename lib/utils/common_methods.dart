@@ -103,7 +103,12 @@ class CommonMethods
   {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key,value);
-
+  }
+  static getPreference(BuildContext context,String key) async
+  {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.get(key) !=null)
+      return prefs.get(key);
   }
   static final EdgeInsets textFieldPadding = EdgeInsets.only(left:10.0,right:10.0);
   static final EdgeInsets initialPadding =  const EdgeInsets.only(left:40.0,right: 40);

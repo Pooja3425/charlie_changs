@@ -5,6 +5,7 @@ import 'package:charliechang/models/complete_profile_response_model.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/views/address_book_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/common_methods.dart';
@@ -74,7 +75,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   padding: const EdgeInsets.only(left:10.0,right:10.0),
                   child: TextField(
                     keyboardType: TextInputType.emailAddress,
-                    maxLength: 15,
+                    maxLines: 1,
+                    //maxLength: 50,
                     focusNode: focusEmail,
                     controller: controllerEmail,
                     textCapitalization: TextCapitalization.words,
@@ -165,11 +167,13 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   CompleteProfileResponse mCompleteProfileResponse;
   Map<String, dynamic> bodyData;
   callAPI() {
-   /* bodyData={
-      "name":controllerName.text,
-      "email":controllerEmail.text,
-      "referral":controllerReferral.text
-    };*/
+//    bodyData={
+//      "name":controllerName.text,
+//      "email":controllerEmail.text,
+//      "referral":controllerReferral.text
+//    };
+
+
     final body = jsonEncode({"name":controllerName.text,"email":controllerEmail.text,"referral":controllerReferral.text});
 
     mCompleteProfieBloc=CompleteProfieBloc(body);
@@ -186,8 +190,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
         if(mCompleteProfileResponse.msg!="Token not exist!")
           {
-            print("www");
-            navigateToHome();
+            navigateToAddAddress();
           }
       }
       else if(onData.status == Status.ERROR)
@@ -198,10 +201,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       }
     });
   }
-  void navigateToHome() {
+  void navigateToAddAddress() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => BottomScreen()),
+      MaterialPageRoute(builder: (context) => AddressBookScreen()),
     );
   }
 }

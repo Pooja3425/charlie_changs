@@ -1,5 +1,9 @@
 
+import 'package:charliechang/blocs/delivery_loactions_bloc.dart';
+import 'package:charliechang/models/delivery_locations_response_model.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
+import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/views/add_address_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +15,14 @@ class AddressBookScreen extends StatefulWidget {
 }
 
 class _AddressBookScreenState extends State<AddressBookScreen> {
+  String dropdownValue;
+  List<Delivery> mDeliveryLocationsList ;//= new List();
+  @override
+  void initState() {
+    mDeliveryLocationsList = new List();
+    callDeliveryLocationsAPI();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,7 +49,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                               onTap: ()=>Navigator.of(context).pop(),
                               child: Icon(Icons.keyboard_backspace,color: icon_color,)),
                           SizedBox(width: 10,),
-                          Text("Address Book",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
+                          Text("Search Delivery Location",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
                         ],
                       ),
                       SizedBox(height: 15,),
@@ -60,16 +72,29 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                               SizedBox(width: 3,),
                               Container(
                                 width: getWidth(context)-110,
-                                child: TextField(
-                                  style: TextStyle(fontSize: 12),
-                                  decoration: InputDecoration(
-                                      //contentPadding: EdgeInsets.only(top: 5),
-                                     // prefixIcon: Icon(Icons.search,color: icon_color,size: 18,),
-                                      hintText: "Search for adresses",
-                                      hintStyle: TextStyle(fontSize: 12,color: icon_color),
-                                      //contentPadding: EdgeInsets.only(bottom: 3),
-                                      border: InputBorder.none,
-                                      counterText: ''
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    icon: Icon(Icons.arrow_drop_down,color: Colors.transparent,),
+                                    value: dropdownValue,
+                                    elevation: 16,
+                                    style: TextStyle(
+                                        color:  button_color,fontSize: 12
+                                    ),
+                                    hint: Text("Search Delivery Location",style: TextStyle(
+                                        color:  button_color
+                                    ),),
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        dropdownValue = newValue;
+                                      });
+                                    },
+                                    items: mDeliveryLocationsList.map((Delivery map) {
+                                      return new DropdownMenuItem<String>(
+                                        value: map.name,
+                                        child: new Text(map.name,
+                                            style: new TextStyle(color: Colors.black)),
+                                      );
+                                    }).toList(),
                                   ),
                                 ),
                               )
@@ -121,11 +146,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                   shrinkWrap: true,
                   children: <Widget>[
                     addressRouUI(),
-                    addressRouUI(),
-                    addressRouUI(),
-                    addressRouUI(),
-                    addressRouUI(),
-                    addressRouUI(),
+
                   ],
                 ),
               )
@@ -156,5 +177,33 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
         ],
       ),
     );
+  }
+
+  DeliveryLocationsBloc mDeliveryLocationsBloc;
+  DeliveryLocationsResponse mDeliveryLocationsResponse;
+  void callDeliveryLocationsAPI() {
+    mDeliveryLocationsBloc=DeliveryLocationsBloc();
+    mDeliveryLocationsBloc.dataStream.listen((onData){
+      mDeliveryLocationsResponse = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+        CommonMethods.displayProgressDialog(onData.message,context);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        CommonMethods.hideDialog();
+        setState(() {
+          mDeliveryLocationsList = mDeliveryLocationsResponse.delivery;
+        });
+        //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
+
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.hideDialog();
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
   }
 }

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,7 @@ import 'dart:convert';
 
 class ApiProvider {
   final String _baseUrl = "https://charliechangs.in/api/";
+  //final String _baseUrl = "https://finolex.brandzgarage.com/api/";
 
   Future<dynamic> get(String url) async {
     var responseJson;
@@ -30,11 +32,15 @@ class ApiProvider {
   Future<dynamic> getHeader(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token");
-    var header = {"Authorization": 'Bearer ${token}"'};
+    Map<String , String> headers = {
+      'Accept':'application/json',
+      'Authorization':token
+    };
+
     var responseJson;
     try {
-      print("URL ${_baseUrl+url}  ${header}");
-      final response = await http.get(_baseUrl + url,headers: header);
+      print("URL ${_baseUrl+url}  ${headers}");
+      final response = await http.get(_baseUrl + url,headers: headers);
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -104,10 +110,12 @@ class ApiProvider {
     var responseJson;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token");
-    print("TOOO $token");
-    Map<String,String> headers = {'Content-Type':'application/json','authorization':'Bearer ${token}'};
-
-    print("URL ${_baseUrl+url}  ${headers} ");
+    Map<String , String> headers = {
+      'Accept':'application/json',
+      'Authorization':token
+    };
+    print("HEEE ${headers}");
+   // FormData formData = FormData.fromMap(bodyData);
     try {
       final response = await http.post(_baseUrl + url,body: bodyData,headers: headers);
       responseJson = _response(response);
