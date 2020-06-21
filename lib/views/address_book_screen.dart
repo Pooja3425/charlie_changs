@@ -1,5 +1,7 @@
 
+import 'package:charliechang/blocs/customer_address_bloc.dart';
 import 'package:charliechang/blocs/delivery_loactions_bloc.dart';
+import 'package:charliechang/models/customer_address_response_model.dart';
 import 'package:charliechang/models/delivery_locations_response_model.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
@@ -15,12 +17,15 @@ class AddressBookScreen extends StatefulWidget {
 }
 
 class _AddressBookScreenState extends State<AddressBookScreen> {
-  String dropdownValue;
+  Delivery dropdownValue;
   List<Delivery> mDeliveryLocationsList ;//= new List();
+  List<Data> mCustomerAddressList ;//= new List();
   @override
   void initState() {
     mDeliveryLocationsList = new List();
+    mCustomerAddressList = new List();
     callDeliveryLocationsAPI();
+    callAddress();
     super.initState();
   }
   @override
@@ -73,7 +78,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                               Container(
                                 width: getWidth(context)-110,
                                 child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
+                                  child: DropdownButton<Delivery>(
                                     icon: Icon(Icons.arrow_drop_down,color: Colors.transparent,),
                                     value: dropdownValue,
                                     elevation: 16,
@@ -83,14 +88,14 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                     hint: Text("Search Delivery Location",style: TextStyle(
                                         color:  button_color
                                     ),),
-                                    onChanged: (String newValue) {
+                                    onChanged: (Delivery newValue) {
                                       setState(() {
                                         dropdownValue = newValue;
                                       });
                                     },
                                     items: mDeliveryLocationsList.map((Delivery map) {
-                                      return new DropdownMenuItem<String>(
-                                        value: map.name,
+                                      return new DropdownMenuItem<Delivery>(
+                                        value: map,
                                         child: new Text(map.name,
                                             style: new TextStyle(color: Colors.black)),
                                       );
@@ -124,7 +129,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                   onTap: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AddAddressScreen()),
+                      MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,)),
                     );
                   },
                   child: Padding(
@@ -142,13 +147,31 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                 width: getWidth(context),
                 height: getHeight(context)-210,
                 padding: EdgeInsets.only(top:15),
-                child: ListView(
+                child: mCustomerAddressList.length >0?ListView.builder(
                   shrinkWrap: true,
-                  children: <Widget>[
-                    addressRouUI(),
-
-                  ],
-                ),
+                  itemCount: mCustomerAddressList.length,
+                  itemBuilder: (context,index){
+                    return Padding(
+                      padding: const EdgeInsets.only(left:30.0,right: 30.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          // SizedBox(height: 10,),
+                          Text(mCustomerAddressList[index].addressName,style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold),),
+                          SizedBox(height: 10,),
+                          Text(mCustomerAddressList[index].address1+" "+mCustomerAddressList[index].address2,style: TextStyle(fontSize: 12,color: notification_title_color),),
+                          SizedBox(height: 10,),
+                          Text("Edit",style: TextStyle(fontSize: 12,color: fab_color,fontWeight: FontWeight.w600),),
+                          SizedBox(height: 15,),
+                          Container(width: getWidth(context),
+                            height: 0.5,
+                            color: icon_color,),
+                          SizedBox(height: 10,),
+                        ],
+                      ),
+                    );
+                  },
+                ):Center(child: Text("No address added yet")),
               )
             ],
           ),
@@ -187,13 +210,42 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
       mDeliveryLocationsResponse = onData.data;
       if(onData.status == Status.LOADING)
       {
+        //CommonMethods.displayProgressDialog(onData.message,context);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        //CommonMethods.hideDialog();
+        setState(() {
+          mDeliveryLocationsList = mDeliveryLocationsResponse.delivery;
+        });
+        //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
+
+      }
+      else if(onData.status == Status.ERROR)
+      {
+       // CommonMethods.hideDialog();
+        CommonMethods.showShortToast(onData.message);
+      }
+    });
+  }
+
+  CustomerAddressBloc mCustomerAddressBloc;
+  CustomerAddressRespose mCustomerAddressRespose;
+
+  callAddress()
+  {
+    mCustomerAddressBloc=CustomerAddressBloc();
+    mCustomerAddressBloc.dataStream.listen((onData){
+      mCustomerAddressRespose = onData.data;
+      if(onData.status == Status.LOADING)
+      {
         CommonMethods.displayProgressDialog(onData.message,context);
       }
       else if(onData.status == Status.COMPLETED)
       {
         CommonMethods.hideDialog();
         setState(() {
-          mDeliveryLocationsList = mDeliveryLocationsResponse.delivery;
+          mCustomerAddressList = mCustomerAddressRespose.data;
         });
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
 

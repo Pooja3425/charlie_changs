@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
   RegisterResponse regRes;
 
   void callRegisterAPI() {
-      final body = jsonEncode({"mobile":controllerNumber.text});
+     final body = jsonEncode({"mobile":controllerNumber.text});
     _registerBloc=RegisterBloc(body);
     _registerBloc.dataStream.listen((onData){
       regRes = onData.data;

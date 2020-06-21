@@ -5,6 +5,8 @@ import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'views/address_book_screen.dart';
+import 'views/bottom_screen.dart';
 import 'views/home_screen.dart';
 import 'views/payment_fail_screen.dart';
 import 'utils/size_constants.dart';
@@ -54,6 +56,8 @@ class MyApp extends StatelessWidget {
         '/PickupCheckoutScreen': (BuildContext context) => new PickupCheckoutScreen(),
         '/CompleteProfileScreen': (BuildContext context) => new CompleteProfileScreen(),
         '/HomeScreen': (BuildContext context) => new HomeScreen(),
+        '/AddressBookScreen': (BuildContext context) => new AddressBookScreen(),
+        '/BottomScreen': (BuildContext context) => new BottomScreen(),
       },
       home: SplashScreen(),
     );
@@ -73,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed('/LoginScreen');
+    Navigator.of(context).pushReplacementNamed('/BottomScreen');
   }
 
   void navigationHome() {

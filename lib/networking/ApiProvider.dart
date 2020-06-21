@@ -114,8 +114,8 @@ class ApiProvider {
       'Accept':'application/json',
       'Authorization':token
     };
-    print("HEEE ${headers}");
-   // FormData formData = FormData.fromMap(bodyData);
+    print("HEEE ${headers} ${bodyData} ${_baseUrl+url}");
+
     try {
       final response = await http.post(_baseUrl + url,body: bodyData,headers: headers);
       responseJson = _response(response);

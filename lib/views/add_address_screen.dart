@@ -1,9 +1,18 @@
+import 'dart:convert';
+
+import 'package:charliechang/blocs/add_delivery_address_bloc.dart';
+import 'package:charliechang/models/add_delivery_address_response_model.dart';
+import 'package:charliechang/models/delivery_locations_response_model.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/views/bottom_screen.dart';
 import 'package:flutter/material.dart';
 
 class AddAddressScreen extends StatefulWidget {
+  final Delivery delivery;
+  AddAddressScreen({this.delivery});
   @override
   _AddAddressScreenState createState() => _AddAddressScreenState();
 }
@@ -26,6 +35,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   final focusAddressInstruction = FocusNode();
   final focusAddressCity = FocusNode();
   final focusAddressState = FocusNode();
+
+
+  @override
+  void initState() {
+
+    if(widget.delivery !=null)
+      {
+        _controllerLocation.text = widget.delivery.name;
+      }
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -360,12 +381,20 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     )
                   ],
                 ),
-                Container(
-                  width: getWidth(context),
-                  height: 73,
-                  color: button_color,
-                  child: Center(
-                    child: Text("Save Address",style: TextStyle(color: Colors.white),),
+                InkWell(
+                  onTap: (){
+                    if(isValid())
+                      {
+                        callAPI();
+                      }
+                  },
+                  child: Container(
+                    width: getWidth(context),
+                    height: 73,
+                    color: button_color,
+                    child: Center(
+                      child: Text("Save Address",style: TextStyle(color: Colors.white),),
+                    ),
                   ),
                 )
               ],
@@ -377,5 +406,69 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   }
   Widget sizeBox(){
     return SizedBox(height: 15,);
+  }
+
+  bool isValid() {
+    if(_controllerAddressName.text.length==0)
+      {
+        CommonMethods.showShortToast("Please enter address name");
+        return false;
+      }
+    if(_controllerAddressLine1.text.length==0)
+    {
+      CommonMethods.showShortToast("Please enter address line 1");
+      return false;
+    }
+    if(_controllerAddressLine2.text.length==0)
+    {
+      CommonMethods.showShortToast("Please enter address line 2");
+      return false;
+    }
+    if(_controllerLocation.text.length==0)
+    {
+      CommonMethods.showShortToast("Please enter location");
+      return false;
+    }
+    return true;
+  }
+
+  AddDeliveryAddressBloc mAddDeliveryAddressBloc;
+  AddDeliveryAddressRespose mAddDeliveryAddressRespose;
+  void callAPI() {
+    final body = jsonEncode({
+      "address_name":_controllerAddressName.text,
+      "address1":_controllerAddressLine1.text,
+      "address2":_controllerAddressLine2.text,
+      "area_id": widget.delivery.areaid,
+      "is_default":"1",
+    });
+    mAddDeliveryAddressBloc=AddDeliveryAddressBloc(body);
+    mAddDeliveryAddressBloc.dataStream.listen((onData){
+      mAddDeliveryAddressRespose = onData.data;
+      //print(onData.status);
+      if(onData.status == Status.LOADING)
+      {
+        CommonMethods.displayProgressDialog(onData.message,context);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        CommonMethods.hideDialog();
+        CommonMethods.showShortToast(mAddDeliveryAddressRespose.msg);
+        navigationPage();
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.hideDialog();
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
+  }
+
+  void navigationPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BottomScreen()),
+    );
   }
 }

@@ -1,5 +1,9 @@
+import 'package:charliechang/blocs/category_bloc.dart';
+import 'package:charliechang/models/category_response_model.dart';
 import 'package:charliechang/models/icon_menu_model.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
+import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/address_book_screen.dart';
@@ -24,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<IconModel> mIconModelList = new List();
   List<String> mImageList = new List();
   List<String> mImageListSlider = new List();
+  List<Data> mCategoryList = new List();
 
   @override
   void initState() {
@@ -50,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     mImageListSlider.add("assets/images/image.png");
     mImageListSlider.add("assets/images/image2.png");
 
+    getCategoriesAPI();
     scrollController = ScrollController();
     scrollController.addListener(_scrollListener);
     super.initState();
@@ -206,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.only(left: 30),
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: mIconModelList.length,
+                      itemCount: mCategoryList.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 20.0, 8.0, 0),
@@ -224,8 +230,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Radius.circular(3.3),
                                       )),
                                   child: Center(
-                                    child: Image.asset(
-                                      mIconModelList[index].image_name,
+                                    child: Image.network(
+                                      mCategoryList[index].image,
                                       width: 20,
                                       height: 20,
                                       color: Colors.grey,
@@ -236,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 10,
                                 ),
                                 Text(
-                                  mIconModelList[index].title,
+                                  mCategoryList[index].name,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: icon_color, fontSize: 10),
@@ -527,6 +533,32 @@ class _HomeScreenState extends State<HomeScreen> {
         //enableScroll = false;
       });
     }
+  }
+  CategoryBloc mCategoryBloc;
+  CategoryRespose mCategoryRespose;
+  void getCategoriesAPI() {
+    mCategoryBloc=CategoryBloc();
+    mCategoryBloc.dataStream.listen((onData){
+      mCategoryRespose = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+        //CommonMethods.displayProgressDialog(onData.message,context);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        //CommonMethods.hideDialog();
+        setState(() {
+          mCategoryList = mCategoryRespose.data;
+        });
+        //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
+
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        // CommonMethods.hideDialog();
+        CommonMethods.showShortToast(onData.message);
+      }
+    });
   }
 }
 
