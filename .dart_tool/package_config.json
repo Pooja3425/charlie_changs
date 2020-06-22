@@ -74,14 +74,14 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "dio",
-      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/dio-3.0.9",
-      "packageUri": "lib/",
-      "languageVersion": "2.4"
-    },
-    {
       "name": "flutter",
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/packages/flutter",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
+    },
+    {
+      "name": "flutter_svg",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_svg-0.16.1",
       "packageUri": "lib/",
       "languageVersion": "2.2"
     },
@@ -150,6 +150,18 @@
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.6.4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "path_drawing",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_drawing-0.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "1.19"
+    },
+    {
+      "name": "path_parsing",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_parsing-0.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "1.19"
     },
     {
       "name": "pedantic",
@@ -284,7 +296,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-06-20T08:52:20.905842Z",
+  "generated": "2020-06-22T09:20:15.225059Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

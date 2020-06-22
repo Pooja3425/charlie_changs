@@ -5,6 +5,7 @@ import 'package:charliechang/models/complete_profile_response_model.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/address_book_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -187,6 +188,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       {
         CommonMethods.hideDialog();
         CommonMethods.showShortToast(mCompleteProfileResponse.msg);
+        CommonMethods.setPreference(context, COMPLETE_PROFILE, "1");
 
         if(mCompleteProfileResponse.msg!="Token not exist!")
           {

@@ -32,7 +32,8 @@ dependencies:
   connectivity: ^0.4.8+2
   shared_preferences: ^0.5.7
   intl: ^0.16.1
-  dio: ^3.0.9
+  #dio: ^3.0.9
+  flutter_svg: ^0.16.0
 
 dev_dependencies:
   flutter_test:

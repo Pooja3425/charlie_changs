@@ -7,6 +7,8 @@ import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
+import 'package:charliechang/views/address_book_screen.dart';
 import 'package:charliechang/views/bottom_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -454,6 +456,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       {
         CommonMethods.hideDialog();
         CommonMethods.showShortToast(mAddDeliveryAddressRespose.msg);
+        CommonMethods.setPreference(context, DELIVERY_ADDRESS_NAME, _controllerAddressName.text);
+        //CommonMethods.setPreference(context, ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
         navigationPage();
       }
       else if(onData.status == Status.ERROR)
@@ -468,7 +472,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   void navigationPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => BottomScreen()),
+      MaterialPageRoute(builder: (context) => AddressBookScreen()),
     );
   }
 }

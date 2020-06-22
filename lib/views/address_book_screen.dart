@@ -7,9 +7,12 @@ import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/add_address_screen.dart';
+import 'package:charliechang/views/bottom_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 
 class AddressBookScreen extends StatefulWidget {
   @override
@@ -157,10 +160,22 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           // SizedBox(height: 10,),
-                          Text(mCustomerAddressList[index].addressName,style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold),),
-                          SizedBox(height: 10,),
-                          Text(mCustomerAddressList[index].address1+" "+mCustomerAddressList[index].address2,style: TextStyle(fontSize: 12,color: notification_title_color),),
-                          SizedBox(height: 10,),
+                          InkWell(
+                            onTap: (){
+                              CommonMethods.setPreference(context, DELIVERY_ADDRESS_NAME, mCustomerAddressList[index].addressName);
+                              CommonMethods.setPreference(context, ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
+                              navigationPage();
+                              },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(mCustomerAddressList[index].addressName,style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold),),
+                                SizedBox(height: 10,),
+                                Text(mCustomerAddressList[index].address1+" "+mCustomerAddressList[index].address2,style: TextStyle(fontSize: 12,color: notification_title_color),),
+                                SizedBox(height: 10,),
+                              ],
+                            ),
+                          ),
                           Text("Edit",style: TextStyle(fontSize: 12,color: fab_color,fontWeight: FontWeight.w600),),
                           SizedBox(height: 15,),
                           Container(width: getWidth(context),
@@ -257,5 +272,11 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
 
       }
     });
+  }
+  void navigationPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BottomScreen()),
+    );
   }
 }

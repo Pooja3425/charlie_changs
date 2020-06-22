@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:charliechang/blocs/category_bloc.dart';
+import 'package:charliechang/blocs/menu_bloc.dart';
 import 'package:charliechang/models/category_response_model.dart';
 import 'package:charliechang/models/icon_menu_model.dart';
+import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
@@ -13,9 +17,11 @@ import 'package:charliechang/views/pickup_checkout_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getflutter/getflutter.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'switch_ui.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -29,7 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> mImageList = new List();
   List<String> mImageListSlider = new List();
   List<Data> mCategoryList = new List();
-
+  String hashKey,category;
+  String deliveryAddressName;
   @override
   void initState() {
     mIconModelList.add(new IconModel(
@@ -54,8 +61,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     mImageListSlider.add("assets/images/image.png");
     mImageListSlider.add("assets/images/image2.png");
-
+    
+    getDeliveryAddress();
     getCategoriesAPI();
+
+
     scrollController = ScrollController();
     scrollController.addListener(_scrollListener);
     super.initState();
@@ -63,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double itemHeight = (getHeight(context) - kToolbarHeight - 24) / 2;
+    final double itemHeight = (getHeight(context) - kToolbarHeight - 24) / 2.1;
     final double itemWidth = getWidth(context) / 2;
     final double grid_size = (itemWidth / itemHeight) - 100;
     return SafeArea(
@@ -116,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  status?"Caranzalem": "Home",
+                                  status?"Caranzalem": deliveryAddressName,
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: text_color,
@@ -219,35 +229,46 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Container(
                             width: 50,
                             //height: 80,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: switch_bg,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(3.3),
-                                      )),
-                                  child: Center(
-                                    child: Image.network(
-                                      mCategoryList[index].image,
-                                      width: 20,
-                                      height: 20,
-                                      color: Colors.grey,
+                            child: InkWell(
+                              onTap: (){
+                                setState(() {
+                                  category = mCategoryList[index].name;
+                                  print("categoryy");
+                                  getMenuAPI();
+                                });
+
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: switch_bg,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(3.3),
+                                        )),
+                                    child: Center(
+                                      child: SvgPicture.network(
+                                        IMAGE_BASE_URL+mCategoryList[index].image,
+                                        width: 20,
+                                        height: 20,
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  mCategoryList[index].name,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: icon_color, fontSize: 10),
-                                )
-                              ],
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    mCategoryList[index].name,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: icon_color, fontSize: 10),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         );
@@ -319,6 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
+
                       ),
                       SizedBox(
                         height: 15,
@@ -338,23 +360,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                           width: getWidth(context),
                           // height: getHeight(context)/2,
-                          child: GridView.count(
+                          child: mMenuList.length>0?GridView.count(
                             physics: enableScroll?NeverScrollableScrollPhysics():ScrollPhysics(),
                             crossAxisCount: 2,
                             childAspectRatio: (itemWidth / itemHeight),
                             //controller: new ScrollController(keepScrollOffset: false),
                             shrinkWrap: true,
-                            children: List.generate(mImageList.length, (index) {
+                            children: List.generate(mMenuList.length, (index) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Container(
                                     child: Card(
-                                      child: Image.asset(
-                                        mImageList[index],
+                                      child: Image.network(
+                                        IMAGE_BASE_URL+mMenuList[index].image,
                                         fit: BoxFit.cover,
                                         width: getWidth(context),
-                                        height: 130,
+                                        height: 150,
                                       ),
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(
@@ -367,7 +389,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: const EdgeInsets.only(
                                         left: 5, top: 10),
                                     child: Text(
-                                      "Name of the dish line 1 \nName of the dish line 2",
+                                      mMenuList[index].name,
+                                      maxLines: 2,
                                       style: TextStyle(fontSize: 12,color: icon_color),
                                     ),
                                   ),
@@ -387,7 +410,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         InkWell(
                                           onTap: (){
-                                            _settingModalBottomSheet(context);
+                                           // _settingModalBottomSheet(context);
                                           },
                                           child: Container(
                                             width: 80,
@@ -413,7 +436,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               );
                             }),
-                          ) /*ListView.builder(
+                          ):Center(child: CircularProgressIndicator(),) /*ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context,index){
                           return Padding(
@@ -519,13 +542,13 @@ class _HomeScreenState extends State<HomeScreen> {
     double maxScroll = scrollController.position.maxScrollExtent;
     double currentScroll = scrollController.position.pixels;
     double delta = 270.0; // o
-    print(maxScroll-currentScroll);
+    //print(maxScroll-currentScroll);
     if ( maxScroll - currentScroll >= 540) { // whatever you determine here
       //.. load more
       setState(() {
         //enableScroll = true;
       });
-      print("END");
+     // print("END");
     }
     else
     {
@@ -537,8 +560,8 @@ class _HomeScreenState extends State<HomeScreen> {
   CategoryBloc mCategoryBloc;
   CategoryRespose mCategoryRespose;
   void getCategoriesAPI() {
-    mCategoryBloc=CategoryBloc();
-    mCategoryBloc.dataStream.listen((onData){
+      mCategoryBloc=CategoryBloc();
+      mCategoryBloc.dataStream.listen((onData){
       mCategoryRespose = onData.data;
       if(onData.status == Status.LOADING)
       {
@@ -549,6 +572,9 @@ class _HomeScreenState extends State<HomeScreen> {
         //CommonMethods.hideDialog();
         setState(() {
           mCategoryList = mCategoryRespose.data;
+         // hashKey = mCategoryRespose.data[0].hashCode.toString();
+          category = mCategoryRespose.data[0].name.toString();
+          getMenuAPI();
         });
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
 
@@ -559,6 +585,45 @@ class _HomeScreenState extends State<HomeScreen> {
         CommonMethods.showShortToast(onData.message);
       }
     });
+  }
+
+  MenuBloc mMenuBloc;
+  MenuResponse mMenuResponse;
+  List<Menu> mMenuList = new List();
+
+  getMenuAPI() {
+      final body = jsonEncode({"hash":hashKey,"category":category});
+      mMenuBloc=MenuBloc(body);
+      mMenuBloc.dataStream.listen((onData){
+      mMenuResponse = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+        //CommonMethods.displayProgressDialog(onData.message,context);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        //CommonMethods.hideDialog();
+        setState(() {
+          mMenuList = mMenuResponse.menu;
+        });
+        //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        // CommonMethods.hideDialog();
+        CommonMethods.showShortToast(onData.message);
+      }
+    });
+  }
+
+   getDeliveryAddress() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      deliveryAddressName = preferences.get(DELIVERY_ADDRESS_NAME);
+      hashKey = preferences.get(ADDRESS_HASH);
+      print("HASS $hashKey");
+    });
+
   }
 }
 
