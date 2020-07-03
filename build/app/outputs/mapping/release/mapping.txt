@@ -1,7 +1,7 @@
 # compiler: R8
 # compiler_version: 1.5.64
 # min_api: 16
-# pg_map_id: 7e91bb6
+# pg_map_id: eff0351
 androidx.arch.core.internal.FastSafeIterableMap -> a.a.a.a.a:
     java.util.HashMap mHashMap -> e
     boolean contains(java.lang.Object) -> a
@@ -1539,24 +1539,19 @@ io.flutter.plugins.connectivity.ConnectivityPlugin -> io.flutter.plugins.a.d:
     void setupChannels(io.flutter.plugin.common.BinaryMessenger,android.content.Context) -> a
     void teardownChannels() -> a
     void onAttachedToEngine(io.flutter.embedding.engine.plugins.FlutterPlugin$FlutterPluginBinding) -> b
-io.flutter.plugins.sharedpreferences.MethodCallHandlerImpl -> io.flutter.plugins.b.a:
+io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin -> io.flutter.plugins.b.a:
     android.content.SharedPreferences preferences -> a
     void commitAsync(android.content.SharedPreferences$Editor,io.flutter.plugin.common.MethodChannel$Result) -> a
     java.util.List decodeList(java.lang.String) -> a
     java.lang.String encodeList(java.util.List) -> a
     java.util.Map getAllPrefs() -> a
     void onMethodCall(io.flutter.plugin.common.MethodCall,io.flutter.plugin.common.MethodChannel$Result) -> a
-io.flutter.plugins.sharedpreferences.MethodCallHandlerImpl$1 -> io.flutter.plugins.b.a$a:
+    void registerWith(io.flutter.plugin.common.PluginRegistry$Registrar) -> a
+io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin$1 -> io.flutter.plugins.b.a$a:
     android.content.SharedPreferences$Editor val$editor -> a
     io.flutter.plugin.common.MethodChannel$Result val$result -> b
     java.lang.Boolean doInBackground(java.lang.Void[]) -> a
     void onPostExecute(java.lang.Boolean) -> a
-io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin -> io.flutter.plugins.b.b:
-    io.flutter.plugin.common.MethodChannel channel -> a
-    void onDetachedFromEngine(io.flutter.embedding.engine.plugins.FlutterPlugin$FlutterPluginBinding) -> a
-    void setupChannel(io.flutter.plugin.common.BinaryMessenger,android.content.Context) -> a
-    void teardownChannel() -> a
-    void onAttachedToEngine(io.flutter.embedding.engine.plugins.FlutterPlugin$FlutterPluginBinding) -> b
 io.flutter.util.PathUtils -> b.a.d.a:
     java.lang.String getCacheDirectory(android.content.Context) -> a
     java.lang.String getFilesDir(android.content.Context) -> b

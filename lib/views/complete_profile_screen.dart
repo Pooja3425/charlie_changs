@@ -182,11 +182,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       mCompleteProfileResponse = onData.data;
       if(onData.status == Status.LOADING)
       {
-        CommonMethods.displayProgressDialog(onData.message,context);
+        //CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
       }
       else if(onData.status == Status.COMPLETED)
       {
-        CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(mCompleteProfileResponse.msg);
         CommonMethods.setPreference(context, COMPLETE_PROFILE, "1");
 
@@ -197,7 +198,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       }
       else if(onData.status == Status.ERROR)
       {
-        CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(onData.message);
 
       }

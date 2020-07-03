@@ -94,9 +94,36 @@ class CommonMethods
 
 
   static hideDialog(){
-    pr.hide().then((isHidden) {
+    /*pr.hide().then((isHidden) {
       print(isHidden);
+    });*/
+    Future.delayed(Duration(seconds: 1)).then((value) {
+      pr.hide().whenComplete(() {
+
+      });
     });
+  }
+
+
+ static showLoaderDialog(BuildContext context,String message){
+    AlertDialog alert=AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(backgroundColor: button_color,valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),),
+          Container(margin: EdgeInsets.only(left: 7),child:Text(message)),
+        ],),
+    );
+    showDialog(barrierDismissible: false,
+      context:context,
+      builder:(BuildContext context){
+        return alert;
+      },
+    );
+  }
+
+  static dismissDialog(BuildContext context){
+    Navigator.pop(context);
+
   }
 
   static setPreference(BuildContext context,String key, String value) async

@@ -89,11 +89,15 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                         color:  button_color,fontSize: 12
                                     ),
                                     hint: Text("Search Delivery Location",style: TextStyle(
-                                        color:  button_color
+                                        color:  input_border_color
                                     ),),
                                     onChanged: (Delivery newValue) {
                                       setState(() {
                                         dropdownValue = newValue;
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,)),
+                                        );
                                       });
                                     },
                                     items: mDeliveryLocationsList.map((Delivery map) {
@@ -166,14 +170,17 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                               CommonMethods.setPreference(context, ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
                               navigationPage();
                               },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(mCustomerAddressList[index].addressName,style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold),),
-                                SizedBox(height: 10,),
-                                Text(mCustomerAddressList[index].address1+" "+mCustomerAddressList[index].address2,style: TextStyle(fontSize: 12,color: notification_title_color),),
-                                SizedBox(height: 10,),
-                              ],
+                            child: Container(
+                              width: getWidth(context),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(mCustomerAddressList[index].addressName,style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold),),
+                                  SizedBox(height: 10,),
+                                  Text(mCustomerAddressList[index].address1+" "+mCustomerAddressList[index].address2,style: TextStyle(fontSize: 12,color: notification_title_color),),
+                                  SizedBox(height: 10,),
+                                ],
+                              ),
                             ),
                           ),
                           Text("Edit",style: TextStyle(fontSize: 12,color: fab_color,fontWeight: FontWeight.w600),),
@@ -254,11 +261,13 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
       mCustomerAddressRespose = onData.data;
       if(onData.status == Status.LOADING)
       {
-        CommonMethods.displayProgressDialog(onData.message,context);
+        //CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
       }
       else if(onData.status == Status.COMPLETED)
       {
-        CommonMethods.hideDialog();
+        //CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         setState(() {
           mCustomerAddressList = mCustomerAddressRespose.data;
         });
@@ -267,7 +276,8 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
       }
       else if(onData.status == Status.ERROR)
       {
-        CommonMethods.hideDialog();
+        //CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(onData.message);
 
       }

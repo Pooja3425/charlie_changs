@@ -23,6 +23,20 @@
             </list>
           </value>
         </entry>
+        <entry key="badges">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/badges-1.1.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="bloc_pattern">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/bloc_pattern-2.5.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="boolean_selector">
           <value>
             <list>
@@ -226,6 +240,13 @@
             </list>
           </value>
         </entry>
+        <entry key="provider">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/provider-3.2.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="quiver">
           <value>
             <list>
@@ -233,31 +254,17 @@
             </list>
           </value>
         </entry>
+        <entry key="rxdart">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.24.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="shared_preferences">
           <value>
             <list>
-              <option value="$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.7+3/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="shared_preferences_macos">
-          <value>
-            <list>
-              <option value="$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+10/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="shared_preferences_platform_interface">
-          <value>
-            <list>
-              <option value="$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_platform_interface-1.0.4/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="shared_preferences_web">
-          <value>
-            <list>
-              <option value="$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+7/lib" />
+              <option value="$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.3+1/lib" />
             </list>
           </value>
         </entry>
@@ -344,6 +351,8 @@
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/archive-2.0.11/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/args-1.5.2/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.4.0/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/badges-1.1.1/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/bloc_pattern-2.5.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-1.0.5/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.2/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.11/lib" />
@@ -370,11 +379,10 @@
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/pin_input_text_field-3.0.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/progress_dialog-1.2.4/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/provider-3.2.0/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.0.5/lib" />
-      <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.7+3/lib" />
-      <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+10/lib" />
-      <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_platform_interface-1.0.4/lib" />
-      <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+7/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.24.1/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.3+1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/smooth_star_rating-1.1.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.5.5/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.9.3/lib" />

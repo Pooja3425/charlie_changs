@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:charliechang/blocs/register_bloc.dart';
 import 'package:charliechang/blocs/verify_otp_bloc.dart';
+import 'package:charliechang/models/register_response_model.dart';
 import 'package:charliechang/models/verify_otp_response_model.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
@@ -86,7 +88,11 @@ class _OtpScreenState extends State<OtpScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(RESEND_OTP,style: TextStyle(fontSize: 15,color: fab_color,fontFamily: "Manrope",fontWeight: FontWeight.w500),),
+                        InkWell(
+                            onTap: (){
+                              callRegisterAPI();
+                            },
+                            child: Container(child: Text(RESEND_OTP,style: TextStyle(fontSize: 15,color: fab_color,fontFamily: "Manrope",fontWeight: FontWeight.w500),))),
                         FloatingActionButton(onPressed: (){
 
                           if(isValid())
@@ -110,6 +116,37 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 
+
+  RegisterBloc _registerBloc;
+  Map<String, dynamic> bodyDataReg;
+  RegisterResponse regRes;
+
+  void callRegisterAPI() {
+    final body = jsonEncode({"mobile":widget.mobile});
+    _registerBloc=RegisterBloc(body);
+    _registerBloc.dataStream.listen((onData){
+      regRes = onData.data;
+      //print(onData.status);
+      if(onData.status == Status.LOADING)
+      {
+        // CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(regRes.msg);
+        //navigationPage();
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
+  }
+
   VerifyOtpBloc _verifyOtpBloc;
   final _controllerOtp = TextEditingController();
   Map<String, dynamic> bodyData;
@@ -128,11 +165,12 @@ class _OtpScreenState extends State<OtpScreen> {
       verifyOtpRes = onData.data;
       if(onData.status == Status.LOADING)
       {
-        CommonMethods.displayProgressDialog(onData.message,context);
+        //CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
       }
       else if(onData.status == Status.COMPLETED)
       {
-          CommonMethods.hideDialog();
+          CommonMethods.dismissDialog(context);
 
           if(verifyOtpRes.completeProfile =="0")
             {
@@ -153,9 +191,11 @@ class _OtpScreenState extends State<OtpScreen> {
       }
       else if(onData.status == Status.ERROR)
       {
-        CommonMethods.hideDialog();
-        CommonMethods.showShortToast(onData.message);
-
+        CommonMethods.dismissDialog(context);
+        if(onData.message.contains("Invalid"))
+          {
+            CommonMethods.showShortToast("Invalid OTP");
+          }
       }
     });
   }

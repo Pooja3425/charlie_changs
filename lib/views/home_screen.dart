@@ -1,8 +1,12 @@
 import 'dart:convert';
 
+import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:charliechang/blocs/cart_bloc.dart';
+import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/blocs/category_bloc.dart';
 import 'package:charliechang/blocs/menu_bloc.dart';
 import 'package:charliechang/models/category_response_model.dart';
+import 'package:charliechang/models/food_item_model.dart';
 import 'package:charliechang/models/icon_menu_model.dart';
 import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/networking/Repsonse.dart';
@@ -19,11 +23,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getflutter/getflutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'switch_ui.dart';
 
 
 class HomeScreen extends StatefulWidget {
+
+  VoidCallback callback1;
+  Function(String) func1;
+  HomeScreen({this.callback1, this.func1});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -37,6 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Data> mCategoryList = new List();
   String hashKey,category;
   String deliveryAddressName;
+  String pickupAddressName="";
+  final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+
   @override
   void initState() {
     mIconModelList.add(new IconModel(
@@ -60,12 +72,12 @@ class _HomeScreenState extends State<HomeScreen> {
     mImageList.add("assets/images/image2.png");
 
     mImageListSlider.add("assets/images/image.png");
-    mImageListSlider.add("assets/images/image2.png");
+    mImageListSlider.add("assets/images/image.png");
     
     getDeliveryAddress();
     getCategoriesAPI();
 
-
+   //
     scrollController = ScrollController();
     scrollController.addListener(_scrollListener);
     super.initState();
@@ -76,6 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final double itemHeight = (getHeight(context) - kToolbarHeight - 24) / 2.1;
     final double itemWidth = getWidth(context) / 2;
     final double grid_size = (itemWidth / itemHeight) - 100;
+   // print("fetd ${getWidth(context)/2}");
+    //var bloc = Provider.of<CartBloc>(context);
+   // CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -112,10 +127,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: (){
                             if(status)
                               {
+                                //1 = pickup  0=delivery
+                                CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
                               }
                             else
                               {
+                                CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
                               }
 
@@ -126,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  status?"Caranzalem": deliveryAddressName,
+                                  status?pickupAddressName: deliveryAddressName,
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: text_color,
@@ -172,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: SingleChildScrollView(
           controller: scrollController,
-          physics: enableScroll?ScrollPhysics():NeverScrollableScrollPhysics(),
+         // physics: enableScroll?ScrollPhysics():NeverScrollableScrollPhysics(),
           child: Container(
             width: getWidth(context),
             child: Column(
@@ -233,8 +251,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: (){
                                 setState(() {
                                   category = mCategoryList[index].name;
-                                  print("categoryy");
-                                  getMenuAPI();
+                                  //print("categoryy");
+
+                                  scrollController.jumpTo(600);
+                                 // getMenuAPI();
                                 });
 
                               },
@@ -372,11 +392,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: <Widget>[
                                   Container(
                                     child: Card(
-                                      child: Image.network(
-                                        IMAGE_BASE_URL+mMenuList[index].image,
-                                        fit: BoxFit.cover,
-                                        width: getWidth(context),
-                                        height: 150,
+                                      child: AspectRatio(
+                                        aspectRatio: 7/6,
+                                        child: Image.network(
+                                          IMAGE_BASE_URL+mMenuList[index].image,
+                                          fit: BoxFit.cover,
+                                          width: getWidth(context)/2-60,
+                                          height: getWidth(context)/2-80,
+                                        ),
                                       ),
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(
@@ -388,14 +411,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         left: 5, top: 10),
-                                    child: Text(
-                                      mMenuList[index].name,
-                                      maxLines: 2,
-                                      style: TextStyle(fontSize: 12,color: icon_color),
+                                    child: Container(
+                                      height:40,
+                                      child: Text(
+                                        mMenuList[index].name,
+                                        maxLines: 2,
+                                        style: TextStyle(fontSize: 12,color: icon_color),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 12,
+                                    height: 8,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -403,13 +429,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Row(
                                       children: <Widget>[
                                         Text(
-                                          "Rs 599",
+                                          "Rs "+mMenuList[index].price,
                                           style: TextStyle(
                                               color: icon_color,
                                               fontSize: 12),
                                         ),
-                                        InkWell(
+                                        mMenuList[index].count ==0?InkWell(
                                           onTap: (){
+                                            //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+                                            addToCart(mMenuList[index]);
+
+                                            //bloc.addToCart(index);
+                                            widget.callback1();
+                                            widget.func1('ADD');
+                                            setState(() {
+                                              mMenuList[index].count ++;
+                                            });
                                            // _settingModalBottomSheet(context);
                                           },
                                           child: Container(
@@ -426,6 +461,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   color: Colors.white,
                                                   fontSize: 12),
                                             )),
+                                          ),
+                                        ):Container(
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: button_color,width: 0.5),
+                                              borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                                          child: Row(
+                                            children: <Widget>[
+                                              IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+                                                /*if(mMenuList[index].count!=1)
+                                                {*/
+                                                 bloc.removeFromList(mMenuList[index]);
+                                                 print("SIZEEE ${mMenuList[index].count}");
+
+                                                      widget.callback1();
+                                                      widget.func1('REMOVE');
+
+
+                                                //}
+                                              }),
+                                              Text("${mMenuList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
+                                              IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
+                                                print("ADDDD");
+                                                setState(() {
+                                                  //mMenuList[index].count++;
+                                                  // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
+                                                });
+                                                addToCart(mMenuList[index]);
+                                                widget.callback1();
+                                                widget.func1('ADD');
+                                              })
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -478,6 +545,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+
+  addToCart(Menu foodItem) {
+    bloc.addToList(foodItem);
+  }
+
+  removeFromList(Menu foodItem) {
+    bloc.removeFromList(foodItem);
   }
 
   void _settingModalBottomSheet(context){
@@ -573,7 +649,7 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           mCategoryList = mCategoryRespose.data;
          // hashKey = mCategoryRespose.data[0].hashCode.toString();
-          category = mCategoryRespose.data[0].name.toString();
+          category = "";
           getMenuAPI();
         });
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
@@ -591,6 +667,7 @@ class _HomeScreenState extends State<HomeScreen> {
   MenuResponse mMenuResponse;
   List<Menu> mMenuList = new List();
 
+  List<FoodItem> foodList = new List();
   getMenuAPI() {
       final body = jsonEncode({"hash":hashKey,"category":category});
       mMenuBloc=MenuBloc(body);
@@ -605,6 +682,8 @@ class _HomeScreenState extends State<HomeScreen> {
         //CommonMethods.hideDialog();
         setState(() {
           mMenuList = mMenuResponse.menu;
+
+
         });
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
       }
@@ -620,8 +699,31 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       deliveryAddressName = preferences.get(DELIVERY_ADDRESS_NAME);
+      if(preferences.get(PICKUP_ADDRESS_NAME)!=null)
+        {
+          pickupAddressName = preferences.get(PICKUP_ADDRESS_NAME);
+        }
+
       hashKey = preferences.get(ADDRESS_HASH);
       print("HASS $hashKey");
+
+      if(preferences.get(TOGGLE_VALUE) !=null)
+        {
+          if(preferences.get(TOGGLE_VALUE)=="0")
+          {
+            setState(() {
+              status = false; //delivery
+            });
+          }
+          else
+          {
+            setState(() {
+              status = true; //pickup
+            });
+          }
+        }
+
+
     });
 
   }

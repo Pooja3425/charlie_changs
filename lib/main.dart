@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'blocs/cart_bloc.dart';
+import 'blocs/cartlistBloc.dart';
 import 'views/address_book_screen.dart';
 import 'views/bottom_screen.dart';
 import 'views/home_screen.dart';
@@ -15,6 +19,7 @@ import 'views/complete_profile_screen.dart';
 import 'views/login_screen.dart';
 import 'views/otp_screen.dart';
 import 'views/pickup_checkout_screen.dart';
+import 'views/silver_app_demo.dart';
 import 'views/thanks_screen.dart';
 
 void main() async{
@@ -39,27 +44,38 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Charlie changs',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: "Manrope"
+    return BlocProvider(
+      blocs: [
+        //add yours BLoCs controlles
+        Bloc((i) => CartListBloc()),
+        //Bloc((i) => ColorBloc()),
+      ],
+      child: ChangeNotifierProvider<CartBloc>(
+        builder: (context) => CartBloc(),
+        child: MaterialApp(
+          title: 'Charlie changs',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            fontFamily: "Manrope"
 
+          ),
+          routes: <String, WidgetBuilder>{
+            '/LoginScreen': (BuildContext context) => new LoginScreen(),
+            '/OtpScreen': (BuildContext context) => new OtpScreen(),
+            '/ThanksScreen': (BuildContext context) => new ThanksScreen(),
+            '/PaymentFailScreen': (BuildContext context) => new PaymentFailScreen(),
+            '/CheckoutScreen': (BuildContext context) => new CheckoutScreen(),
+            '/PickupCheckoutScreen': (BuildContext context) => new PickupCheckoutScreen(),
+            '/CompleteProfileScreen': (BuildContext context) => new CompleteProfileScreen(),
+            '/HomeScreen': (BuildContext context) => new HomeScreen(),
+            '/AddressBookScreen': (BuildContext context) => new AddressBookScreen(),
+            '/BottomScreen': (BuildContext context) => new BottomScreen(),
+            '/SilverAppBarDemo': (BuildContext context) => new SilverAppBarDemo(),
+          },
+          home: SplashScreen(),
+        ),
       ),
-      routes: <String, WidgetBuilder>{
-        '/LoginScreen': (BuildContext context) => new LoginScreen(),
-        '/OtpScreen': (BuildContext context) => new OtpScreen(),
-        '/ThanksScreen': (BuildContext context) => new ThanksScreen(),
-        '/PaymentFailScreen': (BuildContext context) => new PaymentFailScreen(),
-        '/CheckoutScreen': (BuildContext context) => new CheckoutScreen(),
-        '/PickupCheckoutScreen': (BuildContext context) => new PickupCheckoutScreen(),
-        '/CompleteProfileScreen': (BuildContext context) => new CompleteProfileScreen(),
-        '/HomeScreen': (BuildContext context) => new HomeScreen(),
-        '/AddressBookScreen': (BuildContext context) => new AddressBookScreen(),
-        '/BottomScreen': (BuildContext context) => new BottomScreen(),
-      },
-      home: SplashScreen(),
     );
   }
 }
@@ -74,6 +90,11 @@ class _SplashScreenState extends State<SplashScreen> {
   startTime() async {
     var _duration = new Duration(seconds: 2);
     return new Timer(_duration, navigationPage);
+  }
+
+  startTimeHome() async {
+    var _duration = new Duration(seconds: 2);
+    return new Timer(_duration, navigationHome);
   }
 
   void navigationPage() {
@@ -93,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
       if(profile_value == "1")
       {
-        navigationHome();
+        startTimeHome();
       }
       else
       {
@@ -116,7 +137,7 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                child:Image.asset("assets/images/splash_img.png",width: 156.3,height: 45,),
+                child:Image.asset("assets/images/logo.png",width: 230.3,height: 250,),
               ),
             ],
           ),

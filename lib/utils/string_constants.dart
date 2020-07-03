@@ -6,5 +6,7 @@ final String DELIVER_TO = "Deliver to";
 final String COUPON_CODE = "COUPON_CODE";
 final String COMPLETE_PROFILE = "COMPLETE_PROFILE";
 final String ADDRESS_HASH = "ADDRESS_HASH";
+final String TOGGLE_VALUE = "TOGGLE_VALUE";
+final String PICKUP_ADDRESS_NAME = "PICKUP_ADDRESS_NAME";
 final String DELIVERY_ADDRESS_NAME = "DELIVERY_ADDRESS_NAME";
 final String IMAGE_BASE_URL = "https://charliechangs.in/";

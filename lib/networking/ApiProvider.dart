@@ -138,10 +138,13 @@ class ApiProvider {
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:
+        print("200");
         var responseJson = json.decode(response.body.toString());
         print(responseJson);
         return responseJson;
       case 400:
+        print("400");
+       // var responseJson = json.decode(response.body.toString());
         throw BadRequestException(response.body.toString());
       case 401:
 

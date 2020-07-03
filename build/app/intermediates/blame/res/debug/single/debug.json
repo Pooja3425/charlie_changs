@@ -140,6 +140,10 @@
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/7faf2ad74a0b9932e38d86e684646e95/core-1.0.0/res/drawable-hdpi-v4/notification_bg_normal.9.png"
     },
     {
+        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/debug/drawable_logo.png.flat",
+        "source": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/res/drawable/logo.png"
+    },
+    {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/debug/drawable_notification_bg.xml.flat",
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/7faf2ad74a0b9932e38d86e684646e95/core-1.0.0/res/drawable/notification_bg.xml"
     },

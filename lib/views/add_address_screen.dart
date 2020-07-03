@@ -450,11 +450,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       //print(onData.status);
       if(onData.status == Status.LOADING)
       {
-        CommonMethods.displayProgressDialog(onData.message,context);
+        //CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
       }
       else if(onData.status == Status.COMPLETED)
       {
-        CommonMethods.hideDialog();
+       // CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(mAddDeliveryAddressRespose.msg);
         CommonMethods.setPreference(context, DELIVERY_ADDRESS_NAME, _controllerAddressName.text);
         //CommonMethods.setPreference(context, ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
@@ -462,7 +464,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       }
       else if(onData.status == Status.ERROR)
       {
-        CommonMethods.hideDialog();
+        //CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(onData.message);
 
       }

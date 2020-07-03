@@ -1,9 +1,12 @@
+import 'package:badges/badges.dart';
+import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/views/cart_screen.dart';
 import 'package:charliechang/views/offers_screen.dart';
 import 'package:charliechang/views/updates_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'home_screen.dart';
 import 'more_screen.dart';
@@ -47,15 +50,60 @@ class _BottomScreenState extends State<BottomScreen> {
     _pageController.animateToPage(page,
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
   }
+  bool showBadge= true;
+  int badgeData = 0;
+  Widget callpage(int currentIndex) {
+   /* var bloc = Provider.of<CartBloc>(context);
+    int totalCount = 0;
+    if (bloc.cart.length > 0) {
+      totalCount = bloc.cart.values.reduce((a, b) => a + b);
+    }*/
+    switch (currentIndex) {
+      case 0:
+        return HomeScreen(
+          callback1: () {
+            showBadge = true;
+            setState(() {});
+          },
+          func1: (string) {
+            if (string == 'ADD') {
+              badgeData ++;
+            } else if (string == 'REMOVE') {
+              badgeData--;
+            }
+            setState(() {});
+          },
+        );
+      case 1:
+        return OffersScreen();
+        break;
+      default:
+        return HomeScreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: /*callpage(_page)*/Container(
         height: getHeight(context),
         child: new PageView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            new HomeScreen(),
+            new HomeScreen(
+              callback1: () {
+                showBadge = true;
+                setState(() {});
+              },
+              func1: (string) {
+                if (string == 'ADD') {
+                  badgeData++;
+                } else if (string == 'REMOVE') {
+                  badgeData--;
+                }
+                setState(() {});
+              },
+            ),
             new OffersScreen(),
             new CartScreen(),
             new UpdatesScreen(),
@@ -92,8 +140,15 @@ class _BottomScreenState extends State<BottomScreen> {
 
                 )),
             new BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/images/cart.png', height: 15, width: 15,color: _page==2?fab_color:icon_color,),
+                icon: Badge(
+                  shape: BadgeShape.circle,
+                  badgeContent: Text(
+                    badgeData.toString(),
+                    style: TextStyle(color: Colors.white,fontSize: 10),
+                  ),
+                  child: Image.asset(
+                    'assets/images/cart.png', height: 15, width: 15,color: _page==2?fab_color:icon_color,),
+                ),
                 title: new Text(
                   "Cart",style: TextStyle(color: _page==2?fab_color:icon_color,fontSize: 12),
 
@@ -114,7 +169,13 @@ class _BottomScreenState extends State<BottomScreen> {
                 )),
           ],
           onTap: navigationTapped,
+         /* onTap: (index) {
+            setState(() {
+              _page = index;
+            });
+          },*/
           currentIndex: _page,
+
 
           //selectedItemColor: Colors.amber[800],
 

@@ -52,7 +52,7 @@ class Menu {
   String price;
   String taxTotal;
   String itemTotal;
-  String count;
+  int count;
   String hash;
   String resturantId;
   String status;
@@ -86,7 +86,7 @@ class Menu {
     price = json['price'];
     taxTotal = json['tax_total'];
     itemTotal = json['item_total'];
-    count = json['count'];
+    count = int.parse(json['count']);
     hash = json['hash'];
     resturantId = json['resturant_id'];
     status = json['status'];
@@ -110,6 +110,14 @@ class Menu {
     data['resturant_id'] = this.resturantId;
     data['status'] = this.status;
     return data;
+  }
+
+  void incrementQuantity() {
+    this.count = this.count + 1;
+  }
+
+  void decrementQuantity() {
+    this.count = this.count - 1;
   }
 }
 
@@ -144,4 +152,6 @@ class Timings {
     data['holiday'] = this.holiday;
     return data;
   }
+
+
 }

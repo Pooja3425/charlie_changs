@@ -119,17 +119,18 @@ class _LoginScreenState extends State<LoginScreen> {
       //print(onData.status);
       if(onData.status == Status.LOADING)
       {
-        CommonMethods.displayProgressDialog(onData.message,context);
+       // CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
       }
       else if(onData.status == Status.COMPLETED)
       {
-        CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(regRes.msg);
         navigationPage();
       }
       else if(onData.status == Status.ERROR)
       {
-        CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(onData.message);
 
       }

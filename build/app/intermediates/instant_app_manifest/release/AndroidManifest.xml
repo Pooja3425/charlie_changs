@@ -22,7 +22,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="charliechang" >
         <activity
             android:name="com.brandzgarage.charliechang.MainActivity"
