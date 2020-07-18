@@ -6,6 +6,7 @@ import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:provider/provider.dart';
 import 'blocs/cart_bloc.dart';
 import 'blocs/cartlistBloc.dart';
@@ -22,6 +23,8 @@ import 'views/pickup_checkout_screen.dart';
 import 'views/silver_app_demo.dart';
 import 'views/thanks_screen.dart';
 
+const kAndroidUserAgent =
+    "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36";
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   //SystemChrome.latestStyle;
@@ -42,6 +45,7 @@ class MyHttpOverrides extends HttpOverrides{
 }
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  String selectedUrl = 'https://flutter.io';
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -72,7 +76,13 @@ class MyApp extends StatelessWidget {
             '/AddressBookScreen': (BuildContext context) => new AddressBookScreen(),
             '/BottomScreen': (BuildContext context) => new BottomScreen(),
             '/SilverAppBarDemo': (BuildContext context) => new SilverAppBarDemo(),
+            '/widget': (_){
+              return WebviewScaffold(
+                url: selectedUrl,
+              );
+            }
           },
+
           home: SplashScreen(),
         ),
       ),

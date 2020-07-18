@@ -168,6 +168,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                             onTap: (){
                               CommonMethods.setPreference(context, DELIVERY_ADDRESS_NAME, mCustomerAddressList[index].addressName);
                               CommonMethods.setPreference(context, ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
+                              CommonMethods.setPreference(context, DELIVERY_PICKUP, "1");
                               navigationPage();
                               },
                             child: Container(

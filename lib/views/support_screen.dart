@@ -1,6 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:charliechang/blocs/support_bloc.dart';
+import 'package:charliechang/models/support_response_model.dart';
+import 'package:charliechang/networking/Repsonse.dart';
+import 'package:charliechang/repository/support_repository.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -12,6 +21,31 @@ class SupportScreen extends StatefulWidget {
 class _SupportScreenState extends State<SupportScreen> {
   final _controllerSupport = TextEditingController();
   var rating = 0.0;
+
+  //internet
+  bool _isInternetAvailable = true;
+  Connectivity _connectivity;
+  StreamSubscription<ConnectivityResult> _subscription;
+
+  @override
+  void initState() {
+    // CommonMeathods.showShortToast(widget.otp);
+    _connectivity = new Connectivity();
+    _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
+    super.initState();
+  }
+
+  void onConnectivityChange(ConnectivityResult result) {
+    if (result == ConnectivityResult.none) {
+      setState(() {
+        _isInternetAvailable = false;
+      });
+    } else {
+      setState(() {
+        _isInternetAvailable = true;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -103,7 +137,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                             color: text_color,
                                             fontWeight: FontWeight.w400,fontSize: 12.5),
                                         decoration: InputDecoration(
-                                            hintText: "Typr your message",
+                                            hintText: "Type your message",
                                             hintStyle: TextStyle(color: hint_text_color,fontSize: 12.5),
                                             //contentPadding: EdgeInsets.only(bottom: 12),
                                             border: InputBorder.none,
@@ -116,6 +150,15 @@ class _SupportScreenState extends State<SupportScreen> {
                                     child: Align(
                                       alignment: Alignment.topRight,
                                       child: FloatingActionButton(onPressed: (){
+                                        if(_isInternetAvailable)
+                                          {
+                                            if(isValid())
+                                            callSupportAPI();
+                                          }
+                                        else
+                                          {
+                                            CommonMethods.showLongToast(CHECK_INTERNET);
+                                          }
                                         /*Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => OtpScreen() ),
@@ -195,6 +238,9 @@ class _SupportScreenState extends State<SupportScreen> {
                       spacing: 2.0,
                       onRated: (value) {
                         print("rating value -> $value");
+                        setState(() {
+                          rating_val=value;
+                        });
                         // print("rating value dd -> ${value.truncate()}");
                       },
                     ),
@@ -206,5 +252,43 @@ class _SupportScreenState extends State<SupportScreen> {
         ),
       ),
     );
+  }
+
+  double rating_val;
+  SupportBloc mSupportBloc;
+  SupportResponse mSupportResponse;
+   callSupportAPI() {
+     final body = jsonEncode({"feedback":_controllerSupport.text,"rating":rating_val.toString()});
+     mSupportBloc=SupportBloc(body);
+     mSupportBloc.dataStream.listen((onData){
+       mSupportResponse = onData.data;
+       //print(onData.status);
+       if(onData.status == Status.LOADING)
+       {
+         // CommonMethods.displayProgressDialog(onData.message,context);
+         CommonMethods.showLoaderDialog(context,onData.message);
+       }
+       else if(onData.status == Status.COMPLETED)
+       {
+         CommonMethods.dismissDialog(context);
+         CommonMethods.showShortToast(mSupportResponse.msg);
+         //navigationPage();
+       }
+       else if(onData.status == Status.ERROR)
+       {
+         CommonMethods.dismissDialog(context);
+         CommonMethods.showShortToast(onData.message);
+
+       }
+     });
+   }
+
+  bool isValid() {
+     if(_controllerSupport.text.length==0)
+       {
+         CommonMethods.showLongToast("Enter you query");
+         return false;
+       }
+     return true;
   }
 }

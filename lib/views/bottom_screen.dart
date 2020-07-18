@@ -105,7 +105,20 @@ class _BottomScreenState extends State<BottomScreen> {
               },
             ),
             new OffersScreen(),
-            new CartScreen(),
+            new CartScreen(
+              callback1: () {
+                showBadge = true;
+                setState(() {});
+              },
+              func1: (string) {
+                if (string == 'ADD') {
+                  badgeData++;
+                } else if (string == 'REMOVE') {
+                  badgeData--;
+                }
+                setState(() {});
+              },
+            ),
             new UpdatesScreen(),
             new MoreScreen()
           ],

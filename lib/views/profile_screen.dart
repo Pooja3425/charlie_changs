@@ -1,4 +1,8 @@
+import 'package:charliechang/blocs/get_profile_bloc.dart';
+import 'package:charliechang/models/get_profile_data.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
+import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/views/address_book_screen.dart';
 import 'package:charliechang/views/change_password_screen.dart';
@@ -143,4 +147,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
   }
+
+
 }

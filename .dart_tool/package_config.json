@@ -110,6 +110,12 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "flutter_webview_plugin",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "fluttertoast",
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-4.0.1",
       "packageUri": "lib/",
@@ -302,7 +308,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-07-01T16:46:48.437832Z",
+  "generated": "2020-07-18T16:29:14.455658Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

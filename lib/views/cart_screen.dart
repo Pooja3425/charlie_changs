@@ -4,19 +4,30 @@ import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/views/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class CartScreen extends StatefulWidget {
+  VoidCallback callback1;
+  Function(String) func1;
+  CartScreen({this.callback1, this.func1});
   @override
   _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
+  final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+  List<Menu> foodItems;
+  @override
+  void initState() {
+    foodItems=new List();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
-    List<Menu> foodItems;
+    //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+
     return SafeArea(
       child: Container(
         color: switch_bg,
@@ -24,12 +35,13 @@ class _CartScreenState extends State<CartScreen> {
         height: getHeight(context),
         child: Column(
           children: <Widget>[
-
-            CommonMethods.appBar(context, "Cart"),
+            appBar(context, "Cart"),
             StreamBuilder(
               stream: bloc.listStream,
               builder: (context,snapshot){
-                if (snapshot.data != null) {
+                foodItems = snapshot.data;
+                print("CART ${foodItems.length}");
+                if (foodItems.length >0) {
                   foodItems = snapshot.data;
                   return cartBody(foodItems);
                 }
@@ -42,13 +54,7 @@ class _CartScreenState extends State<CartScreen> {
                   width: getWidth(context),
                   height: getHeight(context)/2-30,
                   alignment: Alignment.center,
-                   child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text("THANKS!",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.white),),
-                            Text("We have received your order",style: TextStyle(fontSize: 15,color: Colors.white),),
-                          ],
-                        ),
+
                 ),
                 Positioned(
                     top: getHeight(context)/2-228,
@@ -87,10 +93,11 @@ class _CartScreenState extends State<CartScreen> {
 
   Widget cartBody(List<Menu> foodItems) {
     return ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        //physics: NeverScrollableScrollPhysics(),
         itemCount: foodItems.length  ,
         shrinkWrap: true,
         itemBuilder: (context,index){
+          int price = int.parse(foodItems[index].price)*foodItems[index].count;
           return Padding(
             padding: const EdgeInsets.only(left:30.0,right: 30.0),
             child: Container(
@@ -114,15 +121,26 @@ class _CartScreenState extends State<CartScreen> {
                           IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
                             if(foodItems[index].count!=1)
                             {
+                              print("SIZEEE ${foodItems[index].count}");
+                              //removeFromList(foodItems[index]);
                               setState(() {
                                 foodItems[index].count--;
                               });
+                              widget.callback1();
+                              widget.func1('REMOVE');
+
                             }
                           }),
                           Text("${foodItems[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
                           IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
                             setState(() {
                               foodItems[index].count++;
+                             // addToCart(foodItems[index]);
+
+                              //bloc.addToCart(index);
+                              widget.callback1();
+                              widget.func1('ADD');
+
                               // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
                             });
                           })
@@ -131,7 +149,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right:8.0),
-                      child: Text("Rs ${foodItems[index].price}",style: TextStyle(fontSize: 12,color: notification_title_color)),
+                      child: Text("Rs ${price}",style: TextStyle(fontSize: 12,color: notification_title_color)),
                     )
 
                   ],
@@ -140,5 +158,49 @@ class _CartScreenState extends State<CartScreen> {
             ),
           );
         });
+  }
+  addToCart(Menu foodItem) {
+    bloc.addToList(foodItem);
+  }
+
+  removeFromList(Menu foodItem) {
+    bloc.removeFromList(foodItem);
+  }
+
+  appBar(BuildContext context, String s) {
+    return Container(
+      color: Colors.white,
+      height: 80,
+      width: getWidth(context),
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.only(right:30.0,left: 30.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                InkWell(
+                    onTap: ()=> Navigator.of(context).pop(),
+                    child: Icon(Icons.keyboard_backspace,color: icon_color,)),
+                SizedBox(width: 10,),
+                Text(s,style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),),
+              ],
+            ),
+
+            Row(
+              children: <Widget>[
+                InkWell(
+                    onTap: ()=>{
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => CheckoutScreen() ),)
+                    },
+                    child: Text("Checkout")),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

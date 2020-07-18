@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:charliechang/blocs/register_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/bottom_screen.dart';
 import 'package:charliechang/views/complete_profile_screen.dart';
 import 'package:charliechang/views/home_screen.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 
@@ -27,6 +29,31 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   final _pinEditingController = TextEditingController();
+
+  //internet
+  bool _isInternetAvailable = true;
+  Connectivity _connectivity;
+  StreamSubscription<ConnectivityResult> _subscription;
+
+  @override
+  void initState() {
+    // CommonMeathods.showShortToast(widget.otp);
+    _connectivity = new Connectivity();
+    _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
+    super.initState();
+  }
+
+  void onConnectivityChange(ConnectivityResult result) {
+    if (result == ConnectivityResult.none) {
+      setState(() {
+        _isInternetAvailable = false;
+      });
+    } else {
+      setState(() {
+        _isInternetAvailable = true;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,6 +210,9 @@ class _OtpScreenState extends State<OtpScreen> {
             }
           else
             {
+              CommonMethods.setPreference(context, "token", verifyOtpRes.token);
+              CommonMethods.setPreference(context, COUPON_CODE, verifyOtpRes.couponCode);
+              CommonMethods.setPreference(context, COMPLETE_PROFILE, verifyOtpRes.completeProfile);
               navigateToHome();
             }
 

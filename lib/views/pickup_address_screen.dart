@@ -74,6 +74,8 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
       onTap: (){
         CommonMethods.setPreference(context, PICKUP_ADDRESS_NAME, mDeliveryLocationsList[i].name);
         CommonMethods.setPreference(context, ADDRESS_HASH, mDeliveryLocationsList[i].hash.toString());
+        CommonMethods.setPreference(context, DELIVERY_PICKUP, "2");
+
         navigationPage();
       },
 
