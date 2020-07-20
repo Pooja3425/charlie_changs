@@ -152,6 +152,12 @@
       "languageVersion": "2.5"
     },
     {
+      "name": "maps_launcher",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/maps_launcher-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "matcher",
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.6",
       "packageUri": "lib/",
@@ -200,6 +206,12 @@
       "languageVersion": "2.7"
     },
     {
+      "name": "platform_detect",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/platform_detect-1.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.4"
+    },
+    {
       "name": "plugin_platform_interface",
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2",
       "packageUri": "lib/",
@@ -214,6 +226,12 @@
     {
       "name": "provider",
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/provider-3.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "pub_semver",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/pub_semver-1.4.4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -290,6 +308,36 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "url_launcher",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-0.0.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "url_launcher_macos",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+7",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-1.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "url_launcher_web",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.0.8",
       "packageUri": "lib/",
@@ -308,7 +356,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-07-18T16:29:14.455658Z",
+  "generated": "2020-07-19T15:57:22.294124Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

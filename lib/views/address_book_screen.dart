@@ -96,7 +96,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                         dropdownValue = newValue;
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,)),
+                                          MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,type: "a",)),
                                         );
                                       });
                                     },
@@ -136,7 +136,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                   onTap: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,)),
+                      MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,type: "a",)),
                     );
                   },
                   child: Padding(
@@ -184,7 +184,22 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                               ),
                             ),
                           ),
-                          Text("Edit",style: TextStyle(fontSize: 12,color: fab_color,fontWeight: FontWeight.w600),),
+                          InkWell(
+                            onTap:(){
+                              if(dropdownValue==null)
+                                {
+                                  CommonMethods.showLongToast("Select delivery location");
+                                }
+                              else
+                                {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,type: "e",data: mCustomerAddressList[index],)),
+                                  );
+                                }
+
+                            },
+                              child: Text("Edit",style: TextStyle(fontSize: 12,color: fab_color,fontWeight: FontWeight.w600),)),
                           SizedBox(height: 15,),
                           Container(width: getWidth(context),
                             height: 0.5,

@@ -6,6 +6,8 @@ import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'bottom_screen.dart';
 
@@ -16,7 +18,7 @@ class PickupAddressScreen extends StatefulWidget {
 
 class _PickupAddressScreenState extends State<PickupAddressScreen> {
 
-  List<Delivery> mDeliveryLocationsList = new List();
+  List<Pickup> mDeliveryLocationsList = new List();
   @override
   void initState() {
     callDeliveryLocationsAPI();
@@ -88,9 +90,23 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
             Text(mDeliveryLocationsList[i].name+ " Outlet",style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold),),
             SizedBox(height: 10,),
 
-            Text(i==0?add2:add1,style: TextStyle(fontSize: 12,color: notification_title_color),),
+            Text(mDeliveryLocationsList[i].address,style: TextStyle(fontSize: 12,color: notification_title_color),),
             SizedBox(height: 10,),
-            Text("Find us on map",style: TextStyle(fontSize: 12,color: fab_color,fontWeight: FontWeight.w600),),
+            InkWell(
+                onTap: () async {
+                  final String googleMapsUrl = "comgooglemaps://?center=${mDeliveryLocationsList[i].lattitude},${mDeliveryLocationsList[i].longitude}";
+                  final String appleMapsUrl = "https://maps.apple.com/?q=${mDeliveryLocationsList[i].lattitude},${mDeliveryLocationsList[i].longitude}";
+
+                  if (await canLaunch(googleMapsUrl)) {
+                    await launch(googleMapsUrl);
+                  }
+                  if (await canLaunch(appleMapsUrl)) {
+                    await launch(appleMapsUrl, forceSafariVC: false);
+                  } else {
+                    throw "Couldn't launch URL";
+                  }
+                },
+                child: Text("Find us on map",style: TextStyle(fontSize: 12,color: fab_color,fontWeight: FontWeight.w600),)),
             SizedBox(height: 15,),
             Container(width: getWidth(context),
               height: 0.5,
@@ -117,6 +133,9 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
       {
         CommonMethods.dismissDialog(context);
         setState(() {
+          mDeliveryLocationsList = mDeliveryLocationsResponse.pickup;
+        });
+        /*setState(() {
           for(int i=0;i<mDeliveryLocationsResponse.delivery.length;i++)
             {
               if(mDeliveryLocationsResponse.delivery[i].name =="Porvorim" || mDeliveryLocationsResponse.delivery[i].name =="Caranzalem")
@@ -126,7 +145,7 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
             }
           print("SIZEE ${mDeliveryLocationsList.length}");
          // mDeliveryLocationsList = mDeliveryLocationsResponse.delivery;
-        });
+        });*/
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
 
       }

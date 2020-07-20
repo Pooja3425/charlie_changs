@@ -1,9 +1,17 @@
+import 'dart:async';
+
+import 'package:charliechang/blocs/order_history_bloc.dart';
+import 'package:charliechang/models/order_history_respons.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/order_detail_screen.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OrdersScreen extends StatefulWidget {
   @override
@@ -11,10 +19,44 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
+
+  //internet
+  bool _isInternetAvailable = true;
+  Connectivity _connectivity;
+  StreamSubscription<ConnectivityResult> _subscription;
+
+  @override
+  void initState() {
+    // CommonMeathods.showShortToast(widget.otp);
+    _connectivity = new Connectivity();
+    _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
+    if(_isInternetAvailable)
+    {
+      callOrdersAPI();
+    }
+    else
+    {
+      CommonMethods.showLongToast(CHECK_INTERNET);
+    }
+    super.initState();
+  }
+
+  void onConnectivityChange(ConnectivityResult result) {
+    if (result == ConnectivityResult.none) {
+      setState(() {
+        _isInternetAvailable = false;
+      });
+    } else {
+      setState(() {
+        _isInternetAvailable = true;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(110),
           child: AppBar(
@@ -63,8 +105,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               child: TextField(
                                 style: TextStyle(fontSize: 12),
                                 decoration: InputDecoration(
-                                    //contentPadding: EdgeInsets.only(top: 5),
-                                    //prefixIcon: Icon(Icons.search,color: icon_color,size: 18,),
+                                  //contentPadding: EdgeInsets.only(top: 5),
+                                  //prefixIcon: Icon(Icons.search,color: icon_color,size: 18,),
                                     hintText: "Search orders",
                                     hintStyle: TextStyle(fontSize: 12,color: icon_color),
                                     //contentPadding: EdgeInsets.only(bottom: 3),
@@ -89,18 +131,22 @@ class _OrdersScreenState extends State<OrdersScreen> {
           child:Column(
             children: <Widget>[
 
-              Container(height: 10,color: switch_bg,
+              Container(
+                height: 10,color: switch_bg,
                 width: getWidth(context),),
 
               Container(
                 width: getWidth(context),
-                height: getHeight(context)-205,
+                height: getHeight(context)-148,
                 padding: EdgeInsets.only(top:20),
-                child: ListView(
-                  children: <Widget>[
-                    orderRowUI(),
-                    deliveryRowUI()
-                  ],
+                child: mOrderList.length>0?ListView.builder(
+                  itemCount: mOrderList.length,
+                  itemBuilder: (context,index){
+                    return  deliveryRowUI(mOrderList[index]);
+                  },
+
+                ):Center(
+                  child: Text("You haven't placed order yet"),
                 ),
               )
             ],
@@ -111,6 +157,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   }
 
   Widget orderRowUI() {
+
     return InkWell(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDetailScreen()));
@@ -151,7 +198,23 @@ class _OrdersScreenState extends State<OrdersScreen> {
   }
 
 
-  Widget deliveryRowUI() {
+  Widget deliveryRowUI(Data orders) {
+    print("DeliveryD ${orders.deliveryTime}");
+    var outputFormat = DateFormat("dd-MM-yyyy");
+    var timeFormat = DateFormat("dd-MM-yyyy hh:mm aa");
+
+
+    int year = int.parse(orders.deliveryDate.split("-")[0]);
+    int mn = int.parse(orders.deliveryDate.split("-")[1]);
+    int dt = int.parse(orders.deliveryDate.split("-")[2]);
+    int hr = int.parse(orders.deliveryTime.split(":")[0]);
+    int min = int.parse(orders.deliveryTime.split(":")[1]);
+
+
+    var date = outputFormat.format(DateTime(year,mn,dt));
+    var time = timeFormat.format(DateTime(year,mn,dt,hr,min));
+    String deliveryTime = time.split(" ")[1]+" "+time.split(" ")[2];
+    print("DATEE $time ");
     return Container(
       width: getWidth(context),
       child: Padding(
@@ -162,7 +225,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text("ABCDE12345",style: TextStyle(color: notification_title_color,fontSize: 15,fontWeight: FontWeight.bold),),
+                Text("${orders.ordercode}",style: TextStyle(color: notification_title_color,fontSize: 15,fontWeight: FontWeight.bold),),
                 Text("Delivered",style: TextStyle(color: delivered_text_color,fontSize: 13),),
               ],
             ),
@@ -170,11 +233,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
             Text("Name of dish x 1, Name of dish x 2, Name of dish x 1",style: TextStyle(color: hint_text_color,fontSize: 12),),
             Padding(
               padding: const EdgeInsets.only(top:3.0,bottom: 3.0),
-              child: Text("Rs 1,200  (check details)",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.bold),),
+              child: Text("Rs ${orders.totalAmount} (check details)",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.bold),),
             ),
             Padding(
               padding: const EdgeInsets.only(top:3.0,bottom: 3.0),
-              child: Text("22-Aug-2020 | 8:00 PM  |  Delivery",style: TextStyle(color: hint_text_color,fontSize: 12),),
+              child: Text("$date | $deliveryTime  |  Delivery",style: TextStyle(color: hint_text_color,fontSize: 12),),
             ),
             SizedBox(height: 20,),
             Text("repeat order",style: TextStyle(color: button_color,fontSize: 12,),),
@@ -185,4 +248,34 @@ class _OrdersScreenState extends State<OrdersScreen> {
       ),
     );
   }
+
+  OrderHistoryBloc  mOrderHistoryBloc;
+  OrderHistoryResponse mOrderHistoryResponse;
+  List<Data> mOrderList = new List();
+   callOrdersAPI() {
+     mOrderHistoryBloc=OrderHistoryBloc();
+     mOrderHistoryBloc.dataStream.listen((onData){
+       mOrderHistoryResponse = onData.data;
+       if(onData.status == Status.LOADING)
+       {
+         //CommonMethods.displayProgressDialog(onData.message,context);
+         CommonMethods.showLoaderDialog(context,onData.message);
+       }
+       else if(onData.status == Status.COMPLETED)
+       {
+         CommonMethods.dismissDialog(context);
+         setState(() {
+           mOrderList= mOrderHistoryResponse.data;
+         });
+       }
+       else if(onData.status == Status.ERROR)
+       {
+         CommonMethods.dismissDialog(context);
+         if(onData.message.contains("Invalid"))
+         {
+           CommonMethods.showShortToast("Invalid OTP");
+         }
+       }
+     });
+   }
 }

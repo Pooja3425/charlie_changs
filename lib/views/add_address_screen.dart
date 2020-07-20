@@ -1,8 +1,11 @@
 import 'dart:convert';
 
 import 'package:charliechang/blocs/add_delivery_address_bloc.dart';
+import 'package:charliechang/blocs/update_address_bloc.dart';
 import 'package:charliechang/models/add_delivery_address_response_model.dart';
+import 'package:charliechang/models/customer_address_response_model.dart';
 import 'package:charliechang/models/delivery_locations_response_model.dart';
+import 'package:charliechang/models/update_address_resonse.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
@@ -14,7 +17,9 @@ import 'package:flutter/material.dart';
 
 class AddAddressScreen extends StatefulWidget {
   final Delivery delivery;
-  AddAddressScreen({this.delivery});
+  String type;
+  Data data;
+  AddAddressScreen({this.delivery,this.type,this.data});
   @override
   _AddAddressScreenState createState() => _AddAddressScreenState();
 }
@@ -42,6 +47,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   @override
   void initState() {
 
+    if(widget.type=="e")
+      {
+        _controllerAddressLine1.text=widget.data.address1;
+        _controllerAddressLine2.text=widget.data.address2;
+        _controllerPincode.text=widget.data.address2;
+        _controllerAddressName.text=widget.data.addressName;
+
+      }
+    else
+      {
+
+      }
     if(widget.delivery !=null)
       {
         _controllerLocation.text = widget.delivery.name;
@@ -387,7 +404,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   onTap: (){
                     if(isValid())
                       {
-                        callAPI();
+                        if(widget.type=="a")
+                          {
+                            callAPI();
+                          }
+                        else
+                          {
+                            callUpdateAPI();
+                          }
+
                       }
                   },
                   child: Container(
@@ -477,5 +502,44 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       context,
       MaterialPageRoute(builder: (context) => AddressBookScreen()),
     );
+  }
+
+  UpdateAddressBloc mUpdateAddressBloc;
+  UpdateAddress mUpdateAddress;
+  callUpdateAPI() {
+    final body = jsonEncode({
+      "address_name":_controllerAddressName.text,
+      "address1":_controllerAddressLine1.text,
+      "address2":_controllerAddressLine2.text,
+      "area_id": widget.delivery.areaid,
+      "id":widget.data.id,
+      "is_primary":""
+    });
+    mUpdateAddressBloc=UpdateAddressBloc(body);
+    mUpdateAddressBloc.dataStream.listen((onData){
+      mUpdateAddress = onData.data;
+      //print(onData.status);
+      if(onData.status == Status.LOADING)
+      {
+        //CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        // CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(mUpdateAddress.msg);
+        CommonMethods.setPreference(context, DELIVERY_ADDRESS_NAME, _controllerAddressName.text);
+        //CommonMethods.setPreference(context, ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
+        navigationPage();
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        //CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
   }
 }

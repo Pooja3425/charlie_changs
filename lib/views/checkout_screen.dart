@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:charliechang/blocs/add_order_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
+import 'package:charliechang/blocs/online_payment_bloc.dart';
 import 'package:charliechang/models/add_order_response_model.dart';
 import 'package:charliechang/models/menu_response_model.dart';
+import 'package:charliechang/models/online_payment_response.dart';
 import 'package:charliechang/models/order_model.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
@@ -12,6 +15,7 @@ import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/pay_screen.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
@@ -80,9 +84,31 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   int itemTotal=0;
   List<Menu> orderModelList= new List();
   final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+
+  //internet
+  bool _isInternetAvailable = true;
+  Connectivity _connectivity;
+  StreamSubscription<ConnectivityResult> _subscription;
+
+
+  void onConnectivityChange(ConnectivityResult result) {
+    if (result == ConnectivityResult.none) {
+      setState(() {
+        _isInternetAvailable = false;
+      });
+    } else {
+      setState(() {
+        _isInternetAvailable = true;
+      });
+    }
+  }
+
+
   @override
   void initState() {
 
+    _connectivity = new Connectivity();
+    _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
     flutterWebviewPlugin.onUrlChanged.listen((String url) {
       if (mounted) {
         if (url.contains(
@@ -408,7 +434,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             InkWell(
                 onTap: ()=>{
-                  if(payment_mode =="0")
+
+                  if(_isInternetAvailable)
+                    {
+                      if(payment_mode =="0")
+                        {
+                          callPlaceOrderAPI()
+                        }
+                      else
+                        {
+
+                          callOnlinePaymentAPI()
+                        }
+
+                    }
+                  /*if(payment_mode =="0")
                    {
                      callPlaceOrderAPI()
                    }
@@ -416,7 +456,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     {
                     createRequest()
                      // Navigator.push(context,MaterialPageRoute(builder: (context) => PayScreen() ),)
-                    }
+                    }*/
 
                 },
                 child: Text("Place Order",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600 ),)),
@@ -478,6 +518,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
       else if(onData.status == Status.COMPLETED)
       {
+
         CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(mAddOrderResponse.msg);
         navigationPage();
@@ -567,12 +608,84 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       if (realResponse["payment"]['status'] == 'Credit') {
 //payment is successful.
         flutterWebviewPlugin.close();
-        callPlaceOrderAPI();
+
+        //callPlaceOrderAPI();
       } else {
 //payment failed or pending.
       }
     } else {
       print("PAYMENT STATUS FAILED");
     }
+  }
+
+  OnlinePaymentBloc mOnlinePaymentBloc;
+  OnlinePaymentResponse mOnlinePaymentResponse;
+
+  callOnlinePaymentAPI() async
+  {
+    print("Online");
+    var resBody = {};
+    var items = [];
+    for(int i=0;i<orderModelList.length;i++)
+    {
+      if(orderModelList[i].count>1)
+      {
+        for(int j=0;j<orderModelList[i].count;j++)
+        {
+          resBody["hash"]=orderModelList[i].hash;
+          resBody["name"]=orderModelList[i].name;
+          items.add(resBody);
+        }
+      }
+      else
+      {
+        resBody["hash"]=orderModelList[i].hash;
+        resBody["name"]=orderModelList[i].name;
+        items.add(resBody);
+      }
+    }
+
+
+    String orderItems = json.encode(items);
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final body = jsonEncode({"del_area":preferences.getString(ADDRESS_HASH),
+      "deliver_pickup":preferences.getString(DELIVERY_PICKUP),
+      "coupon_code":"",
+      "payment_mode":payment_mode,
+      "reward_id_selected":"",
+      "notes":"",
+      "items":json.decode(orderItems)});
+
+    mOnlinePaymentBloc=OnlinePaymentBloc(body);
+    mOnlinePaymentBloc.dataStream.listen((onData){
+      mOnlinePaymentResponse = onData.data;
+      //print(onData.status);
+      if(onData.status == Status.LOADING)
+      {
+        // CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+
+        flutterWebviewPlugin.close();
+        print("${mOnlinePaymentResponse.paymentUrl}");
+//Let's open the url in webview.
+        flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl,
+            userAgent: kAndroidUserAgent);
+
+      /*  CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(mOnlinePaymentResponse.msg);
+        navigationPage();*/
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.dismissDialog(context);
+
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
   }
 }

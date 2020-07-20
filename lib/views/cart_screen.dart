@@ -39,49 +39,54 @@ class _CartScreenState extends State<CartScreen> {
             StreamBuilder(
               stream: bloc.listStream,
               builder: (context,snapshot){
-                foodItems = snapshot.data;
-                print("CART ${foodItems.length}");
-                if (foodItems.length >0) {
+                //foodItems = snapshot.data;
+                print("CART ${snapshot.hasData}");
+                if (snapshot.hasData) {
                   foodItems = snapshot.data;
-                  return cartBody(foodItems);
+                  return foodItems.length>0?cartBody(foodItems):EmptyCart();
                 }
                 else
                   {
-                    return Stack(
+                    return Container(
+                      width: getWidth(context),
+                      height: getHeight(context)-164,
+                      child: Stack(
               children: <Widget>[
                 Container(
                   color: button_color,
                   width: getWidth(context),
-                  height: getHeight(context)/2-30,
+                  height: getHeight(context)/2-110,
                   alignment: Alignment.center,
 
                 ),
                 Positioned(
-                    top: getHeight(context)/2-228,
-                    //left: getWidth(context)/2,
-                    child: Container(
-                      width: getWidth(context),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text("OOPS!",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.white),),
-                          Text("There is no item in your cart.\nLet's add something.",textAlign: TextAlign.center,style: TextStyle(fontSize: 15,color: Colors.white),),
-                          SizedBox(height: 30,),
-                          Image.asset("assets/images/thanks_img.png",width: 119,height: 138,),
-                          SizedBox(height: 40,),
+                      top: getHeight(context)/2-308,
+                      //left: getWidth(context)/2,
+                      child: Container(
+                        width: getWidth(context),
+                height: getHeight(context),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text("OOPS!",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.white),),
+                            Text("There is no item in your cart.\nLet's add something.",textAlign: TextAlign.center,style: TextStyle(fontSize: 15,color: Colors.white),),
+                            SizedBox(height: 30,),
+                            Image.asset("assets/images/thanks_img.png",width: 119,height: 138,),
+                            SizedBox(height: 40,),
 
-                          //Text("Call Us On",style: TextStyle(color: hint_text_color,fontSize: 12),),
-                          //Text("+91-99999 99999",style: TextStyle(color: hint_text_color,fontSize: 15,fontWeight: FontWeight.bold),),
-                          SizedBox(height: 40,),
-                          RaisedButton(
-                            disabledColor: button_color,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(3.3))),
-                            child: Text("Order Now",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),color: button_color,)
-                        ],
-                      ),
-                    ))
+                            //Text("Call Us On",style: TextStyle(color: hint_text_color,fontSize: 12),),
+                            //Text("+91-99999 99999",style: TextStyle(color: hint_text_color,fontSize: 15,fontWeight: FontWeight.bold),),
+                            SizedBox(height: 40,),
+                            RaisedButton(
+                              disabledColor: button_color,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                              child: Text("Order Now",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),color: button_color,)
+                          ],
+                        ),
+                      ))
               ],
-            );
+            ),
+                    );
                   }
               },
             ),
@@ -91,6 +96,49 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
+  Widget EmptyCart()
+  {
+    return Container(
+      width: getWidth(context),
+      height: getHeight(context)-164,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            color: button_color,
+            width: getWidth(context),
+            height: getHeight(context)/2-110,
+            alignment: Alignment.center,
+
+          ),
+          Positioned(
+              top: getHeight(context)/2-308,
+              //left: getWidth(context)/2,
+              child: Container(
+                width: getWidth(context),
+                height: getHeight(context),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("OOPS!",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.white),),
+                    Text("There is no item in your cart.\nLet's add something.",textAlign: TextAlign.center,style: TextStyle(fontSize: 15,color: Colors.white),),
+                    SizedBox(height: 30,),
+                    Image.asset("assets/images/thanks_img.png",width: 119,height: 138,),
+                    SizedBox(height: 40,),
+
+                    //Text("Call Us On",style: TextStyle(color: hint_text_color,fontSize: 12),),
+                    //Text("+91-99999 99999",style: TextStyle(color: hint_text_color,fontSize: 15,fontWeight: FontWeight.bold),),
+                    SizedBox(height: 40,),
+                    RaisedButton(
+                      disabledColor: button_color,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                      child: Text("Order Now",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),color: button_color,)
+                  ],
+                ),
+              ))
+        ],
+      ),
+    );
+  }
   Widget cartBody(List<Menu> foodItems) {
     return ListView.builder(
         //physics: NeverScrollableScrollPhysics(),
@@ -191,11 +239,11 @@ class _CartScreenState extends State<CartScreen> {
 
             Row(
               children: <Widget>[
-                InkWell(
+                foodItems.length>0?InkWell(
                     onTap: ()=>{
                     Navigator.push(context,MaterialPageRoute(builder: (context) => CheckoutScreen() ),)
                     },
-                    child: Text("Checkout")),
+                    child: Text("Checkout")):Container(),
               ],
             )
           ],

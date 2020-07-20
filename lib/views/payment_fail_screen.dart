@@ -24,13 +24,7 @@ class _PaymentFailScreenState extends State<PaymentFailScreen> {
                 width: getWidth(context),
                 height: getHeight(context)/2-30,
                 alignment: Alignment.center,
-                /* child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text("THANKS!",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.white),),
-                      Text("We have received your order",style: TextStyle(fontSize: 15,color: Colors.white),),
-                    ],
-                  ),*/
+
               ),
               Positioned(
                   top: getHeight(context)/2-205,

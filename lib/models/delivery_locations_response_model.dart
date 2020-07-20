@@ -81,6 +81,8 @@ class Pickup {
   String address;
   String landmark;
   String pincode;
+  String lattitude;
+  String longitude;
   String hash;
 
   Pickup(
@@ -89,6 +91,8 @@ class Pickup {
         this.address,
         this.landmark,
         this.pincode,
+        this.lattitude,
+        this.longitude,
         this.hash});
 
   Pickup.fromJson(Map<String, dynamic> json) {
@@ -97,6 +101,8 @@ class Pickup {
     address = json['address'];
     landmark = json['landmark'];
     pincode = json['pincode'];
+    lattitude = json['lattitude'];
+    longitude = json['longitude'];
     hash = json['hash'];
   }
 
@@ -107,6 +113,8 @@ class Pickup {
     data['address'] = this.address;
     data['landmark'] = this.landmark;
     data['pincode'] = this.pincode;
+    data['lattitude'] = this.lattitude;
+    data['longitude'] = this.longitude;
     data['hash'] = this.hash;
     return data;
   }
