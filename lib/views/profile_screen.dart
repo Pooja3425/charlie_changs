@@ -53,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   shrinkWrap: true,
                   children: <Widget>[
                     rowUI("assets/images/profile.png", "Profile Info"),
-                    rowUI("assets/images/password.png", "Change Password"),
+                    //rowUI("assets/images/password.png", "Change Password"),
                     rowUI("assets/images/address.png", "Address Book"),
 
                   ],

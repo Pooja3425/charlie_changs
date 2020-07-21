@@ -6,6 +6,7 @@ import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -21,6 +22,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final controllerNumber = TextEditingController();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  var device_token;
+  @override
+  void initState() {
+    _firebaseMessaging.getToken().then((token){
+      setState(() {
+        device_token =token;
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void navigationPage() {
-    Navigator.push(context,MaterialPageRoute(builder: (context) => OtpScreen(mobile: controllerNumber.text,) ),);
+    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => OtpScreen(mobile: controllerNumber.text,) ),);
   }
 
 }

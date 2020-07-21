@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "439376767001",
+    "firebase_url": "https://charliechang-af13c.firebaseio.com",
+    "project_id": "charliechang-af13c",
+    "storage_bucket": "charliechang-af13c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439376767001:android:13961d4337c7393439a288",
+        "android_client_info": {
+          "package_name": "com.brandzgarage.charliechang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "439376767001-r336pa2jrh6e0keh17bc2sf7d8fmidu0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe7G0_xjqtOLH48V4ZKEP93Xd9qbfEspw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "439376767001-r336pa2jrh6e0keh17bc2sf7d8fmidu0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

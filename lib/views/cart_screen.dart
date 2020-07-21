@@ -4,9 +4,12 @@ import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/checkout_screen.dart';
+import 'package:charliechang/views/pickup_checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartScreen extends StatefulWidget {
   VoidCallback callback1;
@@ -139,7 +142,9 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
+  bool showCheckout=false;
   Widget cartBody(List<Menu> foodItems) {
+   
     return ListView.builder(
         //physics: NeverScrollableScrollPhysics(),
         itemCount: foodItems.length  ,
@@ -239,16 +244,37 @@ class _CartScreenState extends State<CartScreen> {
 
             Row(
               children: <Widget>[
-                foodItems.length>0?InkWell(
+                InkWell(
                     onTap: ()=>{
-                    Navigator.push(context,MaterialPageRoute(builder: (context) => CheckoutScreen() ),)
+                      if(foodItems.length>0)
+                      {  navigateToCheckout()}
+                      else
+                        {
+                          CommonMethods.showLongToast("No item in cart")
+                        }
+                      
                     },
-                    child: Text("Checkout")):Container(),
+                    child: Text("Checkout")),
               ],
             )
           ],
         ),
       ),
     );
+  }
+
+  navigateToCheckout() async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String pickup_delivery = prefs.getString(DELIVERY_PICKUP);
+    /*if(pickup_delivery=="1")
+      {*/
+        Navigator.push(context,MaterialPageRoute(builder: (context) => CheckoutScreen() ),);
+     /* }
+    else
+      {
+        Navigator.push(context,MaterialPageRoute(builder: (context) => PickupCheckoutScreen() ),);
+      }*/
+
   }
 }

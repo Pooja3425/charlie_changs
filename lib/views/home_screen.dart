@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> mImageListSlider = new List();
   List<Data> mCategoryList = new List();
   String hashKey,category;
-  String deliveryAddressName;
+  String deliveryAddressName="";
   String pickupAddressName="";
   final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
 
@@ -698,13 +698,20 @@ class _HomeScreenState extends State<HomeScreen> {
    getDeliveryAddress() async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      deliveryAddressName = preferences.get(DELIVERY_ADDRESS_NAME);
-      if(preferences.get(PICKUP_ADDRESS_NAME)!=null)
-        {
-          pickupAddressName = preferences.get(PICKUP_ADDRESS_NAME);
-        }
 
-      hashKey = preferences.get(ADDRESS_HASH);
+      if(preferences.getString(DELIVERY_PICKUP) =="1")
+        {
+          deliveryAddressName = preferences.get(DELIVERY_ADDRESS_NAME);
+          hashKey = preferences.get(DELIVERY_ADDRESS_HASH);
+        }
+      else
+        {
+          if(preferences.get(PICKUP_ADDRESS_NAME)!=null)
+          {
+            pickupAddressName = preferences.get(PICKUP_ADDRESS_NAME);
+          }
+          hashKey = preferences.get(PICKUP_ADDRESS_HASH);
+        }
       print("HASS $hashKey");
 
       if(preferences.get(TOGGLE_VALUE) !=null)

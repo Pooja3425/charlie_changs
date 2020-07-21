@@ -1,4 +1,5 @@
 import 'package:charliechang/utils/color_constants.dart';
+import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/views/points_screen.dart';
 import 'package:charliechang/views/profile_screen.dart';
@@ -6,6 +7,7 @@ import 'package:charliechang/views/refer_screen.dart';
 import 'package:charliechang/views/support_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'orders_screen.dart';
 
@@ -122,6 +124,85 @@ class _MoreScreenState extends State<MoreScreen> {
     );
   }
 
+  Widget logoutDialogUI()  {
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)), //this right here
+            child: Container(
+              height: 150,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+
+                        SizedBox(height: 35),
+                        Text(
+                          "Are you sure you want to logout?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: notification_title_color,fontSize: 15,fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 15),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: getWidth(context),
+                      height: 35,
+                      decoration: BoxDecoration(
+                        color: button_color,
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.0),
+                              bottomLeft: Radius.circular(10.0))),
+                      child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pop(false);
+                                    CommonMethods.clearSharedPrefs("token");
+                                    SystemNavigator.pop();                                  },
+                                  child: Text(
+                                    "Yes, log me out",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  )),
+                              Container(
+                                  height: 13,
+                                  child: VerticalDivider(
+                                    width: 1,
+                                    thickness: 1,
+                                    color: Colors.white,
+                                  )),
+                              InkWell(
+                                  onTap: () => Navigator.of(context).pop(true),
+                                  child: Text(
+                                    "No, I am good",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  )),
+                            ],
+                          )),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );;
+        });
+  }
+
   navigate(String s) {
 
     print(s);
@@ -167,6 +248,12 @@ class _MoreScreenState extends State<MoreScreen> {
         context,
         MaterialPageRoute(builder: (context) => PointsScreen()),
       );
+    }
+
+    if(s.contains("Logout"))
+    {
+      print("ddd");
+      logoutDialogUI();
     }
   }
 }

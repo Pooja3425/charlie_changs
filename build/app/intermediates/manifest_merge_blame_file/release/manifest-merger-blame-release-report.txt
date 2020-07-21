@@ -31,7 +31,7 @@
 22        android:name="io.flutter.app.FlutterApplication"
 22-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:10:9-57
 23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-23-->[androidx.core:core:1.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/7faf2ad74a0b9932e38d86e684646e95/core-1.0.0/AndroidManifest.xml:22:18-86
+23-->[androidx.core:core:1.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/6b399c2363bb098ebde1725d903cbda0/core-1.1.0/AndroidManifest.xml:24:18-86
 24        android:icon="@drawable/logo"
 24-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:12:9-38
 25        android:label="charliechang" >
@@ -71,6 +71,33 @@
 44-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:28:13-44
 45            android:value="2" />
 45-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:29:13-30
-46    </application>
-47
-48</manifest>
+46
+47        <activity
+47-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:8:9-11:74
+48            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+48-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:9:13-74
+49            android:exported="false"
+49-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:10:13-37
+50            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+50-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:11:13-71
+51
+52        <provider
+52-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:9:9-18:20
+53            android:name="androidx.core.content.FileProvider"
+53-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:10:13-62
+54            android:authorities="com.brandzgarage.charliechang.fileprovider"
+54-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:11:13-64
+55            android:exported="false"
+55-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:12:13-37
+56            android:grantUriPermissions="true" >
+56-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:13:13-47
+57            <meta-data
+57-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:15:13-17:53
+58                android:name="android.support.FILE_PROVIDER_PATHS"
+58-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:16:17-67
+59                android:resource="@xml/filepaths" />
+59-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:17:17-50
+60        </provider>
+61    </application>
+62
+63</manifest>

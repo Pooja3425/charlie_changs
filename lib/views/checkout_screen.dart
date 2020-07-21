@@ -3,9 +3,11 @@ import 'dart:convert';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:charliechang/blocs/add_order_bloc.dart';
+import 'package:charliechang/blocs/apply_coupon_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/blocs/online_payment_bloc.dart';
 import 'package:charliechang/models/add_order_response_model.dart';
+import 'package:charliechang/models/apply_coupon_response.dart';
 import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/models/online_payment_response.dart';
 import 'package:charliechang/models/order_model.dart';
@@ -62,9 +64,9 @@ class PayScreen extends StatelessWidget {
                 initialChild: Container(
                   height: getHeight(context),
                   color: Colors.white,
-                  child: const Center(
-                    child: Text('Waiting.....'),
-                  ),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  )
                 ),
 
               ),
@@ -81,7 +83,7 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  int itemTotal=0;
+  //int itemTotal=0;
   List<Menu> orderModelList= new List();
   final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
 
@@ -90,6 +92,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Connectivity _connectivity;
   StreamSubscription<ConnectivityResult> _subscription;
 
+  final controllerCoupon = TextEditingController();
 
   void onConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
@@ -103,10 +106,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
-
+  bool isWebviewopen = false;
+  String pickup_delivery;
   @override
   void initState() {
-
+      getOrderType();
     _connectivity = new Connectivity();
     _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
     flutterWebviewPlugin.onUrlChanged.listen((String url) {
@@ -126,223 +130,338 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     });
     super.initState();
   }
+  int total=0;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(83),
-          child: AppBar(
-            elevation: 0.0,
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
-            flexibleSpace: Container(
-              color: Colors.white,
-              height: 85,
-              width: getWidth(context),
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.only(right:30.0,left: 30.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        InkWell(
-                            onTap: ()=> Navigator.of(context).pop(),
-                            child: Icon(Icons.keyboard_backspace,color: icon_color,)),
-                        SizedBox(width: 10,),
-                        Text("Checkout",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left:33.0,top: 5),
-                      child: RichText(text: TextSpan(text:"This order is for home delivery (",style: TextStyle(color: notification_title_color),children: <TextSpan>[TextSpan(text: "Change",style: TextStyle(color: button_color),children: <TextSpan>[TextSpan(text: ")",style: TextStyle(color: notification_title_color),),]),]))/*Text("This order is for home delivery (",style: TextStyle(fontSize: 13,color: hint_text_color),),*/
-                    )
-                  ],
+    return WillPopScope(
+      onWillPop: isWebviewopen ? exitPayDialog:null,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(83),
+            child: AppBar(
+              elevation: 0.0,
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.white,
+              flexibleSpace: Container(
+                color: Colors.white,
+                height: 85,
+                width: getWidth(context),
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.only(right:30.0,left: 30.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          InkWell(
+                              onTap: ()=> Navigator.of(context).pop(),
+                              child: Icon(Icons.keyboard_backspace,color: icon_color,)),
+                          SizedBox(width: 10,),
+                          Text("Checkout",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left:33.0,top: 5),
+                        child: RichText(text: TextSpan(text:"This order is for home delivery (",style: TextStyle(color: notification_title_color),children: <TextSpan>[TextSpan(text: "Change",style: TextStyle(color: button_color),children: <TextSpan>[TextSpan(text: ")",style: TextStyle(color: notification_title_color),),]),]))/*Text("This order is for home delivery (",style: TextStyle(fontSize: 13,color: hint_text_color),),*/
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        bottomNavigationBar: bottomUI(),
-        body: SingleChildScrollView(
-          child: Container(
-            width: getWidth(context),
-            child: Column(
-              children: <Widget>[
-                CommonMethods().thickHorizontalLine(context),
-                StreamBuilder(
-                  stream: bloc.listStream,
-                  builder: (context,snapshot){
-                    orderModelList = snapshot.data;
-                    return  ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: orderModelList.length  ,
-                        shrinkWrap: true,
-                        itemBuilder: (context,index){
-                          int price = int.parse(orderModelList[index].price)*orderModelList[index].count;
-                          itemTotal = itemTotal+int.parse(orderModelList[index].price)*orderModelList[index].count;
-                          return Padding(
-                            padding: const EdgeInsets.only(left:30.0,right: 30.0),
-                            child: Container(
-                              width: getWidth(context),
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 20,bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text("${orderModelList[index].name}",style: TextStyle(fontSize: 12,color: notification_title_color)),
-                                      width: getWidth(context)/2-70,
-                                    ),
-                                    Container(
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(color: button_color,width: 0.5),
-                                          borderRadius: BorderRadius.all(Radius.circular(3.3))),
-                                      child: Row(
-                                        children: <Widget>[
-                                          IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
-                                            if(orderModelList[index].count!=1)
-                                            {
-                                              setState(() {
-                                                orderModelList[index].count--;
-                                              });
-                                            }
-                                          }),
-                                          Text("${orderModelList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
-                                          IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
-                                            setState(() {
-                                              orderModelList[index].count++;
-                                              // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
-                                            });
-                                          })
-                                        ],
+          bottomNavigationBar: bottomUI(),
+          body: SingleChildScrollView(
+            child: Container(
+              width: getWidth(context),
+              child: Column(
+                children: <Widget>[
+                  CommonMethods().thickHorizontalLine(context),
+                  StreamBuilder(
+                    stream: bloc.listStream,
+                    builder: (context,snapshot){
+                      orderModelList = snapshot.data;
+                      return  ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: orderModelList.length  ,
+                          shrinkWrap: true,
+                          itemBuilder: (context,index){
+                            int price = int.parse(orderModelList[index].price)*orderModelList[index].count;
+                            int itemTotal=0;
+                            itemTotal = itemTotal+int.parse(orderModelList[index].price)*orderModelList[index].count;
+                            total = itemTotal;
+                            return Padding(
+                              padding: const EdgeInsets.only(left:30.0,right: 30.0),
+                              child: Container(
+                                width: getWidth(context),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 20,bottom: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text("${orderModelList[index].name}",style: TextStyle(fontSize: 12,color: notification_title_color)),
+                                        width: getWidth(context)/2-70,
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right:8.0),
-                                      child: Text("Rs ${price}",style: TextStyle(fontSize: 12,color: notification_title_color)),
-                                    )
+                                      Container(
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(color: button_color,width: 0.5),
+                                            borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                                        child: Row(
+                                          children: <Widget>[
+                                            IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+                                              if(orderModelList[index].count!=1)
+                                              {
+                                                setState(() {
+                                                  orderModelList[index].count--;
+                                                });
+                                              }
+                                            }),
+                                            Text("${orderModelList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
+                                            IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
+                                              setState(() {
+                                                orderModelList[index].count++;
+                                                // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
+                                              });
+                                            })
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(right:8.0),
+                                        child: Text("Rs ${price}",style: TextStyle(fontSize: 12,color: notification_title_color)),
+                                      )
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        });
-                  },
-                ),
-                SizedBox(height: 10,),
-                Padding(
-                  padding: const EdgeInsets.only(left:30.0,right: 30.0),
-                  child: Column(
-                    children: <Widget>[
-                      CommonMethods.horizontalLine(context),
-                      SizedBox(height: 10,),
-                      billUI("Item Total","Rs $itemTotal"),
-                      billUI("Discount","Rs 300"),
-                      billUI("Taxes","Rs 179"),
-                      billUI("Delivery charge","Rs 30"),
-                      SizedBox(height: 20,),
-                      CommonMethods.horizontalLine(context),
-                      billUI("Net Payable","Rs 1699"),
-                      SizedBox(height: 20,),
-                    ],
+                            );
+                          });
+                    },
                   ),
-                ),
-                CommonMethods().thickHorizontalLine(context),
-                Container(
-                  width: getWidth(context),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
+                  SizedBox(height: 10,),
+                  Padding(
+                    padding: const EdgeInsets.only(left:30.0,right: 30.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            /*Text("Redeem CC Points",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),*/
-                            DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
-                                value: dropdownValueReedem,
-                                elevation: 16,
-                                style: TextStyle(
-                                    color:  icon_color
-                                ),
-                                onChanged: (String newValue) {
-                                  setState(() {
-                                    dropdownValueReedem = newValue;
-                                  });
-                                },
-                                items: <String>['Redeem CC Points']
-                                    .map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
-                                  );
-                                })
-                                    .toList(),
-                              ),
-                            ),
-                            Icon(Icons.keyboard_arrow_down,size: 18,color: notification_title_color,)
-                          ],
-                        ),
-                        SizedBox(height: 8,),
-                        Text("You can redeem maximum of 300 points (worth Rs 300)",style: TextStyle(fontSize: 12,color: notification_title_color),),
-                        SizedBox(height: 8,),
-                        Container(
-
-                        width: getWidth(context)-100,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
-                        border: Border.all(color: input_border_color,width: 0.3)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text("300",style: TextStyle(color: icon_color,fontSize: 12),),
-                              Text("redeem",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),),
-                            ],
-                          ),
-                        ),
-                        )
+                        CommonMethods.horizontalLine(context),
+                        SizedBox(height: 10,),
+                        billUI("Item Total","Rs $total"),
+                        billUI("Discount","Rs 300"),
+                        billUI("Taxes","Rs 179"),
+                        billUI("Delivery charge","Rs 30"),
+                        SizedBox(height: 20,),
+                        CommonMethods.horizontalLine(context),
+                        billUI("Net Payable","Rs 1699"),
+                        SizedBox(height: 20,),
                       ],
                     ),
                   ),
-                ),
-                CommonMethods().thickHorizontalLine(context),
-                Container(
-                  width: getWidth(context),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("Delivered to HOME",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
-                            Text("change",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),),
-                          ],
-                        ),
-                        SizedBox(height: 8,),
-                        Text("A-302, Blooming Dales Apartment,  Near Jupiter \nHospital, Opposite De Ballio restaurant, Baner, Pune",style: TextStyle(fontSize: 12,color: notification_title_color),),
-                      ],
-                    ),
-                  ),
-                ),
-                CommonMethods().thickHorizontalLine(context),
+                  CommonMethods().thickHorizontalLine(context),
+                  pickup_delivery =="1"?deliveryUI():pickupUI(),
+                  CommonMethods().thickHorizontalLine(context),
 
-              ],
+                ],
+              ),
+
             ),
-
           ),
         ),
       ),
+    );
+  }
+
+  String discountAmount="";
+  Widget pickupUI()
+  {
+    return Column(
+      children: <Widget>[
+        Container(
+          width: getWidth(context),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text("Apply Coupon Code ",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
+                    Icon(Icons.keyboard_arrow_down,size: 18,color: notification_title_color,)
+                  ],
+                ),
+
+                SizedBox(height: 8,),
+                Container(
+
+                  width: getWidth(context)-100,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
+                      border: Border.all(color: input_border_color,width: 0.3)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        //Text("CHARLIE10",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                        Container(
+                          width:getWidth(context)/2,
+                          height: 25,
+                          child: TextField(
+                            controller: controllerCoupon,
+                              style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(bottom: 15),
+                                  hintText: "",
+                                  hintStyle: TextStyle(fontSize: 12),
+                                  //contentPadding: EdgeInsets.only(bottom: 3),
+                                  border: InputBorder.none,
+                                  counterText: '')
+                          ),
+                        ),
+                        InkWell(
+                            onTap: (){
+                              if(_isInternetAvailable)
+                                {
+                                  if(isCouonValid())
+                                    {
+                                      callCouponAPI();
+                                    }
+                                }
+                              else
+                                {
+                                  CommonMethods.showLongToast(CHECK_INTERNET);
+                                }
+                            },
+                            child: Text("Apply",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
+                      ],
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(top:8.0,left:20),
+                  child: Text(discountAmount,style: TextStyle(color: hint_text_color,fontSize: 12),),
+                )
+              ],
+            ),
+          ),
+        ),
+        CommonMethods().thickHorizontalLine(context),
+        Container(
+          width: getWidth(context),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text("Pickup Outlet Address",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
+                    Text("change",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                  ],
+                ),
+                SizedBox(height: 8,),
+                Text("${pickupAddress}",style: TextStyle(fontSize: 12,color: notification_title_color),),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  String addressName="",deliveryAddress="",pickupAddress="";
+
+  Widget deliveryUI(){
+    return Column(
+      children: <Widget>[
+        Container(
+          width: getWidth(context),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    /*Text("Redeem CC Points",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),*/
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
+                        value: dropdownValueReedem,
+                        elevation: 16,
+                        style: TextStyle(
+                            color:  icon_color
+                        ),
+                        onChanged: (String newValue) {
+                          setState(() {
+                            dropdownValueReedem = newValue;
+                          });
+                        },
+                        items: <String>['Redeem CC Points']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
+                          );
+                        })
+                            .toList(),
+                      ),
+                    ),
+                    Icon(Icons.keyboard_arrow_down,size: 18,color: notification_title_color,)
+                  ],
+                ),
+                SizedBox(height: 8,),
+                Text("You can redeem maximum of 300 points (worth Rs 300)",style: TextStyle(fontSize: 12,color: notification_title_color),),
+                SizedBox(height: 8,),
+                Container(
+
+                  width: getWidth(context)-100,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
+                      border: Border.all(color: input_border_color,width: 0.3)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text("300",style: TextStyle(color: icon_color,fontSize: 12),),
+                        Text("redeem",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        CommonMethods().thickHorizontalLine(context),
+        Container(
+          width: getWidth(context),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text("Delivered to ${addressName.toUpperCase()}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
+                    Text("change",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                  ],
+                ),
+                SizedBox(height: 8,),
+                Text("${deliveryAddress}",style: TextStyle(fontSize: 12,color: notification_title_color),),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
   Widget billUI(String title,String price)
@@ -496,7 +615,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     print("SSS ${json.decode(orderItems)}");
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-        final body = jsonEncode({"del_area":preferences.getString(ADDRESS_HASH),
+        final body = jsonEncode({"del_area":pickup_delivery =="1"?preferences.getString(DELIVERY_ADDRESS_HASH):preferences.getString(PICKUP_ADDRESS_HASH),
           "deliver_pickup":preferences.getString(DELIVERY_PICKUP),
           "coupon_code":"",
           "payment_mode":payment_mode,
@@ -649,7 +768,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     String orderItems = json.encode(items);
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    final body = jsonEncode({"del_area":preferences.getString(ADDRESS_HASH),
+    final body = jsonEncode({"del_area":pickup_delivery =="1"?preferences.getString(DELIVERY_ADDRESS_HASH):preferences.getString(PICKUP_ADDRESS_HASH),
       "deliver_pickup":preferences.getString(DELIVERY_PICKUP),
       "coupon_code":"",
       "payment_mode":payment_mode,
@@ -674,7 +793,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 //Let's open the url in webview.
         flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl,
             userAgent: kAndroidUserAgent);
-
+          setState(() {
+            isWebviewopen = true;
+          });
       /*  CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(mOnlinePaymentResponse.msg);
         navigationPage();*/
@@ -687,5 +808,137 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
       }
     });
+  }
+
+
+   getOrderType() async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     setState(() {
+       pickup_delivery = prefs.getString(DELIVERY_PICKUP);
+       addressName = prefs.getString(DELIVERY_ADDRESS_NAME);
+       deliveryAddress = prefs.getString(DELIVERY_ADDRESS);
+       pickupAddress = prefs.getString(PICKUP_ADDRESS);
+     });
+
+   }
+
+  bool isCouonValid() {
+    if(controllerCoupon.text.length==0)
+      {
+        CommonMethods.showLongToast("Enter coupon");
+        return false;
+      }
+    return true;
+  }
+
+  ApplyCouponBloc mApplyCouponBloc;
+  ApplyCouponReponse mApplyCouponReponse;
+  callCouponAPI() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final body = jsonEncode(
+      {"del_area":preferences.getString(ADDRESS_HASH),
+      "coupon_code":controllerCoupon.text,
+      "payment_mode":payment_mode,
+      "subtotal":total.toString(),
+        });
+
+    mApplyCouponBloc=ApplyCouponBloc(body);
+    mApplyCouponBloc.dataStream.listen((onData){
+      mApplyCouponReponse = onData.data;
+      //print(onData.status);
+      if(onData.status == Status.LOADING)
+      {
+        // CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        setState(() {
+          discountAmount ="Rs ${mApplyCouponReponse.discount} discount applied";
+        });
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(mApplyCouponReponse.msg);
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.dismissDialog(context);
+
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
+  }
+
+ Future<bool> exitPayDialog() {
+    print('EXIT');
+    flutterWebviewPlugin.hide();
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.circular(10.0)), //this right here
+            child: Container(
+              height: 180,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left:20.0,right: 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+
+                        SizedBox(height: 25),
+                        Text("Are you sure you want to quit the transaction?",textAlign: TextAlign.center,style: TextStyle(color: notification_title_color),),
+                        SizedBox(height: 15),
+
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: getWidth(context),
+                      height: 35,
+                      decoration: BoxDecoration(
+                          color: button_color,
+                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(10.0),bottomLeft: Radius.circular(10.0))
+                      ),
+                      child: Center(child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          InkWell(
+                              onTap: (){
+                                Navigator.of(context).pop(true);
+                                flutterWebviewPlugin.close();
+                                setState(() {
+                                  isWebviewopen =false;
+                                });
+                                  //SystemNavigator.pop();
+                              },
+                              child: Text("Yes, exit me ",style: TextStyle(color: Colors.white,fontSize: 12),)),
+                          Container(
+                              height: 13,
+                              child: VerticalDivider(width: 1,thickness: 1,color: Colors.white,)),
+                          InkWell(
+                              onTap: (){
+                                flutterWebviewPlugin.close();
+                                flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl);
+                                Navigator.of(context).pop(false);
+                              },
+                              child: Text("No, I will continue",style: TextStyle(color: Colors.white,fontSize: 12),)),
+                        ],
+                      )),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'blocs/cart_bloc.dart';
 import 'blocs/cartlistBloc.dart';
 import 'views/address_book_screen.dart';
@@ -117,7 +118,9 @@ class _SplashScreenState extends State<SplashScreen> {
   String profile_value;
   @override
   void initState() {
-    Future complete_profile = CommonMethods.getPreference(context, COMPLETE_PROFILE);
+
+    getValues();
+   /* Future complete_profile = CommonMethods.getPreference(context, COMPLETE_PROFILE);
     complete_profile.then((data){
       setState(() {
         profile_value = data;
@@ -130,7 +133,9 @@ class _SplashScreenState extends State<SplashScreen> {
       {
         startTime();
       }
-    });
+    });*/
+
+   print("SPLASH check ${token} $complete_profile");
 
     super.initState();
   }
@@ -153,4 +158,30 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ));
   }
+
+  String token,complete_profile;
+   getValues() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      token = preferences.getString("token");
+      complete_profile = preferences.getString(COMPLETE_PROFILE);
+      print("chrck $token  $complete_profile");
+
+      if(token!=null)
+      {
+        if(complete_profile == "1")
+        {
+          startTimeHome();
+        }
+        else
+        {
+          startTime();
+        }
+      }
+      else
+      {
+        startTime();
+      }
+    });
+   }
 }

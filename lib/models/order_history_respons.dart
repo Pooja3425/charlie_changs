@@ -26,6 +26,7 @@ class OrderHistoryResponse {
 
 class Data {
   String paymentStatus;
+  String status;
   String orderid;
   String ordercode;
   String discount;
@@ -46,9 +47,11 @@ class Data {
   String cityname;
   String restArea;
   Null cseName;
+  List<OrderItems> orderItems;
 
   Data(
       {this.paymentStatus,
+        this.status,
         this.orderid,
         this.ordercode,
         this.discount,
@@ -68,10 +71,12 @@ class Data {
         this.custArea,
         this.cityname,
         this.restArea,
-        this.cseName});
+        this.cseName,
+        this.orderItems});
 
   Data.fromJson(Map<String, dynamic> json) {
     paymentStatus = json['payment_status'];
+    status = json['status'];
     orderid = json['orderid'];
     ordercode = json['ordercode'];
     discount = json['discount'];
@@ -92,11 +97,18 @@ class Data {
     cityname = json['cityname'];
     restArea = json['rest_area'];
     cseName = json['cse_name'];
+    if (json['order_items'] != null) {
+      orderItems = new List<OrderItems>();
+      json['order_items'].forEach((v) {
+        orderItems.add(new OrderItems.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['payment_status'] = this.paymentStatus;
+    data['status'] = this.status;
     data['orderid'] = this.orderid;
     data['ordercode'] = this.ordercode;
     data['discount'] = this.discount;
@@ -117,6 +129,50 @@ class Data {
     data['cityname'] = this.cityname;
     data['rest_area'] = this.restArea;
     data['cse_name'] = this.cseName;
+    if (this.orderItems != null) {
+      data['order_items'] = this.orderItems.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class OrderItems {
+  String orderid;
+  String itemId;
+  String itemName;
+  String quantity;
+  String tax;
+  String price;
+  String itemTotal;
+
+  OrderItems(
+      {this.orderid,
+        this.itemId,
+        this.itemName,
+        this.quantity,
+        this.tax,
+        this.price,
+        this.itemTotal});
+
+  OrderItems.fromJson(Map<String, dynamic> json) {
+    orderid = json['orderid'];
+    itemId = json['item_id'];
+    itemName = json['item_name'];
+    quantity = json['quantity'];
+    tax = json['tax'];
+    price = json['price'];
+    itemTotal = json['item_total'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['orderid'] = this.orderid;
+    data['item_id'] = this.itemId;
+    data['item_name'] = this.itemName;
+    data['quantity'] = this.quantity;
+    data['tax'] = this.tax;
+    data['price'] = this.price;
+    data['item_total'] = this.itemTotal;
     return data;
   }
 }

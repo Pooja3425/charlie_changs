@@ -137,6 +137,17 @@ class CommonMethods
     if(prefs.get(key) !=null)
       return prefs.get(key);
   }
+
+  static void clearSharedPrefs(String keydel)async
+  {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.getKeys();
+    for(String key in preferences.getKeys()) {
+      if(key == keydel) {
+        preferences.remove(key);
+      }
+    }
+  }
   static final EdgeInsets textFieldPadding = EdgeInsets.only(left:10.0,right:10.0);
   static final EdgeInsets initialPadding =  const EdgeInsets.only(left:40.0,right: 40);
 }

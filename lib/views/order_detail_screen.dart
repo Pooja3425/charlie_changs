@@ -1,16 +1,39 @@
+import 'package:charliechang/models/order_history_respons.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/views/thanks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class OrderDetailScreen extends StatefulWidget {
+  Data orderData;
+  OrderDetailScreen({this.orderData});
   @override
   _OrderDetailScreenState createState() => _OrderDetailScreenState();
 }
 
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
+
+  int item_total=0;
+  String discount;
+  int tax=0,net_payable;
+  @override
+  void initState() {
+    discount =widget.orderData.discount;
+    for(int i=0;i<widget.orderData.orderItems.length;i++)
+      {
+        setState(() {
+          item_total = item_total+int.parse(widget.orderData.orderItems[i].quantity)*int.parse(widget.orderData.orderItems[i].price);
+          tax = tax+int.parse(widget.orderData.orderItems[i].tax);
+          net_payable = item_total+tax+int.parse(widget.orderData.discount)+int.parse(widget.orderData.deliveryCharge);
+        });
+
+      }
+    setDate();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -39,12 +62,12 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                             onTap: ()=> Navigator.of(context).pop(),
                             child: Icon(Icons.keyboard_backspace,color: icon_color,)),
                         SizedBox(width: 10,),
-                        Text("ABCDE12345",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
+                        Text("${widget.orderData.ordercode}",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left:33.0,top: 5),
-                      child: Text("22-Aug-2020 | 8:00pm",style: TextStyle(fontSize: 13,color: hint_text_color),),
+                      child: Text("$date | $deliveryTime",style: TextStyle(fontSize: 13,color: hint_text_color),),
                     )
                   ],
                 ),
@@ -73,9 +96,11 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 CommonMethods().thickHorizontalLine(context),
                 ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: 2  ,
+                    itemCount: widget.orderData.orderItems.length  ,
                     shrinkWrap: true,
                     itemBuilder: (context,index){
+
+                      int price = int.parse(widget.orderData.orderItems[index].price)*int.parse(widget.orderData.orderItems[index].quantity);
                   return Padding(
                     padding: const EdgeInsets.only(left:30.0,right: 30.0),
                     child: Container(
@@ -86,13 +111,13 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                                child: Text("Name of dish",style: TextStyle(fontSize: 12,color: notification_title_color)),
+                                child: Text("${widget.orderData.orderItems[index].itemName}",style: TextStyle(fontSize: 12,color: notification_title_color)),
                               width: getWidth(context)/2-70,
                             ),
-                            Text("X 2",style: TextStyle(fontSize: 12,color: notification_title_color)),
+                            Text("X ${widget.orderData.orderItems[index].quantity}",style: TextStyle(fontSize: 12,color: notification_title_color)),
                             Padding(
                               padding: const EdgeInsets.only(right:8.0),
-                              child: Text("Rs 895",style: TextStyle(fontSize: 12,color: notification_title_color)),
+                              child: Text("Rs ${price}",style: TextStyle(fontSize: 12,color: notification_title_color)),
                             )
 
                           ],
@@ -108,13 +133,13 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     children: <Widget>[
                       CommonMethods.horizontalLine(context),
                       SizedBox(height: 10,),
-                      billUI("Item Total","Rs 1790"),
-                      billUI("Discount","Rs 300"),
-                      billUI("Taxes","Rs 179"),
-                      billUI("Delivery charge","Rs 30"),
+                      billUI("Item Total","Rs ${item_total}"),
+                      billUI("Discount","Rs ${widget.orderData.discount}"),
+                      billUI("Taxes","Rs ${tax}"),
+                      billUI("Delivery charge","Rs ${widget.orderData.deliveryCharge}"),
                       SizedBox(height: 20,),
                       CommonMethods.horizontalLine(context),
-                      billUI("Net Payable","Rs 1699"),
+                      billUI("Net Payable","Rs ${net_payable}"),
                       SizedBox(height: 20,),
                     ],
                   ),
@@ -127,9 +152,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Delivered to HOME",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
+                        Text("Delivered to ${widget.orderData.addressName.toUpperCase()}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
                         SizedBox(height: 8,),
-                        Text("A-302, Blooming Dales Apartment,  Near Jupiter \nHospital, Opposite De Ballio restaurant, Baner, Pune",style: TextStyle(fontSize: 12,color: notification_title_color),),
+                        Text("${widget.orderData.address1}"  "${widget.orderData.address2}",style: TextStyle(fontSize: 12,color: notification_title_color),),
                       ],
                     ),
                   ),
@@ -144,7 +169,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       children: <Widget>[
                         Text("Payment method",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
                         SizedBox(height: 8,),
-                        Text("Cash on delivery",style: TextStyle(fontSize: 12,color: notification_title_color),),
+                        Text(widget.orderData.isOnlinePaid=="0"?"Cash on delivery":"Online",style: TextStyle(fontSize: 12,color: notification_title_color),),
                       ],
                     ),
                   ),
@@ -182,5 +207,26 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         ],
       ),
    );
+  }
+
+  var date,deliveryTime;
+  void setDate() {
+    var outputFormat = DateFormat("dd-MM-yyyy");
+    var timeFormat = DateFormat("dd-MM-yyyy hh:mm aa");
+
+
+    int year = int.parse(widget.orderData.deliveryDate.split("-")[0]);
+    int mn = int.parse(widget.orderData.deliveryDate.split("-")[1]);
+    int dt = int.parse(widget.orderData.deliveryDate.split("-")[2]);
+    int hr = int.parse(widget.orderData.deliveryTime.split(":")[0]);
+    int min = int.parse(widget.orderData.deliveryTime.split(":")[1]);
+
+    var time = timeFormat.format(DateTime(year,mn,dt,hr,min));
+
+    setState(() {
+    date = outputFormat.format(DateTime(year,mn,dt));
+      deliveryTime = time.split(" ")[1]+" "+time.split(" ")[2];
+    });
+
   }
 }

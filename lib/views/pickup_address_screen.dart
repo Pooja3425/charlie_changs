@@ -75,9 +75,11 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
     return InkWell(
       onTap: (){
         CommonMethods.setPreference(context, PICKUP_ADDRESS_NAME, mDeliveryLocationsList[i].name);
-        CommonMethods.setPreference(context, ADDRESS_HASH, mDeliveryLocationsList[i].hash.toString());
+        CommonMethods.setPreference(context, PICKUP_ADDRESS_HASH, mDeliveryLocationsList[i].hash.toString());
+        CommonMethods.setPreference(context, PICKUP_ADDRESS, mDeliveryLocationsList[i].address);
         CommonMethods.setPreference(context, DELIVERY_PICKUP, "2");
 
+        print("ickup hash ${mDeliveryLocationsList[i].hash}");
         navigationPage();
       },
 

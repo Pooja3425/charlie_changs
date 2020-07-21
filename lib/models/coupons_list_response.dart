@@ -46,6 +46,7 @@ class Data {
   String isCashback;
   String coupanImage;
   String showApp;
+  String couponCode;
 
   Data(
       {this.id,
@@ -68,7 +69,8 @@ class Data {
         this.validDevice,
         this.isCashback,
         this.coupanImage,
-        this.showApp});
+        this.showApp,
+        this.couponCode});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -92,6 +94,7 @@ class Data {
     isCashback = json['is_cashback'];
     coupanImage = json['coupan_image'];
     showApp = json['show_app'];
+    couponCode = json['coupon_code'];
   }
 
   Map<String, dynamic> toJson() {
@@ -117,6 +120,7 @@ class Data {
     data['is_cashback'] = this.isCashback;
     data['coupan_image'] = this.coupanImage;
     data['show_app'] = this.showApp;
+    data['coupon_code'] = this.couponCode;
     return data;
   }
 }

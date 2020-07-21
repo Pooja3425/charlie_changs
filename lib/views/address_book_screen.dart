@@ -167,8 +167,9 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                           InkWell(
                             onTap: (){
                               CommonMethods.setPreference(context, DELIVERY_ADDRESS_NAME, mCustomerAddressList[index].addressName);
-                              CommonMethods.setPreference(context, ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
+                              CommonMethods.setPreference(context, DELIVERY_ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
                               CommonMethods.setPreference(context, DELIVERY_PICKUP, "1");
+                              CommonMethods.setPreference(context, DELIVERY_ADDRESS, mCustomerAddressList[index].address1+" "+ mCustomerAddressList[index].address2);
                               navigationPage();
                               },
                             child: Container(

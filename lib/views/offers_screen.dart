@@ -22,23 +22,13 @@ class _OffersScreenState extends State<OffersScreen> {
   bool _isInternetAvailable = true;
   Connectivity _connectivity;
   StreamSubscription<ConnectivityResult> _subscription;
-
+  bool isLoading = true;
   @override
   void initState() {
     // CommonMeathods.showShortToast(widget.otp);
     _connectivity = new Connectivity();
     _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
- if(mounted)
-   {
-     if(_isInternetAvailable)
-     {
-       callCouponAPI();
-     }
-     else
-     {
-       CommonMethods.showLongToast(CHECK_INTERNET);
-     }
-   }
+
 
 
     super.initState();
@@ -56,8 +46,23 @@ class _OffersScreenState extends State<OffersScreen> {
     }
   }
 
+
+
+  //BuildContext context;
   @override
   Widget build(BuildContext context) {
+    if(mounted)
+    {
+      print("INIT MOUN");
+      if(_isInternetAvailable)
+      {
+        callCouponAPI();
+      }
+      else
+      {
+        CommonMethods.showLongToast(CHECK_INTERNET);
+      }
+    }
     return SafeArea(
       child: Container(
         color: switch_bg,
@@ -87,7 +92,7 @@ class _OffersScreenState extends State<OffersScreen> {
               width: getWidth(context),
               height: getHeight(context)-162,
               padding: EdgeInsets.only(top: 30),
-              child: mCouponsList.length>0?ListView.builder(
+              child: isLoading?Center(child: CircularProgressIndicator(),): mCouponsList.length>0?ListView.builder(
                 itemCount: mCouponsList.length,
                 itemBuilder: (context,index){
                   return Padding(
@@ -130,7 +135,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                       child: Center(
                                         child: Padding(
                                           padding: const EdgeInsets.only(right:15,left:15),
-                                          child: Text("CHARLIE10",style: TextStyle(color: Colors.white,fontSize: 12),),
+                                          child: Text("${mCouponsList[index].couponCode}",style: TextStyle(color: Colors.white,fontSize: 12),),
                                         ),
                                       ),
                                     )
@@ -164,24 +169,59 @@ class _OffersScreenState extends State<OffersScreen> {
       mCouponListResponse = onData.data;
       if(onData.status == Status.LOADING)
       {
+        setState(() {
+          isLoading = false;
+        });
         //CommonMethods.displayProgressDialog(onData.message,context);
-        CommonMethods.showLoaderDialog(context,onData.message);
+       // showLoaderDialog(context,onData.message);
       }
       else if(onData.status == Status.COMPLETED)
       {
-        CommonMethods.dismissDialog(context);
-        setState(() {
-          mCouponsList= mCouponListResponse.data;
-        });
+        if(mounted)
+          {
+            print("MO");
+          //  dismissDialog(context);
+            setState(() {
+              isLoading = false;
+              mCouponsList= mCouponListResponse.data;
+            });
+          }
+
+
       }
       else if(onData.status == Status.ERROR)
       {
-        CommonMethods.dismissDialog(context);
+        //dismissDialog(context);
         if(onData.message.contains("Invalid"))
         {
-          CommonMethods.showShortToast("Invalid OTP");
+          setState(() {
+            isLoading = false;
+          });
+          CommonMethods.showShortToast("Try after some time");
         }
       }
     });
+  }
+
+
+  static showLoaderDialog(BuildContext context,String message){
+    AlertDialog alert=AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(backgroundColor: button_color,valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),),
+          Container(margin: EdgeInsets.only(left: 7),child:Text(message)),
+        ],),
+    );
+    showDialog(barrierDismissible: false,
+      context:context,
+      builder:(BuildContext context){
+        return alert;
+      },
+    );
+  }
+
+  static dismissDialog(BuildContext context){
+    Navigator.pop(context);
+
   }
 }
