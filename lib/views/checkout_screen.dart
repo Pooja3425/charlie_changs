@@ -16,7 +16,9 @@ import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
+import 'package:charliechang/views/address_book_screen.dart';
 import 'package:charliechang/views/pay_screen.dart';
+import 'package:charliechang/views/pickup_address_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -93,6 +95,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   StreamSubscription<ConnectivityResult> _subscription;
 
   final controllerCoupon = TextEditingController();
+  final controllerRedeem = TextEditingController();
 
   void onConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
@@ -116,7 +119,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     flutterWebviewPlugin.onUrlChanged.listen((String url) {
       if (mounted) {
         if (url.contains(
-            'http://www.example.com/redirect')) {
+            'https://charliechangs.in/thankyou')) {
           Uri uri = Uri.parse(url);
 //Take the payment_id parameter of the url.
           String paymentRequestId = uri.queryParameters['payment_id'];
@@ -166,7 +169,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left:33.0,top: 5),
-                        child: RichText(text: TextSpan(text:"This order is for home delivery (",style: TextStyle(color: notification_title_color),children: <TextSpan>[TextSpan(text: "Change",style: TextStyle(color: button_color),children: <TextSpan>[TextSpan(text: ")",style: TextStyle(color: notification_title_color),),]),]))/*Text("This order is for home delivery (",style: TextStyle(fontSize: 13,color: hint_text_color),),*/
+                        child: InkWell(
+                            onTap: (){
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddressBookScreen(from: "checkout",)));
+                            },
+                            child: RichText(text: TextSpan(text:"This order is for ${addressName.toUpperCase()} delivery (",style: TextStyle(color: notification_title_color),children: <TextSpan>[TextSpan(text: "Change",style: TextStyle(color: button_color),children: <TextSpan>[TextSpan(text: ")",style: TextStyle(color: notification_title_color),),]),])))/*Text("This order is for home delivery (",style: TextStyle(fontSize: 13,color: hint_text_color),),*/
                       )
                     ],
                   ),
@@ -264,7 +271,47 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
                   CommonMethods().thickHorizontalLine(context),
-                  pickup_delivery =="1"?deliveryUI():pickupUI(),
+                  Container(
+                    width: getWidth(context),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(30.0,20,30,0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              /*Text("Redeem CC Points",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),*/
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
+                                  value: dropdownValueReedem,
+                                  elevation: 16,
+                                  style: TextStyle(
+                                      color:  icon_color
+                                  ),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      dropdownValueReedem = newValue;
+                                    });
+                                  },
+                                  items: <String>['Redeem CC Points','Apply coupon code']
+                                      .map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
+                                    );
+                                  })
+                                      .toList(),
+                                ),
+                              ),
+                              Icon(Icons.keyboard_arrow_down,size: 18,color: notification_title_color,)
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  dropdownValueReedem =="Redeem CC Points"?deliveryUI():pickupUI(),
                   CommonMethods().thickHorizontalLine(context),
 
                 ],
@@ -285,16 +332,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         Container(
           width: getWidth(context),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
+            padding: const EdgeInsets.fromLTRB(30.0,0,30,20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text("Apply Coupon Code ",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
-                    Icon(Icons.keyboard_arrow_down,size: 18,color: notification_title_color,)
-                  ],
-                ),
 
                 SizedBox(height: 8,),
                 Container(
@@ -376,6 +417,56 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
+
+  Widget deliveryAppBar()
+  {
+
+  }
+
+  Widget ickupAppBar()
+  {
+    PreferredSize(
+      preferredSize: Size.fromHeight(83),
+      child: AppBar(
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        flexibleSpace: Container(
+          color: Colors.white,
+          height: 85,
+          width: getWidth(context),
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.only(right:30.0,left: 30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    InkWell(
+                        onTap: ()=> Navigator.of(context).pop(),
+                        child: Icon(Icons.keyboard_backspace,color: icon_color,)),
+                    SizedBox(width: 10,),
+                    Text("Checkout",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
+                  ],
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left:33.0,top: 5),
+                    child: InkWell(
+                        onTap: (){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PickupAddressScreen(from: "checkout",)));
+                        },
+                        child: RichText(text: TextSpan(text:"This order is for pickup (",style: TextStyle(color: notification_title_color),children: <TextSpan>[TextSpan(text: "Change",style: TextStyle(color: button_color),children: <TextSpan>[TextSpan(text: ")",style: TextStyle(color: notification_title_color),),]),])))/*Text("This order is for home delivery (",style: TextStyle(fontSize: 13,color: hint_text_color),),*/
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
   String addressName="",deliveryAddress="",pickupAddress="";
 
   Widget deliveryUI(){
@@ -384,45 +475,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         Container(
           width: getWidth(context),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
+            padding: const EdgeInsets.fromLTRB(30.0,0,30,20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    /*Text("Redeem CC Points",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),*/
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
-                        value: dropdownValueReedem,
-                        elevation: 16,
-                        style: TextStyle(
-                            color:  icon_color
-                        ),
-                        onChanged: (String newValue) {
-                          setState(() {
-                            dropdownValueReedem = newValue;
-                          });
-                        },
-                        items: <String>['Redeem CC Points']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
-                          );
-                        })
-                            .toList(),
-                      ),
-                    ),
-                    Icon(Icons.keyboard_arrow_down,size: 18,color: notification_title_color,)
-                  ],
-                ),
-                SizedBox(height: 8,),
+
                 Text("You can redeem maximum of 300 points (worth Rs 300)",style: TextStyle(fontSize: 12,color: notification_title_color),),
                 SizedBox(height: 8,),
-                Container(
-
+                /*Container(
                   width: getWidth(context)-100,
+
                   decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
                       border: Border.all(color: input_border_color,width: 0.3)),
                   child: Padding(
@@ -435,7 +497,52 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ],
                     ),
                   ),
-                )
+                )*/
+                Container(
+
+                  width: getWidth(context)-100,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
+                      border: Border.all(color: input_border_color,width: 0.3)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        //Text("CHARLIE10",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                        Container(
+                          width:getWidth(context)/2,
+                          height: 25,
+                          child: TextField(
+                              controller: controllerRedeem,
+                              style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(bottom: 15),
+                                  hintText: "",
+                                  hintStyle: TextStyle(fontSize: 12),
+                                  //contentPadding: EdgeInsets.only(bottom: 3),
+                                  border: InputBorder.none,
+                                  counterText: '')
+                          ),
+                        ),
+                        InkWell(
+                            onTap: (){
+                              if(_isInternetAvailable)
+                              {
+                                if(isCouonValid())
+                                {
+                                  //callCouponAPI();
+                                }
+                              }
+                              else
+                              {
+                                CommonMethods.showLongToast(CHECK_INTERNET);
+                              }
+                            },
+                            child: Text("Redeem",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -452,7 +559,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Delivered to ${addressName.toUpperCase()}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
-                    Text("change",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                    InkWell(
+                        onTap: (){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddressBookScreen(from: "checkout",)));
+                        },
+                        child: Text("change",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
                   ],
                 ),
                 SizedBox(height: 8,),
@@ -554,19 +665,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             InkWell(
                 onTap: ()=>{
 
-                  if(_isInternetAvailable)
-                    {
-                      if(payment_mode =="0")
-                        {
-                          callPlaceOrderAPI()
-                        }
-                      else
-                        {
-
-                          callOnlinePaymentAPI()
-                        }
-
-                    }
+                  callapi()
                   /*if(payment_mode =="0")
                    {
                      callPlaceOrderAPI()
@@ -620,7 +719,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           "coupon_code":"",
           "payment_mode":payment_mode,
           "reward_id_selected":"",
-          "notes":"",
+          "notes":"do not proceed test order from development team",
           "items":json.decode(orderItems)});
 
 
@@ -773,7 +872,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       "coupon_code":"",
       "payment_mode":payment_mode,
       "reward_id_selected":"",
-      "notes":"",
+      "notes":"do not proceed test order from development team",
       "items":json.decode(orderItems)});
 
     mOnlinePaymentBloc=OnlinePaymentBloc(body);
@@ -940,5 +1039,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
           );
         });
+  }
+
+  callapi() {
+    if(_isInternetAvailable)
+    {
+      if(payment_mode =="0")
+      {
+        callPlaceOrderAPI();
+      }
+      else
+      {
+
+        callOnlinePaymentAPI();
+      }
+
+    }
   }
 }

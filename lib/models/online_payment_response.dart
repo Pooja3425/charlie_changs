@@ -3,6 +3,7 @@ class OnlinePaymentResponse {
   String ordercode;
   String pdata;
   String paymentUrl;
+  String redirectUrl;
   String paymentId;
   int paymentMode;
   String restid;
@@ -15,6 +16,7 @@ class OnlinePaymentResponse {
         this.ordercode,
         this.pdata,
         this.paymentUrl,
+        this.redirectUrl,
         this.paymentId,
         this.paymentMode,
         this.restid,
@@ -27,6 +29,7 @@ class OnlinePaymentResponse {
     ordercode = json['ordercode'];
     pdata = json['pdata'];
     paymentUrl = json['payment_url'];
+    redirectUrl = json['redirect_url'];
     paymentId = json['payment_id'];
     paymentMode = json['payment_mode'];
     restid = json['restid'];
@@ -41,6 +44,7 @@ class OnlinePaymentResponse {
     data['ordercode'] = this.ordercode;
     data['pdata'] = this.pdata;
     data['payment_url'] = this.paymentUrl;
+    data['redirect_url'] = this.redirectUrl;
     data['payment_id'] = this.paymentId;
     data['payment_mode'] = this.paymentMode;
     data['restid'] = this.restid;

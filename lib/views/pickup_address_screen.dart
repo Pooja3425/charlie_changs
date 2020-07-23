@@ -5,13 +5,15 @@ import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
+import 'package:charliechang/views/checkout_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:maps_launcher/maps_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'bottom_screen.dart';
 
 class PickupAddressScreen extends StatefulWidget {
+  String from;
+  PickupAddressScreen({this.from});
   @override
   _PickupAddressScreenState createState() => _PickupAddressScreenState();
 }
@@ -74,13 +76,26 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
 
     return InkWell(
       onTap: (){
-        CommonMethods.setPreference(context, PICKUP_ADDRESS_NAME, mDeliveryLocationsList[i].name);
-        CommonMethods.setPreference(context, PICKUP_ADDRESS_HASH, mDeliveryLocationsList[i].hash.toString());
-        CommonMethods.setPreference(context, PICKUP_ADDRESS, mDeliveryLocationsList[i].address);
-        CommonMethods.setPreference(context, DELIVERY_PICKUP, "2");
+        if(widget.from == "checkout")
+          {
+            CommonMethods.setPreference(context, PICKUP_ADDRESS_NAME, mDeliveryLocationsList[i].name);
+            CommonMethods.setPreference(context, PICKUP_ADDRESS_HASH, mDeliveryLocationsList[i].hash.toString());
+            CommonMethods.setPreference(context, PICKUP_ADDRESS, mDeliveryLocationsList[i].address);
+            CommonMethods.setPreference(context, DELIVERY_PICKUP, "2");
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CheckoutScreen()));
+          }
+        else
+          {
+            CommonMethods.setPreference(context, PICKUP_ADDRESS_NAME, mDeliveryLocationsList[i].name);
+            CommonMethods.setPreference(context, PICKUP_ADDRESS_HASH, mDeliveryLocationsList[i].hash.toString());
+            CommonMethods.setPreference(context, PICKUP_ADDRESS, mDeliveryLocationsList[i].address);
+            CommonMethods.setPreference(context, DELIVERY_PICKUP, "2");
 
-        print("ickup hash ${mDeliveryLocationsList[i].hash}");
-        navigationPage();
+            print("ickup hash ${mDeliveryLocationsList[i].hash}");
+            navigationPage();
+            //Navigator.pop(context);
+          }
+
       },
 
       child: Padding(

@@ -357,10 +357,24 @@ class _UpdateProfileState extends State<UpdateProfile> {
         _controllerEmail.text= mGetProfileData.data.email;
         _controllerPhone.text= mGetProfileData.data.mobile;
         _controllerEmail.text= mGetProfileData.data.email;
-        setState(() {
-          dobString = mGetProfileData.data.dob;
-          aniDate = mGetProfileData.data.annDob;
-        });
+        if(mGetProfileData.data.dob!=null && mGetProfileData.data.dob!="0000-00-00")
+          {
+            setState(() {
+
+              dobString = mGetProfileData.data.dob;
+
+            });
+          }
+
+        if(mGetProfileData.data.annDob!=null && mGetProfileData.data.annDob!="0000-00-00")
+        {
+          setState(() {
+
+
+            aniDate = mGetProfileData.data.annDob;
+          });
+        }
+
 
         //navigationPage();
       }

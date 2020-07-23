@@ -39,8 +39,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String dropdownValue = "Home";
-  bool status = false;
-  List<IconModel> mIconModelList = new List();
+  bool status;
+  //List<IconModel> mIconModelList = new List();
   List<String> mImageList = new List();
   List<String> mImageListSlider = new List();
   List<Data> mCategoryList = new List();
@@ -48,39 +48,60 @@ class _HomeScreenState extends State<HomeScreen> {
   String deliveryAddressName="";
   String pickupAddressName="";
   final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+  TextEditingController _searchController = TextEditingController();
 
+  bool isMenuCalled=false;
   @override
   void initState() {
-    mIconModelList.add(new IconModel(
-        image_name: "assets/images/cc_specials.png", title: "CC Specials"));
-    mIconModelList.add(new IconModel(
-        image_name: "assets/images/cc_specials.png", title: "Veg Soup"));
-    mIconModelList.add(new IconModel(
-        image_name: "assets/images/cc_specials.png", title: "NonVeg Soup"));
-    mIconModelList.add(new IconModel(
-        image_name: "assets/images/cc_specials.png", title: "NonVeg Starter"));
-    mIconModelList.add(new IconModel(
-        image_name: "assets/images/cc_specials.png", title: "CC Specials"));
-    mIconModelList.add(new IconModel(
-        image_name: "assets/images/cc_specials.png", title: "CC Specials"));
-
-    mImageList.add("assets/images/dish1.png");
-    mImageList.add("assets/images/dish2.png");
-    mImageList.add("assets/images/dish3.png");
-    mImageList.add("assets/images/dish4.png");
-    mImageList.add("assets/images/dish5.png");
-    mImageList.add("assets/images/image2.png");
+    _IsSearching=false;
 
     mImageListSlider.add("assets/images/image.png");
     mImageListSlider.add("assets/images/image.png");
-    
+    status=false;
     getDeliveryAddress();
+    //status=preferences.getString(TOGGLE_VALUE)=="0"?false:true;
     getCategoriesAPI();
 
    //
     scrollController = ScrollController();
     scrollController.addListener(_scrollListener);
     super.initState();
+  }
+
+  bool _IsSearching;
+  String _searchText = "";
+
+  _HomeScreenState() {
+    _searchController.addListener(() {
+      if (_searchController.text.isEmpty) {
+        setState(() {
+          _IsSearching = false;
+          _searchText = "";
+          _buildSearchList();
+        });
+      } else {
+        setState(() {
+          _IsSearching = true;
+          _searchText = _searchController.text;
+          _buildSearchList();
+        });
+      }
+    });
+  }
+
+  List<Menu> _searchList=new List();
+  List<Menu> _buildSearchList() {
+    if (_searchText.isEmpty) {
+      return _searchList =
+          mMenuList; //_list.map((contact) =>  Uiitem(contact)).toList();
+    } else {
+      _searchList = mMenuList
+          .where((element) =>
+      element.name.toLowerCase().contains(_searchText.toLowerCase()))
+          .toList();
+      print('${_searchList.length}');
+      return _searchList; //_searchList.map((contact) =>  Uiitem(contact)).toList();
+    }
   }
 
   @override
@@ -128,14 +149,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             if(status)
                               {
                                 //1 = pickup  0=delivery
-                                CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
+                               // CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
                               }
                             else
                               {
-                                CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
+                               // CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
                               }
+
 
                           },
                           child: Container(
@@ -178,6 +200,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           print("VALUE : $value");
                           setState(() {
                             status = value;
+                            if(value==true)
+                              {
+                                CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
+                              }
+                            else
+                              {
+                                CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
+                              }
+                            getDeliveryAddress();
                           });
                         },
                       ),
@@ -253,8 +284,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   category = mCategoryList[index].name;
                                   //print("categoryy");
 
-                                  scrollController.jumpTo(600);
-                                 // getMenuAPI();
+                                 // scrollController.jumpTo(600);
+                                 getMenuAPI();
                                 });
 
                               },
@@ -343,6 +374,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       style: TextStyle(
                                         fontSize: 12,
                                       ),
+                                      controller: _searchController,
                                       decoration: InputDecoration(
                                           //contentPadding: EdgeInsets.only(top: 5),
                                           //prefixIcon: Icon(Icons.search,color: icon_color,size: 18,),
@@ -380,158 +412,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                           width: getWidth(context),
                           // height: getHeight(context)/2,
-                          child: mMenuList.length>0?GridView.count(
+                          child: isMenuCalled?mMenuList.length>0?GridView.count(
                             physics: enableScroll?NeverScrollableScrollPhysics():ScrollPhysics(),
                             crossAxisCount: 2,
                             childAspectRatio: (itemWidth / itemHeight),
                             //controller: new ScrollController(keepScrollOffset: false),
                             shrinkWrap: true,
-                            children: List.generate(mMenuList.length, (index) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    child: Card(
-                                      child: AspectRatio(
-                                        aspectRatio: 7/6,
-                                        child: Image.network(
-                                          IMAGE_BASE_URL+mMenuList[index].image,
-                                          fit: BoxFit.cover,
-                                          width: getWidth(context)/2-60,
-                                          height: getWidth(context)/2-80,
-                                        ),
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(3.3))),
-                                      clipBehavior:
-                                          Clip.antiAliasWithSaveLayer,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5, top: 10),
-                                    child: Container(
-                                      height:40,
-                                      child: Text(
-                                        mMenuList[index].name,
-                                        maxLines: 2,
-                                        style: TextStyle(fontSize: 12,color: icon_color),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5,right: 5),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          "Rs "+mMenuList[index].price,
-                                          style: TextStyle(
-                                              color: icon_color,
-                                              fontSize: 12),
-                                        ),
-                                        mMenuList[index].count ==0?InkWell(
-                                          onTap: (){
-                                            //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
-                                            addToCart(mMenuList[index]);
+                            children: _IsSearching?buildList(_searchList):buildList(mMenuList),
+                          ):Center(child: CircularProgressIndicator(),):
+                          Center(child: Text("Please add atleast one address to proceed"),)
 
-                                            //bloc.addToCart(index);
-                                            widget.callback1();
-                                            widget.func1('ADD');
-                                            setState(() {
-                                              mMenuList[index].count ++;
-                                            });
-                                           // _settingModalBottomSheet(context);
-                                          },
-                                          child: Container(
-                                            width: 80,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(3)),
-                                                color: fab_color),
-                                            child: Center(
-                                                child: Text(
-                                              "Add",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12),
-                                            )),
-                                          ),
-                                        ):Container(
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: button_color,width: 0.5),
-                                              borderRadius: BorderRadius.all(Radius.circular(3.3))),
-                                          child: Row(
-                                            children: <Widget>[
-                                              IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
-                                                /*if(mMenuList[index].count!=1)
-                                                {*/
-                                                 bloc.removeFromList(mMenuList[index]);
-                                                 print("SIZEEE ${mMenuList[index].count}");
-
-                                                      widget.callback1();
-                                                      widget.func1('REMOVE');
-
-
-                                                //}
-                                              }),
-                                              Text("${mMenuList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
-                                              IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
-                                                print("ADDDD");
-                                                setState(() {
-                                                  //mMenuList[index].count++;
-                                                  // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
-                                                });
-                                                addToCart(mMenuList[index]);
-                                                widget.callback1();
-                                                widget.func1('ADD');
-                                              })
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                    ),
-                                  )
-                                ],
-                              );
-                            }),
-                          ):Center(child: CircularProgressIndicator(),) /*ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context,index){
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(0,8.0,0,8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text("Name of the dish",style: TextStyle(fontSize: 12),),
-                                    SizedBox(height: 5,),
-                                    Text("Rs 599",style: TextStyle(color: icon_color,fontSize: 12),),
-                                  ],
-                                ),
-                                Container(
-                                  width:80,
-                                  height:30,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(Radius.circular(3)),
-                                      color: fab_color
-                                  ),
-                                  child: Center(child: Text("Add",style: TextStyle(color: Colors.white,fontSize: 12),)),
-                                )
-                              ],
-                            ),
-                          );
-                        })*/
                           ),
                       SizedBox(
                         height: 10,
@@ -556,6 +446,126 @@ class _HomeScreenState extends State<HomeScreen> {
     bloc.removeFromList(foodItem);
   }
 
+  List<Widget> buildList(List<Menu> mMenuList)
+  {
+    return List.generate(mMenuList.length, (index) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            child: Card(
+              child: AspectRatio(
+                aspectRatio: 7/6,
+                child: Image.network(
+                  IMAGE_BASE_URL+mMenuList[index].image,
+                  fit: BoxFit.cover,
+                  width: getWidth(context)/2-60,
+                  height: getWidth(context)/2-80,
+                ),
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(3.3))),
+              clipBehavior:
+              Clip.antiAliasWithSaveLayer,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 5, top: 10),
+            child: Container(
+              height:40,
+              child: Text(
+                mMenuList[index].name,
+                maxLines: 2,
+                style: TextStyle(fontSize: 12,color: icon_color),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 5,right: 5),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "Rs "+mMenuList[index].price,
+                  style: TextStyle(
+                      color: icon_color,
+                      fontSize: 12),
+                ),
+                mMenuList[index].count ==0?InkWell(
+                  onTap: (){
+                    //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+                    addToCart(mMenuList[index]);
+
+                    //bloc.addToCart(index);
+                    widget.callback1();
+                    widget.func1('ADD');
+                    setState(() {
+                      mMenuList[index].count ++;
+                    });
+                    // _settingModalBottomSheet(context);
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(3)),
+                        color: fab_color),
+                    child: Center(
+                        child: Text(
+                          "Add",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12),
+                        )),
+                  ),
+                ):Container(
+                  height: 30,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: button_color,width: 0.5),
+                      borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+                        /*if(mMenuList[index].count!=1)
+                                                {*/
+                        bloc.removeFromList(mMenuList[index]);
+                        print("SIZEEE ${mMenuList[index].count}");
+
+                        widget.callback1();
+                        widget.func1('REMOVE');
+
+
+                        //}
+                      }),
+                      Text("${mMenuList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
+                      IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
+                        print("ADDDD");
+                        setState(() {
+                          //mMenuList[index].count++;
+                          // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
+                        });
+                        addToCart(mMenuList[index]);
+                        widget.callback1();
+                        widget.func1('ADD');
+                      })
+                    ],
+                  ),
+                ),
+              ],
+              mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
+            ),
+          )
+        ],
+      );
+    });
+  }
   void _settingModalBottomSheet(context){
     showModalBottomSheet(
         context: context,
@@ -650,7 +660,12 @@ class _HomeScreenState extends State<HomeScreen> {
           mCategoryList = mCategoryRespose.data;
          // hashKey = mCategoryRespose.data[0].hashCode.toString();
           category = "";
-          getMenuAPI();
+          if(hashKey !=null)
+            {
+
+              getMenuAPI();
+            }
+
         });
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
 
@@ -681,6 +696,7 @@ class _HomeScreenState extends State<HomeScreen> {
       {
         //CommonMethods.hideDialog();
         setState(() {
+          isMenuCalled= true;
           mMenuList = mMenuResponse.menu;
 
 
@@ -694,9 +710,10 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
-
+    SharedPreferences preferences;
    getDeliveryAddress() async{
-    SharedPreferences preferences = await SharedPreferences.getInstance();
+    print("get address");
+    preferences = await SharedPreferences.getInstance();
     setState(() {
 
       if(preferences.getString(DELIVERY_PICKUP) =="1")
@@ -712,26 +729,26 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           hashKey = preferences.get(PICKUP_ADDRESS_HASH);
         }
-      print("HASS $hashKey");
-
-      if(preferences.get(TOGGLE_VALUE) !=null)
-        {
-          if(preferences.get(TOGGLE_VALUE)=="0")
-          {
-            setState(() {
-              status = false; //delivery
-            });
-          }
-          else
-          {
-            setState(() {
-              status = true; //pickup
-            });
-          }
-        }
-
-
+      print("HASS $hashKey ${preferences.get(TOGGLE_VALUE)}");
     });
+
+    if(preferences.get(TOGGLE_VALUE) !=null)
+    {
+      if(preferences.get(TOGGLE_VALUE)=="0")
+      {
+        print("Zero");
+        setState(() {
+          status = false; //delivery
+        });
+      }
+      else
+      {
+        print("One");
+        setState(() {
+          status = true; //pickup
+        });
+      }
+    }
 
   }
 }

@@ -1,16 +1,81 @@
+import 'dart:async';
+
 import 'package:badges/badges.dart';
 import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/views/cart_screen.dart';
 import 'package:charliechang/views/offers_screen.dart';
+import 'package:charliechang/views/order_detail_screen.dart';
 import 'package:charliechang/views/updates_screen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'home_screen.dart';
 import 'more_screen.dart';
+
+
+Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
+  print("in background");
+  if (message.containsKey('data')) {
+    // Handle data message
+    final dynamic data = message['data'];
+  }
+
+  if (message.containsKey('notification')) {
+    // Handle notification message
+    final dynamic notification = message['notification'];
+  }
+
+  // Or do other work.
+}
+
+final Map<String, Item> _items = <String, Item>{};
+Item _itemForMessage(Map<String, dynamic> message) {
+  final dynamic data = message['data'] ?? message;
+  final String itemId = data['id'];
+  final Item item = _items.putIfAbsent(itemId, () => Item(itemId: itemId))
+    .._matchteam = data['matchteam']
+    .._score = data['score'];
+  return item;
+}
+
+class Item {
+  Item({this.itemId});
+  final String itemId;
+
+  StreamController<Item> _controller = StreamController<Item>.broadcast();
+  Stream<Item> get onChanged => _controller.stream;
+
+  String _matchteam;
+  String get matchteam => _matchteam;
+  set matchteam(String value) {
+    _matchteam = value;
+    _controller.add(this);
+  }
+
+  String _score;
+  String get score => _score;
+  set score(String value) {
+    _score = value;
+    _controller.add(this);
+  }
+
+  static final Map<String, Route<void>> routes = <String, Route<void>>{};
+  Route<void> get route {
+    final String routeName = '/detail/$itemId';
+    return routes.putIfAbsent(
+      routeName,
+          () => MaterialPageRoute<void>(
+        settings: RouteSettings(name: routeName),
+        builder: (BuildContext context) => OrderDetailScreen(),
+      ),
+    );
+  }
+}
+
 
 class BottomScreen extends StatefulWidget {
   @override
@@ -20,9 +85,41 @@ class BottomScreen extends StatefulWidget {
 class _BottomScreenState extends State<BottomScreen> {
   PageController _pageController;
   int _page=0;
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   @override
   void initState() {
     _pageController = new PageController();
+    _firebaseMessaging.getToken().then((value) => print(value));
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        //_showItemDialog(message);
+      },
+      onBackgroundMessage: myBackgroundMessageHandler,
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        //_navigateToItemDetail(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        //_navigateToItemDetail(message);
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      print("Push Messaging token: $token");
+    });
+
+
     super.initState();
   }
   void onPageChanged(int page){
@@ -86,7 +183,7 @@ class _BottomScreenState extends State<BottomScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: exitDialog,
+      onWillPop: _page ==0?exitDialog:goToHome,
       child: Scaffold(
         body: /*callpage(_page)*/Container(
           height: getHeight(context),
@@ -205,6 +302,9 @@ class _BottomScreenState extends State<BottomScreen> {
     );
   }
 
+  Future<bool> goToHome(){
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomScreen()));
+  }
   Future<bool> exitDialog() {
     showDialog(
         barrierDismissible: true,

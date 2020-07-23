@@ -191,10 +191,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
         CommonMethods.showShortToast(mCompleteProfileResponse.msg);
         CommonMethods.setPreference(context, COMPLETE_PROFILE, "1");
 
-        if(mCompleteProfileResponse.msg!="Token not exist!")
-          {
+        /*if(mCompleteProfileResponse.msg!="Token not exist!")
+          {*/
             navigateToAddAddress();
-          }
+        //  }
       }
       else if(onData.status == Status.ERROR)
       {
@@ -207,7 +207,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   void navigateToAddAddress() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddressBookScreen()),
+      MaterialPageRoute(builder: (context) => AddressBookScreen(from: "complete",)),
     );
   }
 }

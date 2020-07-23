@@ -28,6 +28,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   @override
   void initState() {
     // CommonMeathods.showShortToast(widget.otp);
+    _IsSearching=false;
     _connectivity = new Connectivity();
     _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
     if(_isInternetAvailable)
@@ -40,6 +41,27 @@ class _OrdersScreenState extends State<OrdersScreen> {
     }
 
     super.initState();
+  }
+
+  bool _IsSearching;
+  String _searchText = "";
+
+  _OrdersScreenState() {
+    _searchController.addListener(() {
+      if (_searchController.text.isEmpty) {
+        setState(() {
+          _IsSearching = false;
+          _searchText = "";
+          _buildSearchList();
+        });
+      } else {
+        setState(() {
+          _IsSearching = true;
+          _searchText = _searchController.text;
+          _buildSearchList();
+        });
+      }
+    });
   }
 
   void onConnectivityChange(ConnectivityResult result) {
@@ -56,45 +78,26 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   TextEditingController _searchController = TextEditingController();
   // Copy Main List into New List.
-  List<Data> newDataList = List.from(mOrderList);
+  List<Data> newDataList = new List();
 
-  String searchValue="";
-  onItemChanged(String value) {
 
-    setState(() {
-      print("SEARCH $value");
-      searchValue=value;
+  List<Data> _buildSearchList() {
+    if (_searchController.text.isEmpty) {
+      return newDataList =
+          mOrderList; //_list.map((contact) =>  Uiitem(contact)).toList();
+    } else {
+      newDataList = mOrderList
+          .where((element) =>
+          element.orderItems[0].itemName.toLowerCase().contains(_searchText.toLowerCase()))
+          .toList();
 
-      for (int i = 0; i < mOrderList.length; i++) {
-        String  name = mOrderList[i].orderItems[i].itemName;
-        if (name.toLowerCase().contains(searchValue.toLowerCase())) {
-          newDataList.add(mOrderList[i]);
-        }
-      }
-      /*newDataList = mOrderList
-          .where((string) => string.orderItems[0].itemName.toLowerCase().contains(value.toLowerCase()))
-          .toList();*/
-
-      print("SSS ${_searchController.text.length}");
-    });
-  }
-
-  bool _IsSearching=false;
-  _OrdersScreenState() {
-    _searchController.addListener(() {
-      if (_searchController.text.isEmpty) {
-        setState(() {
-          _IsSearching = false;
-          searchValue = "";
-        });
-      }
-      else {
-        setState(() {
-          _IsSearching = true;
-          searchValue = _searchController.text;
-        });
-      }
-    });
+   /* .where((element) =>
+    element.orderItems.where((element) =>
+    element.itemName.toLowerCase().contains(searchValue.toLowerCase())).toList().contains(searchValue.toLowerCase()))
+        .toList();*/
+      print('${newDataList.length}');
+      return newDataList; //_searchList.map((contact) =>  Uiitem(contact)).toList();
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -158,7 +161,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                     counterText: ''
                                 ),
                                 controller: _searchController,
-                                onChanged: onItemChanged,
+                               // onChanged: onItemChanged,
                               ),
                             )
                           ],
@@ -185,10 +188,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 width: getWidth(context),
                 height: getHeight(context)-148,
                 padding: EdgeInsets.only(top:20),
-                child: _IsSearching?newDataList.length>0?ListView.builder(
+                child:_IsSearching?newDataList.length>0?ListView.builder(
                   itemCount: newDataList.length,
                   itemBuilder: (context,index){
-                    print("After search");
+                    print("before search");
+
                     return  deliveryRowUI(newDataList[index]);
                   },
 
@@ -256,7 +260,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
 
   Widget deliveryRowUI(Data orders) {
-    print("DeliveryD ${orders.deliveryTime}");
+    //print("DeliveryD ${orders.deliveryTime}");
     var outputFormat = DateFormat("dd-MM-yyyy");
     var timeFormat = DateFormat("dd-MM-yyyy hh:mm aa");
 
@@ -276,10 +280,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       items = items+orders.orderItems[i].itemName +" x "+ orders.orderItems[i].quantity+",";
     }
 
-
-
-
-    print("DATEE $time ");
+    // print("DATEE $time ");
     return Container(
       width: getWidth(context),
       child: Padding(
@@ -326,7 +327,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   OrderHistoryBloc  mOrderHistoryBloc;
   OrderHistoryResponse mOrderHistoryResponse;
-  static List<Data> mOrderList = new List();
+  List<Data> mOrderList = new List();
   callOrdersAPI() {
     mOrderHistoryBloc=OrderHistoryBloc();
     mOrderHistoryBloc.dataStream.listen((onData){

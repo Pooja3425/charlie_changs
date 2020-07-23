@@ -7,6 +7,7 @@ import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
+import 'package:charliechang/views/bottom_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +81,9 @@ class _OffersScreenState extends State<OffersScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.keyboard_backspace,color: icon_color,),
+                    InkWell(
+                        onTap: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomScreen())),
+                        child: Icon(Icons.keyboard_backspace,color: icon_color,)),
                     SizedBox(width: 10,),
                     Text("Offers For You",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
                   ],

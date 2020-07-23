@@ -5,6 +5,7 @@ import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
+import 'package:charliechang/views/bottom_screen.dart';
 import 'package:charliechang/views/checkout_screen.dart';
 import 'package:charliechang/views/pickup_checkout_screen.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class _CartScreenState extends State<CartScreen> {
                       //left: getWidth(context)/2,
                       child: Container(
                         width: getWidth(context),
-                height: getHeight(context),
+                        height: getHeight(context),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
@@ -132,6 +133,7 @@ class _CartScreenState extends State<CartScreen> {
                     //Text("+91-99999 99999",style: TextStyle(color: hint_text_color,fontSize: 15,fontWeight: FontWeight.bold),),
                     SizedBox(height: 40,),
                     RaisedButton(
+                      onPressed: ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen()),),
                       disabledColor: button_color,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(3.3))),
                       child: Text("Order Now",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),color: button_color,)
@@ -171,11 +173,12 @@ class _CartScreenState extends State<CartScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(3.3))),
                       child: Row(
                         children: <Widget>[
-                          IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+
+                          foodItems[index].count >0? IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
                             if(foodItems[index].count!=1)
                             {
                               print("SIZEEE ${foodItems[index].count}");
-                              //removeFromList(foodItems[index]);
+
                               setState(() {
                                 foodItems[index].count--;
                               });
@@ -183,7 +186,13 @@ class _CartScreenState extends State<CartScreen> {
                               widget.func1('REMOVE');
 
                             }
-                          }),
+                            else
+                              {
+                                removeFromList(foodItems[index]);
+                                widget.callback1();
+                                widget.func1('REMOVE');
+                              }
+                          }):Container(),
                           Text("${foodItems[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
                           IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
                             setState(() {
@@ -235,7 +244,10 @@ class _CartScreenState extends State<CartScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 InkWell(
-                    onTap: ()=> Navigator.of(context).pop(),
+                    onTap: ()=> Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => BottomScreen()),
+                    ),
                     child: Icon(Icons.keyboard_backspace,color: icon_color,)),
                 SizedBox(width: 10,),
                 Text(s,style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),),
@@ -246,12 +258,7 @@ class _CartScreenState extends State<CartScreen> {
               children: <Widget>[
                 InkWell(
                     onTap: ()=>{
-                      if(foodItems.length>0)
-                      {  navigateToCheckout()}
-                      else
-                        {
-                          CommonMethods.showLongToast("No item in cart")
-                        }
+                     navigate()
                       
                     },
                     child: Text("Checkout")),
@@ -276,5 +283,16 @@ class _CartScreenState extends State<CartScreen> {
         Navigator.push(context,MaterialPageRoute(builder: (context) => PickupCheckoutScreen() ),);
       }*/
 
+  }
+
+  navigate() {
+    if(foodItems.length>0)
+    {
+      navigateToCheckout();
+    }
+    else
+    {
+      CommonMethods.showLongToast("No item in cart");
+    }
   }
 }

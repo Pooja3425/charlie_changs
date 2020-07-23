@@ -1,6 +1,7 @@
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/views/about_screen.dart';
 import 'package:charliechang/views/points_screen.dart';
 import 'package:charliechang/views/profile_screen.dart';
 import 'package:charliechang/views/refer_screen.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'bottom_screen.dart';
 import 'orders_screen.dart';
 
 class MoreScreen extends StatefulWidget {
@@ -36,7 +38,9 @@ class _MoreScreenState extends State<MoreScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.keyboard_backspace,color: icon_color,),
+                    InkWell(
+                        onTap: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomScreen())),
+                        child: Icon(Icons.keyboard_backspace,color: icon_color,)),
                     SizedBox(width: 10,),
                     Text("More Settings",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
                   ],
@@ -172,7 +176,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                   onTap: () {
                                     Navigator.of(context).pop(false);
                                     CommonMethods.clearSharedPrefs("token");
-                                    SystemNavigator.pop();                                  },
+                                    Navigator.of(context).pushReplacementNamed('/LoginScreen');
+                                    },
                                   child: Text(
                                     "Yes, log me out",
                                     style: TextStyle(
@@ -247,6 +252,15 @@ class _MoreScreenState extends State<MoreScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => PointsScreen()),
+      );
+    }
+
+    if(s.contains("About"))
+    {
+      print("ddd");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AboutScreen()),
       );
     }
 

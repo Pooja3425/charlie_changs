@@ -1,18 +1,18 @@
 [
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/e91dc08e955cc2e95069b0110f99683d/core-1.0.0/res/layout-v21/notification_action_tombstone.xml"
+        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/layout-v21/notification_action_tombstone.xml"
     },
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/res/merged/debug/layout-v21/notification_action.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/e91dc08e955cc2e95069b0110f99683d/core-1.0.0/res/layout-v21/notification_action.xml"
+        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/layout-v21/notification_action.xml"
     },
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/e91dc08e955cc2e95069b0110f99683d/core-1.0.0/res/layout-v21/notification_template_icon_group.xml"
+        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/layout-v21/notification_template_icon_group.xml"
     },
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/e91dc08e955cc2e95069b0110f99683d/core-1.0.0/res/layout-v21/notification_template_custom_big.xml"
+        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/layout-v21/notification_template_custom_big.xml"
     }
 ]

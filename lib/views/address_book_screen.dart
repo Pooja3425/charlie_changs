@@ -10,11 +10,14 @@ import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/add_address_screen.dart';
 import 'package:charliechang/views/bottom_screen.dart';
+import 'package:charliechang/views/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 
 class AddressBookScreen extends StatefulWidget {
+  String from;
+  AddressBookScreen({this.from});
   @override
   _AddressBookScreenState createState() => _AddressBookScreenState();
 }
@@ -54,7 +57,24 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           InkWell(
-                              onTap: ()=>Navigator.of(context).pop(),
+                              onTap: (){
+                                if(widget.from==null)
+                                  {
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomScreen()));
+                                  }
+                                else if(widget.from=="checkout")
+                                {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CheckoutScreen()));
+                                }
+                                else if(widget.from =="otp" )
+                                  {
+                                    CommonMethods.showLongToast("Please select address to proceed ");
+                                  }
+                                else if(widget.from =="complete")
+                                {
+                                  CommonMethods.showLongToast("Please add address to proceed ");
+                                }
+                              },
                               child: Icon(Icons.keyboard_backspace,color: icon_color,)),
                           SizedBox(width: 10,),
                           Text("Search Delivery Location",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
@@ -96,7 +116,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                         dropdownValue = newValue;
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,type: "a",)),
+                                          MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,type: "a",mDeliveryList: mDeliveryLocationsList)),
                                         );
                                       });
                                     },
@@ -136,7 +156,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                   onTap: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,type: "a",)),
+                      MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,type: "a",mDeliveryList: mDeliveryLocationsList)),
                     );
                   },
                   child: Padding(
@@ -166,11 +186,24 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                           // SizedBox(height: 10,),
                           InkWell(
                             onTap: (){
-                              CommonMethods.setPreference(context, DELIVERY_ADDRESS_NAME, mCustomerAddressList[index].addressName);
-                              CommonMethods.setPreference(context, DELIVERY_ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
-                              CommonMethods.setPreference(context, DELIVERY_PICKUP, "1");
-                              CommonMethods.setPreference(context, DELIVERY_ADDRESS, mCustomerAddressList[index].address1+" "+ mCustomerAddressList[index].address2);
-                              navigationPage();
+                              if(widget.from=="checkout")
+                              {
+                                CommonMethods.setPreference(context, DELIVERY_ADDRESS_NAME, mCustomerAddressList[index].addressName);
+                                CommonMethods.setPreference(context, DELIVERY_ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
+                                CommonMethods.setPreference(context, DELIVERY_PICKUP, "1");
+                                CommonMethods.setPreference(context, DELIVERY_ADDRESS, mCustomerAddressList[index].address1+" "+ mCustomerAddressList[index].address2);
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CheckoutScreen()));
+                              }
+                              else
+                                {
+                                  CommonMethods.setPreference(context, DELIVERY_ADDRESS_NAME, mCustomerAddressList[index].addressName);
+                                  CommonMethods.setPreference(context, DELIVERY_ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
+                                  CommonMethods.setPreference(context, DELIVERY_PICKUP, "1");
+                                  CommonMethods.setPreference(context, DELIVERY_ADDRESS, mCustomerAddressList[index].address1+" "+ mCustomerAddressList[index].address2);
+                                  navigationPage();
+                                 // Navigator.pop(context);
+                                }
+
                               },
                             child: Container(
                               width: getWidth(context),
@@ -187,17 +220,17 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                           ),
                           InkWell(
                             onTap:(){
-                              if(dropdownValue==null)
+                              /*if(dropdownValue==null)
                                 {
                                   CommonMethods.showLongToast("Select delivery location");
                                 }
                               else
-                                {
+                                {*/
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,type: "e",data: mCustomerAddressList[index],)),
+                                    MaterialPageRoute(builder: (context) => AddAddressScreen(delivery: dropdownValue,type: "e",data: mCustomerAddressList[index],mDeliveryList: mDeliveryLocationsList,)),
                                   );
-                                }
+                              //  }
 
                             },
                               child: Text("Edit",style: TextStyle(fontSize: 12,color: fab_color,fontWeight: FontWeight.w600),)),

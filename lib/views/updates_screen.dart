@@ -2,6 +2,8 @@ import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:flutter/material.dart';
 
+import 'bottom_screen.dart';
+
 class UpdatesScreen extends StatefulWidget {
   @override
   _UpdatesScreenState createState() => _UpdatesScreenState();
@@ -27,7 +29,9 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.keyboard_backspace,color: icon_color,),
+                    InkWell(
+                        onTap: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomScreen())),
+                        child: Icon(Icons.keyboard_backspace,color: icon_color,)),
                     SizedBox(width: 10,),
                     Text("Notifications",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
                   ],

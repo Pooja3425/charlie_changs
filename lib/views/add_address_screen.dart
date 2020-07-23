@@ -19,7 +19,8 @@ class AddAddressScreen extends StatefulWidget {
   final Delivery delivery;
   String type;
   Data data;
-  AddAddressScreen({this.delivery,this.type,this.data});
+  List<Delivery> mDeliveryList;
+  AddAddressScreen({this.delivery,this.type,this.data,this.mDeliveryList});
   @override
   _AddAddressScreenState createState() => _AddAddressScreenState();
 }
@@ -61,11 +62,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       }
     if(widget.delivery !=null)
       {
+        dropdownValue = widget.delivery;
         _controllerLocation.text = widget.delivery.name;
       }
 
     super.initState();
   }
+
+  Delivery dropdownValue;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -230,13 +234,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             Row(
                               children: <Widget>[
                                 Container(
-                                  width: getWidth(context)/2-40,
+                                  width: getWidth(context)/2-15,
                                   height: 38,
                                   decoration: BoxDecoration(
                                       border: Border.all(color: input_border_color,width: 1.0),
                                       borderRadius: BorderRadius.all(Radius.circular(3.3))
                                   ),
-                                  child: Padding(
+                                  child: /*Padding(
                                     padding: CommonMethods.textFieldPadding,
                                     child: TextField(
                                       keyboardType: TextInputType.text,
@@ -258,11 +262,38 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                           border: InputBorder.none,
                                           counterText: ''),
                                     ),
+                                  )*/Padding(
+                                    padding: CommonMethods.textFieldPadding,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<Delivery>(
+                                        icon: Icon(Icons.arrow_drop_down,color: Colors.transparent,),
+                                        value: dropdownValue,
+                                        elevation: 16,
+                                        style: TextStyle(
+                                            color:  button_color,fontSize: 12
+                                        ),
+                                        hint: Text("Search Delivery Location",style: TextStyle(
+                                            color:  input_border_color
+                                        ),),
+                                        onChanged: (Delivery newValue) {
+                                          setState(() {
+                                            dropdownValue = newValue;
+                                          });
+                                        },
+                                        items: widget.mDeliveryList.map((Delivery map) {
+                                          return new DropdownMenuItem<Delivery>(
+                                            value: map,
+                                            child: new Text(map.name,
+                                                style: new TextStyle(color: Colors.black)),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(width: 20,),
                                 Container(
-                                  width: getWidth(context)/2-40,
+                                  width: getWidth(context)/2-65,
                                   height: 38,
                                   decoration: BoxDecoration(
                                       border: Border.all(color: input_border_color,width: 1.0),
@@ -451,7 +482,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       CommonMethods.showShortToast("Please enter address line 2");
       return false;
     }
-    if(_controllerLocation.text.length==0)
+    if(dropdownValue==null)
     {
       CommonMethods.showShortToast("Please enter location");
       return false;
@@ -466,7 +497,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       "address_name":_controllerAddressName.text,
       "address1":_controllerAddressLine1.text,
       "address2":_controllerAddressLine2.text,
-      "area_id": widget.delivery.areaid,
+      "area_id": dropdownValue.areaid,
       "is_default":"1",
     });
     mAddDeliveryAddressBloc=AddDeliveryAddressBloc(body);
@@ -511,7 +542,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       "address_name":_controllerAddressName.text,
       "address1":_controllerAddressLine1.text,
       "address2":_controllerAddressLine2.text,
-      "area_id": widget.delivery.areaid,
+      "area_id": dropdownValue.areaid,
       "id":widget.data.id,
       "is_primary":""
     });
