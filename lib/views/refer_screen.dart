@@ -1,7 +1,11 @@
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_share/flutter_share.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ReferScreen extends StatefulWidget {
   @override
@@ -9,6 +13,12 @@ class ReferScreen extends StatefulWidget {
 }
 
 class _ReferScreenState extends State<ReferScreen> {
+  String coupon_code;
+  @override
+  void initState() {
+    getCoupon();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,12 +72,26 @@ class _ReferScreenState extends State<ReferScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text("Your Code - ABCDE12345",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
+                              Text("Your Code - ${coupon_code}",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
                               Row(
                                 children: <Widget>[
-                                  Image.asset("assets/images/copy.png",height: 20,),
+                                  InkWell(
+                                      onTap: (){
+                                        print("COPY");
+                                        Clipboard.setData(new ClipboardData(text: "ABCDE12345"));
+                                        CommonMethods.showLongToast("Coppied to clipboard");
+                                       /* Scaffold.of(context).showSnackBar(SnackBar
+                                          (content: Text('text copied')));*/
+                                      },
+                                      child: Image.asset("assets/images/copy.png",height: 20,)),
                                   SizedBox(width: 10,),
-                                  Image.asset("assets/images/upload.png",height: 20,)
+                                  InkWell(
+
+                                      onTap:() {
+                                        print("COPY");
+                                        share();
+                                      },
+                                      child: Image.asset("assets/images/upload.png",height: 20,))
                                 ],
                               )
                             ],
@@ -83,4 +107,19 @@ class _ReferScreenState extends State<ReferScreen> {
       ),
     );
   }
+  Future<void> share() async {
+    await FlutterShare.share(
+        title: 'Example share',
+        text: 'Example share text',
+        linkUrl: 'https://flutter.dev/',
+        chooserTitle: 'Example Chooser Title'
+    );
+  }
+
+   getCoupon() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      coupon_code=prefs.getString(COUPON_CODE);
+    });
+   }
 }

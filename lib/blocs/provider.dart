@@ -29,6 +29,29 @@ class CartProvider {
     return foodItems;
   }
 
+  int totalCartValue;
+  int calculateTotal() {
+    totalCartValue = 0;
+    foodItems.forEach((f) {
+      totalCartValue += int.parse(f.price) * f.count;
+    });
+    return totalCartValue;
+  }
+
+  int totalTaxValue;
+  int calculateTax() {
+    totalTaxValue = 0;
+    foodItems.forEach((f) {
+      totalTaxValue += int.parse(f.taxTotal) * f.count;
+    });
+    return totalTaxValue;
+  }
+
+  removeAllItems()
+  {
+    foodItems.clear();
+  }
+
   List<Menu> removeFromList(Menu foodItem) {
    // if (foodItem.count > 1) {
       //only decrease the quantity

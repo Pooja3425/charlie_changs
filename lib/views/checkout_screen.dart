@@ -5,12 +5,17 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:charliechang/blocs/add_order_bloc.dart';
 import 'package:charliechang/blocs/apply_coupon_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
+import 'package:charliechang/blocs/loyalty_points_bloc.dart';
 import 'package:charliechang/blocs/online_payment_bloc.dart';
+import 'package:charliechang/blocs/provider.dart';
+import 'package:charliechang/blocs/redeem_otp_bloc.dart';
 import 'package:charliechang/models/add_order_response_model.dart';
 import 'package:charliechang/models/apply_coupon_response.dart';
+import 'package:charliechang/models/loyalty_points_response.dart';
 import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/models/online_payment_response.dart';
 import 'package:charliechang/models/order_model.dart';
+import 'package:charliechang/models/redeem_otp_response.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
@@ -23,6 +28,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -109,28 +115,39 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
+  CartProvider provider = new CartProvider();
   bool isWebviewopen = false;
   String pickup_delivery;
+  final _pinEditingController = TextEditingController();
+  bool isRedeemCalled=false;
   @override
   void initState() {
       getOrderType();
+      print("CART COUNT ${bloc.getCartValue()}");
     _connectivity = new Connectivity();
     _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
-    flutterWebviewPlugin.onUrlChanged.listen((String url) {
-      if (mounted) {
-        if (url.contains(
-            'https://charliechangs.in/thankyou')) {
-          Uri uri = Uri.parse(url);
+      flutterWebviewPlugin.onUrlChanged.listen((String url) {
+        if (mounted) {
+          if (url.contains(
+              'https://charliechangs.in/thankyou')) {
+            Uri uri = Uri.parse(url);
 //Take the payment_id parameter of the url.
-          String paymentRequestId = uri.queryParameters['payment_id'];
+            String paymentRequestId = uri.queryParameters['payment_id'];
 //calling this method to check payment status
-          _checkPaymentStatus(paymentRequestId);
+            _checkPaymentStatus(paymentRequestId);
+          }
+          else {
+            print("ELSE");
+          }
         }
-        else{
-          print("ELSE");
-        }
+      });
+
+      if (dropdownValueReedem == "Redeem CC Points") {
+        if (_isInternetAvailable)
+          callPointsAPI();
+        else
+          CommonMethods.showLongToast(CHECK_INTERNET);
       }
-    });
     super.initState();
   }
   int total=0;
@@ -191,65 +208,73 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   StreamBuilder(
                     stream: bloc.listStream,
                     builder: (context,snapshot){
-                      orderModelList = snapshot.data;
-                      return  ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: orderModelList.length  ,
-                          shrinkWrap: true,
-                          itemBuilder: (context,index){
-                            int price = int.parse(orderModelList[index].price)*orderModelList[index].count;
-                            int itemTotal=0;
-                            itemTotal = itemTotal+int.parse(orderModelList[index].price)*orderModelList[index].count;
-                            total = itemTotal;
-                            return Padding(
-                              padding: const EdgeInsets.only(left:30.0,right: 30.0),
-                              child: Container(
-                                width: getWidth(context),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 20,bottom: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Container(
-                                        child: Text("${orderModelList[index].name}",style: TextStyle(fontSize: 12,color: notification_title_color)),
-                                        width: getWidth(context)/2-70,
-                                      ),
-                                      Container(
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: button_color,width: 0.5),
-                                            borderRadius: BorderRadius.all(Radius.circular(3.3))),
-                                        child: Row(
-                                          children: <Widget>[
-                                            IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
-                                              if(orderModelList[index].count!=1)
-                                              {
-                                                setState(() {
-                                                  orderModelList[index].count--;
-                                                });
-                                              }
-                                            }),
-                                            Text("${orderModelList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
-                                            IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
-                                              setState(() {
-                                                orderModelList[index].count++;
-                                                // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
-                                              });
-                                            })
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right:8.0),
-                                        child: Text("Rs ${price}",style: TextStyle(fontSize: 12,color: notification_title_color)),
-                                      )
+                      if(snapshot.hasData)
+                        {
+                          orderModelList = snapshot.data;
+                          return  ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: orderModelList.length  ,
+                              shrinkWrap: true,
+                              itemBuilder: (context,index){
+                                int price = int.parse(orderModelList[index].price)*orderModelList[index].count;
+                                int itemTotal=0;
+                                itemTotal = itemTotal+int.parse(orderModelList[index].price)*orderModelList[index].count;
+                                total = itemTotal;
+                                return Padding(
+                                  padding: const EdgeInsets.only(left:30.0,right: 30.0),
+                                  child: Container(
+                                    width: getWidth(context),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 20,bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text("${orderModelList[index].name}",style: TextStyle(fontSize: 12,color: notification_title_color)),
+                                            width: getWidth(context)/2-70,
+                                          ),
+                                          Container(
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(color: button_color,width: 0.5),
+                                                borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                                            child: Row(
+                                              children: <Widget>[
+                                                IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+                                                  if(orderModelList[index].count!=1)
+                                                  {
+                                                    setState(() {
+                                                      orderModelList[index].count--;
+                                                    });
+                                                  }
+                                                }),
+                                                Text("${orderModelList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
+                                                IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
+                                                  setState(() {
+                                                    orderModelList[index].count++;
+                                                    // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
+                                                  });
+                                                })
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(right:8.0),
+                                            child: Text("Rs ${price}",style: TextStyle(fontSize: 12,color: notification_title_color)),
+                                          )
 
-                                    ],
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            );
-                          });
+                                );
+                              });
+                        }
+                      else
+                        {
+                          return Container();
+                        }
+
                     },
                   ),
                   SizedBox(height: 10,),
@@ -259,13 +284,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       children: <Widget>[
                         CommonMethods.horizontalLine(context),
                         SizedBox(height: 10,),
-                        billUI("Item Total","Rs $total"),
-                        billUI("Discount","Rs 300"),
-                        billUI("Taxes","Rs 179"),
-                        billUI("Delivery charge","Rs 30"),
+                        billUI("Item Total","Rs ${bloc.getCartValue()}"),
+                        billUI("Discount","Rs ${discountAmount}"),
+                        billUI("Taxes","Rs ${bloc.getTax()}"),
+                        billUI("Delivery charge","Rs 0"),
                         SizedBox(height: 20,),
                         CommonMethods.horizontalLine(context),
-                        billUI("Net Payable","Rs 1699"),
+                        billUI("Net Payable","Rs ${bloc.getCartValue()+bloc.getTax()+30}"),
                         SizedBox(height: 20,),
                       ],
                     ),
@@ -286,12 +311,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
                                   value: dropdownValueReedem,
                                   elevation: 16,
+                                //  hint: Text("Select reward or coupon"),
                                   style: TextStyle(
                                       color:  icon_color
                                   ),
                                   onChanged: (String newValue) {
                                     setState(() {
                                       dropdownValueReedem = newValue;
+                                      /*if(dropdownValueReedem =="Redeem CC Points")
+                                        {
+                                          if(_isInternetAvailable)
+                                          callPointsAPI();
+                                          else
+                                            CommonMethods.showLongToast(CHECK_INTERNET);
+                                        }*/
                                     });
                                   },
                                   items: <String>['Redeem CC Points','Apply coupon code']
@@ -423,6 +456,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   }
 
+
   Widget ickupAppBar()
   {
     PreferredSize(
@@ -468,7 +502,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
   String addressName="",deliveryAddress="",pickupAddress="";
-
+  List<String> _dropdownThree = ["200","300","500"];
+  List<String> _dropdownTwo = ["200","300"];
+  List<String> _dropdownOne = ["200"];
+  int redeemPoints =0;
+  String dropdownReedem;
   Widget deliveryUI(){
     return Column(
       children: <Widget>[
@@ -480,7 +518,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
 
-                Text("You can redeem maximum of 300 points (worth Rs 300)",style: TextStyle(fontSize: 12,color: notification_title_color),),
+                Text("You can redeem maximum of 500 points (worth Rs 5000)",style: TextStyle(fontSize: 12,color: notification_title_color),),
                 SizedBox(height: 8,),
                 /*Container(
                   width: getWidth(context)-100,
@@ -498,7 +536,78 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
                 )*/
-                Container(
+               redeemPoints>=2000? Container(
+                  width: getWidth(context)-100,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
+                      border: Border.all(color: input_border_color,width: 0.3)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        //Text("CHARLIE10",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                        Container(
+                          width:getWidth(context)/2,
+                          height: 25,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
+                              value: dropdownReedem,
+                              hint: Text("Select redeem points"),
+                              elevation: 16,
+                              style: TextStyle(
+                                  color:  icon_color
+                              ),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  dropdownReedem = newValue;
+                                });
+                              },
+                              items: redeemPoints>=2000?_dropdownOne.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
+                                );
+                              })
+                                  .toList():redeemPoints>=3000?_dropdownTwo.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
+                                );
+                              })
+                                  .toList():_dropdownThree.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
+                                );
+                              })
+                                  .toList(),
+                            ),
+                          )
+                        ),
+                        InkWell(
+                            onTap: (){
+                              if(_isInternetAvailable)
+                              {
+                                if(isRedeemValid())
+                                {
+                                  isRedeemCalled=true;
+                                  callRedeemOTPAPI();
+                                  //callCouponAPI();
+                                }
+                              }
+                              else
+                              {
+                                CommonMethods.showLongToast(CHECK_INTERNET);
+                              }
+                            },
+                            child: Text("Redeem",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
+                      ],
+                    ),
+                  ),
+                ):Text("You dont have enought points to reedem"),
+                SizedBox(height: 10,),
+                isRedeemCalled?Container(
 
                   width: getWidth(context)-100,
                   decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
@@ -513,7 +622,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           width:getWidth(context)/2,
                           height: 25,
                           child: TextField(
-                              controller: controllerRedeem,
+                              controller: _pinEditingController,
                               style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.only(bottom: 15),
@@ -530,7 +639,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               {
                                 if(isCouonValid())
                                 {
-                                  //callCouponAPI();
+                                  callCouponAPI();
                                 }
                               }
                               else
@@ -538,11 +647,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 CommonMethods.showLongToast(CHECK_INTERNET);
                               }
                             },
-                            child: Text("Redeem",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
+                            child: Text("Apply",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
                       ],
                     ),
                   ),
-                ),
+                ):Container(),
               ],
             ),
           ),
@@ -687,6 +796,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   AddOrderBloc mAddOrderBloc;
   AddOrderResponse mAddOrderResponse;
   String payment_mode="0";
+
   callPlaceOrderAPI() async{
     var resBody = {};
     var items = [];
@@ -739,6 +849,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
         CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(mAddOrderResponse.msg);
+        bloc.clearCart();
         navigationPage();
       }
       else if(onData.status == Status.ERROR)
@@ -1028,6 +1139,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 flutterWebviewPlugin.close();
                                 flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl);
                                 Navigator.of(context).pop(false);
+                                setState(() {
+                                  isWebviewopen=true;
+
+                                });
                               },
                               child: Text("No, I will continue",style: TextStyle(color: Colors.white,fontSize: 12),)),
                         ],
@@ -1055,5 +1170,85 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
 
     }
+  }
+
+  LoyaltyPointsBloc mLoyaltyPointsBloc;
+  LoyaltyPointsResponse mLoyaltyPointsResponse;
+   callPointsAPI() {
+     mLoyaltyPointsBloc=LoyaltyPointsBloc();
+     mLoyaltyPointsBloc.dataStream.listen((onData){
+       mLoyaltyPointsResponse = onData.data;
+       //print(onData.status);
+       if(onData.status == Status.LOADING)
+       {
+         // CommonMethods.displayProgressDialog(onData.message,context);
+         CommonMethods.showLoaderDialog(context,onData.message);
+       }
+       else if(onData.status == Status.COMPLETED)
+       {
+         CommonMethods.dismissDialog(context);
+          if(mLoyaltyPointsResponse.points==null || mLoyaltyPointsResponse.points==0)
+            {
+              setState(() {
+                redeemPoints = 2000;
+              });
+            }
+          else
+            {
+              setState(() {
+                redeemPoints = mLoyaltyPointsResponse.points;
+              });
+
+            }
+          print("REDD $redeemPoints");
+       }
+       else if(onData.status == Status.ERROR)
+       {
+         CommonMethods.dismissDialog(context);
+         CommonMethods.showShortToast(onData.message);
+
+       }
+     });
+   }
+
+  bool isRedeemValid() {
+     if(dropdownReedem==null)
+       {
+         CommonMethods.showLongToast("Select redeem option");
+         return false;
+       }
+     return true;
+  }
+
+  RedeemOTPBloc mRedeemOTPBloc;
+  RedeemOTPResponse mRedeemOTPResponse;
+
+  callRedeemOTPAPI() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final body = jsonEncode(
+        {
+          "number":preferences.getString(PHONE_NUMBER),
+        });
+    mRedeemOTPBloc=RedeemOTPBloc(body);
+    mRedeemOTPBloc.dataStream.listen((onData){
+      mRedeemOTPResponse = onData.data;
+      //print(onData.status);
+      if(onData.status == Status.LOADING)
+      {
+        // CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        CommonMethods.dismissDialog(context);
+
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
   }
 }

@@ -11,6 +11,7 @@ MERGED from [:shared_preferences] /home/asmss102/Desktop/WORK_SPACE/practice/Bra
 MERGED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-14:12
 MERGED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-10:12
 MERGED from [:connectivity_macos] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity_macos/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:flutter_share] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_share/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-21:12
 MERGED from [com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.firebase:firebase-datatransport:17.0.3] /home/asmss102/.gradle/caches/transforms-2/files-2.1/66b88bf3e9aa090694f8e676d1871042/firebase-datatransport-17.0.3/AndroidManifest.xml:15:1-34:12
@@ -178,6 +179,8 @@ MERGED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgar
 MERGED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:connectivity_macos] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity_macos/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:connectivity_macos] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity_macos/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_share] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_share/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_share] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_share/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:6:5-44
 MERGED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:6:5-44
 MERGED from [com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:20:5-44

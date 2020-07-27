@@ -1,17 +1,24 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:charliechang/blocs/cartlistBloc.dart';
+import 'package:charliechang/blocs/menu_bloc.dart';
 import 'package:charliechang/blocs/order_history_bloc.dart';
+import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/models/order_history_respons.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
+import 'package:charliechang/views/bottom_screen.dart';
 import 'package:charliechang/views/order_detail_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrdersScreen extends StatefulWidget {
   @override
@@ -34,6 +41,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     if(_isInternetAvailable)
     {
       callOrdersAPI();
+      getMenuAPI();
     }
     else
     {
@@ -61,6 +69,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           _buildSearchList();
         });
       }
+
     });
   }
 
@@ -82,7 +91,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
 
   List<Data> _buildSearchList() {
-    if (_searchController.text.isEmpty) {
+    print("search va $_IsSearching");
+    if (_searchText.isEmpty) {
       return newDataList =
           mOrderList; //_list.map((contact) =>  Uiitem(contact)).toList();
     } else {
@@ -91,10 +101,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
           element.orderItems[0].itemName.toLowerCase().contains(_searchText.toLowerCase()))
           .toList();
 
-   /* .where((element) =>
+
+       /*newDataList = mOrderList.where((element) =>
     element.orderItems.where((element) =>
-    element.itemName.toLowerCase().contains(searchValue.toLowerCase())).toList().contains(searchValue.toLowerCase()))
+    element.itemName.toLowerCase().contains(_searchText.toLowerCase())).toList().contains(_searchText.toLowerCase()))
         .toList();*/
+
       print('${newDataList.length}');
       return newDataList; //_searchList.map((contact) =>  Uiitem(contact)).toList();
     }
@@ -161,7 +173,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                     counterText: ''
                                 ),
                                 controller: _searchController,
-                               // onChanged: onItemChanged,
+                                // onChanged: onItemChanged,
                               ),
                             )
                           ],
@@ -191,7 +203,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 child:_IsSearching?newDataList.length>0?ListView.builder(
                   itemCount: newDataList.length,
                   itemBuilder: (context,index){
-                    print("before search");
+                    print("after search");
 
                     return  deliveryRowUI(newDataList[index]);
                   },
@@ -316,7 +328,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 ],
               ),
             ),
-            Text("repeat order",style: TextStyle(color: button_color,fontSize: 12,),),
+            InkWell(
+                onTap: (){
+                  addItemsTocart(orders);
+                },
+                child: Text("repeat order",style: TextStyle(color: button_color,fontSize: 12,),)),
             SizedBox(height: 20,),
             CommonMethods.horizontalLine(context)
           ],
@@ -351,6 +367,85 @@ class _OrdersScreenState extends State<OrdersScreen> {
         {
           CommonMethods.showShortToast("Invalid OTP");
         }
+      }
+    });
+  }
+
+  final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+  addItemsTocart(Data orders) {
+    for(int i=0;i<orders.orderItems.length;i++)
+      {
+          for(int j=0;j<mMenuList.length;j++)
+            {
+              if(orders.orderItems[i].itemId == mMenuList[j].id)
+                {
+                  print("QUATITY ${orders.orderItems[i].quantity}");
+                  for(int k=i;k<=int.parse(orders.orderItems[i].quantity);k++)
+                    {
+                      print("ITEM NAME ${mMenuList[j].name}");
+                      addToCart(mMenuList[j]);
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 2,),));
+                    }
+                }
+            }
+      }
+  }
+
+  addToCart(Menu foodItem) {
+    bloc.addToList(foodItem);
+  }
+
+  removeFromList(Menu foodItem) {
+    bloc.removeFromList(foodItem);
+  }
+
+  MenuBloc mMenuBloc;
+  MenuResponse mMenuResponse;
+  List<Menu> mMenuList = new List();
+
+  /*List<FoodItem> foodList = new List();*/
+  getMenuAPI() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String hashKey;
+    if(preferences.getString(DELIVERY_PICKUP) =="1")
+    {
+     setState(() {
+       hashKey = preferences.get(DELIVERY_ADDRESS_HASH);
+     });
+    }
+    else
+    {
+      if(preferences.get(PICKUP_ADDRESS_NAME)!=null)
+      {
+        setState(() {
+          hashKey = preferences.get(PICKUP_ADDRESS_HASH);
+        });
+
+      }
+
+    }
+    final body = jsonEncode({"hash":hashKey,"category":""});
+    mMenuBloc=MenuBloc(body);
+    mMenuBloc.dataStream.listen((onData){
+      mMenuResponse = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+        //CommonMethods.displayProgressDialog(onData.message,context);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        //CommonMethods.hideDialog();
+        setState(() {
+          mMenuList = mMenuResponse.menu;
+
+
+        });
+        //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        // CommonMethods.hideDialog();
+        CommonMethods.showShortToast(onData.message);
       }
     });
   }

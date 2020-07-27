@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:badges/badges.dart';
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:charliechang/blocs/cart_bloc.dart';
+import 'package:charliechang/blocs/cartlistBloc.dart';
+import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/views/cart_screen.dart';
@@ -12,6 +15,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
 import 'more_screen.dart';
@@ -78,6 +82,8 @@ class Item {
 
 
 class BottomScreen extends StatefulWidget {
+  int initPage;
+  BottomScreen({this.initPage});
   @override
   _BottomScreenState createState() => _BottomScreenState();
 }
@@ -91,6 +97,13 @@ class _BottomScreenState extends State<BottomScreen> {
   @override
   void initState() {
     _pageController = new PageController();
+    if(widget.initPage!=null)
+      {
+        setState(() {
+          _page=widget.initPage;
+        });
+      }
+    getCartValue();
     _firebaseMessaging.getToken().then((value) => print(value));
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
@@ -149,7 +162,7 @@ class _BottomScreenState extends State<BottomScreen> {
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
   }
   bool showBadge= true;
-  int badgeData = 0;
+  static int badgeData = 0;
   Widget callpage(int currentIndex) {
    /* var bloc = Provider.of<CartBloc>(context);
     int totalCount = 0;
@@ -174,18 +187,39 @@ class _BottomScreenState extends State<BottomScreen> {
         );
       case 1:
         return OffersScreen();
+      case 2:
+        return  CartScreen(
+          callback1: () {
+            showBadge = true;
+            setState(() {});
+          },
+          func1: (string) {
+            if (string == 'ADD') {
+              badgeData++;
+            } else if (string == 'REMOVE') {
+              badgeData--;
+            }
+            setState(() {});
+          },
+        );
+
         break;
+      case 3:
+        return UpdatesScreen();
+      case 4:
+        return MoreScreen();
       default:
         return HomeScreen();
     }
   }
+  final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _page ==0?exitDialog:goToHome,
       child: Scaffold(
-        body: /*callpage(_page)*/Container(
+        body: callpage(_page)/*Container(
           height: getHeight(context),
           child: IndexedStack(
             children: <Widget>[
@@ -229,7 +263,7 @@ class _BottomScreenState extends State<BottomScreen> {
               ),
             ],
           ),
-        ),
+        )*/,
         bottomNavigationBar: new Theme(
           isMaterialAppTheme: false,
           data: Theme.of(context).copyWith(
@@ -257,14 +291,49 @@ class _BottomScreenState extends State<BottomScreen> {
 
                   )),
               new BottomNavigationBarItem(
-                  icon: Badge(
-                    shape: BadgeShape.circle,
-                    badgeContent: Text(
-                      badgeData.toString(),
-                      style: TextStyle(color: Colors.white,fontSize: 10),
-                    ),
-                    child: Image.asset(
-                      'assets/images/cart.png', height: 15, width: 15,color: _page==2?fab_color:icon_color,),
+                  icon: StreamBuilder(
+                    stream: bloc.listStream,
+                    builder: (context,snapshot){
+                      if(snapshot.hasData)
+                        {
+                          int quantity=0;
+                          List<Menu>foodItems = snapshot.data;
+                          for(int i=0;i<foodItems.length;i++)
+                            {
+                              quantity=quantity+foodItems[i].count;
+                            }
+                          return Badge(
+                            shape: BadgeShape.circle,
+                            badgeContent: Text(
+                              "${quantity}",
+                              style: TextStyle(color: Colors.white,fontSize: 10),
+                            ),
+                            child: Image.asset(
+                              'assets/images/cart.png', height: 15, width: 15,color: _page==2?fab_color:icon_color,),
+                          );
+                        }
+                      else
+                        {
+                          return Badge(
+                            shape: BadgeShape.circle,
+                            badgeContent: Text(
+                              "${badgeData}",
+                              style: TextStyle(color: Colors.white,fontSize: 10),
+                            ),
+                            child: Image.asset(
+                              'assets/images/cart.png', height: 15, width: 15,color: _page==2?fab_color:icon_color,),
+                          );
+                        }
+                    },
+                   /* child: Badge(
+                      shape: BadgeShape.circle,
+                      badgeContent: Text(
+                        badgeData.toString(),
+                        style: TextStyle(color: Colors.white,fontSize: 10),
+                      ),
+                      child: Image.asset(
+                        'assets/images/cart.png', height: 15, width: 15,color: _page==2?fab_color:icon_color,),
+                    ),*/
                   ),
                   title: new Text(
                     "Cart",style: TextStyle(color: _page==2?fab_color:icon_color,fontSize: 12),
@@ -285,12 +354,12 @@ class _BottomScreenState extends State<BottomScreen> {
                     "More",style: TextStyle(color: _page==4?fab_color:icon_color,fontSize: 12),
                   )),
             ],
-            onTap: navigationTapped,
-           /* onTap: (index) {
+           // onTap: navigationTapped,
+            onTap: (index) {
               setState(() {
                 _page = index;
               });
-            },*/
+            },
             currentIndex: _page,
 
 
@@ -369,4 +438,11 @@ class _BottomScreenState extends State<BottomScreen> {
           );
         });
   }
+
+   getCartValue() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      //badgeData = int.parse(prefs.getString(CART_COUNT));
+    });
+   }
 }

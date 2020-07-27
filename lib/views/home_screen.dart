@@ -505,7 +505,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     widget.callback1();
                     widget.func1('ADD');
                     setState(() {
-                      mMenuList[index].count ++;
+                      //
+                     // mMenuList[index].count ++;
                     });
                     // _settingModalBottomSheet(context);
                   },
@@ -534,11 +535,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
                         /*if(mMenuList[index].count!=1)
                                                 {*/
-                        bloc.removeFromList(mMenuList[index]);
+                        //bloc.removeFromList(mMenuList[index]);
                         print("SIZEEE ${mMenuList[index].count}");
 
                         widget.callback1();
                         widget.func1('REMOVE');
+                        if(mMenuList[index].count!=1)
+                          {
+                            setState(() {
+                              mMenuList[index].count--;
+                            });
+                          }
+                        else
+                          {
+                            removeFromList(mMenuList[index]);
+                          }
+
 
 
                         //}
@@ -547,10 +559,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
                         print("ADDDD");
                         setState(() {
-                          //mMenuList[index].count++;
+                          mMenuList[index].count++;
                           // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
                         });
-                        addToCart(mMenuList[index]);
+                       // addToCart(mMenuList[index]);
                         widget.callback1();
                         widget.func1('ADD');
                       })

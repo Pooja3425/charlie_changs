@@ -23,7 +23,7 @@ class AddOrderBloc{
   }
 
   fetchRegisterData(var bodyData) async {
-    dataSink.add(Response.loading('Saving data...'));
+    dataSink.add(Response.loading('Placing your order...'));
     try {
       AddOrderResponse regRes = await _addOrderRepository.fetchResponse(bodyData);
       if (_isStreaming) dataSink.add(Response.completed(regRes));

@@ -228,6 +228,7 @@ class _OtpScreenState extends State<OtpScreen> {
               CommonMethods.setPreference(context, "token", verifyOtpRes.token);
               CommonMethods.setPreference(context, COUPON_CODE, verifyOtpRes.couponCode);
               CommonMethods.setPreference(context, COMPLETE_PROFILE, verifyOtpRes.completeProfile);
+              CommonMethods.setPreference(context, PHONE_NUMBER, widget.mobile);
               navigateToHome();
             }
 

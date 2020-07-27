@@ -29,6 +29,19 @@ class CartListBloc extends BlocBase {
     
   }
 
+  clearCart()
+  {
+    provider.removeAllItems();
+  }
+  int getCartValue()
+  {
+    return provider.calculateTotal();
+  }
+
+  int getTax()
+  {
+    return provider.calculateTax();
+  }
 //dispose will be called automatically by closing its streams
   @override
   void dispose() {

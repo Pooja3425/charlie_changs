@@ -1,7 +1,14 @@
 
+import 'dart:async';
+
+import 'package:charliechang/blocs/loyalty_points_bloc.dart';
+import 'package:charliechang/models/loyalty_points_response.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 
 class PointsScreen extends StatefulWidget {
@@ -10,6 +17,38 @@ class PointsScreen extends StatefulWidget {
 }
 
 class _PointsScreenState extends State<PointsScreen> {
+
+  //internet
+  bool _isInternetAvailable = true;
+  Connectivity _connectivity;
+  StreamSubscription<ConnectivityResult> _subscription;
+
+  void onConnectivityChange(ConnectivityResult result) {
+    if (result == ConnectivityResult.none) {
+      setState(() {
+        _isInternetAvailable = false;
+      });
+    } else {
+      setState(() {
+        _isInternetAvailable = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    _connectivity = new Connectivity();
+    _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
+    if(_isInternetAvailable)
+      {
+        callPointsAPI();
+      }
+    else
+      {
+        CommonMethods.showLongToast(CHECK_INTERNET);
+      }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,7 +76,7 @@ class _PointsScreenState extends State<PointsScreen> {
                     children: <Widget>[
                       SizedBox(height: 15,),
                       Text("You have",style: TextStyle(color: icon_color),),
-                      Text("500 points",style: TextStyle(color: button_color,fontSize: 15,fontWeight: FontWeight.bold),),
+                      Text("$redeemPoints points",style: TextStyle(color: button_color,fontSize: 15,fontWeight: FontWeight.bold),),
                       SizedBox(height: 15,),
                       Container(
                         width: 200,
@@ -121,5 +160,43 @@ class _PointsScreenState extends State<PointsScreen> {
          ),
       ),
     );
+  }
+  int redeemPoints=0;
+  LoyaltyPointsBloc mLoyaltyPointsBloc;
+  LoyaltyPointsResponse mLoyaltyPointsResponse;
+  callPointsAPI() {
+    mLoyaltyPointsBloc=LoyaltyPointsBloc();
+    mLoyaltyPointsBloc.dataStream.listen((onData){
+      mLoyaltyPointsResponse = onData.data;
+      //print(onData.status);
+      if(onData.status == Status.LOADING)
+      {
+        // CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        CommonMethods.dismissDialog(context);
+        if(mLoyaltyPointsResponse.points==null || mLoyaltyPointsResponse.points==0)
+        {
+          setState(() {
+            redeemPoints = 0;
+          });
+        }
+        else
+        {
+          setState(() {
+            redeemPoints = mLoyaltyPointsResponse.points;
+          });
+
+        }
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
   }
 }
