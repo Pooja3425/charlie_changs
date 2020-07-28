@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void navigationPage() {
-    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => OtpScreen(mobile: controllerNumber.text,) ),);
+    Navigator.push(context,MaterialPageRoute(builder: (context) => OtpScreen(mobile: controllerNumber.text,) ),);
   }
 
 }

@@ -131,6 +131,12 @@ class CommonMethods
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key,value);
   }
+
+  static setPreferenceBool(BuildContext context,String key, bool value) async
+  {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key,value);
+  }
   static getPreference(BuildContext context,String key) async
   {
     SharedPreferences prefs = await SharedPreferences.getInstance();

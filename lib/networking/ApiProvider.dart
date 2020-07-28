@@ -38,7 +38,7 @@ class ApiProvider {
 
     var responseJson;
     try {
-      print("URL ${_baseUrl+url}  ${headers}");
+      //print("URL ${_baseUrl+url}  ${headers}");
       final response = await http.get(_baseUrl + url,headers: headers);
       responseJson = _response(response);
     } on SocketException {
@@ -113,7 +113,7 @@ class ApiProvider {
       'Accept':'application/json',
       'Authorization':token
     };
-    print("HEEE ${headers} ${bodyData} ${_baseUrl+url}");
+    //print("HEEE ${headers} ${bodyData} ${_baseUrl+url}");
 
     try {
       final response = await http.post(_baseUrl + url,body: bodyData,headers: headers);
@@ -138,7 +138,7 @@ class ApiProvider {
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:
-        print("200");
+      //  print("200");
         var responseJson = json.decode(response.body.toString());
         print(responseJson);
         return responseJson;

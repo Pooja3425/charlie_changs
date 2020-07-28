@@ -5,7 +5,7 @@ class RedeemOTPRepository
 {
   ApiProvider _provider = ApiProvider();
   Future<RedeemOTPResponse> fetchResponse(var bodyData) async {
-    final response = await _provider.post("cart/redeem_reward",bodyData);
+    final response = await _provider.postToken("cart/redeem_reward",bodyData);
     return RedeemOTPResponse.fromJson(response);
   }
 }

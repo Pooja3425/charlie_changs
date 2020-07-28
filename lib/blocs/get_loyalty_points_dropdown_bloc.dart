@@ -16,7 +16,7 @@ class GetLoyaltyPointsBloc
   Stream<Response<GetLoyaltyPointsDropdown>> get dataStream =>
       _regDataController.stream;
 
-  RedeemOTPBloc(var bodyData) {
+  GetLoyaltyPointsBloc(var bodyData) {
     _regDataController = StreamController<Response<GetLoyaltyPointsDropdown>>();
     _loyaltyPointsRepository = GetLoyaltyPointsRepository();
     _isStreaming = true;

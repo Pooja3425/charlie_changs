@@ -1,21 +1,28 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:charliechang/blocs/add_order_bloc.dart';
 import 'package:charliechang/blocs/apply_coupon_bloc.dart';
+import 'package:charliechang/blocs/apply_loyalty_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
+import 'package:charliechang/blocs/get_loyalty_points_dropdown_bloc.dart';
 import 'package:charliechang/blocs/loyalty_points_bloc.dart';
 import 'package:charliechang/blocs/online_payment_bloc.dart';
 import 'package:charliechang/blocs/provider.dart';
 import 'package:charliechang/blocs/redeem_otp_bloc.dart';
 import 'package:charliechang/models/add_order_response_model.dart';
 import 'package:charliechang/models/apply_coupon_response.dart';
+import 'package:charliechang/models/apply_loyalty_response.dart';
+import 'package:charliechang/models/get_loyalty_points_dropdown.dart';
+import 'package:charliechang/models/loyalty_dropdown.dart';
 import 'package:charliechang/models/loyalty_points_response.dart';
 import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/models/online_payment_response.dart';
 import 'package:charliechang/models/order_model.dart';
 import 'package:charliechang/models/redeem_otp_response.dart';
+import 'package:charliechang/networking/CustomException.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
@@ -28,6 +35,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:http/http.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -120,8 +128,22 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   String pickup_delivery;
   final _pinEditingController = TextEditingController();
   bool isRedeemCalled=false;
+
+  static final data =  {
+    "id": 1,
+    "points": 2050,
+    "select_points": {
+      "11744": "200 ( 2000 Loyalty points )",
+      "11745": "200 ( 2000 Loyalty points )"
+    }
+  };
+  String reward_id_selected="";
+  List _dates = [];
+
+
   @override
   void initState() {
+
       getOrderType();
       print("CART COUNT ${bloc.getCartValue()}");
     _connectivity = new Connectivity();
@@ -144,7 +166,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
       if (dropdownValueReedem == "Redeem CC Points") {
         if (_isInternetAvailable)
-          callPointsAPI();
+          {callPointsAPI();
+        callDropdownAPI();}
         else
           CommonMethods.showLongToast(CHECK_INTERNET);
       }
@@ -285,12 +308,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         CommonMethods.horizontalLine(context),
                         SizedBox(height: 10,),
                         billUI("Item Total","Rs ${bloc.getCartValue()}"),
-                        billUI("Discount","Rs ${discountAmount}"),
+                        billUI("Discount","Rs ${discount}"),
                         billUI("Taxes","Rs ${bloc.getTax()}"),
                         billUI("Delivery charge","Rs 0"),
                         SizedBox(height: 20,),
                         CommonMethods.horizontalLine(context),
-                        billUI("Net Payable","Rs ${bloc.getCartValue()+bloc.getTax()+30}"),
+                        billUI("Net Payable","Rs ${bloc.getCartValue()+bloc.getTax()-discount}"),
                         SizedBox(height: 20,),
                       ],
                     ),
@@ -357,7 +380,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  String discountAmount="";
+  String discountAmount="0";
+  int discount=0;
   Widget pickupUI()
   {
     return Column(
@@ -506,7 +530,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   List<String> _dropdownTwo = ["200","300"];
   List<String> _dropdownOne = ["200"];
   int redeemPoints =0;
-  String dropdownReedem;
+  PointsDropdown dropdownReedem;
   Widget deliveryUI(){
     return Column(
       children: <Widget>[
@@ -550,7 +574,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           width:getWidth(context)/2,
                           height: 25,
                           child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
+                            child: DropdownButton<PointsDropdown>(
                               icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
                               value: dropdownReedem,
                               hint: Text("Select redeem points"),
@@ -558,27 +582,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               style: TextStyle(
                                   color:  icon_color
                               ),
-                              onChanged: (String newValue) {
+                              onChanged: (PointsDropdown newValue) {
                                 setState(() {
                                   dropdownReedem = newValue;
                                 });
                               },
-                              items: redeemPoints>=2000?_dropdownOne.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
-                                );
-                              })
-                                  .toList():redeemPoints>=3000?_dropdownTwo.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
-                                );
-                              })
-                                  .toList():_dropdownThree.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
+                              items: loyaltyPointsList.map<DropdownMenuItem<PointsDropdown>>((PointsDropdown pointsDrop) {
+                                return DropdownMenuItem<PointsDropdown>(
+                                  value: pointsDrop,
+                                  child: Text(pointsDrop.value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
                                 );
                               })
                                   .toList(),
@@ -623,6 +635,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           height: 25,
                           child: TextField(
                               controller: _pinEditingController,
+                              maxLength: 4,
                               style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.only(bottom: 15),
@@ -637,9 +650,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             onTap: (){
                               if(_isInternetAvailable)
                               {
-                                if(isCouonValid())
+                                if(isOtpValid())
                                 {
-                                  callCouponAPI();
+                                  callApplyLoyaltyPoints();
                                 }
                               }
                               else
@@ -828,7 +841,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           "deliver_pickup":preferences.getString(DELIVERY_PICKUP),
           "coupon_code":"",
           "payment_mode":payment_mode,
-          "reward_id_selected":"",
+          "reward_id_selected":reward_id_selected,
           "notes":"do not proceed test order from development team",
           "items":json.decode(orderItems)});
 
@@ -982,7 +995,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       "deliver_pickup":preferences.getString(DELIVERY_PICKUP),
       "coupon_code":"",
       "payment_mode":payment_mode,
-      "reward_id_selected":"",
+      "reward_id_selected":reward_id_selected,
       "notes":"do not proceed test order from development team",
       "items":json.decode(orderItems)});
 
@@ -1046,7 +1059,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   callCouponAPI() async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final body = jsonEncode(
-      {"del_area":preferences.getString(ADDRESS_HASH),
+      {
+      "del_area":preferences.getString(ADDRESS_HASH),
       "coupon_code":controllerCoupon.text,
       "payment_mode":payment_mode,
       "subtotal":total.toString(),
@@ -1064,6 +1078,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       else if(onData.status == Status.COMPLETED)
       {
         setState(() {
+          discount = mApplyCouponReponse.discount;
           discountAmount ="Rs ${mApplyCouponReponse.discount} discount applied";
         });
         CommonMethods.dismissDialog(context);
@@ -1190,7 +1205,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           if(mLoyaltyPointsResponse.points==null || mLoyaltyPointsResponse.points==0)
             {
               setState(() {
-                redeemPoints = 2000;
+                redeemPoints = 0;
               });
             }
           else
@@ -1227,7 +1242,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final body = jsonEncode(
         {
-          "number":preferences.getString(PHONE_NUMBER),
+          "number":/*preferences.getString(PHONE_NUMBER)*/"8554063733",
         });
     mRedeemOTPBloc=RedeemOTPBloc(body);
     mRedeemOTPBloc.dataStream.listen((onData){
@@ -1241,6 +1256,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       else if(onData.status == Status.COMPLETED)
       {
         CommonMethods.dismissDialog(context);
+        setState(() {
+          isRedeemCalled=true;
+        });
 
       }
       else if(onData.status == Status.ERROR)
@@ -1251,4 +1269,149 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
     });
   }
+
+
+  ApplyLoyaltyBloc mApplyLoyaltyBloc;
+  ApplyLoyaltyResponse mApplyLoyaltyResponse;
+  callApplyLoyaltyPoints() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final body = jsonEncode(
+        {
+          "number":/*preferences.getString(PHONE_NUMBER)*/"8554063733",
+          "otp":_pinEditingController.text,
+          "reward_id":dropdownReedem.key
+        });
+
+    mApplyLoyaltyBloc=ApplyLoyaltyBloc(body);
+    mApplyLoyaltyBloc.dataStream.listen((onData){
+      mApplyLoyaltyResponse = onData.data;
+      //print(onData.status);
+      if(onData.status == Status.LOADING)
+      {
+        // CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        setState(() {
+          //discountAmount ="Rs ${mApplyLoyaltyResponse.discount} discount applied";
+        });
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(mApplyLoyaltyResponse.applyDiscount);
+        String d= mApplyLoyaltyResponse.applyDiscount.split(" ")[0];
+        setState(() {
+          reward_id_selected=dropdownReedem.key;
+          discount = int.parse(d);
+        });
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.dismissDialog(context);
+
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
+  }
+
+  http.Response response;
+  List<PointsDropdown> loyaltyPointsList =new List();
+  void callDropdownAPI() async {
+
+    final String _baseUrl = "https://charliechangs.in/api/";
+
+    String uri = 'https://charliechangs.in/api/user/getloyaltypoint';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString("token");
+    Map<String , String> headers = {
+      'Accept':'application/json',
+      'Authorization':token
+    };
+    final body = jsonEncode(
+        {
+          "number":/*prefs.getString(PHONE_NUMBER)*/"8554063733",
+        });
+
+    print('Parms uri ${uri}');
+
+    try {
+      final response = await http.post(uri,body: body,headers: headers);
+      var responseJson = _response(response);
+      print("REDD   ${responseJson}");
+       var listJson=jsonEncode(responseJson);
+       print("Sss $listJson");
+      Map<String, dynamic> jsonParsed = responseJson["select_points"];
+
+     // print("Www $jsonParsed");
+      jsonParsed.keys.forEach((String key){
+        print("bbb $key");
+        _dates.add(key);
+      });
+
+
+      for(int i=0; i<_dates.length; i++){
+        print(jsonParsed[_dates[i]]);
+
+        final PointsDropdown points = PointsDropdown(key: _dates[i],value:jsonParsed[_dates[i]] );
+        setState(() {
+          loyaltyPointsList.add(points);
+        });
+      }
+
+      /* if(response.statusCode==200)
+        {
+          print("rES ${jsonEncode(response.body)}");
+        }
+      else
+        {
+          print("eee ${response.statusCode}");
+        }*/
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+
+  }
+
+  dynamic _response(http.Response response) {
+    switch (response.statusCode) {
+      case 200:
+      //  print("200");
+        var responseJson = json.decode(response.body.toString());
+        print(responseJson);
+        return responseJson;
+      case 400:
+        print("400");
+        // var responseJson = json.decode(response.body.toString());
+        throw BadRequestException(response.body.toString());
+      case 401:
+
+      case 403:
+        throw UnauthorisedException(response.body.toString());
+      case 500:
+
+      default:
+        throw FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+    }
+  }
+
+  bool isOtpValid() {
+    if(_pinEditingController.text.length==0)
+      {
+        CommonMethods.showLongToast("Enter  OTP");
+        return false;
+      }
+
+    if(_pinEditingController.text.length<4)
+    {
+      CommonMethods.showLongToast("Enter valid OTP");
+      return false;
+    }
+    return true;
+  }
+
+
+
+
+
 }

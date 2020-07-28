@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
@@ -5,6 +6,7 @@ import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/blocs/category_bloc.dart';
 import 'package:charliechang/blocs/menu_bloc.dart';
+import 'package:charliechang/blocs/slider_bloc.dart';
 import 'package:charliechang/models/category_response_model.dart';
 import 'package:charliechang/models/food_item_model.dart';
 import 'package:charliechang/models/icon_menu_model.dart';
@@ -18,6 +20,7 @@ import 'package:charliechang/views/address_book_screen.dart';
 import 'package:charliechang/views/checkout_screen.dart';
 import 'package:charliechang/views/pickup_address_screen.dart';
 import 'package:charliechang/views/pickup_checkout_screen.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -26,6 +29,7 @@ import 'package:getflutter/getflutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'switch_ui.dart';
+import 'package:charliechang/models/slider_response.dart' as slider;
 
 
 class HomeScreen extends StatefulWidget {
@@ -51,16 +55,50 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _searchController = TextEditingController();
 
   bool isMenuCalled=false;
+
+  //internet
+  bool _isInternetAvailable = true;
+  Connectivity _connectivity;
+  StreamSubscription<ConnectivityResult> _subscription;
+
+
+
+  void onConnectivityChange(ConnectivityResult result) {
+    if (result == ConnectivityResult.none) {
+      setState(() {
+        _isInternetAvailable = false;
+      });
+    } else {
+      setState(() {
+        _isInternetAvailable = true;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+   _subscription.cancel();
+    super.dispose();
+  }
   @override
   void initState() {
+    _connectivity = new Connectivity();
+    _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
+    // status=false;
+    mImageListSlider.add("assets/images/image.png");
+    mImageListSlider.add("assets/images/image.png");
     _IsSearching=false;
-
-    mImageListSlider.add("assets/images/image.png");
-    mImageListSlider.add("assets/images/image.png");
-    status=false;
+    sliderList.add(slider.Data(imagePath: ""));
     getDeliveryAddress();
-    //status=preferences.getString(TOGGLE_VALUE)=="0"?false:true;
-    getCategoriesAPI();
+    if(_isInternetAvailable)
+      {
+        getCategoriesAPI();
+        callSliderApi();
+      }
+    else
+      {
+        CommonMethods.showLongToast(CHECK_INTERNET);
+      }
 
    //
     scrollController = ScrollController();
@@ -200,16 +238,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           print("VALUE : $value");
                           setState(() {
                             status = value;
-                            if(value==true)
-                              {
-                                CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
-                              }
-                            else
-                              {
-                                CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
-                              }
-                            getDeliveryAddress();
                           });
+                          if(value==true)
+                          {
+                            CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
+                            CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
+
+                          }
+                          else
+                          {
+                            CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
+                            CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
+                          }
+                          getDeliveryAddress();
                         },
                       ),
                     )
@@ -227,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: <Widget>[
                 // SizedBox(height: 15,),
-                Container(
+              sliderList.length>0?  Container(
                   width: getWidth(context),
                   height: 270,
                   child: GFCarousel(
@@ -240,13 +281,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     // aspectRatio: 10,
                     enlargeMainPage: false,
                     pagination: true,
-                    items: mImageListSlider.map(
+                    items: sliderList.map(
                       (url) {
                         return Container(
                           //margin: EdgeInsets.all(8.0),
                           child: ClipRRect(
                             //borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            child: Image.asset(url,
+                            child: Image.network(IMAGE_BASE_URL+url.imagePath,
                                 fit: BoxFit.cover, width: getWidth(context)),
                           ),
                         );
@@ -258,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                   ),
-                ),
+                ):Container(),
                 // SizedBox(height: 20,),
                 Container(
                   width: getWidth(context),
@@ -761,7 +802,46 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     }
+    else{
+      setState(() {
+        status=false;
+      });
+    }
+    print("VALUE $status");
 
+  }
+
+  SliderBloc mSliderBloc;
+   slider.SliderResponse mSliderResponse;
+   List<slider.Data> sliderList = new List();
+
+  callSliderApi() async
+  {
+    mSliderBloc=SliderBloc();
+    mSliderBloc.dataStream.listen((onData){
+      mSliderResponse = onData.data;
+      //print(onData.status);
+      if(onData.status == Status.LOADING)
+      {
+        // CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        CommonMethods.dismissDialog(context);
+        setState(() {
+          sliderList.clear();
+          sliderList=mSliderResponse.data;
+        });
+
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
   }
 }
 
