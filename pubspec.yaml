@@ -43,6 +43,9 @@ dependencies:
   url_launcher: ^5.4.0
   firebase_messaging: ^6.0.16
   flutter_share: ^1.0.2+1
+  sticky_headers: ^0.1.7
+  scroll_to_index: ^1.0.6
+  pinput: ^0.2.4
 
 dev_dependencies:
   flutter_test:

@@ -27,7 +27,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:provider/provider.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 import 'switch_ui.dart';
 import 'package:charliechang/models/slider_response.dart' as slider;
 
@@ -61,7 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Connectivity _connectivity;
   StreamSubscription<ConnectivityResult> _subscription;
 
+  final scrollDirection = Axis.vertical;
 
+  String cat_name="";
 
   void onConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
@@ -82,6 +86,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   void initState() {
+    controller = AutoScrollController(
+        viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: scrollDirection
+    );
     _connectivity = new Connectivity();
     _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
     // status=false;
@@ -89,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
     mImageListSlider.add("assets/images/image.png");
     _IsSearching=false;
     sliderList.add(slider.Data(imagePath: ""));
+  //  status= false;
     getDeliveryAddress();
     if(_isInternetAvailable)
       {
@@ -261,8 +270,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: SingleChildScrollView(
-          controller: scrollController,
-         // physics: enableScroll?ScrollPhysics():NeverScrollableScrollPhysics(),
+          scrollDirection: scrollDirection,
+          controller: controller,
+          physics: ClampingScrollPhysics(),
           child: Container(
             width: getWidth(context),
             child: Column(
@@ -323,10 +333,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: (){
                                 setState(() {
                                   category = mCategoryList[index].name;
-                                  //print("categoryy");
+                                  print("$category");
 
-                                 // scrollController.jumpTo(600);
-                                 getMenuAPI();
+                                  /*for(int i=0;i<mMenuList.length;i++)
+                                    {
+                                      if(mMenuList[i].category == category)
+                                        {
+                                          _scrollToIndex(i);
+                                          break;
+
+                                        }
+                                    }*/
+
+                                  _scrollToIndex(index);
+
+                                 //getMenuAPI();
                                 });
 
                               },
@@ -443,27 +464,66 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: getWidth(context),
                         color: switch_bg,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
-                        child: Text(
-                          "CC Specials",
-                          style: TextStyle(color: icon_color),
-                        ),
-                      ),
-                      Container(
+                      _IsSearching?  Container(
                           width: getWidth(context),
+                          margin: EdgeInsets.only(top: 20),
                           // height: getHeight(context)/2,
-                          child: isMenuCalled?mMenuList.length>0?GridView.count(
-                            physics: enableScroll?NeverScrollableScrollPhysics():ScrollPhysics(),
+                          child: _searchList.length>0?GridView.count(
+                            physics: NeverScrollableScrollPhysics(),
+                            crossAxisCount: 2,
+                            childAspectRatio: (itemWidth / itemHeight),
+                            //controller: new ScrollController(keepScrollOffset: false),
+                            shrinkWrap: true,
+                            children: buildSearchList(_searchList),
+                          ):Center(child: CircularProgressIndicator(),)
+
+                      ): ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap:true,
+                          itemCount: mCategoryList.length,
+                          itemBuilder: (context,index){
+                        return _wrapScrollTag(
+                          index: index,
+                          child: StickyHeader(
+                            header:  Padding(
+                              padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
+                              child: Text(
+                                "${mCategoryList[index].name}",
+                                style: TextStyle(color: icon_color),
+                              ),
+                            ),
+                            content: Container(
+                                width: getWidth(context),
+                                // height: getHeight(context)/2,
+                                child: mMenuList.length>0?GridView.count(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  crossAxisCount: 2,
+                                  childAspectRatio: (itemWidth / itemHeight),
+                                  //controller: new ScrollController(keepScrollOffset: false),
+                                  shrinkWrap: true,
+                                  children: /*_IsSearching?buildList(_searchList,mCategoryList[index].name):*/buildList(mMenuList,mCategoryList[index].name),
+                                ):Center(child: CircularProgressIndicator(),)
+
+                            ),
+                          ),
+                        );
+                      }),
+
+                     /* Container(
+                          width: getWidth(context),
+                          margin: EdgeInsets.only(top: 20),
+                          // height: getHeight(context)/2,
+                          child: mMenuList.length>0?GridView.count(
+                            physics: NeverScrollableScrollPhysics(),
                             crossAxisCount: 2,
                             childAspectRatio: (itemWidth / itemHeight),
                             //controller: new ScrollController(keepScrollOffset: false),
                             shrinkWrap: true,
                             children: _IsSearching?buildList(_searchList):buildList(mMenuList),
-                          ):Center(child: CircularProgressIndicator(),):
-                          Center(child: Text("Please add atleast one address to proceed"),)
+                          ):Center(child: CircularProgressIndicator(),)
 
-                          ),
+                      ),*/
+
                       SizedBox(
                         height: 10,
                       )
@@ -478,6 +538,19 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  int counter = -1;
+  Future _scrollToIndex(int index) async {
+    print("Anchot");
+   /* setState(() {
+      counter++;
+
+      if (counter >= mCategoryList.length)
+        counter = 0;
+    });*/
+
+    await controller.scrollToIndex(index, preferPosition: AutoScrollPosition.begin);
+    controller.highlight(index);
+  }
 
   addToCart(Menu foodItem) {
     bloc.addToList(foodItem);
@@ -487,37 +560,49 @@ class _HomeScreenState extends State<HomeScreen> {
     bloc.removeFromList(foodItem);
   }
 
-  List<Widget> buildList(List<Menu> mMenuList)
+  List<Widget> buildList(List<Menu> mMenuList,String cat)
   {
-    return List.generate(mMenuList.length, (index) {
+    List<Menu> mTempList =new List();
+    for(int i=0;i<mMenuList.length;i++)
+      {
+         if(mMenuList[i].category == cat)
+           {
+             //print("CCC ${category}");
+             mTempList.add(mMenuList[i]);
+           }
+      }
+
+  //  print("Temp size ${mTempList.length}");
+    return List.generate(/*mMenuList.length*/mTempList.length, (index) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            child: Card(
-              child: AspectRatio(
-                aspectRatio: 7/6,
-                child: Image.network(
-                  IMAGE_BASE_URL+mMenuList[index].image,
-                  fit: BoxFit.cover,
-                  width: getWidth(context)/2-60,
-                  height: getWidth(context)/2-80,
+              child: Card(
+                child: AspectRatio(
+                  aspectRatio: 7/6,
+                  child: Image.network(
+                    IMAGE_BASE_URL+mTempList[index].image,
+                    fit: BoxFit.cover,
+                    width: getWidth(context)/2-60,
+                    height: getWidth(context)/2-80,
+                  ),
                 ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(3.3))),
+                clipBehavior:
+                Clip.antiAliasWithSaveLayer,
               ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(3.3))),
-              clipBehavior:
-              Clip.antiAliasWithSaveLayer,
             ),
-          ),
+
           Padding(
             padding: const EdgeInsets.only(
                 left: 5, top: 10),
             child: Container(
               height:40,
               child: Text(
-                mMenuList[index].name,
+                mTempList[index].name,
                 maxLines: 2,
                 style: TextStyle(fontSize: 12,color: icon_color),
               ),
@@ -532,15 +617,15 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               children: <Widget>[
                 Text(
-                  "Rs "+mMenuList[index].price,
+                  "Rs "+mTempList[index].price,
                   style: TextStyle(
                       color: icon_color,
                       fontSize: 12),
                 ),
-                mMenuList[index].count ==0?InkWell(
+                mTempList[index].count ==0?InkWell(
                   onTap: (){
                     //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
-                    addToCart(mMenuList[index]);
+                    addToCart(mTempList[index]);
 
                     //bloc.addToCart(index);
                     widget.callback1();
@@ -581,29 +666,164 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         widget.callback1();
                         widget.func1('REMOVE');
-                        if(mMenuList[index].count!=1)
+                        if(mTempList[index].count!=1)
                           {
                             setState(() {
-                              mMenuList[index].count--;
+                              mTempList[index].count--;
                             });
                           }
                         else
                           {
-                            removeFromList(mMenuList[index]);
+                            removeFromList(mTempList[index]);
                           }
 
 
 
                         //}
                       }),
-                      Text("${mMenuList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
+                      Text("${mTempList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
                       IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
                         print("ADDDD");
                         setState(() {
-                          mMenuList[index].count++;
+                          mTempList[index].count++;
                           // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
                         });
                        // addToCart(mMenuList[index]);
+                        widget.callback1();
+                        widget.func1('ADD');
+                      })
+                    ],
+                  ),
+                ),
+              ],
+              mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
+            ),
+          )
+        ],
+      );
+    });
+  }
+
+
+  List<Widget> buildSearchList(List<Menu> mTempList)
+  {
+    return List.generate(/*mMenuList.length*/mTempList.length, (index) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            child: Card(
+              child: AspectRatio(
+                aspectRatio: 7/6,
+                child: Image.network(
+                  IMAGE_BASE_URL+mTempList[index].image,
+                  fit: BoxFit.cover,
+                  width: getWidth(context)/2-60,
+                  height: getWidth(context)/2-80,
+                ),
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(3.3))),
+              clipBehavior:
+              Clip.antiAliasWithSaveLayer,
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 5, top: 10),
+            child: Container(
+              height:40,
+              child: Text(
+                mTempList[index].name,
+                maxLines: 2,
+                style: TextStyle(fontSize: 12,color: icon_color),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 5,right: 5),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "Rs "+mTempList[index].price,
+                  style: TextStyle(
+                      color: icon_color,
+                      fontSize: 12),
+                ),
+                mTempList[index].count ==0?InkWell(
+                  onTap: (){
+                    //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+                    addToCart(mTempList[index]);
+
+                    //bloc.addToCart(index);
+                    widget.callback1();
+                    widget.func1('ADD');
+                    setState(() {
+                      //
+                      // mMenuList[index].count ++;
+                    });
+                    // _settingModalBottomSheet(context);
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(3)),
+                        color: fab_color),
+                    child: Center(
+                        child: Text(
+                          "Add",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12),
+                        )),
+                  ),
+                ):Container(
+                  height: 30,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: button_color,width: 0.5),
+                      borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+                        /*if(mMenuList[index].count!=1)
+                                                {*/
+                        //bloc.removeFromList(mMenuList[index]);
+                        print("SIZEEE ${mMenuList[index].count}");
+
+                        widget.callback1();
+                        widget.func1('REMOVE');
+                        if(mTempList[index].count!=1)
+                        {
+                          setState(() {
+                            mTempList[index].count--;
+                          });
+                        }
+                        else
+                        {
+                          removeFromList(mTempList[index]);
+                        }
+
+
+
+                        //}
+                      }),
+                      Text("${mTempList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
+                      IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
+                        print("ADDDD");
+                        setState(() {
+                          mTempList[index].count++;
+                          // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
+                        });
+                        // addToCart(mMenuList[index]);
                         widget.callback1();
                         widget.func1('ADD');
                       })
@@ -674,6 +894,15 @@ class _HomeScreenState extends State<HomeScreen> {
         }
     );
   }
+  AutoScrollController controller;
+  Widget _wrapScrollTag({int index, Widget child})
+  => AutoScrollTag(
+    key: ValueKey(index),
+    controller: controller,
+    index: index,
+    child: child,
+    highlightColor: Colors.black.withOpacity(0.1),
+  );
 
   bool enableScroll = true;
   ScrollController scrollController;
@@ -833,7 +1062,6 @@ class _HomeScreenState extends State<HomeScreen> {
           sliderList.clear();
           sliderList=mSliderResponse.data;
         });
-
       }
       else if(onData.status == Status.ERROR)
       {

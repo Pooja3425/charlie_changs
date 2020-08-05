@@ -1,6 +1,11 @@
+import 'package:charliechang/blocs/notification_bloc.dart';
+import 'package:charliechang/models/notification_response.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'bottom_screen.dart';
 
@@ -10,6 +15,12 @@ class UpdatesScreen extends StatefulWidget {
 }
 
 class _UpdatesScreenState extends State<UpdatesScreen> {
+
+  @override
+  void initState() {
+    notificationAPI();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,10 +59,12 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
               width: getWidth(context),
               height: getHeight(context)-172,
               padding: EdgeInsets.only(top: 15),
-              child: ListView.builder(
+              child: mNotificationList.length>0?ListView.builder(
                 shrinkWrap: true,
-                itemCount: 5,
+                itemCount: mNotificationList.length,
                 itemBuilder: (context,index){
+                  String dd =  DateFormat("dd-MMM-yyy").format(DateTime.parse("${mNotificationList[index].createdAt}"));
+
                   return Container(
                     width: getWidth(context),
                     decoration: BoxDecoration(
@@ -64,11 +77,13 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
 
-                          Text("Notification Title", style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold,fontFamily: "Manrope"),),
+                          Text("${mNotificationList[index].title}", style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold,fontFamily: "Manrope"),),
                           SizedBox(height: 15,),
-                          Text("Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum\nLorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum", style: TextStyle(fontSize: 12,color: icon_color,fontFamily: "Manrope",fontWeight: FontWeight.normal),),
+                          mNotificationList[index].image!=null?Image.network(IMAGE_BASE_URL+"${mNotificationList[index].image}",width: getWidth(context),height: 200,fit: BoxFit.cover,):Container(),
                           SizedBox(height: 15,),
-                          Text("sent on 22-Jan-2020", style: TextStyle(fontSize: 12,color: notification_date_color,fontFamily: "Manrope",fontWeight: FontWeight.normal),),
+                          Text("${mNotificationList[index].description}", maxLines: 3,softWrap: true,style: TextStyle(fontSize: 12,color: icon_color,fontFamily: "Manrope",fontWeight: FontWeight.normal),),
+                          SizedBox(height: 15,),
+                          Text("sent on $dd", style: TextStyle(fontSize: 12,color: notification_date_color,fontFamily: "Manrope",fontWeight: FontWeight.normal),),
                           SizedBox(height: 15,),
                           Container(width: getWidth(context),
                             height: 0.5,
@@ -79,11 +94,39 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                     ),
                   );
                 },
+              ):Center(
+                child: Text("No Notification",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
               ),
             )
           ],
         ),
       ),
     );
+  }
+
+  NotificationBloc mNotificationBloc;
+  NotificationResponse mNotificationResponse;
+  List<Data> mNotificationList = new List();
+  notificationAPI()
+  {
+    mNotificationBloc=NotificationBloc();
+    mNotificationBloc.dataStream.listen((onData){
+      mNotificationResponse = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+          setState(() {
+            mNotificationList = mNotificationResponse.data;
+          });
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        //dismissDialog(context);
+
+      }
+    });
   }
 }

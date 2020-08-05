@@ -16,9 +16,10 @@ import 'package:charliechang/views/home_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
+import 'package:pinput/pin_put/pin_put.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../utils/common_methods.dart';
 import '../utils/common_methods.dart';
 import 'bottom_screen.dart';
@@ -53,6 +54,7 @@ class _OtpScreenState extends State<OtpScreen> {
     });
     _connectivity = new Connectivity();
     _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
+
     super.initState();
   }
 
@@ -69,11 +71,13 @@ class _OtpScreenState extends State<OtpScreen> {
   }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+
       body: SingleChildScrollView(
         child: Container(
           width: getWidth(context),
-          height: getHeight(context),
+         // height: getHeight(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -98,9 +102,11 @@ class _OtpScreenState extends State<OtpScreen> {
                       ],
                     ),
                     SizedBox(height: 30,),
-                    PinInputTextField(
+                    /*PinInputTextField(
                       pinLength: 6,
                       keyboardType: TextInputType.number,
+                      autoFocus: true,
+                      enableInteractiveSelection: true,
                       decoration: BoxLooseDecoration(
                         enteredColor: input_border_color,
                         strokeColor: input_border_color,
@@ -109,7 +115,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         textStyle: TextStyle(fontSize: 15,color: Colors.black),
                         obscureStyle: ObscureStyle(
                           isTextObscure: false,
-                          obscureText: '☺️',
+
                         ),
                         //hintText: _kDefaultHint,
                       ),
@@ -123,7 +129,8 @@ class _OtpScreenState extends State<OtpScreen> {
                       onChanged: (pin) {
                         debugPrint('onChanged execute. pin:$pin');
                       },
-                    ),
+                    ),*/
+                    onlySelectedBorderPinPut(),
                     SizedBox(height: 30,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -145,7 +152,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           child: Image.asset("assets/images/forword_arrow.png",width: 25,),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               )
@@ -155,7 +162,34 @@ class _OtpScreenState extends State<OtpScreen> {
       ),
     );
   }
+  final FocusNode _pinPutFocusNode = FocusNode();
+  Widget onlySelectedBorderPinPut() {
+    BoxDecoration pinPutDecoration = BoxDecoration(
+      color: Color.fromRGBO(235, 236, 237, 1),
+      borderRadius: BorderRadius.circular(5),
+    );
 
+    return PinPut(
+      fieldsCount: 6,
+      textStyle: TextStyle(fontSize: 25, color: Colors.black),
+      eachFieldWidth: 45,
+      eachFieldHeight: 45,
+      autofocus: true,
+
+      //onSubmit: (String pin) => _showSnackBar(pin),
+      focusNode: _pinPutFocusNode,
+      controller: _pinEditingController,
+      submittedFieldDecoration: pinPutDecoration,
+      selectedFieldDecoration: pinPutDecoration.copyWith(
+          //color: Colors.white,
+          border: Border.all(
+            width: 2,
+            color: button_color,
+          )),
+      followingFieldDecoration: pinPutDecoration,
+      pinAnimationType: PinAnimationType.scale,
+    );
+  }
 
   RegisterBloc _registerBloc;
   Map<String, dynamic> bodyDataReg;

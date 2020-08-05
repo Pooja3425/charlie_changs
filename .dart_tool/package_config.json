@@ -218,6 +218,12 @@
       "languageVersion": "2.7"
     },
     {
+      "name": "pinput",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/pinput-0.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/platform-2.2.1",
       "packageUri": "lib/",
@@ -266,6 +272,12 @@
       "languageVersion": "2.6"
     },
     {
+      "name": "scroll_to_index",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/scroll_to_index-1.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "shared_preferences",
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.3+1",
       "packageUri": "lib/",
@@ -294,6 +306,12 @@
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.9.3",
       "packageUri": "lib/",
       "languageVersion": "1.23"
+    },
+    {
+      "name": "sticky_headers",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/sticky_headers-0.1.8+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
     },
     {
       "name": "stream_channel",
@@ -374,7 +392,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-07-24T18:45:42.477873Z",
+  "generated": "2020-08-04T16:20:54.616941Z",
   "generator": "pub",
   "generatorVersion": "2.8.4"
 }
