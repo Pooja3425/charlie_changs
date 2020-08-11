@@ -48,6 +48,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   @override
   void initState() {
 
+    _controllerState.text ="Goa";
+    _controllerCity.text ="Goa";
     if(widget.type=="e")
       {
         _controllerAddressLine1.text=widget.data.address1;
@@ -373,6 +375,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     padding: CommonMethods.textFieldPadding,
                                     child: TextField(
                                       keyboardType: TextInputType.text,
+                                      enabled: false,
                                       maxLength: 15,
                                       focusNode: focusAddressCity,
                                       controller: _controllerCity,
@@ -405,6 +408,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     padding: CommonMethods.textFieldPadding,
                                     child: TextField(
                                       keyboardType: TextInputType.text,
+                                      enabled: false,
                                       focusNode: focusAddressState,
                                       maxLength: 15,
                                       textCapitalization: TextCapitalization.words,

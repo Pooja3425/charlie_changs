@@ -17,6 +17,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -130,7 +131,8 @@ class _OtpScreenState extends State<OtpScreen> {
                         debugPrint('onChanged execute. pin:$pin');
                       },
                     ),*/
-                    onlySelectedBorderPinPut(),
+                   // onlySelectedBorderPinPut(),
+                    pinCodeUI(),
                     SizedBox(height: 30,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,6 +162,48 @@ class _OtpScreenState extends State<OtpScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget pinCodeUI()
+  {
+    return PinCodeTextField(
+      length: 6,
+      obsecureText: false,
+      animationType: AnimationType.fade,
+      textInputType: TextInputType.number,
+      pinTheme: PinTheme(
+        shape: PinCodeFieldShape.box,
+        borderRadius: BorderRadius.circular(5),
+        fieldHeight: 50,
+        fieldWidth: 40,
+        borderWidth: 0.3,
+        inactiveFillColor: Colors.black12,
+        inactiveColor: Colors.white,
+        activeColor: button_color,
+        activeFillColor: Colors.white,
+        selectedFillColor: button_color
+      ),
+      animationDuration: Duration(milliseconds: 300),
+      backgroundColor: Colors.white10,
+      enableActiveFill: true,
+     // errorAnimationController: errorController,
+      controller: _pinEditingController,
+      onCompleted: (v) {
+        print("Completed");
+      },
+      onChanged: (value) {
+        print(value);
+        setState(() {
+         // currentText = value;
+        });
+      },
+      beforeTextPaste: (text) {
+        print("Allowing to paste $text");
+        //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+        //but you can show anything you want here, like your pop up saying wrong paste format or etc
+        return true;
+      },
     );
   }
   final FocusNode _pinPutFocusNode = FocusNode();

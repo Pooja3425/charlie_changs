@@ -29,6 +29,7 @@ import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/address_book_screen.dart';
+import 'package:charliechang/views/bottom_screen.dart';
 import 'package:charliechang/views/pay_screen.dart';
 import 'package:charliechang/views/pickup_address_screen.dart';
 import 'package:connectivity/connectivity.dart';
@@ -139,7 +140,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   };
   String reward_id_selected="";
   List _dates = [];
-
+  bool isEmpty = false;
 
   @override
   void initState() {
@@ -177,55 +178,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: isWebviewopen ? exitPayDialog:null,
+      onWillPop: isWebviewopen ? exitPayDialog:goBack,
       child: SafeArea(
         child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(83),
-            child: AppBar(
-              elevation: 0.0,
-              automaticallyImplyLeading: false,
-              backgroundColor: Colors.white,
-              flexibleSpace: Container(
-                color: Colors.white,
-                height: 85,
-                width: getWidth(context),
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.only(right:30.0,left: 30.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          InkWell(
-                              onTap: ()=> Navigator.of(context).pop(),
-                              child: Icon(Icons.keyboard_backspace,color: icon_color,)),
-                          SizedBox(width: 10,),
-                          Text("Checkout",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left:33.0,top: 5),
-                        child: InkWell(
-                            onTap: (){
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddressBookScreen(from: "checkout",)));
-                            },
-                            child: RichText(text: TextSpan(text:"This order is for ${addressName.toUpperCase()} delivery (",style: TextStyle(color: notification_title_color),children: <TextSpan>[TextSpan(text: "Change",style: TextStyle(color: button_color),children: <TextSpan>[TextSpan(text: ")",style: TextStyle(color: notification_title_color),),]),])))/*Text("This order is for home delivery (",style: TextStyle(fontSize: 13,color: hint_text_color),),*/
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          bottomNavigationBar: bottomUI(),
+          appBar: isEmpty?PreferredSize(child: Container(height: 0,), preferredSize: Size.fromHeight(0)):pickup_delivery =="1"?deliveryAppBar():pickupAppBar(),
+          bottomNavigationBar: isEmpty?Container(height: 0,):bottomUI(),
           body: SingleChildScrollView(
             child: Container(
               width: getWidth(context),
-              child: Column(
+              child: isEmpty?EmptyCart():Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   CommonMethods().thickHorizontalLine(context),
                   StreamBuilder(
@@ -263,14 +225,36 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                 borderRadius: BorderRadius.all(Radius.circular(3.3))),
                                             child: Row(
                                               children: <Widget>[
-                                                IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+                                                /*IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
                                                   if(orderModelList[index].count!=1)
                                                   {
                                                     setState(() {
                                                       orderModelList[index].count--;
                                                     });
                                                   }
-                                                }),
+                                                }),*/
+                                                orderModelList[index].count >0? IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+                                                  if(orderModelList[index].count!=1)
+                                                  {
+                                                    print("SIZEEE ${orderModelList[index].count}");
+
+                                                    setState(() {
+                                                      orderModelList[index].count--;
+                                                    });
+                                                  }
+                                                  else
+                                                  {
+                                                    removeFromList(orderModelList[index]);
+                                                    print("SIZEE ${orderModelList.length}");
+                                                    if(orderModelList.length ==0)
+                                                      {
+                                                        setState(() {
+                                                          isEmpty = true;
+                                                        });
+                                                       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 2,),));
+                                                      }
+                                                  }
+                                                }):Container(),
                                                 Text("${orderModelList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
                                                 IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
                                                   setState(() {
@@ -319,55 +303,50 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
                   CommonMethods().thickHorizontalLine(context),
-                  Container(
-                    width: getWidth(context),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30.0,20,30,0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              /*Text("Redeem CC Points",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),*/
-                              DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
-                                  value: dropdownValueReedem,
-                                  elevation: 16,
-                                //  hint: Text("Select reward or coupon"),
-                                  style: TextStyle(
-                                      color:  icon_color
-                                  ),
-                                  onChanged: (String newValue) {
-                                    setState(() {
-                                      dropdownValueReedem = newValue;
-                                      /*if(dropdownValueReedem =="Redeem CC Points")
-                                        {
-                                          if(_isInternetAvailable)
-                                          callPointsAPI();
-                                          else
-                                            CommonMethods.showLongToast(CHECK_INTERNET);
-                                        }*/
-                                    });
-                                  },
-                                  items: <String>['Redeem CC Points','Apply coupon code']
-                                      .map<DropdownMenuItem<String>>((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
-                                    );
-                                  })
-                                      .toList(),
+                  SizedBox(height: 10,),
+                  Padding(
+                    padding: const EdgeInsets.only(left:30.0),
+                    child: Container(
+                        width: getWidth(context)/2-26,
+                        height: 38,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: input_border_color,width: 0.3),
+                            borderRadius: BorderRadius.all(Radius.circular(3.3))
+                        ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10.0,0,5,0),
+                        child: Row(
+                          children: <Widget>[
+                            DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
+                                value: dropdownValueReedem,
+                                elevation: 16,
+                                style: TextStyle(
+                                    color:  icon_color
                                 ),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    dropdownValueReedem = newValue;
+                                  });
+                                },
+                                items: <String>['Redeem CC Points','Apply coupon code']
+                                    .map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold,fontSize: 13),),
+                                  );
+                                }).toList(),
                               ),
-                              Icon(Icons.keyboard_arrow_down,size: 18,color: notification_title_color,)
-                            ],
-                          ),
-                        ],
+                            ),
+                            Icon(Icons.keyboard_arrow_down,size: 18,color: notification_title_color,)
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  dropdownValueReedem =="Redeem CC Points"?deliveryUI():pickupUI(),
+                  dropdownValueReedem =="Redeem CC Points"?redeemUI():couponUI(),
+                  pickup_delivery=="1"?deliveryUI():pickupUI(),
                   CommonMethods().thickHorizontalLine(context),
 
                 ],
@@ -380,75 +359,219 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  String discountAmount="0";
-  int discount=0;
-  Widget pickupUI()
+  Widget redeemUI()
   {
-    return Column(
-      children: <Widget>[
-        Container(
-          width: getWidth(context),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(30.0,0,30,20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-
-                SizedBox(height: 8,),
-                Container(
-
+    return  Container(
+      width: getWidth(context),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(30.0,0,30,20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(height: 8,),
+            Text("You can redeem maximum of 5000 points (worth Rs 500)",style: TextStyle(fontSize: 12,color: notification_title_color),),
+            SizedBox(height: 8,),
+            /*Container(
                   width: getWidth(context)-100,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
                       border: Border.all(color: input_border_color,width: 0.3)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        //Text("CHARLIE10",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.w600),),
-                        Container(
-                          width:getWidth(context)/2,
-                          height: 25,
-                          child: TextField(
-                            controller: controllerCoupon,
-                              style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(bottom: 15),
-                                  hintText: "",
-                                  hintStyle: TextStyle(fontSize: 12),
-                                  //contentPadding: EdgeInsets.only(bottom: 3),
-                                  border: InputBorder.none,
-                                  counterText: '')
-                          ),
-                        ),
-                        InkWell(
-                            onTap: (){
-                              if(_isInternetAvailable)
-                                {
-                                  if(isCouonValid())
-                                    {
-                                      callCouponAPI();
-                                    }
-                                }
-                              else
-                                {
-                                  CommonMethods.showLongToast(CHECK_INTERNET);
-                                }
-                            },
-                            child: Text("Apply",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
+                        Text("300",style: TextStyle(color: icon_color,fontSize: 12),),
+                        Text("redeem",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),),
                       ],
                     ),
                   ),
+                )*/
+            redeemPoints>=2000? Container(
+              width: getWidth(context)-100,
+              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
+                  border: Border.all(color: input_border_color,width: 0.3)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    //Text("CHARLIE10",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                    Container(
+                        width:getWidth(context)/2,
+                        height: 25,
+                        decoration: BoxDecoration(),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<PointsDropdown>(
+                            icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
+                            value: dropdownReedem,
+                            hint: Text("Select redeem points"),
+                            elevation: 16,
+                            style: TextStyle(
+                                color:  icon_color
+                            ),
+                            onChanged: (PointsDropdown newValue) {
+                              setState(() {
+                                dropdownReedem = newValue;
+                              });
+                            },
+                            items: loyaltyPointsList.map<DropdownMenuItem<PointsDropdown>>((PointsDropdown pointsDrop) {
+                              return DropdownMenuItem<PointsDropdown>(
+                                value: pointsDrop,
+                                child: Text(pointsDrop.value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
+                              );
+                            })
+                                .toList(),
+                          ),
+                        )
+                    ),
+                    InkWell(
+                        onTap: (){
+                          if(_isInternetAvailable)
+                          {
+                            if(isRedeemValid())
+                            {
+                              isRedeemCalled=true;
+                              callRedeemOTPAPI();
+                              //callCouponAPI();
+                            }
+                          }
+                          else
+                          {
+                            CommonMethods.showLongToast(CHECK_INTERNET);
+                          }
+                        },
+                        child: Text("Redeem",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
+                  ],
                 ),
+              ),
+            ):Text("You dont have enought points to reedem"),
+            SizedBox(height: 10,),
+            isRedeemCalled?Container(
 
-                Padding(
-                  padding: const EdgeInsets.only(top:8.0,left:20),
-                  child: Text(discountAmount,style: TextStyle(color: hint_text_color,fontSize: 12),),
-                )
-              ],
-            ),
-          ),
+              width: getWidth(context)-100,
+              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
+                  border: Border.all(color: input_border_color,width: 0.3)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    //Text("CHARLIE10",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                    Container(
+                      width:getWidth(context)/2,
+                      height: 25,
+                      child: TextField(
+                          controller: _pinEditingController,
+                          maxLength: 4,
+                          style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom: 15),
+                              hintText: "",
+                              hintStyle: TextStyle(fontSize: 12),
+                              //contentPadding: EdgeInsets.only(bottom: 3),
+                              border: InputBorder.none,
+                              counterText: '')
+                      ),
+                    ),
+                    InkWell(
+                        onTap: (){
+                          if(_isInternetAvailable)
+                          {
+                            if(isOtpValid())
+                            {
+                              callApplyLoyaltyPoints();
+                            }
+                          }
+                          else
+                          {
+                            CommonMethods.showLongToast(CHECK_INTERNET);
+                          }
+                        },
+                        child: Text("Apply",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
+                  ],
+                ),
+              ),
+            ):Container(),
+          ],
         ),
+      ),
+    );
+  }
+
+
+  Widget couponUI()
+  {
+    return Container(
+      width: getWidth(context),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(30.0,0,30,20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+
+            SizedBox(height: 8,),
+            Container(
+
+              width: getWidth(context)-100,
+              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
+                  border: Border.all(color: input_border_color,width: 0.3)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    //Text("CHARLIE10",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                    Container(
+                      width:getWidth(context)/2,
+                      height: 25,
+                      child: TextField(
+                          controller: controllerCoupon,
+                          style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom: 15),
+                              hintText: "",
+                              hintStyle: TextStyle(fontSize: 12),
+                              //contentPadding: EdgeInsets.only(bottom: 3),
+                              border: InputBorder.none,
+                              counterText: '')
+                      ),
+                    ),
+                    InkWell(
+                        onTap: (){
+                          if(_isInternetAvailable)
+                          {
+                            if(isCouonValid())
+                            {
+                              callCouponAPI();
+                            }
+                          }
+                          else
+                          {
+                            CommonMethods.showLongToast(CHECK_INTERNET);
+                          }
+                        },
+                        child: Text("Apply",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
+                  ],
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(top:8.0,left:20),
+              child: Text(discountAmount=="0"?"":discountAmount,style: TextStyle(color: hint_text_color,fontSize: 12),),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+  String discountAmount="0";
+  int discount=0;
+  Widget pickupUI()
+  {
+    return Column(
+      children: <Widget>[
+
         CommonMethods().thickHorizontalLine(context),
         Container(
           width: getWidth(context),
@@ -461,7 +584,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Pickup Outlet Address",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
-                    Text("change",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),),
+                    InkWell(
+                        onTap: (){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PickupAddressScreen(from: "checkout",)));
+                          },
+                        child: Text("change",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
                   ],
                 ),
                 SizedBox(height: 8,),
@@ -474,16 +601,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
+  addToCart(Menu foodItem) {
+    bloc.addToList(foodItem);
+  }
+
+  removeFromList(Menu foodItem) {
+    bloc.removeFromList(foodItem);
+  }
 
   Widget deliveryAppBar()
   {
-
-  }
-
-
-  Widget ickupAppBar()
-  {
-    PreferredSize(
+    return PreferredSize(
       preferredSize: Size.fromHeight(83),
       child: AppBar(
         elevation: 0.0,
@@ -504,7 +632,53 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     InkWell(
-                        onTap: ()=> Navigator.of(context).pop(),
+                        onTap: ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomScreen())),
+                        child: Icon(Icons.keyboard_backspace,color: icon_color,)),
+                    SizedBox(width: 10,),
+                    Text("Checkout",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
+                  ],
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left:33.0,top: 5),
+                    child: InkWell(
+                        onTap: (){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddressBookScreen(from: "checkout",)));
+                        },
+                        child: RichText(text: TextSpan(text:"This order is for ${addressName.toUpperCase()} delivery (",style: TextStyle(color: notification_title_color),children: <TextSpan>[TextSpan(text: "Change",style: TextStyle(color: button_color),children: <TextSpan>[TextSpan(text: ")",style: TextStyle(color: notification_title_color),),]),])))/*Text("This order is for home delivery (",style: TextStyle(fontSize: 13,color: hint_text_color),),*/
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  Widget pickupAppBar()
+  {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(83),
+      child: AppBar(
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        flexibleSpace: Container(
+          color: Colors.white,
+          height: 85,
+          width: getWidth(context),
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.only(right:30.0,left: 30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    InkWell(
+                        onTap: ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomScreen())),
                         child: Icon(Icons.keyboard_backspace,color: icon_color,)),
                     SizedBox(width: 10,),
                     Text("Checkout",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
@@ -534,141 +708,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget deliveryUI(){
     return Column(
       children: <Widget>[
-        Container(
-          width: getWidth(context),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(30.0,0,30,20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
 
-                Text("You can redeem maximum of 500 points (worth Rs 5000)",style: TextStyle(fontSize: 12,color: notification_title_color),),
-                SizedBox(height: 8,),
-                /*Container(
-                  width: getWidth(context)-100,
-
-                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
-                      border: Border.all(color: input_border_color,width: 0.3)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("300",style: TextStyle(color: icon_color,fontSize: 12),),
-                        Text("redeem",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),),
-                      ],
-                    ),
-                  ),
-                )*/
-               redeemPoints>=2000? Container(
-                  width: getWidth(context)-100,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
-                      border: Border.all(color: input_border_color,width: 0.3)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        //Text("CHARLIE10",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.w600),),
-                        Container(
-                          width:getWidth(context)/2,
-                          height: 25,
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<PointsDropdown>(
-                              icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
-                              value: dropdownReedem,
-                              hint: Text("Select redeem points"),
-                              elevation: 16,
-                              style: TextStyle(
-                                  color:  icon_color
-                              ),
-                              onChanged: (PointsDropdown newValue) {
-                                setState(() {
-                                  dropdownReedem = newValue;
-                                });
-                              },
-                              items: loyaltyPointsList.map<DropdownMenuItem<PointsDropdown>>((PointsDropdown pointsDrop) {
-                                return DropdownMenuItem<PointsDropdown>(
-                                  value: pointsDrop,
-                                  child: Text(pointsDrop.value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold),),
-                                );
-                              })
-                                  .toList(),
-                            ),
-                          )
-                        ),
-                        InkWell(
-                            onTap: (){
-                              if(_isInternetAvailable)
-                              {
-                                if(isRedeemValid())
-                                {
-                                  isRedeemCalled=true;
-                                  callRedeemOTPAPI();
-                                  //callCouponAPI();
-                                }
-                              }
-                              else
-                              {
-                                CommonMethods.showLongToast(CHECK_INTERNET);
-                              }
-                            },
-                            child: Text("Redeem",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
-                      ],
-                    ),
-                  ),
-                ):Text("You dont have enought points to reedem"),
-                SizedBox(height: 10,),
-                isRedeemCalled?Container(
-
-                  width: getWidth(context)-100,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(3)),
-                      border: Border.all(color: input_border_color,width: 0.3)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        //Text("CHARLIE10",style: TextStyle(color: icon_color,fontSize: 12,fontWeight: FontWeight.w600),),
-                        Container(
-                          width:getWidth(context)/2,
-                          height: 25,
-                          child: TextField(
-                              controller: _pinEditingController,
-                              maxLength: 4,
-                              style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.only(bottom: 15),
-                                  hintText: "",
-                                  hintStyle: TextStyle(fontSize: 12),
-                                  //contentPadding: EdgeInsets.only(bottom: 3),
-                                  border: InputBorder.none,
-                                  counterText: '')
-                          ),
-                        ),
-                        InkWell(
-                            onTap: (){
-                              if(_isInternetAvailable)
-                              {
-                                if(isOtpValid())
-                                {
-                                  callApplyLoyaltyPoints();
-                                }
-                              }
-                              else
-                              {
-                                CommonMethods.showLongToast(CHECK_INTERNET);
-                              }
-                            },
-                            child: Text("Apply",style: TextStyle(color: button_color,fontSize: 12,fontWeight: FontWeight.w600),)),
-                      ],
-                    ),
-                  ),
-                ):Container(),
-              ],
-            ),
-          ),
-        ),
         CommonMethods().thickHorizontalLine(context),
         Container(
           width: getWidth(context),
@@ -788,15 +828,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 onTap: ()=>{
 
                   callapi()
-                  /*if(payment_mode =="0")
-                   {
-                     callPlaceOrderAPI()
-                   }
-                  else
-                    {
-                    createRequest()
-                     // Navigator.push(context,MaterialPageRoute(builder: (context) => PayScreen() ),)
-                    }*/
 
                 },
                 child: Text("Place Order",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600 ),)),
@@ -1094,6 +1125,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     });
   }
 
+  Future<bool> goBack()
+  {
+    print("BACK");
+    //Navigator.of(context).pop();
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomScreen()));
+  }
  Future<bool> exitPayDialog() {
     print('EXIT');
     flutterWebviewPlugin.hide();
@@ -1180,7 +1217,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
       else
       {
-
         callOnlinePaymentAPI();
       }
 
@@ -1197,11 +1233,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
        if(onData.status == Status.LOADING)
        {
          // CommonMethods.displayProgressDialog(onData.message,context);
-         CommonMethods.showLoaderDialog(context,onData.message);
+        // CommonMethods.showLoaderDialog(context,onData.message);
        }
        else if(onData.status == Status.COMPLETED)
        {
-         CommonMethods.dismissDialog(context);
+         //CommonMethods.dismissDialog(context);
           if(mLoyaltyPointsResponse.points==null || mLoyaltyPointsResponse.points==0)
             {
               setState(() {
@@ -1219,7 +1255,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
        }
        else if(onData.status == Status.ERROR)
        {
-         CommonMethods.dismissDialog(context);
+        // CommonMethods.dismissDialog(context);
          CommonMethods.showShortToast(onData.message);
 
        }
@@ -1329,10 +1365,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     };
     final body = jsonEncode(
         {
-          "number":/*prefs.getString(PHONE_NUMBER)*/"8554063733",
+          "number":prefs.getString(PHONE_NUMBER)/*"8554063733"*/,
         });
 
-    print('Parms uri ${uri}');
+    print('Parms MOBILE ${prefs.getString(PHONE_NUMBER)}');
 
     try {
       final response = await http.post(uri,body: body,headers: headers);
@@ -1340,32 +1376,31 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       print("REDD   ${responseJson}");
        var listJson=jsonEncode(responseJson);
        print("Sss $listJson");
-      Map<String, dynamic> jsonParsed = responseJson["select_points"];
+       if(responseJson.toString().contains("error"))
+         {
+           CommonMethods.showLongToast(responseJson["message"]);
+         }
+       else
+         {
+           Map<String, dynamic> jsonParsed = responseJson["select_points"];
 
-     // print("Www $jsonParsed");
-      jsonParsed.keys.forEach((String key){
-        print("bbb $key");
-        _dates.add(key);
-      });
+           jsonParsed.keys.forEach((String key){
+             print("bbb $key");
+             _dates.add(key);
+           });
 
 
-      for(int i=0; i<_dates.length; i++){
-        print(jsonParsed[_dates[i]]);
+           for(int i=0; i<_dates.length; i++){
+             print(jsonParsed[_dates[i]]);
 
-        final PointsDropdown points = PointsDropdown(key: _dates[i],value:jsonParsed[_dates[i]] );
-        setState(() {
-          loyaltyPointsList.add(points);
-        });
-      }
+             final PointsDropdown points = PointsDropdown(key: _dates[i],value:jsonParsed[_dates[i]] );
+             setState(() {
+               loyaltyPointsList.add(points);
+             });
+           }
+         }
 
-      /* if(response.statusCode==200)
-        {
-          print("rES ${jsonEncode(response.body)}");
-        }
-      else
-        {
-          print("eee ${response.statusCode}");
-        }*/
+
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
@@ -1375,7 +1410,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:
-      //  print("200");
+        print("200");
         var responseJson = json.decode(response.body.toString());
         print(responseJson);
         return responseJson;
@@ -1410,7 +1445,50 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return true;
   }
 
+  Widget EmptyCart()
+  {
+    return Container(
+      width: getWidth(context),
+      height: getHeight(context)-164,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            color: button_color,
+            width: getWidth(context),
+            height: getHeight(context)/2-110,
+            alignment: Alignment.center,
 
+          ),
+          Positioned(
+              top: getHeight(context)/2-308,
+              //left: getWidth(context)/2,
+              child: Container(
+                width: getWidth(context),
+                height: getHeight(context),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("OOPS!",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.white),),
+                    Text("There is no item in your cart.\nLet's add something.",textAlign: TextAlign.center,style: TextStyle(fontSize: 15,color: Colors.white),),
+                    SizedBox(height: 30,),
+                    Image.asset("assets/images/thanks_img.png",width: 119,height: 138,),
+                    SizedBox(height: 40,),
+
+                    //Text("Call Us On",style: TextStyle(color: hint_text_color,fontSize: 12),),
+                    //Text("+91-99999 99999",style: TextStyle(color: hint_text_color,fontSize: 15,fontWeight: FontWeight.bold),),
+                    SizedBox(height: 40,),
+                    RaisedButton(
+                      onPressed: ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen()),),
+                      disabledColor: button_color,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                      child: Text("Order Now",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),color: button_color,)
+                  ],
+                ),
+              ))
+        ],
+      ),
+    );
+  }
 
 
 

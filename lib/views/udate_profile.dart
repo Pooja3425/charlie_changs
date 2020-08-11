@@ -359,19 +359,21 @@ class _UpdateProfileState extends State<UpdateProfile> {
         _controllerEmail.text= mGetProfileData.data.email;
         if(mGetProfileData.data.dob!=null && mGetProfileData.data.dob!="0000-00-00")
           {
+            String dd =  DateFormat("dd-MM-yyyy").format(DateTime.parse("${mGetProfileData.data.dob}"));
+
             setState(() {
 
-              dobString = mGetProfileData.data.dob;
+              dobString = dd;
 
             });
           }
 
         if(mGetProfileData.data.annDob!=null && mGetProfileData.data.annDob!="0000-00-00")
         {
+          String dd =  DateFormat("dd-MM-yyyy").format(DateTime.parse("${mGetProfileData.data.annDob}"));
+
           setState(() {
-
-
-            aniDate = mGetProfileData.data.annDob;
+            aniDate = dd;
           });
         }
 
@@ -408,7 +410,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
 
 
-     final body = jsonEncode({"first_name":_controllerFirstName.text,
+     final body = jsonEncode({
+        "first_name":_controllerFirstName.text,
         "last_name":_controllerLastName.text,
         "email":_controllerEmail.text,
         "dob":dobString!=""?dob.toString():"",

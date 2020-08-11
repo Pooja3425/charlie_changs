@@ -36,10 +36,10 @@ class _CartScreenState extends State<CartScreen> {
       child: Container(
         color: switch_bg,
         width: getWidth(context),
-        height: getHeight(context),
+        //height: getHeight(context),
         child: Column(
           children: <Widget>[
-            appBar(context, "Cart"),
+           // appBar(context, "Cart"),
             StreamBuilder(
               stream: bloc.listStream,
               builder: (context,snapshot){
@@ -104,18 +104,18 @@ class _CartScreenState extends State<CartScreen> {
   {
     return Container(
       width: getWidth(context),
-      height: getHeight(context)-164,
+      height: getHeight(context)-84,
       child: Stack(
         children: <Widget>[
           Container(
             color: button_color,
             width: getWidth(context),
-            height: getHeight(context)/2-110,
+            height: getHeight(context)/2,
             alignment: Alignment.center,
 
           ),
           Positioned(
-              top: getHeight(context)/2-308,
+              top: getHeight(context)/2-200,
               //left: getWidth(context)/2,
               child: Container(
                 width: getWidth(context),
@@ -146,7 +146,9 @@ class _CartScreenState extends State<CartScreen> {
   }
   bool showCheckout=false;
   Widget cartBody(List<Menu> foodItems) {
-   
+
+   /* return Container();*/
+
     return ListView.builder(
         //physics: NeverScrollableScrollPhysics(),
         itemCount: foodItems.length  ,
@@ -236,34 +238,34 @@ class _CartScreenState extends State<CartScreen> {
       width: getWidth(context),
       alignment: Alignment.center,
       child: Padding(
-        padding: const EdgeInsets.only(right:30.0,left: 30.0),
+        padding: const EdgeInsets.only(left:20.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                InkWell(
+                /*InkWell(
                     onTap: ()=> Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => BottomScreen()),
                     ),
-                    child: Icon(Icons.keyboard_backspace,color: icon_color,)),
+                    child: Icon(Icons.keyboard_backspace,color: icon_color,)),*/
                 SizedBox(width: 10,),
                 Text(s,style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),),
               ],
             ),
 
-            Row(
+           /* Row(
               children: <Widget>[
                 InkWell(
                     onTap: ()=>{
                      navigate()
-                      
+
                     },
                     child: Text("Checkout")),
               ],
-            )
+            )*/
           ],
         ),
       ),

@@ -7,14 +7,15 @@ import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/views/HomeDemo.dart';
 import 'package:charliechang/views/cart_screen.dart';
+import 'package:charliechang/views/checkout_screen.dart';
 import 'package:charliechang/views/offers_screen.dart';
 import 'package:charliechang/views/order_detail_screen.dart';
 import 'package:charliechang/views/updates_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
@@ -101,6 +102,7 @@ class _BottomScreenState extends State<BottomScreen> {
       {
         setState(() {
           _page=widget.initPage;
+
         });
       }
     getCartValue();
@@ -139,9 +141,11 @@ class _BottomScreenState extends State<BottomScreen> {
     setState(() {
       this._page = page;
     });
+
   }
   String appBarTitle = 'Dashboard';
   void navigationTapped(int page) {
+    print("SSS $page");
     if (page == 0) {
       appBarTitle = 'Dashboard';
     }
@@ -150,6 +154,9 @@ class _BottomScreenState extends State<BottomScreen> {
     }
     else if (page == 2) {
       appBarTitle = 'Personal Profile';
+      if(count>0)
+      goToCheckout();
+
     }
     else if (page == 3) {
       appBarTitle = 'Sync Cases';
@@ -163,14 +170,11 @@ class _BottomScreenState extends State<BottomScreen> {
   }
   bool showBadge= true;
   static int badgeData = 0;
-  Widget callpage(int currentIndex) {
-   /* var bloc = Provider.of<CartBloc>(context);
-    int totalCount = 0;
-    if (bloc.cart.length > 0) {
-      totalCount = bloc.cart.values.reduce((a, b) => a + b);
-    }*/
+  /*Widget callpage(int currentIndex) {
+
     switch (currentIndex) {
       case 0:
+        //return HomeDemo();
         return HomeScreen(
           callback1: () {
             showBadge = true;
@@ -188,7 +192,7 @@ class _BottomScreenState extends State<BottomScreen> {
       case 1:
         return OffersScreen();
       case 2:
-        return  CartScreen(
+        *//*return count==0?CartScreen(
           callback1: () {
             showBadge = true;
             setState(() {});
@@ -201,7 +205,10 @@ class _BottomScreenState extends State<BottomScreen> {
             }
             setState(() {});
           },
-        );
+        ):*//*
+
+
+
 
         break;
       case 3:
@@ -211,7 +218,8 @@ class _BottomScreenState extends State<BottomScreen> {
       default:
         return HomeScreen();
     }
-  }
+  }*/
+  int count=0;
   final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
 
   @override
@@ -219,7 +227,7 @@ class _BottomScreenState extends State<BottomScreen> {
     return WillPopScope(
       onWillPop: _page ==0?exitDialog:goToHome,
       child: Scaffold(
-        body: callpage(_page)/*Container(
+        body: /*callpage(_page)*/Container(
           height: getHeight(context),
           child: IndexedStack(
             children: <Widget>[
@@ -263,7 +271,7 @@ class _BottomScreenState extends State<BottomScreen> {
               ),
             ],
           ),
-        )*/,
+        ),
         bottomNavigationBar: new Theme(
           isMaterialAppTheme: false,
           data: Theme.of(context).copyWith(
@@ -301,6 +309,7 @@ class _BottomScreenState extends State<BottomScreen> {
                           for(int i=0;i<foodItems.length;i++)
                             {
                               quantity=quantity+foodItems[i].count;
+                              count = quantity;
                             }
                           return Badge(
                             shape: BadgeShape.circle,
@@ -354,12 +363,12 @@ class _BottomScreenState extends State<BottomScreen> {
                     "More",style: TextStyle(color: _page==4?fab_color:icon_color,fontSize: 12),
                   )),
             ],
-           // onTap: navigationTapped,
-            onTap: (index) {
+           onTap: navigationTapped,
+            /*onTap: (index) {
               setState(() {
                 _page = index;
               });
-            },
+            },*/
             currentIndex: _page,
 
 
@@ -373,6 +382,14 @@ class _BottomScreenState extends State<BottomScreen> {
 
   Future<bool> goToHome(){
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomScreen()));
+  }
+
+  goToCheckout()
+  {
+    if(mounted)
+    {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutScreen(),));
+    }
   }
   Future<bool> exitDialog() {
     showDialog(

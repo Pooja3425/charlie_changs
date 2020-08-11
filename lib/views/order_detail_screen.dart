@@ -1,11 +1,23 @@
+import 'dart:convert';
+
+import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:charliechang/blocs/cartlistBloc.dart';
+import 'package:charliechang/blocs/menu_bloc.dart';
+import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/models/order_history_respons.dart';
+import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
+import 'package:charliechang/views/checkout_screen.dart';
 import 'package:charliechang/views/thanks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'bottom_screen.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   Data orderData;
@@ -31,6 +43,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         });
 
       }
+    getMenuAPI();
     setDate();
     super.initState();
   }
@@ -77,7 +90,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         ),
         bottomNavigationBar: InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ThanksScreen()));
+            addItemsTocart(widget.orderData);
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => ThanksScreen()));
           },
           child: Container(
             height: 78,
@@ -228,5 +242,78 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       deliveryTime = time.split(" ")[1]+" "+time.split(" ")[2];
     });
 
+  }
+
+  final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+  addItemsTocart(Data orders) {
+    for(int i=0;i<orders.orderItems.length;i++)
+    {
+      for(int j=0;j<mMenuList.length;j++)
+      {
+        if(orders.orderItems[i].itemId == mMenuList[j].id)
+        {
+          print("QUATITY ${orders.orderItems[i].quantity}");
+          for(int k=i;k<=int.parse(orders.orderItems[i].quantity);k++)
+          {
+            print("ITEM NAME ${mMenuList[j].name}");
+            addToCart(mMenuList[j]);
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CheckoutScreen(),));
+          }
+        }
+      }
+    }
+  }
+
+  addToCart(Menu foodItem) {
+    bloc.addToList(foodItem);
+  }
+
+  MenuBloc mMenuBloc;
+  MenuResponse mMenuResponse;
+  List<Menu> mMenuList = new List();
+  getMenuAPI() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String hashKey;
+    if(preferences.getString(DELIVERY_PICKUP) =="1")
+    {
+      setState(() {
+        hashKey = preferences.get(DELIVERY_ADDRESS_HASH);
+      });
+    }
+    else
+    {
+      if(preferences.get(PICKUP_ADDRESS_NAME)!=null)
+      {
+        setState(() {
+          hashKey = preferences.get(PICKUP_ADDRESS_HASH);
+        });
+
+      }
+
+    }
+    final body = jsonEncode({"hash":hashKey,"category":""});
+    mMenuBloc=MenuBloc(body);
+    mMenuBloc.dataStream.listen((onData){
+      mMenuResponse = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+        //CommonMethods.displayProgressDialog(onData.message,context);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        //CommonMethods.hideDialog();
+        setState(() {
+          mMenuList = mMenuResponse.menu;
+
+
+        });
+        //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        // CommonMethods.hideDialog();
+        CommonMethods.showShortToast(onData.message);
+      }
+    });
   }
 }

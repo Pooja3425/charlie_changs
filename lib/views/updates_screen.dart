@@ -76,10 +76,9 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-
-                          Text("${mNotificationList[index].title}", style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold,fontFamily: "Manrope"),),
-                          SizedBox(height: 15,),
                           mNotificationList[index].image!=null?Image.network(IMAGE_BASE_URL+"${mNotificationList[index].image}",width: getWidth(context),height: 200,fit: BoxFit.cover,):Container(),
+                          SizedBox(height: 15,),
+                          Text("${mNotificationList[index].title}", style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold,fontFamily: "Manrope"),),
                           SizedBox(height: 15,),
                           Text("${mNotificationList[index].description}", maxLines: 3,softWrap: true,style: TextStyle(fontSize: 12,color: icon_color,fontFamily: "Manrope",fontWeight: FontWeight.normal),),
                           SizedBox(height: 15,),

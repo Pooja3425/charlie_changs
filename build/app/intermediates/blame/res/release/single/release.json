@@ -412,6 +412,10 @@
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/drawable-xhdpi-v4/abc_list_pressed_holo_light.9.png"
     },
     {
+        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-xxxhdpi_logo.jpg.flat",
+        "source": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/res/drawable-xxxhdpi/logo.jpg"
+    },
+    {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/color-v23_abc_btn_colored_borderless_text_material.xml.flat",
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/color-v23/abc_btn_colored_borderless_text_material.xml"
     },
@@ -542,6 +546,10 @@
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-xxhdpi-v4_abc_textfield_default_mtrl_alpha.9.png.flat",
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/drawable-xxhdpi-v4/abc_textfield_default_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-xhdpi_logo.jpg.flat",
+        "source": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/res/drawable-xhdpi/logo.jpg"
     },
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-hdpi-v4_abc_text_select_handle_middle_mtrl_dark.png.flat",
@@ -1088,6 +1096,10 @@
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/drawable/abc_ratingbar_small_material.xml"
     },
     {
+        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-hdpi_logo.jpg.flat",
+        "source": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/res/drawable-hdpi/logo.jpg"
+    },
+    {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/anim_abc_slide_in_top.xml.flat",
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/anim/abc_slide_in_top.xml"
     },
@@ -1126,6 +1138,10 @@
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-hdpi-v4_abc_ic_menu_cut_mtrl_alpha.png.flat",
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/drawable-hdpi-v4/abc_ic_menu_cut_mtrl_alpha.png"
+    },
+    {
+        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-ldpi_logo.jpg.flat",
+        "source": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/res/drawable-ldpi/logo.jpg"
     },
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable_abc_ic_clear_material.xml.flat",
@@ -1404,6 +1420,10 @@
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/res/drawable-xhdpi-v4/googleg_disabled_color_18.png"
     },
     {
+        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-xxhdpi_logo.jpg.flat",
+        "source": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/res/drawable-xxhdpi/logo.jpg"
+    },
+    {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/layout_abc_tooltip.xml.flat",
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/layout/abc_tooltip.xml"
     },
@@ -1510,10 +1530,6 @@
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-mdpi-v4_abc_list_focused_holo.9.png.flat",
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/drawable-mdpi-v4/abc_list_focused_holo.9.png"
-    },
-    {
-        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable_logo.png.flat",
-        "source": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/res/drawable/logo.png"
     },
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-xxhdpi-v4_abc_ic_menu_paste_mtrl_am_alpha.png.flat",
@@ -1718,6 +1734,10 @@
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-xxhdpi-v4_abc_tab_indicator_mtrl_alpha.9.png.flat",
         "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/drawable-xxhdpi-v4/abc_tab_indicator_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-mdpi_logo.jpg.flat",
+        "source": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/res/drawable-mdpi/logo.jpg"
     },
     {
         "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/res/merged/release/drawable-hdpi-v4_abc_ic_star_black_36dp.png.flat",

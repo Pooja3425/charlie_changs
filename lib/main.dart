@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -122,7 +123,7 @@ class MyApp extends StatelessWidget {
           title: 'Charlie changs',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: colorCustom,
             fontFamily: "Manrope"
 
           ),
@@ -171,11 +172,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigationPage() {
     Navigator.of(context).pushReplacementNamed('/LoginScreen');
-   // Navigator.of(context).pushReplacementNamed('/OtpScreen');
+    //Navigator.of(context).pushReplacementNamed('/OtpScreen');
   }
 
   void navigationHome() {
     Navigator.of(context).pushReplacementNamed('/BottomScreen');
+    //Navigator.of(context).pushReplacementNamed('/OtpScreen');
   }
   String profile_value;
 

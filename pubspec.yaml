@@ -46,6 +46,9 @@ dependencies:
   sticky_headers: ^0.1.7
   scroll_to_index: ^1.0.6
   pinput: ^0.2.4
+  extended_nested_scroll_view: ^1.0.1
+  loading_more_list: ^3.0.0
+  pin_code_fields: ^4.0.0
 
 dev_dependencies:
   flutter_test:

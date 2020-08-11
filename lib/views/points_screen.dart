@@ -98,7 +98,7 @@ class _PointsScreenState extends State<PointsScreen> {
                   height: 10,
                   color: switch_bg,
                 ),
-                Container(
+                /*Container(
                   width: getWidth(context),
                   child: Padding(
                     padding: const EdgeInsets.only(left:30.0,right: 30,top: 20),
@@ -153,7 +153,7 @@ class _PointsScreenState extends State<PointsScreen> {
                       ],
                     ),
                   ),
-                )
+                )*/
 
               ],
             ),

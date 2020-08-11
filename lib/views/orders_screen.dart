@@ -13,6 +13,7 @@ import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/bottom_screen.dart';
+import 'package:charliechang/views/checkout_screen.dart';
 import 'package:charliechang/views/order_detail_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
@@ -102,7 +103,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           .toList();
 
 
-       /*newDataList = mOrderList.where((element) =>
+      /*newDataList = mOrderList.where((element) =>
     element.orderItems.where((element) =>
     element.itemName.toLowerCase().contains(_searchText.toLowerCase())).toList().contains(_searchText.toLowerCase()))
         .toList();*/
@@ -374,21 +375,21 @@ class _OrdersScreenState extends State<OrdersScreen> {
   final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
   addItemsTocart(Data orders) {
     for(int i=0;i<orders.orderItems.length;i++)
+    {
+      for(int j=0;j<mMenuList.length;j++)
       {
-          for(int j=0;j<mMenuList.length;j++)
-            {
-              if(orders.orderItems[i].itemId == mMenuList[j].id)
-                {
-                  print("QUATITY ${orders.orderItems[i].quantity}");
-                  for(int k=i;k<=int.parse(orders.orderItems[i].quantity);k++)
-                    {
-                      print("ITEM NAME ${mMenuList[j].name}");
-                      addToCart(mMenuList[j]);
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 2,),));
-                    }
-                }
-            }
+        if(orders.orderItems[i].itemId == mMenuList[j].id)
+        {
+          print("QUATITY ${orders.orderItems[i].quantity}");
+          for(int k=i;k<=int.parse(orders.orderItems[i].quantity);k++)
+          {
+            print("ITEM NAME ${mMenuList[j].name}");
+            addToCart(mMenuList[j]);
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CheckoutScreen(),));
+          }
+        }
       }
+    }
   }
 
   addToCart(Menu foodItem) {
@@ -409,9 +410,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
     String hashKey;
     if(preferences.getString(DELIVERY_PICKUP) =="1")
     {
-     setState(() {
-       hashKey = preferences.get(DELIVERY_ADDRESS_HASH);
-     });
+      setState(() {
+        hashKey = preferences.get(DELIVERY_ADDRESS_HASH);
+      });
     }
     else
     {

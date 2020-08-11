@@ -18,12 +18,10 @@ import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/address_book_screen.dart';
 import 'package:charliechang/views/checkout_screen.dart';
+import 'package:charliechang/views/demo.dart';
 import 'package:charliechang/views/pickup_address_screen.dart';
 import 'package:charliechang/views/pickup_checkout_screen.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +30,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'switch_ui.dart';
 import 'package:charliechang/models/slider_response.dart' as slider;
-
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
+import 'package:flutter/material.dart' hide NestedScrollView;
+import 'package:loading_more_list/loading_more_list.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -43,7 +43,7 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   String dropdownValue = "Home";
   bool status;
   //List<IconModel> mIconModelList = new List();
@@ -66,7 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final scrollDirection = Axis.vertical;
 
   String cat_name="";
-
+  bool _IsSearching;
+  String _searchText = "";
+  ScrollController mainContoller;
   void onConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
       setState(() {
@@ -81,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    expandController.dispose();
    _subscription.cancel();
     super.dispose();
   }
@@ -109,14 +112,20 @@ class _HomeScreenState extends State<HomeScreen> {
         CommonMethods.showLongToast(CHECK_INTERNET);
       }
 
-   //
+    mainContoller = ScrollController();
     scrollController = ScrollController();
-    scrollController.addListener(_scrollListener);
+    prepareAnimations();
+    _runExpandCheck();
+    controller.addListener(_scrollListener);
+
     super.initState();
   }
 
-  bool _IsSearching;
-  String _searchText = "";
+  @override
+  void didUpdateWidget(HomeScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _runExpandCheck();
+  }
 
   _HomeScreenState() {
     _searchController.addListener(() {
@@ -155,15 +164,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final double itemHeight = (getHeight(context) - kToolbarHeight - 24) / 2.1;
     final double itemWidth = getWidth(context) / 2;
-    final double grid_size = (itemWidth / itemHeight) - 100;
-   // print("fetd ${getWidth(context)/2}");
-    //var bloc = Provider.of<CartBloc>(context);
-   // CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(80),
           child: AppBar(
+
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             elevation: 0.0,
@@ -204,8 +212,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                // CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
                               }
-
-
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -269,287 +275,329 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          scrollDirection: scrollDirection,
-          controller: controller,
-          physics: ClampingScrollPhysics(),
-          child: Container(
-            width: getWidth(context),
-            child: Column(
-              children: <Widget>[
-                // SizedBox(height: 15,),
-              sliderList.length>0?  Container(
-                  width: getWidth(context),
-                  height: 270,
-                  child: GFCarousel(
-                    autoPlay: true,
-                    pagerSize: 8,
-                    activeIndicator: Colors.white,
-                    passiveIndicator: Colors.transparent.withOpacity(0.5),
-                    viewportFraction: 1.0,
-                    height: 270,
-                    // aspectRatio: 10,
-                    enlargeMainPage: false,
-                    pagination: true,
-                    items: sliderList.map(
-                      (url) {
-                        return Container(
-                          //margin: EdgeInsets.all(8.0),
-                          child: ClipRRect(
-                            //borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            child: Image.network(IMAGE_BASE_URL+url.imagePath,
-                                fit: BoxFit.cover, width: getWidth(context)),
-                          ),
-                        );
-                      },
-                    ).toList(),
-                    onPageChanged: (index) {
-                      setState(() {
-                        index;
-                      });
-                    },
-                  ),
-                ):Container(),
-                // SizedBox(height: 20,),
-                Container(
-                  width: getWidth(context),
-                  height: 15,
-                  color: switch_bg,
-                ),
-                Container(
-                  width: getWidth(context),
-                  height: 120,
-                  padding: EdgeInsets.only(left: 30),
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: mCategoryList.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(2.0, 20.0, 8.0, 0),
-                          child: Container(
-                            width: 50,
-                            //height: 80,
-                            child: InkWell(
-                              onTap: (){
-                                setState(() {
-                                  category = mCategoryList[index].name;
-                                  print("$category");
+        body: NestedScrollView(
+          controller: mainContoller,
+          headerSliverBuilder: (BuildContext c, bool f) {
+              return buildSliverHeader();
+            },
 
-                                  /*for(int i=0;i<mMenuList.length;i++)
-                                    {
-                                      if(mMenuList[i].category == category)
-                                        {
-                                          _scrollToIndex(i);
-                                          break;
+          innerScrollPositionKeyBuilder: () {
+            String index = 'Tab';
+            return Key(index);
+          },
+          body: Column(
+            children: <Widget>[
+              Container(
+                width: getWidth(context),
+                height: 15,
+                color: switch_bg,
+              ),
+              Container(
+                width: getWidth(context),
+                height: 120,
+                padding: EdgeInsets.only(left: 30),
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: mCategoryList.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(2.0, 20.0, 8.0, 0),
+                        child: Container(
+                          width: 50,
+                          //height: 80,
+                          child: InkWell(
+                            onTap: (){
+                              setState(() {
+                                category = mCategoryList[index].name;
+                                print("$category");
+                                _scrollToIndex(index);
+                              });
 
-                                        }
-                                    }*/
-
-                                  _scrollToIndex(index);
-
-                                 //getMenuAPI();
-                                });
-
-                              },
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        color: switch_bg,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(3.3),
-                                        )),
-                                    child: Center(
-                                      child: SvgPicture.network(
-                                        IMAGE_BASE_URL+mCategoryList[index].image,
-                                        width: 20,
-                                        height: 20,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    mCategoryList[index].name,
-                                    maxLines: 2,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: icon_color, fontSize: 10),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 25.0, right: 25.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        height: 2,
-                        width: getWidth(context),
-                        color: switch_bg,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        height: 40,
-                        width: getWidth(context),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: switch_bg,
-                            borderRadius: BorderRadius.all(Radius.circular(3))),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                            },
+                            child: Column(
                               children: <Widget>[
-                                //Icon(Icons.search,color: icon_color,size: 18,),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  color: icon_color,
-                                  size: 18,
-                                ),
-                                SizedBox(
-                                  width: 3,
-                                ),
                                 Container(
-                                  width: getWidth(context) - 110,
-                                  alignment: Alignment.centerLeft,
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: TextField(
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                      ),
-                                      controller: _searchController,
-                                      decoration: InputDecoration(
-                                          //contentPadding: EdgeInsets.only(top: 5),
-                                          //prefixIcon: Icon(Icons.search,color: icon_color,size: 18,),
-                                          hintText: "Search for dishes",
-                                          // alignLabelWithHint: ,
-                                          hintStyle: TextStyle(
-                                              fontSize: 12, color: icon_color),
-                                          //contentPadding: EdgeInsets.only(bottom: 3),
-                                          border: InputBorder.none,
-                                          counterText: ''),
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: switch_bg,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(3.3),
+                                      )),
+                                  child: Center(
+                                    child: Image.network(
+                                      IMAGE_BASE_URL+mCategoryList[index].image,
+                                      width: 20,
+                                      height: 20,
+                                      color: Colors.grey,
                                     ),
                                   ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  mCategoryList[index].name,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: icon_color, fontSize: 10),
                                 )
                               ],
                             ),
                           ),
                         ),
-
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        height: 2,
-                        width: getWidth(context),
-                        color: switch_bg,
-                      ),
-                      _IsSearching?  Container(
-                          width: getWidth(context),
-                          margin: EdgeInsets.only(top: 20),
-                          // height: getHeight(context)/2,
-                          child: _searchList.length>0?GridView.count(
-                            physics: NeverScrollableScrollPhysics(),
-                            crossAxisCount: 2,
-                            childAspectRatio: (itemWidth / itemHeight),
-                            //controller: new ScrollController(keepScrollOffset: false),
-                            shrinkWrap: true,
-                            children: buildSearchList(_searchList),
-                          ):Center(child: CircularProgressIndicator(),)
-
-                      ): ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap:true,
-                          itemCount: mCategoryList.length,
-                          itemBuilder: (context,index){
-                        return _wrapScrollTag(
-                          index: index,
-                          child: StickyHeader(
-                            header:  Padding(
-                              padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
-                              child: Text(
-                                "${mCategoryList[index].name}",
-                                style: TextStyle(color: icon_color),
+                      );
+                    }),
+              ),
+              Container(
+                height: 2,
+                width: getWidth(context),
+                color: switch_bg,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+                child: Container(
+                  height: 40,
+                  width: getWidth(context),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: switch_bg,
+                      borderRadius: BorderRadius.all(Radius.circular(3))),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          //Icon(Icons.search,color: icon_color,size: 18,),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Icon(
+                            Icons.search,
+                            color: icon_color,
+                            size: 18,
+                          ),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Container(
+                            width: getWidth(context) - 110,
+                            alignment: Alignment.centerLeft,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: TextField(
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  //contentPadding: EdgeInsets.only(top: 5),
+                                  //prefixIcon: Icon(Icons.search,color: icon_color,size: 18,),
+                                    hintText: "Search for dishes",
+                                    // alignLabelWithHint: ,
+                                    hintStyle: TextStyle(
+                                        fontSize: 12, color: icon_color),
+                                    //contentPadding: EdgeInsets.only(bottom: 3),
+                                    border: InputBorder.none,
+                                    counterText: ''),
                               ),
                             ),
-                            content: Container(
-                                width: getWidth(context),
-                                // height: getHeight(context)/2,
-                                child: mMenuList.length>0?GridView.count(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  crossAxisCount: 2,
-                                  childAspectRatio: (itemWidth / itemHeight),
-                                  //controller: new ScrollController(keepScrollOffset: false),
-                                  shrinkWrap: true,
-                                  children: /*_IsSearching?buildList(_searchList,mCategoryList[index].name):*/buildList(mMenuList,mCategoryList[index].name),
-                                ):Center(child: CircularProgressIndicator(),)
-
-                            ),
-                          ),
-                        );
-                      }),
-
-                     /* Container(
-                          width: getWidth(context),
-                          margin: EdgeInsets.only(top: 20),
-                          // height: getHeight(context)/2,
-                          child: mMenuList.length>0?GridView.count(
-                            physics: NeverScrollableScrollPhysics(),
-                            crossAxisCount: 2,
-                            childAspectRatio: (itemWidth / itemHeight),
-                            //controller: new ScrollController(keepScrollOffset: false),
-                            shrinkWrap: true,
-                            children: _IsSearching?buildList(_searchList):buildList(mMenuList),
-                          ):Center(child: CircularProgressIndicator(),)
-
-                      ),*/
-
-                      SizedBox(
-                        height: 10,
-                      )
-                    ],
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                )
-              ],
-            ),
+
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                height: 2,
+                width: getWidth(context),
+                color: switch_bg,
+              ),
+              Expanded(
+                child: ListView(
+                  scrollDirection: scrollDirection,
+                  controller: controller,
+                 // physics: const ClampingScrollPhysics(),
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+
+                          _IsSearching?  Container(
+                              width: getWidth(context),
+                              margin: EdgeInsets.only(top: 20),
+                              // height: getHeight(context)/2,
+                              child: _searchList.length>0?GridView.count(
+                                physics: NeverScrollableScrollPhysics(),
+                                crossAxisCount: 2,
+                                childAspectRatio: (itemWidth / itemHeight),
+                                //controller: new ScrollController(keepScrollOffset: false),
+                                shrinkWrap: true,
+                                children: buildSearchList(_searchList),
+                              ):Center(child: CircularProgressIndicator(),)
+
+                          ): ListView.builder(
+
+                              //physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap:true,
+                              itemCount: mCategoryList.length,
+                              itemBuilder: (context,index){
+                                return  _wrapScrollTag(
+                                  index: index,
+                                  child: StickyHeader(
+                                      header:  Padding(
+                                        padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
+                                        child: Text(
+                                          "${mCategoryList[index].name}",
+                                          style: TextStyle(color: icon_color),
+                                        ),
+                                      ),
+                                      content:  mMenuList.length>0?GridView.count(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        crossAxisCount: 2,
+                                        childAspectRatio: (itemWidth / itemHeight),
+                                        //controller: new ScrollController(keepScrollOffset: false),
+                                        shrinkWrap: true,
+                                        children: /*_IsSearching?buildList(_searchList,mCategoryList[index].name):*/buildList(mMenuList,mCategoryList[index].name),
+                                      ):Center(child: CircularProgressIndicator(),)
+
+
+                                  ),
+                                );
+
+                              }),
+
+                          /* Container(
+                              width: getWidth(context),
+                              margin: EdgeInsets.only(top: 20),
+                              // height: getHeight(context)/2,
+                              child: mMenuList.length>0?GridView.count(
+                                physics: NeverScrollableScrollPhysics(),
+                                crossAxisCount: 2,
+                                childAspectRatio: (itemWidth / itemHeight),
+                                //controller: new ScrollController(keepScrollOffset: false),
+                                shrinkWrap: true,
+                                children: _IsSearching?buildList(_searchList):buildList(mMenuList),
+                              ):Center(child: CircularProgressIndicator(),)
+
+                          ),*/
+
+                          SizedBox(
+                            height: 10,
+                          )
+                        ],
+                      ),
+                    )
+
+
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
     );
   }
+  AnimationController expandController;
+  Animation<double> animation;
+
+  void prepareAnimations() {
+    expandController = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 500)
+    );
+    animation = CurvedAnimation(
+      parent: expandController,
+      curve: Curves.ease,
+    );
+  }
+
+  void _runExpandCheck() {
+    if(isStretched) {
+      expandController.forward();
+    }
+    else {
+      expandController.reverse();
+    }
+  }
+  bool isStretched = true;
+  List<Widget> buildSliverHeader() {
+    final List<Widget> widgets = <Widget>[];
+    widgets.add(
+      SliverList(delegate: SliverChildListDelegate([
+        sliderList.length>0?SizeTransition(
+          axisAlignment: 1.0,
+          sizeFactor: animation,
+          child: GFCarousel(
+            autoPlay: true,
+            pagerSize: 8,
+            activeIndicator: Colors.white,
+            passiveIndicator: Colors.transparent.withOpacity(0.5),
+            viewportFraction: 1.0,
+            height: 270,
+            // aspectRatio: 10,
+            enlargeMainPage: false,
+            pagination: true,
+            items: sliderList.map(
+                  (url) {
+                return Container(
+                  //margin: EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    //borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    child: Image.network(IMAGE_BASE_URL+url.imagePath,
+                        fit: BoxFit.cover, width: getWidth(context)),
+                  ),
+                );
+              },
+            ).toList(),
+            onPageChanged: (index) {
+              setState(() {
+                index;
+              });
+            },
+          ),
+        ):Container()
+      ]))
+        /*SliverAppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          expandedHeight: 250.0,
+          floating: false,
+          pinned: false,
+          stretch: isStretched,
+          flexibleSpace: FlexibleSpaceBar(
+            background:,
+          ),
+          *//**//*
+        )*/);
+
+    //widgets.add( );
+
+    return widgets;
+  }
 
   int counter = -1;
   Future _scrollToIndex(int index) async {
     print("Anchot");
-   /* setState(() {
-      counter++;
-
-      if (counter >= mCategoryList.length)
-        counter = 0;
-    });*/
 
     await controller.scrollToIndex(index, preferPosition: AutoScrollPosition.begin);
-    controller.highlight(index);
+    //controller.highlight(index);
   }
 
   addToCart(Menu foodItem) {
@@ -626,7 +674,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: (){
                     //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                     addToCart(mTempList[index]);
-
+                    mTempList[index].count++;
                     //bloc.addToCart(index);
                     widget.callback1();
                     widget.func1('ADD');
@@ -716,11 +764,29 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Card(
               child: AspectRatio(
                 aspectRatio: 7/6,
-                child: Image.network(
-                  IMAGE_BASE_URL+mTempList[index].image,
-                  fit: BoxFit.cover,
-                  width: getWidth(context)/2-60,
-                  height: getWidth(context)/2-80,
+                child: InkWell(
+                  onTap: (){
+                    /*if(isStretched)
+                      {
+                        setState(() {
+                          isStretched = false;
+                        });
+                      }
+                    else
+                      {
+                        setState(() {
+                          isStretched = true;
+                        });
+                      }
+                    _runExpandCheck();
+                    print("vall $isStretched");*/
+                  },
+                  child: Image.network(
+                    IMAGE_BASE_URL+mTempList[index].image,
+                    fit: BoxFit.cover,
+                    width: getWidth(context)/2-60,
+                    height: getWidth(context)/2-80,
+                  ),
                 ),
               ),
               shape: RoundedRectangleBorder(
@@ -907,23 +973,24 @@ class _HomeScreenState extends State<HomeScreen> {
   bool enableScroll = true;
   ScrollController scrollController;
   _scrollListener() {
-    double maxScroll = scrollController.position.maxScrollExtent;
-    double currentScroll = scrollController.position.pixels;
+    double maxScroll = controller.position.maxScrollExtent;
+    double currentScroll = controller.position.pixels;
     double delta = 270.0; // o
-    //print(maxScroll-currentScroll);
-    if ( maxScroll - currentScroll >= 540) { // whatever you determine here
+    //print("ddd ${controller.position.pixels} dif ${maxScroll - currentScroll}");
+    if ( currentScroll <2) { // whatever you determine here
       //.. load more
       setState(() {
-        //enableScroll = true;
+        isStretched = true;
       });
-     // print("END");
+
     }
-    else
+    else if(currentScroll>10)
     {
       setState(() {
-        //enableScroll = false;
+        isStretched = false;
       });
     }
+    _runExpandCheck();
   }
   CategoryBloc mCategoryBloc;
   CategoryRespose mCategoryRespose;
@@ -938,17 +1005,20 @@ class _HomeScreenState extends State<HomeScreen> {
       else if(onData.status == Status.COMPLETED)
       {
         //CommonMethods.hideDialog();
-        setState(() {
-          mCategoryList = mCategoryRespose.data;
-         // hashKey = mCategoryRespose.data[0].hashCode.toString();
-          category = "";
-          if(hashKey !=null)
-            {
+        if(mounted)
+          {
+            setState(() {
+              mCategoryList = mCategoryRespose.data;
+              // hashKey = mCategoryRespose.data[0].hashCode.toString();
+              category = "";
+              if(hashKey !=null)
+              {
 
-              getMenuAPI();
-            }
+                getMenuAPI();
+              }
 
-        });
+            });
+          }
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
 
       }
@@ -1057,11 +1127,14 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       else if(onData.status == Status.COMPLETED)
       {
-        CommonMethods.dismissDialog(context);
-        setState(() {
-          sliderList.clear();
-          sliderList=mSliderResponse.data;
-        });
+       if(mounted)
+         {
+           CommonMethods.dismissDialog(context);
+           setState(() {
+             sliderList.clear();
+             sliderList=mSliderResponse.data;
+           });
+         }
       }
       else if(onData.status == Status.ERROR)
       {

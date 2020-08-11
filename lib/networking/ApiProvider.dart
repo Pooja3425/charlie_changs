@@ -113,7 +113,7 @@ class ApiProvider {
       'Accept':'application/json',
       'Authorization':token
     };
-    //print("HEEE ${headers} ${bodyData} ${_baseUrl+url}");
+    print("HEEE ${headers} ${bodyData} ${_baseUrl+url}");
 
     try {
       final response = await http.post(_baseUrl + url,body: bodyData,headers: headers);

@@ -35,7 +35,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Icon(Icons.keyboard_backspace,color: icon_color,),
+                      InkWell(
+                          onTap: (){
+                            Navigator.of(context).pop();
+                          },
+                          child: Icon(Icons.keyboard_backspace,color: icon_color,)),
                       SizedBox(width: 10,),
                       Text("Profile",style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
                     ],

@@ -172,9 +172,9 @@ class _OffersScreenState extends State<OffersScreen> {
       mCouponListResponse = onData.data;
       if(onData.status == Status.LOADING)
       {
-        setState(() {
+        /*setState(() {
           isLoading = false;
-        });
+        });*/
         //CommonMethods.displayProgressDialog(onData.message,context);
        // showLoaderDialog(context,onData.message);
       }
