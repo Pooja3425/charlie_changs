@@ -253,19 +253,39 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                           print("VALUE : $value");
                           setState(() {
                             status = value;
-                          });
-                          if(value==true)
-                          {
-                            CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
-                            CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
+                            if(value==true)
+                            {
+                              CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
+                              CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
+                              print("dataa T${bloc.getCartCount()}");
+                              if(bloc.getCartCount()==0)
+                                {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
+                                }
+                              else
+                                {
+                                  showWarningDialog("p");
 
-                          }
-                          else
-                          {
-                            CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
-                            CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
-                          }
-                          getDeliveryAddress();
+                                }
+                            }
+                            else
+                            {
+                              CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
+                              CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
+                              print("dataa F ${bloc.getCartCount()}");
+                              if(bloc.getCartCount() == 0)
+                                {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
+                                }
+                              else
+                                {
+                                  showWarningDialog("d");
+                                }
+                            }
+
+                            getDeliveryAddress();
+                          });
+
                         },
                       ),
                     )
@@ -276,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
           ),
         ),
         body: NestedScrollView(
-          controller: mainContoller,
+          //  controller: mainContoller,
           headerSliverBuilder: (BuildContext c, bool f) {
               return buildSliverHeader();
             },
@@ -449,7 +469,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 //controller: new ScrollController(keepScrollOffset: false),
                                 shrinkWrap: true,
                                 children: buildSearchList(_searchList),
-                              ):Center(child: CircularProgressIndicator(),)
+                              ):Center(child: Text("No such item found"),)
 
                           ): ListView.builder(
 
@@ -520,7 +540,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   void prepareAnimations() {
     expandController = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: 500)
+        duration: Duration(milliseconds: 200)
     );
     animation = CurvedAnimation(
       parent: expandController,
@@ -539,6 +559,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   bool isStretched = true;
   List<Widget> buildSliverHeader() {
     final List<Widget> widgets = <Widget>[];
+
     widgets.add(
       SliverList(delegate: SliverChildListDelegate([
         sliderList.length>0?SizeTransition(
@@ -1067,11 +1088,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     print("get address");
     preferences = await SharedPreferences.getInstance();
     setState(() {
-
       if(preferences.getString(DELIVERY_PICKUP) =="1")
         {
           deliveryAddressName = preferences.get(DELIVERY_ADDRESS_NAME);
           hashKey = preferences.get(DELIVERY_ADDRESS_HASH);
+
         }
       else
         {
@@ -1144,6 +1165,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
       }
     });
   }
+
+   showWarningDialog(String from) {
+     showDialog(
+         context: context,
+         barrierDismissible: false,
+         builder: (BuildContext context){
+           return AlertDialog(
+             contentPadding: EdgeInsets.only(top: 0,bottom: 0,right: 20,left: 20),
+             title: Text("Warning",style: TextStyle(color: fab_color),),
+             content: Padding(
+               padding: const EdgeInsets.only(top:8.0),
+               child: Text("Switching address type will remove all items from cart."),
+             ),
+             actions: <Widget>[FlatButton(onPressed: () {
+               Navigator.of(context).pop();
+               bloc.clearCart();
+               if(from=="p")
+                 {
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
+                 }
+               else
+                 {
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
+                 }
+             }, child: Text("Ok",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),))
+             ],
+           );
+         }
+     );
+   }
 }
 
 

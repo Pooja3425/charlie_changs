@@ -44,6 +44,7 @@ class _PaymentFailScreenState extends State<PaymentFailScreen> {
                         Text("+91-99999 99999",style: TextStyle(color: hint_text_color,fontSize: 15,fontWeight: FontWeight.bold),),
                         SizedBox(height: 40,),
                         RaisedButton(
+                          onPressed: ()=>Navigator.pop(context),
                           disabledColor: button_color,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(3.3))),
                           child: Text("Try Again",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),color: button_color,)
@@ -56,4 +57,6 @@ class _PaymentFailScreenState extends State<PaymentFailScreen> {
       ),
     );
   }
+
+
 }

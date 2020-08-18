@@ -159,7 +159,7 @@ class _CartScreenState extends State<CartScreen> {
             padding: const EdgeInsets.only(left:30.0,right: 30.0),
             child: Container(
               width: getWidth(context),
-              child: Padding(
+              /*child: Padding(
                 padding: const EdgeInsets.only(top: 20,bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,7 +218,7 @@ class _CartScreenState extends State<CartScreen> {
 
                   ],
                 ),
-              ),
+              ),*/
             ),
           );
         });

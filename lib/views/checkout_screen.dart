@@ -31,6 +31,7 @@ import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/address_book_screen.dart';
 import 'package:charliechang/views/bottom_screen.dart';
 import 'package:charliechang/views/pay_screen.dart';
+import 'package:charliechang/views/payment_fail_screen.dart';
 import 'package:charliechang/views/pickup_address_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -304,7 +305,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                   CommonMethods().thickHorizontalLine(context),
                   SizedBox(height: 10,),
-                  Padding(
+                  /*Padding(
                     padding: const EdgeInsets.only(left:30.0),
                     child: Container(
                         width: getWidth(context)/2-26,
@@ -320,23 +321,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                                 icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
-                                value: dropdownValueReedem,
+                                value: dropdownValue,
                                 elevation: 16,
                                 style: TextStyle(
                                     color:  icon_color
                                 ),
                                 onChanged: (String newValue) {
                                   setState(() {
-                                    dropdownValueReedem = newValue;
+                                    dropdownValue = newValue;
+                                    payment_mode = dropdownValue =="Cash on delivery"?"0":"1";
                                   });
                                 },
-                                items: <String>['Redeem CC Points','Apply coupon code']
+                                items: <String>['Cash on delivery', 'Online Payment']
                                     .map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
-                                    child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold,fontSize: 13),),
+                                    child: Text(value,style: TextStyle(color: Colors.white),),
                                   );
-                                }).toList(),
+                                })
+                                    .toList(),
                               ),
                             ),
                             Icon(Icons.keyboard_arrow_down,size: 18,color: notification_title_color,)
@@ -344,8 +347,45 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                       ),
                     ),
+                  ),*/
+
+                  Padding(
+                    padding: const EdgeInsets.only(left:30.0),
+                    child: Container(
+                      width: getWidth(context)/2,
+                      height: 38,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: input_border_color,width: 0.3),
+                          borderRadius: BorderRadius.all(Radius.circular(3.3))
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left:5.0,right: 5.0),
+                        child:    DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            icon: Icon(Icons.arrow_drop_down,color: notification_title_color,),
+                            value: dropdownValueReedem,
+                            elevation: 16,
+                            style: TextStyle(
+                                color:  icon_color
+                            ),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownValueReedem = newValue;
+                              });
+                            },
+                            items: <String>['Redeem CC Points','Apply coupon code','Special Offers']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,style: TextStyle(color: notification_title_color,fontWeight: FontWeight.bold,fontSize: 13),),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  dropdownValueReedem =="Redeem CC Points"?redeemUI():couponUI(),
+                  dropdownValueReedem =="Redeem CC Points"?redeemUI():dropdownValueReedem=="Apply coupon code"?couponUI():specialOffersUI(),
                   pickup_delivery=="1"?deliveryUI():pickupUI(),
                   CommonMethods().thickHorizontalLine(context),
 
@@ -358,7 +398,32 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
     );
   }
-
+  Widget specialOffersUI()
+  {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: 2,
+        itemBuilder: ((context,index){
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(30.0,5,30,5),
+        child: Container(
+          width: getWidth(context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text("Chicken Soup"),
+              Container(width: 65,height: 30,
+              decoration: BoxDecoration(
+                color: fab_color,
+                borderRadius: BorderRadius.all(Radius.circular(3))
+              ),
+              child: Center(child: Text("Add",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),)),)
+            ],
+          ),
+        ),
+      );
+    }));
+  }
   Widget redeemUI()
   {
     return  Container(
@@ -444,7 +509,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ],
                 ),
               ),
-            ):Text("You dont have enought points to reedem"),
+            ):Text("You don't have enought points to reedem",style: TextStyle(color: fab_color),),
             SizedBox(height: 10,),
             isRedeemCalled?Container(
 
@@ -525,6 +590,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       width:getWidth(context)/2,
                       height: 25,
                       child: TextField(
+                          enableInteractiveSelection: false,
                           controller: controllerCoupon,
                           style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),
                           decoration: InputDecoration(
@@ -557,7 +623,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(top:8.0,left:20),
+              padding: const EdgeInsets.only(top:8.0,left:0),
               child: Text(discountAmount=="0"?"":discountAmount,style: TextStyle(color: hint_text_color,fontSize: 12),),
             )
           ],
@@ -935,8 +1001,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded",
-          "X-Api-Key": "test_8338f3d1e94dd539eecfec357cb",
-          "X-Auth-Token": "test_86f3567ae710bfb0eba0dbad138"
+          "X-Api-Key": "dfe6f3c4b461cecd7370e4d71212b450",
+          "X-Auth-Token": "tc38184743fe1b1978708960ed15ec6de"
         },
         body: body);
     print("DDD${json.decode(resp.body)['success']}");
@@ -968,12 +1034,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   _checkPaymentStatus(String id) async {
     var response = await http.get(
-        Uri.encodeFull("https://test.instamojo.com/api/1.1/payments/$id/"),
+        Uri.encodeFull("https://www.instamojo.com/api/1.1/payments/$id/"),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded",
-          "X-Api-Key": "test_8338f3d1e94dd539eecfec357cb",
-          "X-Auth-Token": "test_86f3567ae710bfb0eba0dbad138"
+          "X-Api-Key": "dfe6f3c4b461cecd7370e4d71212b450",
+          "X-Auth-Token": "tc38184743fe1b1978708960ed15ec6de"
         });
     var realResponse = json.decode(response.body);
     print("SUCC $realResponse");
@@ -984,6 +1050,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
         //callPlaceOrderAPI();
       } else {
+
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentFailScreen(),));
 //payment failed or pending.
       }
     } else {
@@ -991,6 +1059,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
+  
   OnlinePaymentBloc mOnlinePaymentBloc;
   OnlinePaymentResponse mOnlinePaymentResponse;
 
@@ -1110,7 +1179,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       {
         setState(() {
           discount = mApplyCouponReponse.discount;
-          discountAmount ="Rs ${mApplyCouponReponse.discount} discount applied";
+          discountAmount ="Rs. ${mApplyCouponReponse.discount} discount applied";
         });
         CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(mApplyCouponReponse.msg);

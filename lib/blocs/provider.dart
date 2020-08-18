@@ -47,6 +47,15 @@ class CartProvider {
     return totalTaxValue;
   }
 
+  int cartCount=0;
+  int calculateCartCount() {
+    cartCount = 0;
+    foodItems.forEach((f) {
+      cartCount += f.count;
+    });
+    return cartCount;
+  }
+
   removeAllItems()
   {
     foodItems.clear();

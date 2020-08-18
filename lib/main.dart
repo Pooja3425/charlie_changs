@@ -119,34 +119,43 @@ class MyApp extends StatelessWidget {
       ],
       child: ChangeNotifierProvider<CartBloc>(
         builder: (context) => CartBloc(),
-        child: MaterialApp(
-          title: 'Charlie changs',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: colorCustom,
-            fontFamily: "Manrope"
+        child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
 
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+          child: MaterialApp(
+            title: 'Charlie changs',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: colorCustom,
+              fontFamily: "Manrope"
+
+            ),
+            routes: <String, WidgetBuilder>{
+              '/LoginScreen': (BuildContext context) => new LoginScreen(),
+              '/OtpScreen': (BuildContext context) => new OtpScreen(),
+              '/ThanksScreen': (BuildContext context) => new ThanksScreen(),
+              '/PaymentFailScreen': (BuildContext context) => new PaymentFailScreen(),
+              '/CheckoutScreen': (BuildContext context) => new CheckoutScreen(),
+              '/PickupCheckoutScreen': (BuildContext context) => new PickupCheckoutScreen(),
+              '/CompleteProfileScreen': (BuildContext context) => new CompleteProfileScreen(),
+              '/HomeScreen': (BuildContext context) => new HomeScreen(),
+              '/AddressBookScreen': (BuildContext context) => new AddressBookScreen(),
+              '/BottomScreen': (BuildContext context) => new BottomScreen(),
+              '/SilverAppBarDemo': (BuildContext context) => new SilverAppBarDemo(),
+              '/widget': (_){
+                return WebviewScaffold(
+                  url: selectedUrl,
+                );
+              }
+            },
+
+            home: SplashScreen(),
           ),
-          routes: <String, WidgetBuilder>{
-            '/LoginScreen': (BuildContext context) => new LoginScreen(),
-            '/OtpScreen': (BuildContext context) => new OtpScreen(),
-            '/ThanksScreen': (BuildContext context) => new ThanksScreen(),
-            '/PaymentFailScreen': (BuildContext context) => new PaymentFailScreen(),
-            '/CheckoutScreen': (BuildContext context) => new CheckoutScreen(),
-            '/PickupCheckoutScreen': (BuildContext context) => new PickupCheckoutScreen(),
-            '/CompleteProfileScreen': (BuildContext context) => new CompleteProfileScreen(),
-            '/HomeScreen': (BuildContext context) => new HomeScreen(),
-            '/AddressBookScreen': (BuildContext context) => new AddressBookScreen(),
-            '/BottomScreen': (BuildContext context) => new BottomScreen(),
-            '/SilverAppBarDemo': (BuildContext context) => new SilverAppBarDemo(),
-            '/widget': (_){
-              return WebviewScaffold(
-                url: selectedUrl,
-              );
-            }
-          },
-
-          home: SplashScreen(),
         ),
       ),
     );
@@ -185,25 +194,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
 
     getValues();
-
-
-   /* Future complete_profile = CommonMethods.getPreference(context, COMPLETE_PROFILE);
-    complete_profile.then((data){
-      setState(() {
-        profile_value = data;
-      });
-      if(profile_value == "1")
-      {
-        startTimeHome();
-      }
-      else
-      {
-        startTime();
-      }
-    });*/
-
-   print("SPLASH check ${token} $complete_profile");
-
     super.initState();
   }
   @override

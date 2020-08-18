@@ -81,7 +81,7 @@ class _CustomSwitchState extends State<CustomSwitch>
                 children: <Widget>[
                   _circleAnimation.value == Alignment.centerRight
                       ? Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 2.0),
+                    padding: const EdgeInsets.only(left: 8.0, right: 12.0),
                     child: Text(
                       widget.activeText,
                       style: TextStyle(
@@ -94,15 +94,15 @@ class _CustomSwitchState extends State<CustomSwitch>
                   Align(
                     alignment: _circleAnimation.value,
                     child: Container(
-                      width: 35.0,
-                      height: 35.0,
+                      width: 30.0,
+                      height: 30.0,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle, color: fab_color),
                     ),
                   ),
                   _circleAnimation.value == Alignment.centerLeft
                       ? Padding(
-                    padding: const EdgeInsets.only(left: 0.0, right: 2.0),
+                    padding: const EdgeInsets.only(left: 0.0, right: 10.0),
                     child: Text(
                       widget.inactiveText,
                       style: TextStyle(

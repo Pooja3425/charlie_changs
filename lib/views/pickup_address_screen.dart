@@ -29,41 +29,44 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(80),
-          child: AppBar(
-            elevation: 0.0,
-            automaticallyImplyLeading: false,
-            flexibleSpace: CommonMethods.appBar(context, "Select Outlet for Pickup"),
+    return WillPopScope(
+      onWillPop: goBack,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(80),
+            child: AppBar(
+              elevation: 0.0,
+              automaticallyImplyLeading: false,
+              flexibleSpace: appBar(context, "Select Outlet for Pickup"),
+            ),
           ),
-        ),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 10,
-                width: getWidth(context),
-                color: switch_bg,
-              ),
-              Container(
-                width: getWidth(context),
-                height: getHeight(context)-122,
-                padding: EdgeInsets.only(top:15),
-                child: mDeliveryLocationsList.length>0?ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: mDeliveryLocationsList.length,
-                  itemBuilder: (context,index)
-                  {
-                    return addressRouUI(index);
-                  },
-
-                ):Center(
-                 child: Text("No nearby pickup location"),
+          body: Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 10,
+                  width: getWidth(context),
+                  color: switch_bg,
                 ),
-              )
-            ],
+                Container(
+                  width: getWidth(context),
+                  height: getHeight(context)-122,
+                  padding: EdgeInsets.only(top:15),
+                  child: mDeliveryLocationsList.length>0?ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: mDeliveryLocationsList.length,
+                    itemBuilder: (context,index)
+                    {
+                      return addressRouUI(index);
+                    },
+
+                  ):Center(
+                   child: Text("No nearby pickup location"),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -178,5 +181,50 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
       context,
       MaterialPageRoute(builder: (context) => BottomScreen()),
     );
+  }
+
+  Widget appBar(BuildContext context,String title)
+  {
+    return Container(
+      color: Colors.white,
+      height: 80,
+      width: getWidth(context),
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.only(right:30.0,left: 30.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            InkWell(
+                onTap: (){
+                  if(widget.from==null)
+                    {
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomScreen()));
+                    }
+                  else
+                    {
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CheckoutScreen()));
+
+                    }
+                },
+                child: Icon(Icons.keyboard_backspace,color: icon_color,)),
+            SizedBox(width: 10,),
+            Text(title,style: TextStyle(color: text_color,fontSize: 15,fontFamily: "Manrope",fontWeight: FontWeight.bold),)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<bool> goBack() {
+    if(widget.from==null)
+    {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomScreen()));
+    }
+    else
+    {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CheckoutScreen()));
+
+    }
   }
 }
