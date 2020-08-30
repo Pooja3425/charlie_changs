@@ -1,6 +1,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:charliechang/blocs/get_profile_bloc.dart';
 import 'package:charliechang/blocs/update_profile_bloc.dart';
@@ -148,7 +149,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     maxLength: 15,
                                     controller: _controllerFirstName,
                                     textCapitalization: TextCapitalization.words,
-                                    textInputAction: TextInputAction.next,
+                                    textInputAction: Platform.isAndroid? TextInputAction.next:TextInputAction.done,
                                     onSubmitted: (v){
                                       FocusScope.of(context).requestFocus(focusLastName);
                                     },
@@ -180,7 +181,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     maxLength: 15,
                                     textCapitalization: TextCapitalization.words,
                                     controller: _controllerLastName,
-                                    textInputAction: TextInputAction.next,
+                                    textInputAction: Platform.isAndroid? TextInputAction.next:TextInputAction.done,
                                     onSubmitted: (v){
                                       FocusScope.of(context).requestFocus(focusPhone);
                                     },
@@ -214,7 +215,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 focusNode: focusPhone,
                                 controller: _controllerPhone,
                                 textCapitalization: TextCapitalization.words,
-                                textInputAction: TextInputAction.next,
+                                textInputAction:Platform.isAndroid? TextInputAction.next:TextInputAction.done,
                                 onSubmitted: (v){
                                   FocusScope.of(context).requestFocus(focusEmail);
                                 },
@@ -246,7 +247,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 focusNode: focusEmail,
                                 controller: _controllerEmail,
                                 textCapitalization: TextCapitalization.words,
-                                textInputAction: TextInputAction.next,
+                                textInputAction: TextInputAction.done,
                                 /*onSubmitted: (v){
                                   FocusScope.of(context).requestFocus(focus);
                                 },*/

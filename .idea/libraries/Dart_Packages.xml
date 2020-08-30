@@ -149,6 +149,13 @@
             </list>
           </value>
         </entry>
+        <entry key="flutter_staggered_grid_view">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_staggered_grid_view-0.3.2/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="flutter_svg">
           <value>
             <list>
@@ -522,6 +529,7 @@
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/extended_nested_scroll_view-1.0.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-6.0.16/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_share-1.0.2+1/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_staggered_grid_view-0.3.2/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_svg-0.17.4/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-4.0.1/lib" />

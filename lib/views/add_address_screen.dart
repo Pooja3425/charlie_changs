@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:charliechang/blocs/add_delivery_address_bloc.dart';
 import 'package:charliechang/blocs/update_address_bloc.dart';
@@ -119,7 +120,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   maxLength: 10,
                                   controller: _controllerAddressName,
                                   textCapitalization: TextCapitalization.words,
-                                  textInputAction: TextInputAction.next,
+                                  textInputAction: Platform.isAndroid? TextInputAction.next:TextInputAction.done,
                                   onSubmitted: (v){
                                     FocusScope.of(context).requestFocus(focusAddressLine1);
                                   },
@@ -151,7 +152,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   focusNode: focusAddressLine1,
                                   controller: _controllerAddressLine1,
                                   textCapitalization: TextCapitalization.words,
-                                  textInputAction: TextInputAction.next,
+                                  textInputAction: Platform.isAndroid? TextInputAction.next:TextInputAction.done,
                                   onSubmitted: (v){
                                     FocusScope.of(context).requestFocus(focusAddressLine2);
                                   },
@@ -183,7 +184,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   focusNode: focusAddressLine2,
                                   controller: _controllerAddressLine2,
                                   textCapitalization: TextCapitalization.words,
-                                  textInputAction: TextInputAction.next,
+                                  textInputAction: Platform.isAndroid? TextInputAction.next:TextInputAction.done,
                                   onSubmitted: (v){
                                     FocusScope.of(context).requestFocus(focusAddressLandmark);
                                   },
@@ -215,7 +216,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   focusNode: focusAddressLandmark,
                                   controller: _controllerLandmark,
                                   textCapitalization: TextCapitalization.words,
-                                  textInputAction: TextInputAction.next,
+                                  textInputAction: Platform.isAndroid? TextInputAction.next:TextInputAction.done,
                                   onSubmitted: (v){
                                     FocusScope.of(context).requestFocus(focusAddressLocation);
                                   },
@@ -345,7 +346,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   focusNode: focusAddressInstruction,
                                   controller: _controllerInstruction,
                                   textCapitalization: TextCapitalization.words,
-                                  textInputAction: TextInputAction.next,
+                                  textInputAction: Platform.isAndroid? TextInputAction.next:TextInputAction.done,
                                   onSubmitted: (v){
                                           FocusScope.of(context).requestFocus(focusAddressCity);
                                         },

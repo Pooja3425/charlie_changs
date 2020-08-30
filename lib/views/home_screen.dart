@@ -22,6 +22,7 @@ import 'package:charliechang/views/demo.dart';
 import 'package:charliechang/views/pickup_address_screen.dart';
 import 'package:charliechang/views/pickup_checkout_screen.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:provider/provider.dart';
@@ -162,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-    final double itemHeight = (getHeight(context) - kToolbarHeight - 24) / 2.1;
+    final double itemHeight = (getHeight(context) - kToolbarHeight - 24) / 2.3;
     final double itemWidth = getWidth(context) / 2;
     final double statusBarHeight = MediaQuery.of(context).padding.top;
 
@@ -487,13 +488,31 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                           style: TextStyle(color: icon_color),
                                         ),
                                       ),
-                                      content:  mMenuList.length>0?GridView.count(
+                                      content:/*StaggeredGridView.countBuilder(
+                                        shrinkWrap: true,
+                                        crossAxisCount: 2,
+                                        itemBuilder: (context,i){
+                                          List<Menu> mTempList =new List();
+                                          for(int i=0;i<mMenuList.length;i++)
+                                          {
+                                            if(mMenuList[i].category == mCategoryList[index].name)
+                                            {
+                                              //print("CCC ${category}");
+                                              mTempList.add(mMenuList[i]);
+                                            }
+                                          }
+                                          return staggeredView(mTempList[i]);
+                                        },
+                                        staggeredTileBuilder: (int index) =>
+                                        new StaggeredTile.count(2, 2.5),
+                                        mainAxisSpacing: 4.0,
+                                        crossAxisSpacing: 4.0,)*/  mMenuList.length>0?GridView.count(
                                         physics: NeverScrollableScrollPhysics(),
                                         crossAxisCount: 2,
                                         childAspectRatio: (itemWidth / itemHeight),
                                         //controller: new ScrollController(keepScrollOffset: false),
                                         shrinkWrap: true,
-                                        children: /*_IsSearching?buildList(_searchList,mCategoryList[index].name):*/buildList(mMenuList,mCategoryList[index].name),
+                                        children: buildList(mMenuList,mCategoryList[index].name),
                                       ):Center(child: CircularProgressIndicator(),)
 
 
@@ -629,6 +648,138 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     bloc.removeFromList(foodItem);
   }
 
+  Widget staggeredView(Menu menu)
+  {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          child: Card(
+            child: AspectRatio(
+              aspectRatio: 7/6,
+              child: Image.network(
+                IMAGE_BASE_URL+menu.image,
+                fit: BoxFit.cover,
+                width: getWidth(context)/2-60,
+                height: getWidth(context)/2-80,
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                    Radius.circular(3.3))),
+            clipBehavior:
+            Clip.antiAliasWithSaveLayer,
+          ),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.only(
+              left: 5, top: 10),
+          child: Container(
+            height:40,
+            child: Text(
+              menu.name,
+              maxLines: 2,
+              style: TextStyle(fontSize: 12,color: icon_color),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              left: 5,right: 5),
+          child: Row(
+            children: <Widget>[
+              Text(
+                "Rs "+menu.price,
+                style: TextStyle(
+                    color: icon_color,
+                    fontSize: 12),
+              ),
+              menu.count ==0?InkWell(
+                onTap: (){
+                  //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+                  addToCart(menu);
+                  menu.count++;
+                  //bloc.addToCart(index);
+                  widget.callback1();
+                  widget.func1('ADD');
+                  setState(() {
+                    //
+                    // mMenuList[index].count ++;
+                  });
+                  // _settingModalBottomSheet(context);
+                },
+                child: Container(
+                  width: 80,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(3)),
+                      color: fab_color),
+                  child: Center(
+                      child: Text(
+                        "Add",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12),
+                      )),
+                ),
+              ):Container(
+                height: 30,
+                decoration: BoxDecoration(
+                    border: Border.all(color: button_color,width: 0.5),
+                    borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                child: Row(
+                  children: <Widget>[
+                    IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+                      /*if(mMenuList[index].count!=1)
+                                                {*/
+                      //bloc.removeFromList(mMenuList[index]);
+
+
+                      widget.callback1();
+                      widget.func1('REMOVE');
+                      if(menu.count!=1)
+                      {
+                        setState(() {
+                          menu.count--;
+                        });
+                      }
+                      else
+                      {
+                        removeFromList(menu);
+                      }
+
+
+
+                      //}
+                    }),
+                    Text("${menu.count}",style: TextStyle(color: button_color,fontSize: 13),),
+                    IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
+                      print("ADDDD");
+                      setState(() {
+                        menu.count++;
+                        // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
+                      });
+                      // addToCart(mMenuList[index]);
+                      widget.callback1();
+                      widget.func1('ADD');
+                    })
+                  ],
+                ),
+              ),
+            ],
+            mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
+          ),
+        )
+      ],
+    );
+  }
+
   List<Widget> buildList(List<Menu> mMenuList,String cat)
   {
     List<Menu> mTempList =new List();
@@ -643,133 +794,136 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
   //  print("Temp size ${mTempList.length}");
     return List.generate(/*mMenuList.length*/mTempList.length, (index) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-              child: Card(
-                child: AspectRatio(
-                  aspectRatio: 7/6,
-                  child: Image.network(
-                    IMAGE_BASE_URL+mTempList[index].image,
-                    fit: BoxFit.cover,
-                    width: getWidth(context)/2-60,
-                    height: getWidth(context)/2-80,
+      return Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+                child: Card(
+                  child: AspectRatio(
+                    aspectRatio: 7/6,
+                    child: Image.network(
+                      IMAGE_BASE_URL+mTempList[index].image,
+                      fit: BoxFit.cover,
+                      width: getWidth(context)/2-60,
+                      height: getWidth(context)/2-80,
+                    ),
                   ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(3.3))),
+                  clipBehavior:
+                  Clip.antiAliasWithSaveLayer,
                 ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(3.3))),
-                clipBehavior:
-                Clip.antiAliasWithSaveLayer,
               ),
-            ),
 
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 5, top: 10),
-            child: Container(
-              height:40,
-              child: Text(
-                mTempList[index].name,
-                maxLines: 2,
-                style: TextStyle(fontSize: 12,color: icon_color),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 5, top: 10),
+              child: Container(
+                height:40,
+                child: Text(
+                  mTempList[index].name,
+                  maxLines: 2,
+                  style: TextStyle(fontSize: 12,color: icon_color),
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 5,right: 5),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  "Rs "+mTempList[index].price,
-                  style: TextStyle(
-                      color: icon_color,
-                      fontSize: 12),
-                ),
-                mTempList[index].count ==0?InkWell(
-                  onTap: (){
-                    //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
-                    addToCart(mTempList[index]);
-                    mTempList[index].count++;
-                    //bloc.addToCart(index);
-                    widget.callback1();
-                    widget.func1('ADD');
-                    setState(() {
-                      //
-                     // mMenuList[index].count ++;
-                    });
-                    // _settingModalBottomSheet(context);
-                  },
-                  child: Container(
-                    width: 80,
+            SizedBox(
+              height: 8,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 5,right: 5),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    "Rs "+mTempList[index].price,
+                    style: TextStyle(
+                        color: icon_color,
+                        fontSize: 12),
+                  ),
+                  mTempList[index].count ==0?InkWell(
+                    onTap: (){
+                      //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+                      addToCart(mTempList[index]);
+                      mTempList[index].count++;
+                      //bloc.addToCart(index);
+                      widget.callback1();
+                      widget.func1('ADD');
+                      setState(() {
+                        //
+                       // mMenuList[index].count ++;
+                      });
+                      // _settingModalBottomSheet(context);
+                    },
+                    child: Container(
+                      width: 80,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(3)),
+                          color: fab_color),
+                      child: Center(
+                          child: Text(
+                            "Add",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12),
+                          )),
+                    ),
+                  ):Container(
                     height: 30,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(3)),
-                        color: fab_color),
-                    child: Center(
-                        child: Text(
-                          "Add",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12),
-                        )),
+                        border: Border.all(color: button_color,width: 0.5),
+                        borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                    child: Row(
+                      children: <Widget>[
+                        IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+                          /*if(mMenuList[index].count!=1)
+                                                  {*/
+                          //bloc.removeFromList(mMenuList[index]);
+                          print("SIZEEE ${mMenuList[index].count}");
+
+                          widget.callback1();
+                          widget.func1('REMOVE');
+                          if(mTempList[index].count!=1)
+                            {
+                              setState(() {
+                                mTempList[index].count--;
+                              });
+                            }
+                          else
+                            {
+                              removeFromList(mTempList[index]);
+                            }
+
+
+
+                          //}
+                        }),
+                        Text("${mTempList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
+                        IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
+                          print("ADDDD");
+                          setState(() {
+                            mTempList[index].count++;
+                            // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
+                          });
+                         // addToCart(mMenuList[index]);
+                          widget.callback1();
+                          widget.func1('ADD');
+                        })
+                      ],
+                    ),
                   ),
-                ):Container(
-                  height: 30,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: button_color,width: 0.5),
-                      borderRadius: BorderRadius.all(Radius.circular(3.3))),
-                  child: Row(
-                    children: <Widget>[
-                      IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
-                        /*if(mMenuList[index].count!=1)
-                                                {*/
-                        //bloc.removeFromList(mMenuList[index]);
-                        print("SIZEEE ${mMenuList[index].count}");
-
-                        widget.callback1();
-                        widget.func1('REMOVE');
-                        if(mTempList[index].count!=1)
-                          {
-                            setState(() {
-                              mTempList[index].count--;
-                            });
-                          }
-                        else
-                          {
-                            removeFromList(mTempList[index]);
-                          }
-
-
-
-                        //}
-                      }),
-                      Text("${mTempList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
-                      IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
-                        print("ADDDD");
-                        setState(() {
-                          mTempList[index].count++;
-                          // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
-                        });
-                       // addToCart(mMenuList[index]);
-                        widget.callback1();
-                        widget.func1('ADD');
-                      })
-                    ],
-                  ),
-                ),
-              ],
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-            ),
-          )
-        ],
+                ],
+                mainAxisAlignment:
+                MainAxisAlignment.spaceBetween,
+              ),
+            )
+          ],
+        ),
       );
     });
   }
@@ -778,151 +932,156 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   List<Widget> buildSearchList(List<Menu> mTempList)
   {
     return List.generate(/*mMenuList.length*/mTempList.length, (index) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: Card(
-              child: AspectRatio(
-                aspectRatio: 7/6,
-                child: InkWell(
-                  onTap: (){
-                    /*if(isStretched)
-                      {
-                        setState(() {
-                          isStretched = false;
-                        });
-                      }
-                    else
-                      {
-                        setState(() {
-                          isStretched = true;
-                        });
-                      }
-                    _runExpandCheck();
-                    print("vall $isStretched");*/
-                  },
-                  child: Image.network(
-                    IMAGE_BASE_URL+mTempList[index].image,
-                    fit: BoxFit.cover,
-                    width: getWidth(context)/2-60,
-                    height: getWidth(context)/2-80,
-                  ),
-                ),
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(3.3))),
-              clipBehavior:
-              Clip.antiAliasWithSaveLayer,
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 5, top: 10),
-            child: Container(
-              height:40,
-              child: Text(
-                mTempList[index].name,
-                maxLines: 2,
-                style: TextStyle(fontSize: 12,color: icon_color),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 5,right: 5),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  "Rs "+mTempList[index].price,
-                  style: TextStyle(
-                      color: icon_color,
-                      fontSize: 12),
-                ),
-                mTempList[index].count ==0?InkWell(
-                  onTap: (){
-                    //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
-                    addToCart(mTempList[index]);
-
-                    //bloc.addToCart(index);
-                    widget.callback1();
-                    widget.func1('ADD');
-                    setState(() {
-                      //
-                      // mMenuList[index].count ++;
-                    });
-                    // _settingModalBottomSheet(context);
-                  },
-                  child: Container(
-                    width: 80,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(3)),
-                        color: fab_color),
-                    child: Center(
-                        child: Text(
-                          "Add",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12),
-                        )),
-                  ),
-                ):Container(
-                  height: 30,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: button_color,width: 0.5),
-                      borderRadius: BorderRadius.all(Radius.circular(3.3))),
-                  child: Row(
-                    children: <Widget>[
-                      IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
-                        /*if(mMenuList[index].count!=1)
-                                                {*/
-                        //bloc.removeFromList(mMenuList[index]);
-                        print("SIZEEE ${mMenuList[index].count}");
-
-                        widget.callback1();
-                        widget.func1('REMOVE');
-                        if(mTempList[index].count!=1)
-                        {
-                          setState(() {
-                            mTempList[index].count--;
-                          });
-                        }
+      return Container(
+        color: Colors.lime,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                child: Card(
+                  child: AspectRatio(
+                    aspectRatio: 7/6,
+                    child: InkWell(
+                      onTap: (){
+                        /*if(isStretched)
+                          {
+                            setState(() {
+                              isStretched = false;
+                            });
+                          }
                         else
-                        {
-                          removeFromList(mTempList[index]);
-                        }
+                          {
+                            setState(() {
+                              isStretched = true;
+                            });
+                          }
+                        _runExpandCheck();
+                        print("vall $isStretched");*/
+                      },
+                      child: Image.network(
+                        IMAGE_BASE_URL+mTempList[index].image,
+                        fit: BoxFit.cover,
+                        width: getWidth(context)/2-60,
+                        height: getWidth(context)/2-80,
+                      ),
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(3.3))),
+                  clipBehavior:
+                  Clip.antiAliasWithSaveLayer,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 5, top: 10),
+                child: Container(
+                  height:40,
+                  child: Text(
+                    mTempList[index].name,
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 12,color: icon_color),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 5,right: 5),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Rs "+mTempList[index].price,
+                      style: TextStyle(
+                          color: icon_color,
+                          fontSize: 12),
+                    ),
+                    mTempList[index].count ==0?InkWell(
+                      onTap: (){
+                        //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
+                        addToCart(mTempList[index]);
 
-
-
-                        //}
-                      }),
-                      Text("${mTempList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
-                      IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
-                        print("ADDDD");
-                        setState(() {
-                          mTempList[index].count++;
-                          // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
-                        });
-                        // addToCart(mMenuList[index]);
+                        //bloc.addToCart(index);
                         widget.callback1();
                         widget.func1('ADD');
-                      })
-                    ],
-                  ),
+                        setState(() {
+                          //
+                          // mMenuList[index].count ++;
+                        });
+                        // _settingModalBottomSheet(context);
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(3)),
+                            color: fab_color),
+                        child: Center(
+                            child: Text(
+                              "Add",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12),
+                            )),
+                      ),
+                    ):Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: button_color,width: 0.5),
+                          borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                      child: Row(
+                        children: <Widget>[
+                          IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
+                            /*if(mMenuList[index].count!=1)
+                                                    {*/
+                            //bloc.removeFromList(mMenuList[index]);
+                            print("SIZEEE ${mMenuList[index].count}");
+
+                            widget.callback1();
+                            widget.func1('REMOVE');
+                            if(mTempList[index].count!=1)
+                            {
+                              setState(() {
+                                mTempList[index].count--;
+                              });
+                            }
+                            else
+                            {
+                              removeFromList(mTempList[index]);
+                            }
+
+
+
+                            //}
+                          }),
+                          Text("${mTempList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
+                          IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
+                            print("ADDDD");
+                            setState(() {
+                              mTempList[index].count++;
+                              // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
+                            });
+                            // addToCart(mMenuList[index]);
+                            widget.callback1();
+                            widget.func1('ADD');
+                          })
+                        ],
+                      ),
+                    ),
+                  ],
+                  mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
                 ),
-              ],
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-            ),
-          )
-        ],
+              )
+            ],
+          ),
+        ),
       );
     });
   }
@@ -1171,26 +1330,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
          context: context,
          barrierDismissible: false,
          builder: (BuildContext context){
-           return AlertDialog(
-             contentPadding: EdgeInsets.only(top: 0,bottom: 0,right: 20,left: 20),
-             title: Text("Warning",style: TextStyle(color: fab_color),),
-             content: Padding(
-               padding: const EdgeInsets.only(top:8.0),
-               child: Text("Switching address type will remove all items from cart."),
+           return WillPopScope(
+             onWillPop: (){},
+             child: AlertDialog(
+               contentPadding: EdgeInsets.only(top: 0,bottom: 0,right: 20,left: 20),
+               title: Text("Warning",style: TextStyle(color: fab_color),),
+               content: Padding(
+                 padding: const EdgeInsets.only(top:8.0),
+                 child: Text("Switching address type will remove all items from cart."),
+               ),
+               actions: <Widget>[FlatButton(onPressed: () {
+                 Navigator.of(context).pop();
+                 bloc.clearCart();
+                 if(from=="p")
+                   {
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
+                   }
+                 else
+                   {
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
+                   }
+               }, child: Text("Ok",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),))
+               ],
              ),
-             actions: <Widget>[FlatButton(onPressed: () {
-               Navigator.of(context).pop();
-               bloc.clearCart();
-               if(from=="p")
-                 {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
-                 }
-               else
-                 {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
-                 }
-             }, child: Text("Ok",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),))
-             ],
            );
          }
      );

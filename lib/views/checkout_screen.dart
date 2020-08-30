@@ -1059,7 +1059,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
-  
+
   OnlinePaymentBloc mOnlinePaymentBloc;
   OnlinePaymentResponse mOnlinePaymentResponse;
 
