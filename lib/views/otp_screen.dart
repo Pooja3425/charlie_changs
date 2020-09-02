@@ -253,7 +253,7 @@ class _OtpScreenState extends State<OtpScreen> {
       else if(onData.status == Status.COMPLETED)
       {
         CommonMethods.dismissDialog(context);
-        CommonMethods.showShortToast(regRes.msg);
+        CommonMethods.showShortToast("OTP resent");
         //navigationPage();
       }
       else if(onData.status == Status.ERROR)

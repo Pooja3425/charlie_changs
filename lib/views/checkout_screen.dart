@@ -903,31 +903,62 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
+  printOrder()
+  {
+
+    var items = [];
+    print("LEN ${orderModelList.length}");
+    for(int i=0;i<orderModelList.length;i++)
+    {
+      var resBody = {};
+      if(orderModelList[i].count>1)
+      {
+        print("COUNT ${orderModelList[i].count}");
+        for(int j=0;j<orderModelList[i].count;j++)
+        {
+          print("vv${orderModelList[i].name }");
+          resBody["hash"]=orderModelList[i].hash;
+          resBody["name"]=orderModelList[i].name;
+          items.add(resBody);
+        }
+      }
+      else if(orderModelList[i].count==1)
+      {
+        print("EEE ${orderModelList[i].name}");
+        resBody["hash"]=orderModelList[i].hash;
+        resBody["name"]=orderModelList[i].name;
+        items.add(resBody);
+      }
+    }
+    String orderItems = json.encode(items);
+    print("SSS ${json.decode(orderItems)}");
+  }
+
   AddOrderBloc mAddOrderBloc;
   AddOrderResponse mAddOrderResponse;
   String payment_mode="0";
 
   callPlaceOrderAPI() async{
-    var resBody = {};
+
     var items = [];
-    for(int i=0;i<orderModelList.length;i++)
-      {
-        if(orderModelList[i].count>1)
-          {
-            for(int j=0;j<orderModelList[i].count;j++)
-              {
-                resBody["hash"]=orderModelList[i].hash;
-                resBody["name"]=orderModelList[i].name;
-                items.add(resBody);
-              }
-          }
-        else
-          {
-            resBody["hash"]=orderModelList[i].hash;
-            resBody["name"]=orderModelList[i].name;
-            items.add(resBody);
-          }
+    for(int i=0;i<orderModelList.length;i++) {
+      var resBody = {};
+      if (orderModelList[i].count > 1) {
+        print("COUNT ${orderModelList[i].count}");
+        for (int j = 0; j < orderModelList[i].count; j++) {
+          print("vv${orderModelList[i].name }");
+          resBody["hash"] = orderModelList[i].hash;
+          resBody["name"] = orderModelList[i].name;
+          items.add(resBody);
+        }
       }
+      else if (orderModelList[i].count == 1) {
+        print("EEE ${orderModelList[i].name}");
+        resBody["hash"] = orderModelList[i].hash;
+        resBody["name"] = orderModelList[i].name;
+        items.add(resBody);
+      }
+    }
 
 
     String orderItems = json.encode(items);
@@ -943,7 +974,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           "items":json.decode(orderItems)});
 
 
-        String data = body;
+    String data = body;
     print("REQUETS ${data.replaceAll("\\", "").replaceAll('"', "")}");
     mAddOrderBloc=AddOrderBloc(data);
     mAddOrderBloc.dataStream.listen((onData){
@@ -1282,6 +1313,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     {
       if(payment_mode =="0")
       {
+        //printOrder();
         callPlaceOrderAPI();
       }
       else
@@ -1434,7 +1466,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     };
     final body = jsonEncode(
         {
-          "number":prefs.getString(PHONE_NUMBER)/*"8554063733"*/,
+          "number":/*prefs.getString(PHONE_NUMBER)*/"8554063733",
         });
 
     print('Parms MOBILE ${prefs.getString(PHONE_NUMBER)}');
