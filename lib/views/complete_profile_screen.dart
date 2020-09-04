@@ -97,7 +97,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
+              /*SizedBox(height: 20,),
               Container(
                 width: getWidth(context),
                 //height: 40,
@@ -114,9 +114,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     controller: controllerReferral,
                     textCapitalization: TextCapitalization.words,
                     textInputAction: TextInputAction.done,
-                    /*onSubmitted: (v){
+                    *//*onSubmitted: (v){
                                   FocusScope.of(context).requestFocus(focus);
-                                },*/
+                                },*//*
                     style: TextStyle(
                         color: text_color,
                         fontWeight: FontWeight.w400,fontSize: 12.5),
@@ -128,7 +128,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         counterText: ''),
                   ),
                 ),
-              ),
+              ),*/
               SizedBox(height: 40,),
               Align(
                 alignment: Alignment.centerRight,

@@ -933,7 +933,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   {
     return List.generate(/*mMenuList.length*/mTempList.length, (index) {
       return Container(
-        color: Colors.lime,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

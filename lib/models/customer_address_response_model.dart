@@ -31,6 +31,7 @@ class Data {
   String address2;
   String isPrimary;
   String areaid;
+  String pincode;
   String hash;
 
   Data(
@@ -40,6 +41,7 @@ class Data {
         this.address2,
         this.isPrimary,
         this.areaid,
+        this.pincode,
         this.hash});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -49,6 +51,7 @@ class Data {
     address2 = json['address2'];
     isPrimary = json['is_primary'];
     areaid = json['areaid'];
+    pincode = json['pincode'];
     hash = json['hash'];
   }
 
@@ -60,6 +63,7 @@ class Data {
     data['address2'] = this.address2;
     data['is_primary'] = this.isPrimary;
     data['areaid'] = this.areaid;
+    data['pincode'] = this.pincode;
     data['hash'] = this.hash;
     return data;
   }

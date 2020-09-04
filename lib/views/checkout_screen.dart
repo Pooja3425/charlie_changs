@@ -33,6 +33,7 @@ import 'package:charliechang/views/bottom_screen.dart';
 import 'package:charliechang/views/pay_screen.dart';
 import 'package:charliechang/views/payment_fail_screen.dart';
 import 'package:charliechang/views/pickup_address_screen.dart';
+import 'package:charliechang/views/thanks_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -967,7 +968,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
         final body = jsonEncode({"del_area":pickup_delivery =="1"?preferences.getString(DELIVERY_ADDRESS_HASH):preferences.getString(PICKUP_ADDRESS_HASH),
           "deliver_pickup":preferences.getString(DELIVERY_PICKUP),
-          "coupon_code":"",
+          "coupon_code":controllerCoupon.text,
           "payment_mode":payment_mode,
           "reward_id_selected":reward_id_selected,
           "notes":"do not proceed test order from development team",
@@ -979,7 +980,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     mAddOrderBloc=AddOrderBloc(data);
     mAddOrderBloc.dataStream.listen((onData){
       mAddOrderResponse = onData.data;
-      //print(onData.status);
       if(onData.status == Status.LOADING)
       {
         // CommonMethods.displayProgressDialog(onData.message,context);
@@ -991,20 +991,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(mAddOrderResponse.msg);
         bloc.clearCart();
-        navigationPage();
+        navigationPage(mAddOrderResponse.ordercode);
       }
       else if(onData.status == Status.ERROR)
       {
         CommonMethods.dismissDialog(context);
-
         CommonMethods.showShortToast(onData.message);
 
       }
     });
   }
 
-  navigationPage() {
-    Navigator.of(context).pushReplacementNamed('/BottomScreen');
+  navigationPage(String orderCode) {
+    //Navigator.of(context).pushReplacementNamed('/BottomScreen');
+    //Navigator.of(context).pushReplacementNamed('/ThanksScreen');
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ThanksScreen(orderCode: orderCode,)));
   }
 
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
@@ -1466,7 +1467,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     };
     final body = jsonEncode(
         {
-          "number":/*prefs.getString(PHONE_NUMBER)*/"8554063733",
+          "number":prefs.getString(PHONE_NUMBER)/*"8554063733"*/,
         });
 
     print('Parms MOBILE ${prefs.getString(PHONE_NUMBER)}');
@@ -1489,7 +1490,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
              print("bbb $key");
              _dates.add(key);
            });
-
 
            for(int i=0; i<_dates.length; i++){
              print(jsonParsed[_dates[i]]);
