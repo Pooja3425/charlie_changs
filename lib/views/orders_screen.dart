@@ -212,7 +212,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 ):Center(
                   child: Text("You haven't placed order yet"),
                 ):mOrderList.length>0?ListView.builder(
-                  itemCount: /*mOrderList.length*/3,
+                  itemCount: mOrderList.length,
                   itemBuilder: (context,index){
                     print("before search");
 

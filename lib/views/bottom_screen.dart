@@ -106,7 +106,7 @@ class _BottomScreenState extends State<BottomScreen> {
         });
       }
     getCartValue();
-    _firebaseMessaging.getToken().then((value) => print(value));
+    _firebaseMessaging.getToken().then((value) => print("TOKEN $value"));
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
@@ -119,6 +119,10 @@ class _BottomScreenState extends State<BottomScreen> {
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
+       setState(() {
+         _page = 3;
+         _pageController.jumpToPage(_page);
+       });
         //_navigateToItemDetail(message);
       },
     );

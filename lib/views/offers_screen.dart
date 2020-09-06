@@ -29,9 +29,18 @@ class _OffersScreenState extends State<OffersScreen> {
     // CommonMeathods.showShortToast(widget.otp);
     _connectivity = new Connectivity();
     _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
-
-
-
+    if(mounted)
+    {
+      print("INIT MOUN");
+      if(_isInternetAvailable)
+      {
+        callCouponAPI();
+      }
+      else
+      {
+        CommonMethods.showLongToast(CHECK_INTERNET);
+      }
+    }
     super.initState();
   }
 
@@ -52,18 +61,6 @@ class _OffersScreenState extends State<OffersScreen> {
   //BuildContext context;
   @override
   Widget build(BuildContext context) {
-    if(mounted)
-    {
-      print("INIT MOUN");
-      if(_isInternetAvailable)
-      {
-        callCouponAPI();
-      }
-      else
-      {
-        CommonMethods.showLongToast(CHECK_INTERNET);
-      }
-    }
     return SafeArea(
       child: Container(
         color: switch_bg,

@@ -1,30 +1,36 @@
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:23
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:24
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:93
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:100
 -keep class androidx.core.content.FileProvider { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:23
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:24
 -keep class com.brandzgarage.charliechang.Application { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:28
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:29
 -keep class com.brandzgarage.charliechang.MainActivity { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:127
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:150
 -keep class com.google.android.datatransport.runtime.backends.TransportBackendDiscovery { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:140
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:163
 -keep class com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:134
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:157
 -keep class com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:118
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:125
 -keep class com.google.android.gms.common.api.GoogleApiActivity { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:59
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:140
+-keep class com.google.android.gms.measurement.AppMeasurementJobService { <init>(); }
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:130
+-keep class com.google.android.gms.measurement.AppMeasurementReceiver { <init>(); }
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:136
+-keep class com.google.android.gms.measurement.AppMeasurementService { <init>(); }
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:60
 -keep class com.google.firebase.components.ComponentDiscoveryService { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:103
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:110
 -keep class com.google.firebase.iid.FirebaseInstanceIdReceiver { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:80
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:87
 -keep class com.google.firebase.messaging.FirebaseMessagingService { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:112
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:119
 -keep class com.google.firebase.provider.FirebaseInitProvider { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:54
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:55
 -keep class io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService { <init>(); }
-# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:88
+# Referenced at /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/merged_manifests/release/AndroidManifest.xml:95
 -keep class io.flutter.plugins.urllauncher.WebViewActivity { <init>(); }
 # Referenced at /home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/layout/abc_alert_dialog_title_material.xml:57
 # Referenced at /home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/layout/abc_alert_dialog_material.xml:52

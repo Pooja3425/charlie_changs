@@ -46,7 +46,7 @@ class Data {
   String custArea;
   String cityname;
   String restArea;
-  Null cseName;
+  String cseName;
   List<OrderItems> orderItems;
 
   Data(
@@ -96,7 +96,7 @@ class Data {
     custArea = json['cust_area'];
     cityname = json['cityname'];
     restArea = json['rest_area'];
-    cseName = json['cse_name'];
+    cseName = json['cse_name'].toString();
     if (json['order_items'] != null) {
       orderItems = new List<OrderItems>();
       json['order_items'].forEach((v) {
@@ -128,7 +128,7 @@ class Data {
     data['cust_area'] = this.custArea;
     data['cityname'] = this.cityname;
     data['rest_area'] = this.restArea;
-    data['cse_name'] = this.cseName;
+    data['cse_name'] = this.cseName.toString();
     if (this.orderItems != null) {
       data['order_items'] = this.orderItems.map((v) => v.toJson()).toList();
     }
