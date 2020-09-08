@@ -290,7 +290,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     String items="";
     for(int i=0;i<orders.orderItems.length;i++)
     {
-      items = items+orders.orderItems[i].itemName +" x "+ orders.orderItems[i].quantity+",";
+      items = items+orders.orderItems[i].itemName +" x "+ orders.orderItems[i].quantity+", ";
     }
 
     // print("DATEE $time ");
@@ -381,7 +381,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
         if(orders.orderItems[i].itemId == mMenuList[j].id)
         {
           print("QUATITY ${orders.orderItems[i].quantity}");
-          for(int k=i;k<=int.parse(orders.orderItems[i].quantity);k++)
+          for(int k=0;k<=int.parse(orders.orderItems[i].quantity);k++)
           {
             print("ITEM NAME ${mMenuList[j].name}");
             addToCart(mMenuList[j]);

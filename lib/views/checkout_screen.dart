@@ -169,10 +169,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
       if (dropdownValueReedem == "Redeem CC Points") {
         if (_isInternetAvailable)
-          {callPointsAPI();
-        callDropdownAPI();}
-        else
-          CommonMethods.showLongToast(CHECK_INTERNET);
+          {
+            if(mounted)
+              {
+                callPointsAPI();
+                callDropdownAPI();
+              }
+          }
+            else
+              CommonMethods.showLongToast(CHECK_INTERNET);
       }
     super.initState();
   }
@@ -365,6 +370,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           child: DropdownButton<String>(
                             icon: Icon(Icons.arrow_drop_down,color: notification_title_color,),
                             value: dropdownValueReedem,
+                            hint: Text("Select for offers"),
                             elevation: 16,
                             style: TextStyle(
                                 color:  icon_color
@@ -386,7 +392,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                     ),
                   ),
-                  dropdownValueReedem =="Redeem CC Points"?redeemUI():dropdownValueReedem=="Apply coupon code"?couponUI():specialOffersUI(),
+                  dropdownValueReedem =="Redeem CC Points"?redeemUI():dropdownValueReedem=="Apply coupon code"?couponUI():dropdownValueReedem =="Special Offers"?specialOffersUI():Container(height: 20,),
                   pickup_delivery=="1"?deliveryUI():pickupUI(),
                   CommonMethods().thickHorizontalLine(context),
 
@@ -831,7 +837,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   String dropdownValue = 'Cash on delivery';
-  String dropdownValueReedem = 'Redeem CC Points';
+  //String dropdownValueReedem = 'Redeem CC Points';
+  String dropdownValueReedem;
   Widget bottomUI() {
     return Container(
       height: 100,

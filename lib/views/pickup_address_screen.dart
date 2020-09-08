@@ -7,6 +7,7 @@ import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/checkout_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'bottom_screen.dart';
@@ -114,7 +115,12 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
             SizedBox(height: 10,),
             InkWell(
                 onTap: () async {
-                  final String googleMapsUrl = "comgooglemaps://?center=${mDeliveryLocationsList[i].lattitude},${mDeliveryLocationsList[i].longitude}";
+                  final availableMaps = await MapLauncher.installedMaps;
+                  await availableMaps.first.showMarker(
+                    coords: Coords(double.parse(mDeliveryLocationsList[i].lattitude), double.parse(mDeliveryLocationsList[i].longitude)),
+                    title: "${mDeliveryLocationsList[i].name}",
+                  );
+                  /* final String googleMapsUrl = "comgooglemaps://?center=${mDeliveryLocationsList[i].lattitude},${mDeliveryLocationsList[i].longitude}";
                   final String appleMapsUrl = "https://maps.apple.com/?q=${mDeliveryLocationsList[i].lattitude},${mDeliveryLocationsList[i].longitude}";
 
                   if (await canLaunch(googleMapsUrl)) {
@@ -124,7 +130,7 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
                     await launch(appleMapsUrl, forceSafariVC: false);
                   } else {
                     throw "Couldn't launch URL";
-                  }
+                  }*/
                 },
                 child: Text("Find us on map",style: TextStyle(fontSize: 12,color: fab_color,fontWeight: FontWeight.w600),)),
             SizedBox(height: 15,),

@@ -50,6 +50,7 @@ dependencies:
   loading_more_list: ^3.0.0
   pin_code_fields: ^4.0.0
   flutter_staggered_grid_view: ^0.3.2
+  map_launcher: ^0.12.2
 
 dev_dependencies:
   flutter_test:

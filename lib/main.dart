@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:charliechang/models/scroll_model.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/string_constants.dart';
@@ -97,7 +98,11 @@ void main() async{
     DeviceOrientation.portraitUp,
   ]);
   HttpOverrides.global = new MyHttpOverrides();
-  runApp(MyApp());
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ScrollModel()),
+      ],
+      child: MyApp()));
 }
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -119,42 +124,45 @@ class MyApp extends StatelessWidget {
       ],
       child: ChangeNotifierProvider<CartBloc>(
         builder: (context) => CartBloc(),
-        child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
+        child: ChangeNotifierProvider(
+          create: (context) => ScrollModel(),
+          child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
 
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-          child: MaterialApp(
-            title: 'Charlie changs',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primarySwatch: colorCustom,
-              fontFamily: "Manrope"
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+            child: MaterialApp(
+              title: 'Charlie changs',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                primarySwatch: colorCustom,
+                fontFamily: "Manrope"
 
+              ),
+              routes: <String, WidgetBuilder>{
+                '/LoginScreen': (BuildContext context) => new LoginScreen(),
+                '/OtpScreen': (BuildContext context) => new OtpScreen(),
+                '/ThanksScreen': (BuildContext context) => new ThanksScreen(),
+                '/PaymentFailScreen': (BuildContext context) => new PaymentFailScreen(),
+                '/CheckoutScreen': (BuildContext context) => new CheckoutScreen(),
+                '/PickupCheckoutScreen': (BuildContext context) => new PickupCheckoutScreen(),
+                '/CompleteProfileScreen': (BuildContext context) => new CompleteProfileScreen(),
+                '/HomeScreen': (BuildContext context) => new HomeScreen(),
+                '/AddressBookScreen': (BuildContext context) => new AddressBookScreen(),
+                '/BottomScreen': (BuildContext context) => new BottomScreen(),
+                '/SilverAppBarDemo': (BuildContext context) => new SilverAppBarDemo(),
+                '/widget': (_){
+                  return WebviewScaffold(
+                    url: selectedUrl,
+                  );
+                }
+              },
+
+              home: SplashScreen(),
             ),
-            routes: <String, WidgetBuilder>{
-              '/LoginScreen': (BuildContext context) => new LoginScreen(),
-              '/OtpScreen': (BuildContext context) => new OtpScreen(),
-              '/ThanksScreen': (BuildContext context) => new ThanksScreen(),
-              '/PaymentFailScreen': (BuildContext context) => new PaymentFailScreen(),
-              '/CheckoutScreen': (BuildContext context) => new CheckoutScreen(),
-              '/PickupCheckoutScreen': (BuildContext context) => new PickupCheckoutScreen(),
-              '/CompleteProfileScreen': (BuildContext context) => new CompleteProfileScreen(),
-              '/HomeScreen': (BuildContext context) => new HomeScreen(),
-              '/AddressBookScreen': (BuildContext context) => new AddressBookScreen(),
-              '/BottomScreen': (BuildContext context) => new BottomScreen(),
-              '/SilverAppBarDemo': (BuildContext context) => new SilverAppBarDemo(),
-              '/widget': (_){
-                return WebviewScaffold(
-                  url: selectedUrl,
-                );
-              }
-            },
-
-            home: SplashScreen(),
           ),
         ),
       ),

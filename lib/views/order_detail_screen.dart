@@ -252,8 +252,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       {
         if(orders.orderItems[i].itemId == mMenuList[j].id)
         {
-          print("QUATITY ${orders.orderItems[i].quantity}");
-          for(int k=i;k<=int.parse(orders.orderItems[i].quantity);k++)
+
+          for(int k=0;k<=int.parse(orders.orderItems[i].quantity);k++)
           {
             print("ITEM NAME ${mMenuList[j].name}");
             addToCart(mMenuList[j]);

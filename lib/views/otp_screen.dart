@@ -180,9 +180,10 @@ class _OtpScreenState extends State<OtpScreen> {
         borderWidth: 0.3,
         inactiveFillColor: Colors.black12,
         inactiveColor: Colors.white,
-        activeColor: button_color,
+        activeColor: Colors.black,
         activeFillColor: Colors.white,
-        selectedFillColor: button_color
+        selectedFillColor: Colors.transparent,
+        selectedColor: button_color
       ),
       animationDuration: Duration(milliseconds: 300),
       backgroundColor: Colors.white10,

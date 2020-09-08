@@ -5,14 +5,15 @@ INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/cha
 INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-37:12
 INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-37:12
 MERGED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-37:12
-MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-20:12
 MERGED from [:fluttertoast] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/fluttertoast/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:shared_preferences] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-14:12
 MERGED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-10:12
 MERGED from [:connectivity_macos] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity_macos/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:flutter_share] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_share/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-21:12
+MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-20:12
+MERGED from [:map_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/map_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-14:12
+MERGED from [:flutter_share] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_share/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:shared_preferences] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.firebase:firebase-analytics:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/5336b43c636cc10e51396d735065facd/firebase-analytics-17.5.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.firebase:firebase-datatransport:17.0.3] /home/asmss102/.gradle/caches/transforms-2/files-2.1/66b88bf3e9aa090694f8e676d1871042/firebase-datatransport-17.0.3/AndroidManifest.xml:15:1-34:12
@@ -101,12 +102,12 @@ MERGED from [com.google.android.datatransport:transport-backend-cct:2.2.0] /home
 		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:8:22-64
 application
 ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:9:5-36:19
+MERGED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-19:19
+MERGED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-19:19
 MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-18:19
 MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-18:19
 MERGED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-12:19
 MERGED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-12:19
-MERGED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-19:19
-MERGED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-19:19
 MERGED from [com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:22:5-42:19
 MERGED from [com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:22:5-42:19
 MERGED from [com.google.firebase:firebase-analytics:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/5336b43c636cc10e51396d735065facd/firebase-analytics-17.5.0/AndroidManifest.xml:7:5-20
@@ -203,22 +204,24 @@ uses-sdk
 INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml
 INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml
-MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:fluttertoast] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/fluttertoast/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:fluttertoast] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/fluttertoast/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:shared_preferences] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:shared_preferences] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:connectivity_macos] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity_macos/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:connectivity_macos] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity_macos/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:flutter_share] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_share/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:flutter_share] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_share/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:6:5-44
 MERGED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:6:5-44
+MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:map_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/map_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:map_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/map_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_share] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_share/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_share] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_share/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.firebase:firebase-analytics:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/5336b43c636cc10e51396d735065facd/firebase-analytics-17.5.0/AndroidManifest.xml:5:5-44
@@ -325,6 +328,48 @@ INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/cha
 	android:minSdkVersion
 		INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml
 		INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/debug/AndroidManifest.xml
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
+MERGED from [com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:22:5-79
+MERGED from [com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:22:5-79
+MERGED from [com.google.android.gms:play-services-measurement-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/dabf6277090e314ccc96495c411e23e0/play-services-measurement-api-17.5.0/AndroidManifest.xml:23:5-79
+MERGED from [com.google.android.gms:play-services-measurement-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/dabf6277090e314ccc96495c411e23e0/play-services-measurement-api-17.5.0/AndroidManifest.xml:23:5-79
+MERGED from [com.google.firebase:firebase-installations:16.3.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3263c67f642443b7a8433b3039cfa9d3/firebase-installations-16.3.2/AndroidManifest.xml:10:5-79
+MERGED from [com.google.firebase:firebase-installations:16.3.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3263c67f642443b7a8433b3039cfa9d3/firebase-installations-16.3.2/AndroidManifest.xml:10:5-79
+MERGED from [com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-impl:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/b164b250cbd7a404a869ef675fc3afa6/play-services-measurement-impl-17.5.0/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-impl:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/b164b250cbd7a404a869ef675fc3afa6/play-services-measurement-impl-17.5.0/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/93b617c73c3149b130460cc69c8f696e/play-services-measurement-sdk-api-17.5.0/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/93b617c73c3149b130460cc69c8f696e/play-services-measurement-sdk-api-17.5.0/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:25:5-79
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:25:5-79
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:22:5-79
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:22:5-79
+	android:name
+		ADDED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-76
+	android:name
+		ADDED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:8:22-73
+provider#androidx.core.content.FileProvider
+ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:9:9-18:20
+	android:grantUriPermissions
+		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-47
+	android:authorities
+		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-64
+	android:exported
+		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-37
+	tools:replace
+		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-48
+	android:name
+		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-62
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-17:53
+	android:resource
+		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:17:17-50
+	android:name
+		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:16:17-67
 service#io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService
 ADDED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
 	android:name
@@ -371,48 +416,6 @@ ADDED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgara
 		ADDED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-71
 	android:name
 		ADDED from [:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-74
-uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
-MERGED from [com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:22:5-79
-MERGED from [com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:22:5-79
-MERGED from [com.google.android.gms:play-services-measurement-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/dabf6277090e314ccc96495c411e23e0/play-services-measurement-api-17.5.0/AndroidManifest.xml:23:5-79
-MERGED from [com.google.android.gms:play-services-measurement-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/dabf6277090e314ccc96495c411e23e0/play-services-measurement-api-17.5.0/AndroidManifest.xml:23:5-79
-MERGED from [com.google.firebase:firebase-installations:16.3.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3263c67f642443b7a8433b3039cfa9d3/firebase-installations-16.3.2/AndroidManifest.xml:10:5-79
-MERGED from [com.google.firebase:firebase-installations:16.3.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3263c67f642443b7a8433b3039cfa9d3/firebase-installations-16.3.2/AndroidManifest.xml:10:5-79
-MERGED from [com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:24:5-79
-MERGED from [com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:24:5-79
-MERGED from [com.google.android.gms:play-services-measurement-impl:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/b164b250cbd7a404a869ef675fc3afa6/play-services-measurement-impl-17.5.0/AndroidManifest.xml:24:5-79
-MERGED from [com.google.android.gms:play-services-measurement-impl:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/b164b250cbd7a404a869ef675fc3afa6/play-services-measurement-impl-17.5.0/AndroidManifest.xml:24:5-79
-MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/93b617c73c3149b130460cc69c8f696e/play-services-measurement-sdk-api-17.5.0/AndroidManifest.xml:24:5-79
-MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/93b617c73c3149b130460cc69c8f696e/play-services-measurement-sdk-api-17.5.0/AndroidManifest.xml:24:5-79
-MERGED from [com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:25:5-79
-MERGED from [com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:25:5-79
-MERGED from [com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:22:5-79
-MERGED from [com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:22:5-79
-	android:name
-		ADDED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-76
-uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-76
-	android:name
-		ADDED from [:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:8:22-73
-provider#androidx.core.content.FileProvider
-ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:9:9-18:20
-	android:grantUriPermissions
-		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-47
-	android:authorities
-		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-64
-	android:exported
-		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-37
-	tools:replace
-		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-48
-	android:name
-		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-62
-meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-17:53
-	android:resource
-		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:17:17-50
-	android:name
-		ADDED from [:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:16:17-67
 service#com.google.firebase.messaging.FirebaseMessagingService
 ADDED from [com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:28:9-34:19
 	android:exported

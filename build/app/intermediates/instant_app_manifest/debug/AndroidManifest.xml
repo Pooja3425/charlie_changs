@@ -51,6 +51,16 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.brandzgarage.charliechang.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
         <service android:name="io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -84,16 +94,6 @@
             android:name="io.flutter.plugins.urllauncher.WebViewActivity"
             android:exported="false"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.brandzgarage.charliechang.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true" >
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths" />
-        </provider>
         <!--
              FirebaseMessagingService performs security checks at runtime,
              but set to not exported to explicitly avoid allowing another app to call it.
