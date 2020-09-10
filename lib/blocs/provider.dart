@@ -29,20 +29,20 @@ class CartProvider {
     return foodItems;
   }
 
-  int totalCartValue;
-  int calculateTotal() {
+  double totalCartValue;
+  double calculateTotal() {
     totalCartValue = 0;
     foodItems.forEach((f) {
-      totalCartValue += int.parse(f.price) * f.count;
+      totalCartValue += double.parse(f.price) * f.count;
     });
     return totalCartValue;
   }
 
-  int totalTaxValue;
-  int calculateTax() {
+  double totalTaxValue;
+  double calculateTax() {
     totalTaxValue = 0;
     foodItems.forEach((f) {
-      totalTaxValue += int.parse(f.taxTotal) * f.count;
+      totalTaxValue += double.parse(f.taxTotal) * f.count;
     });
     return totalTaxValue;
   }

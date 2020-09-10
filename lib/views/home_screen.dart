@@ -364,7 +364,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                     scrollPhysics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     autoPlay: true,
+                    //autoPlayAnimationDuration: Duration(seconds: 1),
                     pagerSize: 8,
+
                     activeIndicator: Colors.white,
                     passiveIndicator: Colors.transparent.withOpacity(0.5),
                     viewportFraction: 1.0,

@@ -639,7 +639,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
   String discountAmount="0";
-  int discount=0;
+  double discount=0;
   Widget pickupUI()
   {
     return Column(
@@ -1235,7 +1235,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         else
           {
             setState(() {
-              discount = mApplyCouponReponse.discount;
+              discount = mApplyCouponReponse.discount.toDouble() ;
               discountAmount ="Rs. ${mApplyCouponReponse.discount} discount applied";
             });
           }
@@ -1466,7 +1466,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         String d= mApplyLoyaltyResponse.applyDiscount.split(" ")[0];
         setState(() {
           reward_id_selected=dropdownReedem.key;
-          discount = int.parse(d);
+          discount = double.parse(d);
         });
       }
       else if(onData.status == Status.ERROR)

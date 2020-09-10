@@ -39,7 +39,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         setState(() {
           item_total = item_total+int.parse(widget.orderData.orderItems[i].quantity)*int.parse(widget.orderData.orderItems[i].price);
           tax = tax+int.parse(widget.orderData.orderItems[i].tax);
-          net_payable = item_total+tax+int.parse(widget.orderData.discount)+int.parse(widget.orderData.deliveryCharge);
+          net_payable = item_total+tax-int.parse(widget.orderData.discount)+int.parse(widget.orderData.deliveryCharge);
         });
 
       }
