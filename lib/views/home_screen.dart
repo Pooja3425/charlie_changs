@@ -165,17 +165,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     double minScroll = scrollNotification.metrics.minScrollExtent;
     double currentScroll = scrollNotification.metrics.pixels;
     double delta = 180.0; // or something else..
-    print("SSS  $currentScroll ");
-    if(currentScroll>300)
+   // print("SSS  ${maxScroll - minScroll} ");
+    /*if(currentScroll.toString().split(".")[0].length<=3 && currentScroll>300)
     {
       var timerInfo = Provider.of<ScrollModel>(context, listen: false);
-      timerInfo.setScroll(currentScroll);
+      timerInfo.setScroll(true);
     }
+    if(currentScroll.toString().split(".")[0].length>4)
+      {
+        var timerInfo = Provider.of<ScrollModel>(context, listen: false);
+        timerInfo.setScroll(true);
+      }
     else
       {
         var timerInfo = Provider.of<ScrollModel>(context, listen: false);
-        timerInfo.setScroll(currentScroll);
-      }
+        timerInfo.setScroll(false);
+      }*/
+
+    var timerInfo = Provider.of<ScrollModel>(context, listen: false);
+    timerInfo.setScroll(true);
   }
 
   @override
@@ -353,6 +361,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
               child: Column(
                 children: <Widget>[
                   GFCarousel(
+                    scrollPhysics: NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
                     autoPlay: true,
                     pagerSize: 8,
                     activeIndicator: Colors.white,
@@ -437,12 +447,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    Text(
-                                      mCategoryList[index].name,
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: icon_color, fontSize: 10),
+                                    Flexible(
+                                      child: Text(
+                                        mCategoryList[index].name,
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            letterSpacing: 1,
+                                            color: icon_color, fontSize: 10),
+                                      ),
                                     )
                                   ],
                                 ),
@@ -545,7 +558,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                               children: buildSearchList(_searchList),
                             ):Center(child: Text("No such item found"),)
 
-                        ): ListView.builder(
+                        ): mMenuList.length>0?ListView.builder(
 
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap:true,
@@ -555,7 +568,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 index: index,
                                 child: StickyHeader(
                                     header:  Padding(
-                                      padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
+                                      padding: const EdgeInsets.only(top: 15.0, bottom: 1.0),
                                       child: Text(
                                         "${mCategoryList[index].name}",
                                         style: TextStyle(color: icon_color),
@@ -579,20 +592,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                         staggeredTileBuilder: (int index) =>
                                         new StaggeredTile.count(2, 2.5),
                                         mainAxisSpacing: 4.0,
-                                        crossAxisSpacing: 4.0,)*/  mMenuList.length>0?GridView.count(
+                                        crossAxisSpacing: 4.0,)*/  GridView.count(
                                       physics: NeverScrollableScrollPhysics(),
                                       crossAxisCount: 2,
                                       childAspectRatio: (itemWidth / itemHeight),
                                       //controller: new ScrollController(keepScrollOffset: false),
                                       shrinkWrap: true,
                                       children: buildList(mMenuList,mCategoryList[index].name),
-                                    ):Center(child: CircularProgressIndicator(),)
+                                    )
 
 
                                 ),
                               );
 
-                            }),
+                            }):Padding(
+                              padding: const EdgeInsets.only(top:20.0),
+                              child: Center(child: CircularProgressIndicator(),),
+                            ),
 
                         /* Container(
                               width: getWidth(context),

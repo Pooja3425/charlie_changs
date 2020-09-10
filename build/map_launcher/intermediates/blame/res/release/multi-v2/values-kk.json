@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/map_launcher/intermediates/incremental/mergeReleaseResources/merged.dir/values-kk/values-kk.xml",
+            "map": [
+                {
+                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/values-kk/values-kk.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/map_launcher/intermediates/res/merged/release/values-kk/values-kk.xml",
+            "map": [
+                {
+                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/values-kk/values-kk.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

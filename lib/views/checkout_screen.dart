@@ -880,7 +880,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           onChanged: (String newValue) {
                             setState(() {
                               dropdownValue = newValue;
-                              payment_mode = dropdownValue =="Cash on delivery"?"0":"1";
+                              payment_mode = dropdownValue =="Cash on delivery"?"2":"1";
                             });
                           },
                           items: <String>['Cash on delivery', 'Online Payment']
@@ -944,7 +944,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   AddOrderBloc mAddOrderBloc;
   AddOrderResponse mAddOrderResponse;
-  String payment_mode="0";
+  String payment_mode="2";
 
   callPlaceOrderAPI() async{
 
@@ -994,16 +994,24 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
       else if(onData.status == Status.COMPLETED)
       {
-
         CommonMethods.dismissDialog(context);
-        CommonMethods.showShortToast(mAddOrderResponse.msg);
-        bloc.clearCart();
-        navigationPage(mAddOrderResponse.ordercode);
+        if(mAddOrderResponse.status==0)
+          {
+            CommonMethods.showShortToast(mAddOrderResponse.msg);
+          }
+        else
+          {
+            bloc.clearCart();
+            navigationPage(mAddOrderResponse.ordercode);
+          }
+
+
+
       }
       else if(onData.status == Status.ERROR)
       {
         CommonMethods.dismissDialog(context);
-        CommonMethods.showShortToast(onData.message);
+        CommonMethods.showShortToast(mAddOrderResponse.msg);
 
       }
     });
@@ -1199,10 +1207,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final body = jsonEncode(
       {
-      "del_area":preferences.getString(ADDRESS_HASH),
+      "del_area":pickup_delivery =="1"?preferences.getString(DELIVERY_ADDRESS_HASH):preferences.getString(PICKUP_ADDRESS_HASH),
       "coupon_code":controllerCoupon.text,
       "payment_mode":payment_mode,
-      "subtotal":total.toString(),
+      "subtotal":bloc.getCartValue(),
         });
 
     mApplyCouponBloc=ApplyCouponBloc(body);
@@ -1216,10 +1224,22 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
       else if(onData.status == Status.COMPLETED)
       {
-        setState(() {
-          discount = mApplyCouponReponse.discount;
-          discountAmount ="Rs. ${mApplyCouponReponse.discount} discount applied";
-        });
+
+        if(mApplyCouponReponse.error=="1")
+          {
+            setState(() {
+              discount = 0;
+              discountAmount ="Rs. 0 discount applied";
+            });
+          }
+        else
+          {
+            setState(() {
+              discount = mApplyCouponReponse.discount;
+              discountAmount ="Rs. ${mApplyCouponReponse.discount} discount applied";
+            });
+          }
+
         CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(mApplyCouponReponse.msg);
       }
@@ -1319,7 +1339,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   callapi() {
     if(_isInternetAvailable)
     {
-      if(payment_mode =="0")
+      if(payment_mode =="2")
       {
         //printOrder();
         callPlaceOrderAPI();
