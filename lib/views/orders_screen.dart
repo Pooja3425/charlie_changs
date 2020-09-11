@@ -199,7 +199,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
               Container(
                 width: getWidth(context),
-                height: getHeight(context)-148,
+                height: getHeight(context)-152,
                 padding: EdgeInsets.only(top:20),
                 child:_IsSearching?newDataList.length>0?ListView.builder(
                   itemCount: newDataList.length,

@@ -214,8 +214,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
               width: getWidth(context),
               child: Padding(
                 padding: const EdgeInsets.only(
-                  left: 30.0,
-                  right: 30.0,
+                  left: 20.0,
+                  right: 20.0,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -257,10 +257,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                   Container(
                                     child: Text(
                                       status?pickupAddressName: deliveryAddressName,
-                                      maxLines: 2,
+                                      maxLines: 1,
                                       overflow: TextOverflow.visible,
                                       style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 13,
                                           color: text_color,
                                           fontFamily: "Manrope",
                                           fontWeight: FontWeight.bold),
@@ -415,9 +415,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.fromLTRB(2.0, 20.0, 8.0, 0),
+                            padding: const EdgeInsets.fromLTRB(2.0, 20.0, 2.0, 0),
                             child: Container(
-                              width: 50,
+                              width: 62,
                               //height: 80,
                               child: InkWell(
                                 onTap: (){
@@ -455,8 +455,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            letterSpacing: 1,
-                                            color: icon_color, fontSize: 10),
+                                          //letterSpacing: 0.5,
+                                            //letterSpacing: 1,
+                                            color: icon_color, fontSize: 9),
                                       ),
                                     )
                                   ],

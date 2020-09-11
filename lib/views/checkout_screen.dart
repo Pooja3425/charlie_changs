@@ -169,16 +169,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
       if (dropdownValueReedem == "Redeem CC Points") {
         if (_isInternetAvailable)
+        {
+          if(mounted)
           {
-            if(mounted)
-              {
-                callPointsAPI();
-                callDropdownAPI();
-              }
+            callPointsAPI();
+            callDropdownAPI();
           }
-            else
-              CommonMethods.showLongToast(CHECK_INTERNET);
+        }
+        else
+          CommonMethods.showLongToast(CHECK_INTERNET);
       }
+
+
     super.initState();
   }
   int total=0;
@@ -370,7 +372,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           child: DropdownButton<String>(
                             icon: Icon(Icons.arrow_drop_down,color: notification_title_color,),
                             value: dropdownValueReedem,
-                            hint: Text("Select for offers"),
+                           // hint: Text("Select for offers"),
                             elevation: 16,
                             style: TextStyle(
                                 color:  icon_color
@@ -407,7 +409,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
   Widget specialOffersUI()
   {
-    return ListView.builder(
+    /*return ListView.builder(
         shrinkWrap: true,
         itemCount: 2,
         itemBuilder: ((context,index){
@@ -429,10 +431,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
         ),
       );
-    }));
+    }));*/
+    return Container(child: Padding(
+      padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
+      child: Text("No offers available. Continue ordering to be eligible for surprise CC offers.",style: TextStyle(color: fab_color),),
+    ),);
   }
   Widget redeemUI()
   {
+
     return  Container(
       width: getWidth(context),
       child: Padding(
@@ -838,7 +845,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   String dropdownValue = 'Cash on delivery';
   //String dropdownValueReedem = 'Redeem CC Points';
-  String dropdownValueReedem;
+  String dropdownValueReedem="Redeem CC Points";
   Widget bottomUI() {
     return Container(
       height: 100,
