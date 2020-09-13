@@ -57,7 +57,17 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         _controllerAddressLine2.text=widget.data.address2;
         _controllerPincode.text=widget.data.pincode;
         _controllerAddressName.text=widget.data.addressName;
-        dropdownValue = widget.delivery;
+        _controllerLandmark.text = widget.data.landmark;
+        _controllerInstruction.text = widget.data.note;
+        for(int i=0;i<widget.mDeliveryList.length;i++)
+          {
+            if(widget.data.areaid == widget.mDeliveryList[i].areaid)
+              {
+                dropdownValue = widget.mDeliveryList[i];
+              }
+          }
+
+
       }
     else
       {
@@ -504,6 +514,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       "address2":_controllerAddressLine2.text,
       "area_id": dropdownValue.areaid,
       "pincode":_controllerPincode.text,
+      "landmark":_controllerLandmark.text,
+      "note":_controllerInstruction.text,
       "is_default":"1",
     });
     mAddDeliveryAddressBloc=AddDeliveryAddressBloc(body);
@@ -550,6 +562,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       "address2":_controllerAddressLine2.text,
       "area_id": dropdownValue.areaid,
       "id":widget.data.id,
+      "landmark":_controllerLandmark.text,
+      "note":_controllerInstruction.text,
       "is_primary":""
     });
     mUpdateAddressBloc=UpdateAddressBloc(body);

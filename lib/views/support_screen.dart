@@ -12,6 +12,7 @@ import 'package:charliechang/utils/string_constants.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 class SupportScreen extends StatefulWidget {
   @override
@@ -228,25 +229,33 @@ class _SupportScreenState extends State<SupportScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text("Rate your experience",style: TextStyle(color: Colors.white),),
-                    SmoothStarRating(
-                      rating: rating,
-                      isReadOnly: false,
-                      size: 20,
-                      borderColor: Colors.white,
-                      color: Colors.white,
-                      filledIconData: Icons.star,
-                      halfFilledIconData: Icons.star_half,
-                      defaultIconData: Icons.star_border,
-                      starCount: 5,
-                      allowHalfRating: true,
-                      spacing: 2.0,
-                      onRated: (value) {
-                        print("rating value -> $value");
-                        setState(() {
-                          rating_val=value;
-                        });
-                        // print("rating value dd -> ${value.truncate()}");
+                    InkWell(
+                      onTap: (){
+                        StoreRedirect.redirect(
+                          androidAppId: "com.brandzgarage.charliechang",
+                          iOSAppId: ""
+                        );
                       },
+                      child: SmoothStarRating(
+                        rating: rating,
+                        isReadOnly: true,
+                        size: 20,
+                        borderColor: Colors.white,
+                        color: Colors.white,
+                        filledIconData: Icons.star,
+                        halfFilledIconData: Icons.star_half,
+                        defaultIconData: Icons.star_border,
+                        starCount: 5,
+                        allowHalfRating: true,
+                        spacing: 2.0,
+                        onRated: (value) {
+                          print("rating value -> $value");
+                          setState(() {
+                            //rating_val=value;
+                          });
+                          // print("rating value dd -> ${value.truncate()}");
+                        },
+                      ),
                     ),
                   ],
                 ),

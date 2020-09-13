@@ -69,12 +69,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
   String dobString="";
   String aniDate="";
   Future _selectDate() async {
-    print('picked  ${DateTime(1985)}');
+    print('picked  ${DateTime(1900)}');
     DateTime picked = await showDatePicker(
       context: context,
       initialDatePickerMode: DatePickerMode.year,
       initialDate: new DateTime.now() ,
-      firstDate:new DateTime(1985),
+      firstDate:new DateTime(1900),
       lastDate: DateTime.now(),
     );
     // if(picked != null) setState(() => _datevalue = new DateFormat("MM/dd/yyyy").parse( picked.toString()));
@@ -96,7 +96,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       context: context,
       initialDatePickerMode: DatePickerMode.year,
       initialDate: new DateTime.now() ,
-      firstDate:new DateTime(1985),
+      firstDate:new DateTime(1990),
       lastDate: DateTime.now(),
     );
     // if(picked != null) setState(() => _datevalue = new DateFormat("MM/dd/yyyy").parse( picked.toString()));

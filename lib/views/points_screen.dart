@@ -78,15 +78,20 @@ class _PointsScreenState extends State<PointsScreen> {
                       Text("You have",style: TextStyle(color: icon_color),),
                       Text("$redeemPoints points",style: TextStyle(color: button_color,fontSize: 15,fontWeight: FontWeight.bold),),
                       SizedBox(height: 15,),
-                      Container(
-                        width: 200,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: input_border_color,width: 0.5),
-                          borderRadius: BorderRadius.all(Radius.circular(3)),
-                        ),
-                        child: Center(
-                          child: Text("Learn how to redeem",style: TextStyle(color: icon_color,fontSize: 12),),
+                      InkWell(
+                        onTap: (){
+                          showWarningDialog();
+                        },
+                        child: Container(
+                          width: 200,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: input_border_color,width: 0.5),
+                            borderRadius: BorderRadius.all(Radius.circular(3)),
+                          ),
+                          child: Center(
+                            child: Text("Learn how to redeem",style: TextStyle(color: icon_color,fontSize: 12),),
+                          ),
                         ),
                       )
                     ],
@@ -198,5 +203,100 @@ class _PointsScreenState extends State<PointsScreen> {
 
       }
     });
+  }
+
+  showWarningDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context){
+          return WillPopScope(
+            onWillPop: (){},
+            child: AlertDialog(
+              contentPadding: EdgeInsets.only(top: 0,bottom: 0,right: 20,left: 20),
+              title: Text("How to redeem",style: TextStyle(color: fab_color),),
+              content: Container(
+                height: 250,
+                child: Padding(
+                  padding: const EdgeInsets.only(top:20.0),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top:8.0),
+                            child: Container(
+                              width: 7,
+                              height: 7,
+                              decoration: BoxDecoration(shape: BoxShape.circle,color: fab_color),
+                            ),
+                          ),SizedBox(width: 5,),
+                          Flexible(child: Text("Select Redeem CC Points option on checkout page.",style: TextStyle(color: Colors.black),)),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top:8.0),
+                            child: Container(
+                              width: 7,
+                              height: 7,
+                              decoration: BoxDecoration(shape: BoxShape.circle,color: fab_color),
+                            ),
+                          ),SizedBox(width: 5,),
+                          Flexible(child: Text("Enter numbef of points you want to redeem.",style: TextStyle(color: Colors.black),)),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            width: 7,
+                            height: 7,
+                            decoration: BoxDecoration(shape: BoxShape.circle,color: fab_color),
+                          ),SizedBox(width: 5,),
+                          Flexible(child: Text('Click "Redeem"',style: TextStyle(color: Colors.black),)),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top:8.0),
+                            child: Container(
+                              width: 7,
+                              height: 7,
+                              decoration: BoxDecoration(shape: BoxShape.circle,color: fab_color),
+                            ),
+                          ),SizedBox(width: 5,),
+                          Flexible(child: Text("You can redeem maximum 5000 points.",style: TextStyle(color: Colors.black),)),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            width: 7,
+                            height: 7,
+                            decoration: BoxDecoration(shape: BoxShape.circle,color: fab_color),
+                          ),SizedBox(width: 5,),
+                          Flexible(child: Text("2000 points are worth Rs. 200*",style: TextStyle(color: Colors.black),)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              actions: <Widget>[FlatButton(onPressed: () {
+                Navigator.of(context).pop();
+              }, child: Text("Ok",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),))
+              ],
+            ),
+          );
+        }
+    );
   }
 }

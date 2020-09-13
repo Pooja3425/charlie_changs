@@ -312,7 +312,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text("${orders.ordercode}",style: TextStyle(color: notification_title_color,fontSize: 15,fontWeight: FontWeight.bold),),
-                      Text(orders.status =="0"?"Pending":orders.status=="1"?"Confirm":"Cancelled",style: TextStyle(color: orders.status=="2"?fab_color:delivered_text_color,fontSize: 13),),
+                      Text(orders.status =="0"?"In progress":orders.status=="1"?"Delivered":"Cancelled",style: TextStyle(color: orders.status=="2"?fab_color:delivered_text_color,fontSize: 13),),
                     ],
                   ),
                   SizedBox(height: 20,),

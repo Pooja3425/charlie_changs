@@ -7,7 +7,6 @@ import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
-import 'package:charliechang/views/HomeDemo.dart';
 import 'package:charliechang/views/cart_screen.dart';
 import 'package:charliechang/views/checkout_screen.dart';
 import 'package:charliechang/views/offers_screen.dart';

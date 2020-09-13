@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc_pattern/bloc_pattern.dart' as blocPattern;
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/blocs/category_bloc.dart';
@@ -25,7 +26,8 @@ import 'package:charliechang/views/pickup_checkout_screen.dart';
 import 'package:charliechang/views/refer_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/rendering.dart';
-import 'package:getflutter/getflutter.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -191,6 +193,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     final double itemHeight = (getHeight(context) - kToolbarHeight - 24) / 2.3;
     final double itemWidth = getWidth(context) / 2;
     final double statusBarHeight = MediaQuery.of(context).padding.top;
+
+
+
 
     return SafeArea(
       child: Scaffold(
@@ -361,16 +366,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
               child: Column(
                 children: <Widget>[
                   GFCarousel(
-                    scrollPhysics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     autoPlay: true,
                     //autoPlayAnimationDuration: Duration(seconds: 1),
                     pagerSize: 8,
-
+                    reverse: true,
+                    pauseAutoPlayOnTouch: Duration(seconds: 2),
                     activeIndicator: Colors.white,
                     passiveIndicator: Colors.transparent.withOpacity(0.5),
                     viewportFraction: 1.0,
-                    height: 270,
+                    height: 280,
                     // aspectRatio: 10,
                     enlargeMainPage: false,
                     pagination: true,
@@ -431,8 +436,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 child: Column(
                                   children: <Widget>[
                                     Container(
-                                      width: 40,
-                                      height: 40,
+                                      width: 48,
+                                      height: 48,
                                       decoration: BoxDecoration(
                                           color: switch_bg,
                                           borderRadius: BorderRadius.all(
@@ -443,6 +448,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                           IMAGE_BASE_URL+mCategoryList[index].image,
                                           width: 20,
                                           height: 20,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
@@ -577,25 +583,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                         style: TextStyle(color: icon_color),
                                       ),
                                     ),
-                                    content:/*StaggeredGridView.countBuilder(
-                                        shrinkWrap: true,
-                                        crossAxisCount: 2,
-                                        itemBuilder: (context,i){
-                                          List<Menu> mTempList =new List();
-                                          for(int i=0;i<mMenuList.length;i++)
-                                          {
-                                            if(mMenuList[i].category == mCategoryList[index].name)
-                                            {
-                                              //print("CCC ${category}");
-                                              mTempList.add(mMenuList[i]);
-                                            }
-                                          }
-                                          return staggeredView(mTempList[i]);
-                                        },
-                                        staggeredTileBuilder: (int index) =>
-                                        new StaggeredTile.count(2, 2.5),
-                                        mainAxisSpacing: 4.0,
-                                        crossAxisSpacing: 4.0,)*/  GridView.count(
+                                    content:  GridView.count(
                                       physics: NeverScrollableScrollPhysics(),
                                       crossAxisCount: 2,
                                       childAspectRatio: (itemWidth / itemHeight),
@@ -673,7 +661,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
         sliderList.length>0?SizeTransition(
           axisAlignment: 1.0,
           sizeFactor: animation,
-          child: GFCarousel(
+          /*child: GFCarousel(
             autoPlay: true,
             pagerSize: 8,
             activeIndicator: Colors.white,
@@ -708,7 +696,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                 index;
               });
             },
-          ),
+          ),*/
         ):Container()
       ]))
         /*SliverAppBar(
@@ -888,6 +876,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
              mTempList.add(mMenuList[i]);
            }
       }
+    DateFormat dateFormat = new DateFormat.Hm();
+
+    DateTime currentTime = DateTime.now();
+    DateTime open = dateFormat.parse("10:30");
+    open = new DateTime(currentTime.year, currentTime.month, currentTime.day, open.hour, open.minute);
+
+    DateTime open1 = dateFormat.parse("10:30");
+    open1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, open1.hour, open1.minute);
+
+    DateTime close = dateFormat.parse("14:30");
+    close = new DateTime(currentTime.year, currentTime.month, currentTime.day, close.hour, close.minute);
+
+    DateTime close1 = dateFormat.parse("14:30");
+    close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, close1.hour, close1.minute);
+    print("time $open");
 
   //  print("Temp size ${mTempList.length}");
     return List.generate(/*mMenuList.length*/mTempList.length, (index) {
@@ -941,6 +944,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         color: icon_color,
                         fontSize: 12),
                   ),
+                  currentTime.isBefore(open) && currentTime.isBefore(open1) || currentTime.isAfter(close) || currentTime.isAfter(close1)?Container(
+                    width: 80,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(3)),
+                        color: Colors.grey),
+                    child: Center(
+                        child: Text(
+                          "Add",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12),
+                        )),
+                  ):
                   mTempList[index].count ==0?InkWell(
                     onTap: (){
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
@@ -950,8 +968,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                       widget.callback1();
                       widget.func1('ADD');
                       setState(() {
-                        //
-                       // mMenuList[index].count ++;
+
                       });
                       // _settingModalBottomSheet(context);
                     },
@@ -969,7 +986,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 color: Colors.white,
                                 fontSize: 12),
                           )),
-                    ),
+                    )
                   ):Container(
                     height: 30,
                     decoration: BoxDecoration(
@@ -1028,6 +1045,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
   List<Widget> buildSearchList(List<Menu> mTempList)
   {
+    DateFormat dateFormat = new DateFormat.Hm();
+
+    DateTime currentTime = DateTime.now();
+    DateTime open = dateFormat.parse("10:30");
+    open = new DateTime(currentTime.year, currentTime.month, currentTime.day, open.hour, open.minute);
+    DateTime close = dateFormat.parse("14:30");
+    close = new DateTime(currentTime.year, currentTime.month, currentTime.day, close.hour, close.minute);
+    print("time $open");
+
     return List.generate(/*mMenuList.length*/mTempList.length, (index) {
       return Container(
         child: Center(
@@ -1111,7 +1137,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         });
                         // _settingModalBottomSheet(context);
                       },
-                      child: Container(
+                      child: currentTime.isBefore(open)||currentTime.isAfter(close)?Container(
                         width: 80,
                         height: 30,
                         decoration: BoxDecoration(
@@ -1123,6 +1149,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                               "Add",
                               style: TextStyle(
                                   color: Colors.white,
+                                  fontSize: 12),
+                            )),
+                      ):Container(
+                        width: 80,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(3)),
+                            color: Colors.grey),
+                        child: Center(
+                            child: Text(
+                              "Add",
+                              style: TextStyle(
+                                  color: Colors.black,
                                   fontSize: 12),
                             )),
                       ),

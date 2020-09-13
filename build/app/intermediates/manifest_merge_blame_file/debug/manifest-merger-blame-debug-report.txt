@@ -39,8 +39,8 @@
 24        android:debuggable="true"
 25        android:icon="@drawable/logo"
 25-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:12:9-38
-26        android:label="charliechang" >
-26-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:11:9-37
+26        android:label="Charlie Chang&apos;s" >
+26-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:11:9-38
 27        <activity
 27-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:13:9-29:20
 28            android:name="com.brandzgarage.charliechang.MainActivity"

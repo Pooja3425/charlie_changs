@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".Application"
-        android:label="charliechang"
+        android:label="Charlie Chang's"
         android:icon="@drawable/logo">
         <activity
             android:name=".MainActivity"

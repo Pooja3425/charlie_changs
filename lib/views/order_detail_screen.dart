@@ -149,12 +149,13 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       SizedBox(height: 10,),
                       billUI("Item Total","Rs ${item_total}"),
                       billUI("Discount","Rs ${widget.orderData.discount}"),
-                      billUI("Taxes","Rs ${tax}"),
+                     /* billUI("Taxes","Rs ${tax}"),*/
                       billUI("Delivery charge","Rs ${widget.orderData.deliveryCharge}"),
                       SizedBox(height: 20,),
                       CommonMethods.horizontalLine(context),
                       billUI("Net Payable","Rs ${net_payable}"),
                       SizedBox(height: 20,),
+
                     ],
                   ),
                 ),

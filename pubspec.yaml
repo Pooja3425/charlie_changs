@@ -25,7 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   pin_input_text_field: ^3.0.1
   smooth_star_rating: ^1.1.1
-  getflutter: ^1.0.11
+  #getflutter: ^1.0.11
   http: ^0.12.1
   progress_dialog: ^1.2.2
   fluttertoast: ^4.0.1
@@ -51,6 +51,9 @@ dependencies:
   pin_code_fields: ^4.0.0
   flutter_staggered_grid_view: ^0.3.2
   map_launcher: ^0.12.2
+  store_redirect: ^1.0.2
+  carousel_slider: ^2.2.1
+  getwidget: ^1.1.3
 
 dev_dependencies:
   flutter_test:

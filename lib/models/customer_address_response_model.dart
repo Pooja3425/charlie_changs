@@ -33,6 +33,8 @@ class Data {
   String areaid;
   String pincode;
   String hash;
+  String note;
+  String landmark;
 
   Data(
       {this.id,
@@ -52,6 +54,8 @@ class Data {
     isPrimary = json['is_primary'];
     areaid = json['areaid'];
     pincode = json['pincode'];
+    landmark = json['landmark'];
+    note = json['note'];
     hash = json['hash'];
   }
 
@@ -64,6 +68,8 @@ class Data {
     data['is_primary'] = this.isPrimary;
     data['areaid'] = this.areaid;
     data['pincode'] = this.pincode;
+    data['landmark'] = this.landmark;
+    data['note'] = this.note;
     data['hash'] = this.hash;
     return data;
   }

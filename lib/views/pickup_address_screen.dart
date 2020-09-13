@@ -115,12 +115,13 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
             SizedBox(height: 10,),
             InkWell(
                 onTap: () async {
-                  final availableMaps = await MapLauncher.installedMaps;
+                  /*final availableMaps = await MapLauncher.installedMaps;
                   await availableMaps.first.showMarker(
                     coords: Coords(double.parse(mDeliveryLocationsList[i].lattitude), double.parse(mDeliveryLocationsList[i].longitude)),
                     title: "${mDeliveryLocationsList[i].name}",
-                  );
-                  /* final String googleMapsUrl = "comgooglemaps://?center=${mDeliveryLocationsList[i].lattitude},${mDeliveryLocationsList[i].longitude}";
+                  );*/
+                   //final String googleMapsUrl = "comgooglemaps://?center=${mDeliveryLocationsList[i].lattitude},${mDeliveryLocationsList[i].longitude}";
+                   final String googleMapsUrl = "comgooglemaps://?center=${mDeliveryLocationsList[i].lattitude},${mDeliveryLocationsList[i].longitude}";
                   final String appleMapsUrl = "https://maps.apple.com/?q=${mDeliveryLocationsList[i].lattitude},${mDeliveryLocationsList[i].longitude}";
 
                   if (await canLaunch(googleMapsUrl)) {
@@ -130,7 +131,7 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
                     await launch(appleMapsUrl, forceSafariVC: false);
                   } else {
                     throw "Couldn't launch URL";
-                  }*/
+                  }
                 },
                 child: Text("Find us on map",style: TextStyle(fontSize: 12,color: fab_color,fontWeight: FontWeight.w600),)),
             SizedBox(height: 15,),

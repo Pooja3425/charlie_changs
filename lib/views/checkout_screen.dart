@@ -302,11 +302,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         SizedBox(height: 10,),
                         billUI("Item Total","Rs ${bloc.getCartValue()}"),
                         billUI("Discount","Rs ${discount}"),
-                        billUI("Taxes","Rs ${bloc.getTax()}"),
+                       /* billUI("Taxes","Rs ${bloc.getTax()}"),*/
                         billUI("Delivery charge","Rs 0"),
                         SizedBox(height: 20,),
                         CommonMethods.horizontalLine(context),
                         billUI("Net Payable","Rs ${bloc.getCartValue()+bloc.getTax()-discount}"),
+                        SizedBox(height: 20,),
+                        Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text("Note: Menu price is inclusive of tax")),
                         SizedBox(height: 20,),
                       ],
                     ),
@@ -1018,10 +1022,36 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       else if(onData.status == Status.ERROR)
       {
         CommonMethods.dismissDialog(context);
-        CommonMethods.showShortToast(mAddOrderResponse.msg);
+        String msg = jsonDecode(onData.message.replaceAll("Invalid Request:", "")).toString().split(":")[1].split(",")[0];
+        //CommonMethods.showShortToast(msg);
+        showWarningDialog(msg);
 
       }
     });
+  }
+
+  showWarningDialog(String from) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context){
+          return WillPopScope(
+            onWillPop: (){},
+            child: AlertDialog(
+              contentPadding: EdgeInsets.only(top: 0,bottom: 0,right: 20,left: 20),
+              title: Text("Warning",style: TextStyle(color: fab_color),),
+              content: Padding(
+                padding: const EdgeInsets.only(top:8.0),
+                child: Text(from),
+              ),
+              actions: <Widget>[FlatButton(onPressed: () {
+                Navigator.of(context).pop();
+              }, child: Text("Ok",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),))
+              ],
+            ),
+          );
+        }
+    );
   }
 
   navigationPage(String orderCode) {

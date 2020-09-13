@@ -113,7 +113,6 @@ class _ReferScreenState extends State<ReferScreen> {
                             Text("How to redeem",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 18),),
                             SizedBox(height: 8,),
                             Row(
-
                               children: <Widget>[
                                 Container(
                                   width: 7,

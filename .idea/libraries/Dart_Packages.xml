@@ -44,6 +44,13 @@
             </list>
           </value>
         </entry>
+        <entry key="carousel_slider">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-2.2.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="charcode">
           <value>
             <list>
@@ -191,10 +198,10 @@
             </list>
           </value>
         </entry>
-        <entry key="getflutter">
+        <entry key="getwidget">
           <value>
             <list>
-              <option value="$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/getflutter-1.1.3/lib" />
+              <option value="$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/getwidget-1.1.3/lib" />
             </list>
           </value>
         </entry>
@@ -422,6 +429,13 @@
             </list>
           </value>
         </entry>
+        <entry key="store_redirect">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/store_redirect-1.0.2/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="stream_channel">
           <value>
             <list>
@@ -522,6 +536,7 @@
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/badges-1.1.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/bloc_pattern-2.5.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.0.0/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-2.2.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.3/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.12/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-0.4.9/lib" />
@@ -540,7 +555,7 @@
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_svg-0.17.4/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-4.0.1/lib" />
-      <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/getflutter-1.1.3/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/getwidget-1.1.3/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.4/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/image-2.1.12/lib" />
@@ -572,6 +587,7 @@
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.7.0/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.9.3/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/sticky_headers-0.1.8+1/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/store_redirect-1.0.2/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.0.0/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.0.5/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.1.0/lib" />
