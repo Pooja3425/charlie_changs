@@ -143,7 +143,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   String reward_id_selected="";
   List _dates = [];
   bool isEmpty = false;
-
+  bool isPointsCalled=true;
   @override
   void initState() {
 
@@ -170,8 +170,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       if (dropdownValueReedem == "Redeem CC Points") {
         if (_isInternetAvailable)
         {
-          if(mounted)
+          if(isPointsCalled)
           {
+            setState(() {
+              isPointsCalled = false;
+            });
             callPointsAPI();
             callDropdownAPI();
           }
@@ -443,7 +446,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
   Widget redeemUI()
   {
-
     return  Container(
       width: getWidth(context),
       child: Padding(
@@ -608,7 +610,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       width:getWidth(context)/2,
                       height: 25,
                       child: TextField(
-                          enableInteractiveSelection: false,
+                          //enableInteractiveSelection: false,
                           controller: controllerCoupon,
                           style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),
                           decoration: InputDecoration(
@@ -848,8 +850,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   String dropdownValue = 'Cash on delivery';
-  //String dropdownValueReedem = 'Redeem CC Points';
-  String dropdownValueReedem="Redeem CC Points";
+  String dropdownValueReedem = 'Redeem CC Points';
+  //String dropdownValueReedem;
   Widget bottomUI() {
     return Container(
       height: 100,
@@ -911,9 +913,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             InkWell(
                 onTap: ()=>{
-
                   callapi()
-
                 },
                 child: Text("Place Order",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600 ),)),
           ],
@@ -924,7 +924,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   printOrder()
   {
-
     var items = [];
     print("LEN ${orderModelList.length}");
     for(int i=0;i<orderModelList.length;i++)
@@ -988,6 +987,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           "deliver_pickup":preferences.getString(DELIVERY_PICKUP),
           "coupon_code":controllerCoupon.text,
           "payment_mode":payment_mode,
+          "is_mobile":"0",
           "reward_id_selected":reward_id_selected,
           "notes":"do not proceed test order from development team",
           "items":json.decode(orderItems)});
@@ -1015,9 +1015,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             bloc.clearCart();
             navigationPage(mAddOrderResponse.ordercode);
           }
-
-
-
       }
       else if(onData.status == Status.ERROR)
       {
@@ -1181,6 +1178,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       "payment_mode":payment_mode,
       "reward_id_selected":reward_id_selected,
       "notes":"do not proceed test order from development team",
+      "is_mobile":"0",
       "items":json.decode(orderItems)});
 
     mOnlinePaymentBloc=OnlinePaymentBloc(body);

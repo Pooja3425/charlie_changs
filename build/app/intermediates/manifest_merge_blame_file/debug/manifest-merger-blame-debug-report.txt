@@ -14,280 +14,304 @@
 14    <uses-permission android:name="android.permission.INTERNET" />
 14-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:8:5-67
 14-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:8:22-64
-15    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-15-->[:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
-15-->[:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-76
-16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-16-->[:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-76
-16-->[:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:8:22-73
-17    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
-17-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:24:5-68
-17-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:24:22-65
-18    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-18-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:26:5-82
-18-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:26:22-79
-19    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
-19-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:26:5-110
-19-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:26:22-107
-20
-21    <application
-21-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:9:5-36:19
-22        android:name="com.brandzgarage.charliechang.Application"
-22-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:10:9-36
-23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-23-->[androidx.core:core:1.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/AndroidManifest.xml:24:18-86
-24        android:debuggable="true"
-25        android:icon="@drawable/logo"
-25-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:12:9-38
-26        android:label="Charlie Chang&apos;s" >
-26-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:11:9-38
-27        <activity
-27-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:13:9-29:20
-28            android:name="com.brandzgarage.charliechang.MainActivity"
-28-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:14:13-41
-29            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-29-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:17:13-163
-30            android:hardwareAccelerated="true"
-30-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:18:13-47
-31            android:launchMode="singleTop"
-31-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:15:13-43
-32            android:theme="@style/LaunchTheme"
-32-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:16:13-47
-33            android:windowSoftInputMode="adjustResize" >
-33-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:19:13-55
-34            <intent-filter>
-34-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:20:13-23:29
-35                <action android:name="android.intent.action.MAIN" />
-35-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:21:17-68
-35-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:21:25-66
-36
-37                <category android:name="android.intent.category.LAUNCHER" />
-37-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:22:17-76
-37-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:22:27-74
-38            </intent-filter>
-39            <intent-filter>
-39-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:25:13-28:29
-40                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
-40-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:26:17-69
-40-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:26:25-66
-41
-42                <category android:name="android.intent.category.DEFAULT" />
-42-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:27:17-76
-42-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:27:27-73
-43            </intent-filter>
-44        </activity>
-45        <!--
-46             Don't delete the meta-data below.
-47             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-48        -->
-49        <meta-data
-49-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:32:9-34:33
-50            android:name="flutterEmbedding"
-50-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:33:13-44
-51            android:value="2" />
-51-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:34:13-30
-52
-53        <provider
-53-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:9:9-18:20
-54            android:name="androidx.core.content.FileProvider"
-54-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-62
-55            android:authorities="com.brandzgarage.charliechang.fileprovider"
-55-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-64
-56            android:exported="false"
-56-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-37
-57            android:grantUriPermissions="true" >
-57-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-47
-58            <meta-data
-58-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-17:53
-59                android:name="android.support.FILE_PROVIDER_PATHS"
-59-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:16:17-67
-60                android:resource="@xml/filepaths" />
-60-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:17:17-50
-61        </provider>
-62
-63        <service android:name="io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService" >
-63-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
-63-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:8:18-101
-64            <intent-filter>
-64-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:29
-65                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-65-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:10:17-78
-65-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:10:25-75
-66            </intent-filter>
-67        </service>
-68        <service
-68-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:13:9-17:19
-69            android:name="com.google.firebase.components.ComponentDiscoveryService"
-69-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:13:18-89
-70            android:directBootAware="true"
-70-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:34:13-43
-71            android:exported="false" >
-71-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:37:13-37
-72            <meta-data
-72-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-16:85
-73                android:name="com.google.firebase.components:io.flutter.plugins.firebasemessaging.FlutterFirebaseAppRegistrar"
-73-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:15:17-127
-74                android:value="com.google.firebase.components.ComponentRegistrar" />
-74-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:16:17-82
-75            <meta-data
-75-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:38:13-40:85
-76                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
-76-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:39:17-119
-77                android:value="com.google.firebase.components.ComponentRegistrar" />
-77-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:40:17-82
-78            <meta-data
-78-->[com.google.firebase:firebase-datatransport:17.0.3] /home/asmss102/.gradle/caches/transforms-2/files-2.1/66b88bf3e9aa090694f8e676d1871042/firebase-datatransport-17.0.3/AndroidManifest.xml:28:13-30:85
-79                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
-79-->[com.google.firebase:firebase-datatransport:17.0.3] /home/asmss102/.gradle/caches/transforms-2/files-2.1/66b88bf3e9aa090694f8e676d1871042/firebase-datatransport-17.0.3/AndroidManifest.xml:29:17-115
-80                android:value="com.google.firebase.components.ComponentRegistrar" />
-80-->[com.google.firebase:firebase-datatransport:17.0.3] /home/asmss102/.gradle/caches/transforms-2/files-2.1/66b88bf3e9aa090694f8e676d1871042/firebase-datatransport-17.0.3/AndroidManifest.xml:30:17-82
-81            <meta-data
-81-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:32:13-34:85
-82                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
-82-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:33:17-96
-83                android:value="com.google.firebase.components.ComponentRegistrar" />
-83-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:34:17-82
-84            <meta-data
-84-->[com.google.android.gms:play-services-measurement-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/dabf6277090e314ccc96495c411e23e0/play-services-measurement-api-17.5.0/AndroidManifest.xml:30:13-32:85
-85                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
-85-->[com.google.android.gms:play-services-measurement-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/dabf6277090e314ccc96495c411e23e0/play-services-measurement-api-17.5.0/AndroidManifest.xml:31:17-139
-86                android:value="com.google.firebase.components.ComponentRegistrar" />
-86-->[com.google.android.gms:play-services-measurement-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/dabf6277090e314ccc96495c411e23e0/play-services-measurement-api-17.5.0/AndroidManifest.xml:32:17-82
-87            <meta-data
-87-->[com.google.firebase:firebase-installations:16.3.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3263c67f642443b7a8433b3039cfa9d3/firebase-installations-16.3.2/AndroidManifest.xml:17:13-19:85
-88                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
-88-->[com.google.firebase:firebase-installations:16.3.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3263c67f642443b7a8433b3039cfa9d3/firebase-installations-16.3.2/AndroidManifest.xml:18:17-127
-89                android:value="com.google.firebase.components.ComponentRegistrar" />
-89-->[com.google.firebase:firebase-installations:16.3.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3263c67f642443b7a8433b3039cfa9d3/firebase-installations-16.3.2/AndroidManifest.xml:19:17-82
-90        </service>
-91
-92        <activity
-92-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-11:74
-93            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
-93-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-74
-94            android:exported="false"
-94-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-37
-95            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-95-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-71
-96        <!--
-97             FirebaseMessagingService performs security checks at runtime,
-98             but set to not exported to explicitly avoid allowing another app to call it.
-99        -->
-100        <service
-100-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:28:9-34:19
-101            android:name="com.google.firebase.messaging.FirebaseMessagingService"
-101-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:29:13-82
-102            android:exported="false" >
-102-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:30:13-37
-103            <intent-filter android:priority="-500" >
-103-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:29
-104                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-104-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:10:17-78
-104-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:10:25-75
-105            </intent-filter>
-106        </service>
-107
-108        <receiver
-108-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:37:9-44:20
-109            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
-109-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:38:13-78
-110            android:exported="true"
-110-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:39:13-36
-111            android:permission="com.google.android.c2dm.permission.SEND" >
-111-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:40:13-73
-112            <intent-filter>
-112-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:41:13-43:29
-113                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-113-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:42:17-81
-113-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:42:25-78
-114            </intent-filter>
-115        </receiver>
-116
-117        <provider
-117-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:26:9-30:39
-118            android:name="com.google.firebase.provider.FirebaseInitProvider"
-118-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:27:13-77
-119            android:authorities="com.brandzgarage.charliechang.firebaseinitprovider"
-119-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:28:13-72
-120            android:exported="false"
-120-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:29:13-37
-121            android:initOrder="100" />
-121-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:30:13-36
-122
-123        <activity
-123-->[com.google.android.gms:play-services-base:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
-124            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-124-->[com.google.android.gms:play-services-base:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/AndroidManifest.xml:24:13-79
-125            android:exported="false"
-125-->[com.google.android.gms:play-services-base:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/AndroidManifest.xml:25:13-37
-126            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-126-->[com.google.android.gms:play-services-base:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+15    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+15-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:9:5-80
+15-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:9:22-78
+16    <uses-permission android:name="android.permission.VIBRATE" />
+16-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:10:5-66
+16-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:10:22-63
+17    <uses-permission android:name="android.permission.WAKE_LOCK" />
+17-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:11:5-68
+17-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:11:22-65
+18    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+18-->[:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
+18-->[:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-76
+19    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+19-->[:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-76
+19-->[:connectivity] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:8:22-73
+20    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+20-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:26:5-82
+20-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:26:22-79
+21    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+21-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:26:5-110
+21-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:26:22-107
+22
+23    <application
+23-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:12:5-48:19
+24        android:name="com.brandzgarage.charliechang.Application"
+24-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:13:9-36
+25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+25-->[androidx.core:core:1.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/158de9519577c7ffb49592b2f543b9bc/core-1.2.0/AndroidManifest.xml:24:18-86
+26        android:debuggable="true"
+27        android:icon="@drawable/logo"
+27-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:15:9-38
+28        android:label="Charlie Chang&apos;s" >
+28-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:14:9-38
+29        <activity
+29-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:16:9-32:20
+30            android:name="com.brandzgarage.charliechang.MainActivity"
+30-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:17:13-41
+31            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+31-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:20:13-163
+32            android:hardwareAccelerated="true"
+32-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:21:13-47
+33            android:launchMode="singleTop"
+33-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:18:13-43
+34            android:theme="@style/LaunchTheme"
+34-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:19:13-47
+35            android:windowSoftInputMode="adjustResize" >
+35-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:22:13-55
+36            <intent-filter>
+36-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:23:13-26:29
+37                <action android:name="android.intent.action.MAIN" />
+37-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:24:17-68
+37-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:24:25-66
+38
+39                <category android:name="android.intent.category.LAUNCHER" />
+39-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:25:17-76
+39-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:25:27-74
+40            </intent-filter>
+41            <intent-filter>
+41-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:28:13-31:29
+42                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+42-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:29:17-69
+42-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:29:25-66
+43
+44                <category android:name="android.intent.category.DEFAULT" />
+44-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:30:17-76
+44-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:30:27-73
+45            </intent-filter>
+46        </activity>
+47
+48        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+48-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:34:9-106
+48-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:34:19-103
+49        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver" >
+49-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:35:9-40:20
+49-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:35:19-107
+50            <intent-filter>
+50-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:36:13-39:29
+51                <action android:name="android.intent.action.BOOT_COMPLETED" />
+51-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:37:17-78
+51-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:37:25-76
+52                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+52-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:38:17-83
+52-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:38:25-81
+53            </intent-filter>
+54        </receiver>
+55
+56        <!--
+57             Don't delete the meta-data below.
+58             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+59        -->
+60        <meta-data
+60-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:44:9-46:33
+61            android:name="flutterEmbedding"
+61-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:45:13-44
+62            android:value="2" />
+62-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:46:13-30
+63
+64        <provider
+64-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:9:9-18:20
+65            android:name="androidx.core.content.FileProvider"
+65-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-62
+66            android:authorities="com.brandzgarage.charliechang.fileprovider"
+66-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-64
+67            android:exported="false"
+67-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-37
+68            android:grantUriPermissions="true" >
+68-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-47
+69            <meta-data
+69-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-17:53
+70                android:name="android.support.FILE_PROVIDER_PATHS"
+70-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:16:17-67
+71                android:resource="@xml/filepaths" />
+71-->[:flutter_webview_plugin] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:17:17-50
+72        </provider>
+73
+74        <service android:name="io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService" >
+74-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
+74-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:8:18-101
+75            <intent-filter>
+75-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:29
+76                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+76-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:10:17-78
+76-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:10:25-75
+77            </intent-filter>
+78        </service>
+79        <service
+79-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:13:9-17:19
+80            android:name="com.google.firebase.components.ComponentDiscoveryService"
+80-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:13:18-89
+81            android:directBootAware="true"
+81-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:34:13-43
+82            android:exported="false" >
+82-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:37:13-37
+83            <meta-data
+83-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-16:85
+84                android:name="com.google.firebase.components:io.flutter.plugins.firebasemessaging.FlutterFirebaseAppRegistrar"
+84-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:15:17-127
+85                android:value="com.google.firebase.components.ComponentRegistrar" />
+85-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:16:17-82
+86            <meta-data
+86-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:38:13-40:85
+87                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+87-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:39:17-119
+88                android:value="com.google.firebase.components.ComponentRegistrar" />
+88-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:40:17-82
+89            <meta-data
+89-->[com.google.firebase:firebase-datatransport:17.0.3] /home/asmss102/.gradle/caches/transforms-2/files-2.1/66b88bf3e9aa090694f8e676d1871042/firebase-datatransport-17.0.3/AndroidManifest.xml:28:13-30:85
+90                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+90-->[com.google.firebase:firebase-datatransport:17.0.3] /home/asmss102/.gradle/caches/transforms-2/files-2.1/66b88bf3e9aa090694f8e676d1871042/firebase-datatransport-17.0.3/AndroidManifest.xml:29:17-115
+91                android:value="com.google.firebase.components.ComponentRegistrar" />
+91-->[com.google.firebase:firebase-datatransport:17.0.3] /home/asmss102/.gradle/caches/transforms-2/files-2.1/66b88bf3e9aa090694f8e676d1871042/firebase-datatransport-17.0.3/AndroidManifest.xml:30:17-82
+92            <meta-data
+92-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:32:13-34:85
+93                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+93-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:33:17-96
+94                android:value="com.google.firebase.components.ComponentRegistrar" />
+94-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:34:17-82
+95            <meta-data
+95-->[com.google.android.gms:play-services-measurement-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/dabf6277090e314ccc96495c411e23e0/play-services-measurement-api-17.5.0/AndroidManifest.xml:30:13-32:85
+96                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+96-->[com.google.android.gms:play-services-measurement-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/dabf6277090e314ccc96495c411e23e0/play-services-measurement-api-17.5.0/AndroidManifest.xml:31:17-139
+97                android:value="com.google.firebase.components.ComponentRegistrar" />
+97-->[com.google.android.gms:play-services-measurement-api:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/dabf6277090e314ccc96495c411e23e0/play-services-measurement-api-17.5.0/AndroidManifest.xml:32:17-82
+98            <meta-data
+98-->[com.google.firebase:firebase-installations:16.3.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3263c67f642443b7a8433b3039cfa9d3/firebase-installations-16.3.2/AndroidManifest.xml:17:13-19:85
+99                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+99-->[com.google.firebase:firebase-installations:16.3.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3263c67f642443b7a8433b3039cfa9d3/firebase-installations-16.3.2/AndroidManifest.xml:18:17-127
+100                android:value="com.google.firebase.components.ComponentRegistrar" />
+100-->[com.google.firebase:firebase-installations:16.3.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3263c67f642443b7a8433b3039cfa9d3/firebase-installations-16.3.2/AndroidManifest.xml:19:17-82
+101        </service>
+102
+103        <activity
+103-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-11:74
+104            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+104-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-74
+105            android:exported="false"
+105-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-37
+106            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+106-->[:url_launcher] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-71
+107        <!--
+108             FirebaseMessagingService performs security checks at runtime,
+109             but set to not exported to explicitly avoid allowing another app to call it.
+110        -->
+111        <service
+111-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:28:9-34:19
+112            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+112-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:29:13-82
+113            android:exported="false" >
+113-->[com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:30:13-37
+114            <intent-filter android:priority="-500" >
+114-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:29
+115                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+115-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:10:17-78
+115-->[:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:10:25-75
+116            </intent-filter>
+117        </service>
+118
+119        <receiver
+119-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:37:9-44:20
+120            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+120-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:38:13-78
+121            android:exported="true"
+121-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:39:13-36
+122            android:permission="com.google.android.c2dm.permission.SEND" >
+122-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:40:13-73
+123            <intent-filter>
+123-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:41:13-43:29
+124                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+124-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:42:17-81
+124-->[com.google.firebase:firebase-iid:20.0.2] /home/asmss102/.gradle/caches/transforms-2/files-2.1/cb0ec7d86949087c2d713bd548c7bf46/firebase-iid-20.0.2/AndroidManifest.xml:42:25-78
+125            </intent-filter>
+126        </receiver>
 127
-128        <receiver
-128-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:29:9-33:20
-129            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
-129-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:30:13-85
-130            android:enabled="true"
-130-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:31:13-35
-131            android:exported="false" >
-131-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:32:13-37
-132        </receiver>
+128        <provider
+128-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:26:9-30:39
+129            android:name="com.google.firebase.provider.FirebaseInitProvider"
+129-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:27:13-77
+130            android:authorities="com.brandzgarage.charliechang.firebaseinitprovider"
+130-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:28:13-72
+131            android:exported="false"
+131-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:29:13-37
+132            android:initOrder="100" />
+132-->[com.google.firebase:firebase-common:19.3.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/95186ec9d06fa47c076f93b050dc8f89/jetified-firebase-common-19.3.0/AndroidManifest.xml:30:13-36
 133
-134        <service
-134-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:35:9-38:40
-135            android:name="com.google.android.gms.measurement.AppMeasurementService"
-135-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:36:13-84
-136            android:enabled="true"
-136-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:37:13-35
-137            android:exported="false" />
-137-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:38:13-37
-138        <service
-138-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:39:9-43:72
-139            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
-139-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:40:13-87
-140            android:enabled="true"
-140-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:41:13-35
-141            android:exported="false"
-141-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:42:13-37
-142            android:permission="android.permission.BIND_JOB_SERVICE" />
-142-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:43:13-69
-143
-144        <meta-data
-144-->[com.google.android.gms:play-services-basement:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12f58499fe5a189f89b9025446125583/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
-145            android:name="com.google.android.gms.version"
-145-->[com.google.android.gms:play-services-basement:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12f58499fe5a189f89b9025446125583/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
-146            android:value="@integer/google_play_services_version" />
-146-->[com.google.android.gms:play-services-basement:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12f58499fe5a189f89b9025446125583/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
-147
-148        <service
-148-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:29:9-35:19
-149            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-149-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:30:13-103
-150            android:exported="false" >
-150-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:31:13-37
-151            <meta-data
-151-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:32:13-34:39
-152                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-152-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:33:17-94
-153                android:value="cct" />
-153-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:34:17-36
-154        </service>
-155        <service
-155-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:26:9-30:19
-156            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
-156-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:27:13-117
-157            android:exported="false"
-157-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:28:13-37
-158            android:permission="android.permission.BIND_JOB_SERVICE" >
-158-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:29:13-69
-159        </service>
-160
-161        <receiver
-161-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:32:9-34:40
-162            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-162-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:33:13-132
-163            android:exported="false" />
-163-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:34:13-37
-164    </application>
-165
-166</manifest>
+134        <activity
+134-->[com.google.android.gms:play-services-base:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+135            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+135-->[com.google.android.gms:play-services-base:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+136            android:exported="false"
+136-->[com.google.android.gms:play-services-base:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+137            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+137-->[com.google.android.gms:play-services-base:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+138
+139        <receiver
+139-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:29:9-33:20
+140            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+140-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:30:13-85
+141            android:enabled="true"
+141-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:31:13-35
+142            android:exported="false" >
+142-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:32:13-37
+143        </receiver>
+144
+145        <service
+145-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:35:9-38:40
+146            android:name="com.google.android.gms.measurement.AppMeasurementService"
+146-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:36:13-84
+147            android:enabled="true"
+147-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:37:13-35
+148            android:exported="false" />
+148-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:38:13-37
+149        <service
+149-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:39:9-43:72
+150            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+150-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:40:13-87
+151            android:enabled="true"
+151-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:41:13-35
+152            android:exported="false"
+152-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:42:13-37
+153            android:permission="android.permission.BIND_JOB_SERVICE" />
+153-->[com.google.android.gms:play-services-measurement:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a1328a97e0a391348e228cc11cfeeae5/play-services-measurement-17.5.0/AndroidManifest.xml:43:13-69
+154
+155        <meta-data
+155-->[com.google.android.gms:play-services-basement:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12f58499fe5a189f89b9025446125583/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+156            android:name="com.google.android.gms.version"
+156-->[com.google.android.gms:play-services-basement:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12f58499fe5a189f89b9025446125583/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+157            android:value="@integer/google_play_services_version" />
+157-->[com.google.android.gms:play-services-basement:17.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/12f58499fe5a189f89b9025446125583/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+158
+159        <service
+159-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:29:9-35:19
+160            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+160-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:30:13-103
+161            android:exported="false" >
+161-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:31:13-37
+162            <meta-data
+162-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:32:13-34:39
+163                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+163-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:33:17-94
+164                android:value="cct" />
+164-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/238bb28cdda333a63371ebc589db665d/transport-backend-cct-2.2.0/AndroidManifest.xml:34:17-36
+165        </service>
+166        <service
+166-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:26:9-30:19
+167            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+167-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:27:13-117
+168            android:exported="false"
+168-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:28:13-37
+169            android:permission="android.permission.BIND_JOB_SERVICE" >
+169-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:29:13-69
+170        </service>
+171
+172        <receiver
+172-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:32:9-34:40
+173            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+173-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:33:13-132
+174            android:exported="false" />
+174-->[com.google.android.datatransport:transport-runtime:2.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/3eccd91eb1afef858a784bd1efa0fa95/transport-runtime-2.2.0/AndroidManifest.xml:34:13-37
+175    </application>
+176
+177</manifest>

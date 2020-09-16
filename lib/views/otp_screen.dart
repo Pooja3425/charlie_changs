@@ -78,14 +78,14 @@ class _OtpScreenState extends State<OtpScreen> {
       body: SingleChildScrollView(
         child: Container(
           width: getWidth(context),
-         // height: getHeight(context),
+          height: getHeight(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 width: getWidth(context),
                 height: getHeight(context)/2,
-                child: Image.asset("assets/images/otp_img.png",fit: BoxFit.cover,),
+                child: Image.asset("assets/images/otp_image.jpg",fit: BoxFit.cover,),
               ),
               Padding(
                 padding: const EdgeInsets.only(left:30.0,right: 30.0),
@@ -142,17 +142,20 @@ class _OtpScreenState extends State<OtpScreen> {
                               callRegisterAPI();
                             },
                             child: Container(child: Text(RESEND_OTP,style: TextStyle(fontSize: 15,color: fab_color,fontFamily: "Manrope",fontWeight: FontWeight.w500),))),
-                        FloatingActionButton(onPressed: (){
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: FloatingActionButton(onPressed: (){
 
-                          if(isValid())
-                            {
-                              callVerifyOtpAPI();
-                            }
-                        },
+                                if(isValid())
+                                  {
+                                    callVerifyOtpAPI();
+                                  }
+                              },
                           elevation: 10,
                           backgroundColor: fab_color,
                           child: Image.asset("assets/images/forword_arrow.png",width: 25,),
                         ),
+                            ),
                       ],
                     ),
                   ],

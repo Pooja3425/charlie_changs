@@ -8,6 +8,14 @@ class ExpandedSection extends StatefulWidget {
   _ExpandedSectionState createState() => _ExpandedSectionState();
 }
 
+//noti order
+   /* {notification: {title: Order Received, body: Thanks for ordering. Order ref :QGLQK5392}, data: {n_type: order, click_action: FLUTTER_NOTIFICATION_CLICK, n_type_id: QGLQK5392}}*/
+
+//general
+
+    /*{notification: {title: test, body: test}, data: {n_type: general, click_action: FLUTTER_NOTIFICATION_CLICK, n_type_id: 36}}*/
+
+
 class _ExpandedSectionState extends State<ExpandedSection> with SingleTickerProviderStateMixin {
   AnimationController expandController;
   Animation<double> animation;

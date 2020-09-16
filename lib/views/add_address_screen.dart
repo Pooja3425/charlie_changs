@@ -87,6 +87,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: bottomView(),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(80),
           child: AppBar(
@@ -99,7 +100,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         body: SingleChildScrollView(
           child: Container(
             width: getWidth(context),
-            height: getHeight(context)-108,
+           // height: getHeight(context)-108,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -138,7 +139,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                       color: text_color,
                                       fontWeight: FontWeight.w400,fontSize: 12.5),
                                   decoration: InputDecoration(
-                                      hintText: "Name of the address like home...",
+                                      hintText: 'Name your address e.g: “Home”, Office”..',
                                       hintStyle: TextStyle(color: hint_text_color,fontSize: 12.5),
                                       contentPadding: EdgeInsets.only(bottom: 12),
                                       border: InputBorder.none,
@@ -446,30 +447,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     )
                   ],
                 ),
-                InkWell(
-                  onTap: (){
-                    if(isValid())
-                      {
-                        if(widget.type=="a")
-                          {
-                            callAPI();
-                          }
-                        else
-                          {
-                            callUpdateAPI();
-                          }
 
-                      }
-                  },
-                  child: Container(
-                    width: getWidth(context),
-                    height: 73,
-                    color: button_color,
-                    child: Center(
-                      child: Text("Save Address",style: TextStyle(color: Colors.white),),
-                    ),
-                  ),
-                )
               ],
             ),
           ),
@@ -592,5 +570,32 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
       }
     });
+  }
+
+  Widget bottomView() {
+    return InkWell(
+      onTap: (){
+        if(isValid())
+        {
+          if(widget.type=="a")
+          {
+            callAPI();
+          }
+          else
+          {
+            callUpdateAPI();
+          }
+
+        }
+      },
+      child: Container(
+        width: getWidth(context),
+        height: 73,
+        color: button_color,
+        child: Center(
+          child: Text("Save Address",style: TextStyle(color: Colors.white),),
+        ),
+      ),
+    );
   }
 }

@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:badges/badges.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/models/menu_response_model.dart';
+import 'package:charliechang/utils/NotificationPlugin.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/views/cart_screen.dart';
@@ -13,8 +16,11 @@ import 'package:charliechang/views/offers_screen.dart';
 import 'package:charliechang/views/order_detail_screen.dart';
 import 'package:charliechang/views/updates_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
@@ -36,51 +42,6 @@ Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
   // Or do other work.
 }
 
-final Map<String, Item> _items = <String, Item>{};
-Item _itemForMessage(Map<String, dynamic> message) {
-  final dynamic data = message['data'] ?? message;
-  final String itemId = data['id'];
-  final Item item = _items.putIfAbsent(itemId, () => Item(itemId: itemId))
-    .._matchteam = data['matchteam']
-    .._score = data['score'];
-  return item;
-}
-
-class Item {
-  Item({this.itemId});
-  final String itemId;
-
-  StreamController<Item> _controller = StreamController<Item>.broadcast();
-  Stream<Item> get onChanged => _controller.stream;
-
-  String _matchteam;
-  String get matchteam => _matchteam;
-  set matchteam(String value) {
-    _matchteam = value;
-    _controller.add(this);
-  }
-
-  String _score;
-  String get score => _score;
-  set score(String value) {
-    _score = value;
-    _controller.add(this);
-  }
-
-  static final Map<String, Route<void>> routes = <String, Route<void>>{};
-  Route<void> get route {
-    final String routeName = '/detail/$itemId';
-    return routes.putIfAbsent(
-      routeName,
-          () => MaterialPageRoute<void>(
-        settings: RouteSettings(name: routeName),
-        builder: (BuildContext context) => OrderDetailScreen(),
-      ),
-    );
-  }
-}
-
-
 class BottomScreen extends StatefulWidget {
   int initPage;
   BottomScreen({this.initPage});
@@ -91,11 +52,24 @@ class BottomScreen extends StatefulWidget {
 class _BottomScreenState extends State<BottomScreen> {
   PageController _pageController;
   int _page=0;
-
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
+
+    notificationPlugin
+        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationPlugin.setOnNotificationClick(onNotificationClick);
+    var initializationSettingsAndroid =
+    AndroidInitializationSettings('@drawable/logo');
+    var initializationSettingsIOs = IOSInitializationSettings();
+    var initSetttings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOs);
+    flutterLocalNotificationsPlugin.initialize(initSetttings,
+        onSelectNotification: onSelectNotification);
+
     _pageController = new PageController();
     if(widget.initPage!=null)
       {
@@ -104,12 +78,18 @@ class _BottomScreenState extends State<BottomScreen> {
 
         });
       }
-    getCartValue();
+      getCartValue();
+
     _firebaseMessaging.getToken().then((value) => print("TOKEN $value"));
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
-        //_showItemDialog(message);
+        /*Platform.isAndroid
+            ? showNotification(message['notification'])
+            : showNotification(message['aps']['alert']);*/
+        Platform.isAndroid
+            ? notificationPlugin.showNotification(message["notification"])
+            : notificationPlugin.showNotification(message['aps']['alert']);
       },
       onBackgroundMessage: myBackgroundMessageHandler,
       onLaunch: (Map<String, dynamic> message) async {
@@ -117,7 +97,7 @@ class _BottomScreenState extends State<BottomScreen> {
         //_navigateToItemDetail(message);
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
+        print("onResume: ${message.values}");
        setState(() {
          _page = 3;
          _pageController.jumpToPage(_page);
@@ -136,10 +116,22 @@ class _BottomScreenState extends State<BottomScreen> {
       assert(token != null);
       print("Push Messaging token: $token");
     });
-
-
     super.initState();
   }
+
+  Future onSelectNotification(String payload) {
+   print("payloadd $payload");
+  }
+
+  onNotificationInLowerVersions(ReceivedNotification receivedNotification) {
+    print('Notification Received ${receivedNotification.id}');
+  }
+
+  onNotificationClick(String payload) {
+    print('Payload $payload');
+
+  }
+
   void onPageChanged(int page){
     setState(() {
       this._page = page;
@@ -173,55 +165,6 @@ class _BottomScreenState extends State<BottomScreen> {
   }
   bool showBadge= true;
   static int badgeData = 0;
-  /*Widget callpage(int currentIndex) {
-
-    switch (currentIndex) {
-      case 0:
-        //return HomeDemo();
-        return HomeScreen(
-          callback1: () {
-            showBadge = true;
-            setState(() {});
-          },
-          func1: (string) {
-            if (string == 'ADD') {
-              badgeData ++;
-            } else if (string == 'REMOVE') {
-              badgeData--;
-            }
-            setState(() {});
-          },
-        );
-      case 1:
-        return OffersScreen();
-      case 2:
-        *//*return count==0?CartScreen(
-          callback1: () {
-            showBadge = true;
-            setState(() {});
-          },
-          func1: (string) {
-            if (string == 'ADD') {
-              badgeData++;
-            } else if (string == 'REMOVE') {
-              badgeData--;
-            }
-            setState(() {});
-          },
-        ):*//*
-
-
-
-
-        break;
-      case 3:
-        return UpdatesScreen();
-      case 4:
-        return MoreScreen();
-      default:
-        return HomeScreen();
-    }
-  }*/
   int count=0;
   final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
 
@@ -230,7 +173,7 @@ class _BottomScreenState extends State<BottomScreen> {
     return WillPopScope(
       onWillPop: _page ==0?exitDialog:goToHome,
       child: Scaffold(
-        body: /*callpage(_page)*/Container(
+        body: Container(
           height: getHeight(context),
           child: IndexedStack(
             children: <Widget>[

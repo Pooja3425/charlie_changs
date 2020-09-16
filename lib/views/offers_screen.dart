@@ -11,6 +11,7 @@ import 'package:charliechang/views/bottom_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OffersScreen extends StatefulWidget {
   @override
@@ -124,7 +125,12 @@ class _OffersScreenState extends State<OffersScreen> {
                                     style: TextStyle(color: icon_color,fontSize: 13),),
                                   SizedBox(height: 15,),
                                   Row(children: <Widget>[
-                                    Text("use code",style: TextStyle(color: icon_color,),),
+                                    InkWell(
+                                        onTap:(){
+                                          Clipboard.setData(new ClipboardData(text: "${mCouponsList[index].couponCode}"));
+                                          CommonMethods.showLongToast("Copied to clipboard");
+                                         },
+                                        child: Text("use code",style: TextStyle(color: icon_color,),)),
                                     SizedBox(width: 20,),
                                     Container(
                                       height: 30,

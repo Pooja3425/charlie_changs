@@ -82,9 +82,8 @@ class _ReferScreenState extends State<ReferScreen> {
                                   children: <Widget>[
                                     InkWell(
                                         onTap: (){
-                                          print("COPY");
-                                          Clipboard.setData(new ClipboardData(text: "ABCDE12345"));
-                                          CommonMethods.showLongToast("Coppied to clipboard");
+                                          Clipboard.setData(new ClipboardData(text: coupon_code));
+                                          CommonMethods.showLongToast("Copied to clipboard");
                                          /* Scaffold.of(context).showSnackBar(SnackBar
                                             (content: Text('text copied')));*/
                                         },
@@ -93,7 +92,6 @@ class _ReferScreenState extends State<ReferScreen> {
                                     InkWell(
 
                                         onTap:() {
-                                          print("COPY");
                                           share();
                                         },
                                         child: Image.asset("assets/images/upload.png",height: 20,))

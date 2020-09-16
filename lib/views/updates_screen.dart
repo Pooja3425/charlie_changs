@@ -2,6 +2,7 @@ import 'package:charliechang/blocs/notification_bloc.dart';
 import 'package:charliechang/models/notification_response.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
+import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +94,8 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                     ),
                   );
                 },
-              ):Center(
+              ):
+              Center(
                 child: Text("No Notification",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
               ),
             )
@@ -113,18 +115,18 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
       mNotificationResponse = onData.data;
       if(onData.status == Status.LOADING)
       {
-
+        //CommonMethods.displayProgressDialog(onData.message, context);
       }
       else if(onData.status == Status.COMPLETED)
       {
+        //CommonMethods.dismissDialog(context);
           setState(() {
             mNotificationList = mNotificationResponse.data;
           });
       }
       else if(onData.status == Status.ERROR)
       {
-        //dismissDialog(context);
-
+       // CommonMethods.dismissDialog(context);
       }
     });
   }

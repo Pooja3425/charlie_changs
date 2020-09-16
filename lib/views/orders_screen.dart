@@ -332,6 +332,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             InkWell(
                 onTap: (){
                   addItemsTocart(orders);
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CheckoutScreen(),));
                 },
                 child: Text("repeat order",style: TextStyle(color: button_color,fontSize: 12,),)),
             SizedBox(height: 20,),
@@ -385,7 +386,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
           {
             print("ITEM NAME ${mMenuList[j].name}");
             addToCart(mMenuList[j]);
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CheckoutScreen(),));
           }
         }
       }

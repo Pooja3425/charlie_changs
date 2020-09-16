@@ -38,12 +38,6 @@
       "languageVersion": "2.4"
     },
     {
-      "name": "carousel_slider",
-      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-2.2.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.6"
-    },
-    {
       "name": "charcode",
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.3",
       "packageUri": "lib/",
@@ -116,6 +110,12 @@
       "languageVersion": "2.6"
     },
     {
+      "name": "fading_edge_scrollview",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fading_edge_scrollview-1.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "firebase_messaging",
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-6.0.16",
       "packageUri": "lib/",
@@ -126,6 +126,18 @@
       "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "2.2"
+    },
+    {
+      "name": "flutter_local_notifications",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-1.4.4+4",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "flutter_local_notifications_platform_interface",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_platform_interface-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "flutter_share",
@@ -212,10 +224,10 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "map_launcher",
-      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/map_launcher-0.12.2",
+      "name": "marquee",
+      "rootUri": "file:///home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/marquee-1.6.1",
       "packageUri": "lib/",
-      "languageVersion": "2.7"
+      "languageVersion": "2.0"
     },
     {
       "name": "matcher",
@@ -458,7 +470,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-09-13T11:37:08.631148Z",
+  "generated": "2020-09-16T10:42:38.930657Z",
   "generator": "pub",
   "generatorVersion": "2.8.4"
 }

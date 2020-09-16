@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc_pattern/bloc_pattern.dart' as blocPattern;
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/blocs/category_bloc.dart';
@@ -193,10 +192,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     final double itemHeight = (getHeight(context) - kToolbarHeight - 24) / 2.3;
     final double itemWidth = getWidth(context) / 2;
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-
-
-
-
     return SafeArea(
       child: Scaffold(
         floatingActionButton:Consumer<ScrollModel>(
@@ -215,7 +210,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
             backgroundColor: Colors.white,
             elevation: 0.0,
             flexibleSpace: Container(
-              //height: 78,
               width: getWidth(context),
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -311,7 +305,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                               else
                                 {
                                   showWarningDialog("p");
-
                                 }
                             }
                             else
@@ -370,11 +363,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                     autoPlay: true,
                     //autoPlayAnimationDuration: Duration(seconds: 1),
                     pagerSize: 8,
-                    reverse: true,
-                    pauseAutoPlayOnTouch: Duration(seconds: 2),
+                    reverse: false,
+                    pauseAutoPlayOnTouch: Duration(seconds: 5),
                     activeIndicator: Colors.white,
                     passiveIndicator: Colors.transparent.withOpacity(0.5),
                     viewportFraction: 1.0,
+                    autoPlayInterval: Duration(seconds: 5),
+                    enableInfiniteScroll: true,
                     height: 280,
                     // aspectRatio: 10,
                     enlargeMainPage: false,
@@ -436,8 +431,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 child: Column(
                                   children: <Widget>[
                                     Container(
-                                      width: 48,
-                                      height: 48,
+                                      width: 40,
+                                      height: 40,
                                       decoration: BoxDecoration(
                                           color: switch_bg,
                                           borderRadius: BorderRadius.all(
@@ -492,49 +487,54 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                           borderRadius: BorderRadius.all(Radius.circular(3))),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              //Icon(Icons.search,color: icon_color,size: 18,),
-                              SizedBox(
-                                width: 3,
-                              ),
-                              Icon(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            //Icon(Icons.search,color: icon_color,size: 18,),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top:3.0),
+                              child: Icon(
                                 Icons.search,
                                 color: icon_color,
                                 size: 18,
                               ),
-                              SizedBox(
-                                width: 3,
-                              ),
-                              Container(
-                                width: getWidth(context) - 110,
-                                alignment: Alignment.centerLeft,
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: TextField(
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                    ),
-                                    controller: _searchController,
-                                    decoration: InputDecoration(
-                                      //contentPadding: EdgeInsets.only(top: 5),
-                                      //prefixIcon: Icon(Icons.search,color: icon_color,size: 18,),
-                                        hintText: "Search for dishes",
-                                        // alignLabelWithHint: ,
-                                        hintStyle: TextStyle(
-                                            fontSize: 12, color: icon_color),
-                                        //contentPadding: EdgeInsets.only(bottom: 3),
-                                        border: InputBorder.none,
-                                        counterText: ''),
-                                  ),
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Container(
+                              width: getWidth(context) - 110,
+                              //alignment: Alignment.centerLeft,
+                              child: TextField(
+                                style: TextStyle(
+                                  fontSize: 12,
                                 ),
-                              )
-                            ],
-                          ),
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  //contentPadding: EdgeInsets.only(top: 5),
+                                  //prefixIcon: Icon(Icons.search,color: icon_color,size: 18,),
+                                    hintText: "Search for dishes",
+                                    // alignLabelWithHint: ,
+                                    hintStyle: TextStyle(
+                                        fontSize: 12, color: icon_color),
+                                    //contentPadding: EdgeInsets.only(bottom: 3),
+                                    border: InputBorder.none,
+                                    counterText: ''),
+                              ),
+                            ),
+                            _IsSearching?InkWell(
+                              onTap: ()=>_searchController.clear(),
+                              child: Icon(
+                                Icons.clear,
+                                color: icon_color,
+                                size: 18,
+                              ),
+                            ):Container(),
+                          ],
                         ),
                       ),
 
@@ -580,7 +580,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                       padding: const EdgeInsets.only(top: 15.0, bottom: 1.0),
                                       child: Text(
                                         "${mCategoryList[index].name}",
-                                        style: TextStyle(color: icon_color),
+                                        style: TextStyle(color: fab_color,fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     content:  GridView.count(
@@ -882,15 +882,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     DateTime open = dateFormat.parse("10:30");
     open = new DateTime(currentTime.year, currentTime.month, currentTime.day, open.hour, open.minute);
 
-    DateTime open1 = dateFormat.parse("10:30");
+    DateTime open1 = dateFormat.parse("19:00");
     open1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, open1.hour, open1.minute);
 
     DateTime close = dateFormat.parse("14:30");
     close = new DateTime(currentTime.year, currentTime.month, currentTime.day, close.hour, close.minute);
 
-    DateTime close1 = dateFormat.parse("14:30");
+    DateTime close1 = dateFormat.parse("22:30");
     close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, close1.hour, close1.minute);
-    print("time $open");
+   // print("time  $currentTime ${currentTime.isAfter(open) } ${currentTime.isAfter(open1)} ${currentTime.isAfter(close)}  ${currentTime.isBefore(close1)}");
 
   //  print("Temp size ${mTempList.length}");
     return List.generate(/*mMenuList.length*/mTempList.length, (index) {
@@ -922,7 +922,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
               padding: const EdgeInsets.only(
                   left: 5, top: 10),
               child: Container(
-                height:40,
+                height:35,
                 child: Text(
                   mTempList[index].name,
                   maxLines: 2,
@@ -944,7 +944,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         color: icon_color,
                         fontSize: 12),
                   ),
-                  currentTime.isBefore(open) && currentTime.isBefore(open1) || currentTime.isAfter(close) || currentTime.isAfter(close1)?Container(
+                  currentTime.isAfter(open) && currentTime.isAfter(open1) && currentTime.isAfter(close) && currentTime.isAfter(close1)?Container(
                     width: 80,
                     height: 30,
                     decoration: BoxDecoration(
@@ -1052,7 +1052,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     open = new DateTime(currentTime.year, currentTime.month, currentTime.day, open.hour, open.minute);
     DateTime close = dateFormat.parse("14:30");
     close = new DateTime(currentTime.year, currentTime.month, currentTime.day, close.hour, close.minute);
-    print("time $open");
+   // print("time $open");
 
     return List.generate(/*mMenuList.length*/mTempList.length, (index) {
       return Container(

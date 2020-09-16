@@ -96,7 +96,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       context: context,
       initialDatePickerMode: DatePickerMode.year,
       initialDate: new DateTime.now() ,
-      firstDate:new DateTime(1990),
+      firstDate:new DateTime(1900),
       lastDate: DateTime.now(),
     );
     // if(picked != null) setState(() => _datevalue = new DateFormat("MM/dd/yyyy").parse( picked.toString()));
