@@ -9,6 +9,7 @@ import 'package:charliechang/utils/string_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -152,12 +153,70 @@ class _SplashScreenState extends State<SplashScreen> {
     //Navigator.of(context).pushReplacementNamed('/OtpScreen');
   }
   String profile_value;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
-
     getValues();
+   /* var initializationSettingsAndroid =
+    AndroidInitializationSettings('drawable/logo');
+    var initializationSettingsIOs = IOSInitializationSettings();
+    var initSetttings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOs);
+
+    flutterLocalNotificationsPlugin.initialize(initSetttings,
+        onSelectNotification: onSelectNotification);
+    _firebaseMessaging.getToken().then((value) => print("TOKEN $value"));
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        Platform.isAndroid
+            ? showNotification(message['notification'])
+            : showNotification(message['aps']['alert']);
+      },
+      onBackgroundMessage: myBackgroundMessageHandler,
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        //_navigateToItemDetail(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: ${message.values}");
+        setState(() {
+
+        });
+        //_navigateToItemDetail(message);
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      print("Push Messaging token: $token");
+    });*/
     super.initState();
+  }
+
+  Future onSelectNotification(String payload) {
+    print("SPALSH $payload");
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+  }
+
+  showNotification(message) async {
+    var android = AndroidNotificationDetails(
+        'id', 'channel ', 'description',
+        priority: Priority.High, importance: Importance.Max);
+    var iOS = IOSNotificationDetails();
+    var platform = new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(
+        0, '${message["title"]}', '${message["body"]}', platform,
+        payload: 'Welcome to the Local Notification demo');
   }
   @override
   Widget build(BuildContext context) {

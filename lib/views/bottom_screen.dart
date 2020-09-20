@@ -7,7 +7,6 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/models/menu_response_model.dart';
-import 'package:charliechang/utils/NotificationPlugin.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/views/cart_screen.dart';
@@ -25,6 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
 import 'more_screen.dart';
+import 'order_screen.dart';
 
 
 Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
@@ -59,14 +59,12 @@ class _BottomScreenState extends State<BottomScreen> {
   @override
   void initState() {
 
-    notificationPlugin
-        .setListenerForLowerVersions(onNotificationInLowerVersions);
-    notificationPlugin.setOnNotificationClick(onNotificationClick);
     var initializationSettingsAndroid =
-    AndroidInitializationSettings('@drawable/logo');
+    AndroidInitializationSettings('drawable/logo');
     var initializationSettingsIOs = IOSInitializationSettings();
     var initSetttings = InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOs);
+
     flutterLocalNotificationsPlugin.initialize(initSetttings,
         onSelectNotification: onSelectNotification);
 
@@ -75,8 +73,11 @@ class _BottomScreenState extends State<BottomScreen> {
       {
         setState(() {
           _page=widget.initPage;
-
+          print("PAGE ${widget.initPage}");
+          _pageController.jumpToPage(_page);
+          //
         });
+
       }
       getCartValue();
 
@@ -84,12 +85,9 @@ class _BottomScreenState extends State<BottomScreen> {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
-        /*Platform.isAndroid
-            ? showNotification(message['notification'])
-            : showNotification(message['aps']['alert']);*/
         Platform.isAndroid
-            ? notificationPlugin.showNotification(message["notification"])
-            : notificationPlugin.showNotification(message['aps']['alert']);
+            ? showNotification(message['notification'])
+            : showNotification(message['aps']['alert']);
       },
       onBackgroundMessage: myBackgroundMessageHandler,
       onLaunch: (Map<String, dynamic> message) async {
@@ -102,7 +100,9 @@ class _BottomScreenState extends State<BottomScreen> {
          _page = 3;
          _pageController.jumpToPage(_page);
        });
-        //_navigateToItemDetail(message);
+        Platform.isAndroid
+            ? showNotification(message['notification'])
+            : showNotification(message['aps']['alert']);
       },
     );
     _firebaseMessaging.requestNotificationPermissions(
@@ -120,17 +120,28 @@ class _BottomScreenState extends State<BottomScreen> {
   }
 
   Future onSelectNotification(String payload) {
-   print("payloadd $payload");
+    if(payload.contains("Order ref"))
+      {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+      }
+    else
+      {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+      }
+
   }
 
-  onNotificationInLowerVersions(ReceivedNotification receivedNotification) {
-    print('Notification Received ${receivedNotification.id}');
+  showNotification(message) async {
+    var android = AndroidNotificationDetails(
+        'id', 'channel ', 'description',
+        priority: Priority.High, importance: Importance.Max);
+    var iOS = IOSNotificationDetails();
+    var platform = new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(
+        0, '${message["title"]}', '${message["body"]}', platform,
+        payload: '${message["body"]}');
   }
 
-  onNotificationClick(String payload) {
-    print('Payload $payload');
-
-  }
 
   void onPageChanged(int page){
     setState(() {

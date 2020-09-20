@@ -1,9 +1,10 @@
 import 'package:charliechang/utils/color_constants.dart';
-import 'package:charliechang/views/orders_screen.dart';
 import 'package:charliechang/views/payment_fail_screen.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'order_screen.dart';
 
 class ThanksScreen extends StatefulWidget {
   String orderCode;

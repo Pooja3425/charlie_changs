@@ -568,7 +568,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                             ):Center(child: Text("No such item found"),)
 
                         ): mMenuList.length>0?ListView.builder(
-
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap:true,
                             itemCount: mCategoryList.length,
@@ -944,7 +943,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         color: icon_color,
                         fontSize: 12),
                   ),
-                  currentTime.isAfter(open) && currentTime.isAfter(open1) && currentTime.isAfter(close) && currentTime.isAfter(close1)?Container(
+                  /*currentTime.isAfter(open) && currentTime.isAfter(open1) && currentTime.isAfter(close) && currentTime.isAfter(close1)?Container(
                     width: 80,
                     height: 30,
                     decoration: BoxDecoration(
@@ -958,7 +957,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                               color: Colors.black,
                               fontSize: 12),
                         )),
-                  ):
+                  ):*/
                   mTempList[index].count ==0?InkWell(
                     onTap: (){
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
