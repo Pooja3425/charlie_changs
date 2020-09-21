@@ -74,8 +74,7 @@ class _BottomScreenState extends State<BottomScreen> {
         setState(() {
           _page=widget.initPage;
           print("PAGE ${widget.initPage}");
-          _pageController.jumpToPage(_page);
-          //
+
         });
 
       }
@@ -91,18 +90,27 @@ class _BottomScreenState extends State<BottomScreen> {
       },
       onBackgroundMessage: myBackgroundMessageHandler,
       onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-        //_navigateToItemDetail(message);
+        print("onLaunch: ${message.containsKey("body")}");
+        if(message["data"]["n_type"] == "order")
+        {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+        }
+        else
+        {
+          //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+        }
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: ${message.values}");
-       setState(() {
-         _page = 3;
-         _pageController.jumpToPage(_page);
-       });
-        Platform.isAndroid
-            ? showNotification(message['notification'])
-            : showNotification(message['aps']['alert']);
+        print("onResume: ${message["data"]["n_type"]}");
+        if(message["data"]["n_type"] == "order")
+          {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+          }
+        else
+          {
+            //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+          }
+
       },
     );
     _firebaseMessaging.requestNotificationPermissions(
@@ -126,7 +134,8 @@ class _BottomScreenState extends State<BottomScreen> {
       }
     else
       {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+        //.jumpToPage(3);
+       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
       }
 
   }
@@ -134,6 +143,7 @@ class _BottomScreenState extends State<BottomScreen> {
   showNotification(message) async {
     var android = AndroidNotificationDetails(
         'id', 'channel ', 'description',
+       // sound: "piece_of_cake",
         priority: Priority.High, importance: Importance.Max);
     var iOS = IOSNotificationDetails();
     var platform = new NotificationDetails(android, iOS);
@@ -189,7 +199,7 @@ class _BottomScreenState extends State<BottomScreen> {
           child: IndexedStack(
             children: <Widget>[
               new PageView(
-                physics: NeverScrollableScrollPhysics(),
+               // physics: NeverScrollableScrollPhysics(),
                 children: [
                   new HomeScreen(
                     callback1: () {
