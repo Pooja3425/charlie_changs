@@ -68,62 +68,63 @@ class _BottomScreenState extends State<BottomScreen> {
     flutterLocalNotificationsPlugin.initialize(initSetttings,
         onSelectNotification: onSelectNotification);
 
-    _pageController = new PageController();
+
     if(widget.initPage!=null)
       {
-        setState(() {
-          _page=widget.initPage;
-          print("PAGE ${widget.initPage}");
+        print("DATA $_page");
+        _page=widget.initPage;
+        _pageController = new PageController(initialPage: _page);
 
-        });
-
+      }
+    else
+      {
+        _pageController = new PageController(initialPage: _page);
       }
       getCartValue();
 
-    _firebaseMessaging.getToken().then((value) => print("TOKEN $value"));
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        Platform.isAndroid
-            ? showNotification(message['notification'])
-            : showNotification(message['aps']['alert']);
-      },
-      onBackgroundMessage: myBackgroundMessageHandler,
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: ${message.containsKey("body")}");
-        if(message["data"]["n_type"] == "order")
-        {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
-        }
-        else
-        {
-          //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
-        }
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: ${message["data"]["n_type"]}");
-        if(message["data"]["n_type"] == "order")
-          {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
-          }
-        else
-          {
-            //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
-          }
+          _firebaseMessaging.getToken().then((value) => print("TOKEN $value"));
+          _firebaseMessaging.configure(
+            onMessage: (Map<String, dynamic> message) async {
+              print("onMessage: $message");
+              Platform.isAndroid
+                  ? showNotification(message['notification'])
+                  : showNotification(message['aps']['alert']);
+            },
+            onBackgroundMessage: myBackgroundMessageHandler,
+            onLaunch: (Map<String, dynamic> message) async {
+              print("onLaunch: ${message.containsKey("body")}");
+              if(message["data"]["n_type"] == "order")
+              {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+              }
+              else
+              {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+              }
+            },
+            onResume: (Map<String, dynamic> message) async {
+              print("onResume: ${message["data"]["n_type"]}");
+              if(message["data"]["n_type"] == "order")
+                {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+                }
+              else
+                {
 
-      },
-    );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(
-            sound: true, badge: true, alert: true, provisional: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      print("Push Messaging token: $token");
-    });
+                }
+            },
+          );
+          _firebaseMessaging.requestNotificationPermissions(
+              const IosNotificationSettings(
+                  sound: true, badge: true, alert: true, provisional: true));
+          _firebaseMessaging.onIosSettingsRegistered
+              .listen((IosNotificationSettings settings) {
+            print("Settings registered: $settings");
+          });
+          _firebaseMessaging.getToken().then((String token) {
+            assert(token != null);
+            print("Push Messaging token: $token");
+          });
     super.initState();
   }
 
@@ -134,8 +135,15 @@ class _BottomScreenState extends State<BottomScreen> {
       }
     else
       {
-        //.jumpToPage(3);
-       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+        if(mounted)
+        {
+          print("In mounted local");
+          _pageController.jumpToPage(3);
+        }
+        else
+        {
+           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+        }
       }
 
   }
@@ -172,15 +180,11 @@ class _BottomScreenState extends State<BottomScreen> {
       appBarTitle = 'Personal Profile';
       if(count>0)
       goToCheckout();
-
     }
     else if (page == 3) {
+      print("updates $page");
       appBarTitle = 'Sync Cases';
     }
-
-    // Animating to the page.
-    // You can use whatever duration and curve you like
-
     _pageController.animateToPage(page,
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
   }
@@ -196,47 +200,43 @@ class _BottomScreenState extends State<BottomScreen> {
       child: Scaffold(
         body: Container(
           height: getHeight(context),
-          child: IndexedStack(
-            children: <Widget>[
-              new PageView(
-               // physics: NeverScrollableScrollPhysics(),
-                children: [
-                  new HomeScreen(
-                    callback1: () {
-                      showBadge = true;
-                      setState(() {});
-                    },
-                    func1: (string) {
-                      if (string == 'ADD') {
-                        badgeData++;
-                      } else if (string == 'REMOVE') {
-                        badgeData--;
-                      }
-                      setState(() {});
-                    },
-                  ),
-                  new OffersScreen(),
-                  new CartScreen(
-                    callback1: () {
-                      showBadge = true;
-                      setState(() {});
-                    },
-                    func1: (string) {
-                      if (string == 'ADD') {
-                        badgeData++;
-                      } else if (string == 'REMOVE') {
-                        badgeData--;
-                      }
-                      setState(() {});
-                    },
-                  ),
-                  new UpdatesScreen(),
-                  new MoreScreen()
-                ],
-                onPageChanged: onPageChanged,
-                controller: _pageController,
+          child: new PageView(
+           // physics: NeverScrollableScrollPhysics(),
+            children: [
+              new HomeScreen(
+                callback1: () {
+                  showBadge = true;
+                  setState(() {});
+                },
+                func1: (string) {
+                  if (string == 'ADD') {
+                    badgeData++;
+                  } else if (string == 'REMOVE') {
+                    badgeData--;
+                  }
+                  setState(() {});
+                },
               ),
+              new OffersScreen(),
+              new CartScreen(
+                callback1: () {
+                  showBadge = true;
+                  setState(() {});
+                },
+                func1: (string) {
+                  if (string == 'ADD') {
+                    badgeData++;
+                  } else if (string == 'REMOVE') {
+                    badgeData--;
+                  }
+                  setState(() {});
+                },
+              ),
+              new UpdatesScreen(),
+              new MoreScreen()
             ],
+            onPageChanged: onPageChanged,
+            controller: _pageController,
           ),
         ),
         bottomNavigationBar: new Theme(

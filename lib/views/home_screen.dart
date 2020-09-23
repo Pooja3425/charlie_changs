@@ -441,8 +441,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                       child: Center(
                                         child: Image.network(
                                           IMAGE_BASE_URL+mCategoryList[index].image,
-                                          width: 20,
-                                          height: 20,
+                                          width: 30,
+                                          height: 30,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -943,21 +943,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         color: icon_color,
                         fontSize: 12),
                   ),
-                  /*currentTime.isAfter(open) && currentTime.isAfter(open1) && currentTime.isAfter(close) && currentTime.isAfter(close1)?Container(
-                    width: 80,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(3)),
-                        color: Colors.grey),
-                    child: Center(
-                        child: Text(
-                          "Add",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12),
-                        )),
-                  ):*/
+
                   mTempList[index].count ==0?InkWell(
                     onTap: (){
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
@@ -966,9 +952,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                       //bloc.addToCart(index);
                       widget.callback1();
                       widget.func1('ADD');
-                      setState(() {
-
-                      });
+                      setState(() {});
                       // _settingModalBottomSheet(context);
                     },
                     child: Container(

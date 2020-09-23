@@ -127,21 +127,32 @@ class _OffersScreenState extends State<OffersScreen> {
                                   Row(children: <Widget>[
                                     InkWell(
                                         onTap:(){
-                                          Clipboard.setData(new ClipboardData(text: "${mCouponsList[index].couponCode}"));
-                                          CommonMethods.showLongToast("Copied to clipboard");
+
                                          },
                                         child: Text("use code",style: TextStyle(color: icon_color,),)),
-                                    SizedBox(width: 20,),
-                                    Container(
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                          color: fab_color,
-                                          borderRadius: BorderRadius.all(Radius.circular(3.3))
-                                      ),
-                                      child: Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(right:15,left:15),
-                                          child: Text("${mCouponsList[index].couponCode}",style: TextStyle(color: Colors.white,fontSize: 12),),
+                                      SizedBox(width: 20,),
+                                      InkWell(
+                                      onTap: (){
+                                        Clipboard.setData(new ClipboardData(text: "${mCouponsList[index].couponCode}"));
+                                        CommonMethods.showLongToast("Copied to clipboard");
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                            color: fab_color,
+                                            borderRadius: BorderRadius.all(Radius.circular(3.3))
+                                        ),
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(right:15,left:15),
+                                            child: Row(
+                                              children: <Widget>[
+                                                Text("${mCouponsList[index].couponCode}",style: TextStyle(color: Colors.white,fontSize: 12),),
+                                                SizedBox(width: 10,),
+                                                Image.asset("assets/images/copy.png",height: 20,)
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     )

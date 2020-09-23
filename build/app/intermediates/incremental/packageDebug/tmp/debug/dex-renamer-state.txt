@@ -1,4 +1,4 @@
-#Mon Sep 21 11:38:27 IST 2020
+#Wed Sep 23 12:07:57 IST 2020
 base.0=/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

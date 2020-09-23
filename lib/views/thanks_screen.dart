@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'order_screen.dart';
 
 class ThanksScreen extends StatefulWidget {
-  String orderCode;
-  ThanksScreen({this.orderCode});
+  String orderCode,rest_mobile;
+  ThanksScreen({this.orderCode,this.rest_mobile});
   @override
   _ThanksScreenState createState() => _ThanksScreenState();
 }
@@ -56,7 +56,7 @@ class _ThanksScreenState extends State<ThanksScreen> {
                           Text("${widget.orderCode}",style: TextStyle(color: hint_text_color,fontSize: 15,fontWeight: FontWeight.bold),),
                           SizedBox(height: 40,),
                           Text("Call Us On",style: TextStyle(color: hint_text_color,fontSize: 12),),
-                          Text("+91-99999 99999",style: TextStyle(color: hint_text_color,fontSize: 15,fontWeight: FontWeight.bold),),
+                          Text("+91-${widget.rest_mobile}",style: TextStyle(color: hint_text_color,fontSize: 15,fontWeight: FontWeight.bold),),
                           SizedBox(height: 40,),
                           RaisedButton(
                             onPressed: (){

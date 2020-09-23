@@ -252,6 +252,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                                                     setState(() {
                                                       orderModelList[index].count--;
+                                                      if(bloc.getCartValue()<minCouponValue)
+                                                        {
+                                                          discount =0;
+                                                        }
                                                     });
                                                   }
                                                   else
@@ -1013,7 +1017,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         else
           {
             bloc.clearCart();
-            navigationPage(mAddOrderResponse.ordercode);
+            print("MON ${mAddOrderResponse.rest_bobile}");
+            navigationPage(mAddOrderResponse.ordercode,mAddOrderResponse.rest_bobile);
           }
       }
       else if(onData.status == Status.ERROR)
@@ -1051,10 +1056,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  navigationPage(String orderCode) {
+  navigationPage(String orderCode,String mobile) {
     //Navigator.of(context).pushReplacementNamed('/BottomScreen');
     //Navigator.of(context).pushReplacementNamed('/ThanksScreen');
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ThanksScreen(orderCode: orderCode,)));
+    print("MONNN $mobile");
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ThanksScreen(orderCode: orderCode,rest_mobile: mobile,)));
   }
 
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
@@ -1235,7 +1241,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
     return true;
   }
-
+  int minCouponValue;
   ApplyCouponBloc mApplyCouponBloc;
   ApplyCouponReponse mApplyCouponReponse;
   callCouponAPI() async{
@@ -1270,6 +1276,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         else
           {
             setState(() {
+              minCouponValue = int.parse(mApplyCouponReponse.min_cart_val);
               discount = mApplyCouponReponse.discount.toDouble() ;
               discountAmount ="Rs. ${mApplyCouponReponse.discount} discount applied";
             });
