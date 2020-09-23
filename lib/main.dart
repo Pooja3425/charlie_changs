@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'blocs/cart_bloc.dart';
 import 'blocs/cartlistBloc.dart';
+import 'utils/notification.dart';
 import 'views/address_book_screen.dart';
 import 'views/bottom_screen.dart';
 import 'views/home_screen.dart';
@@ -162,7 +163,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     getValues();
 
-    /*var initializationSettingsAndroid =
+   /* var initializationSettingsAndroid =
     AndroidInitializationSettings('drawable/logo');
     var initializationSettingsIOs = IOSInitializationSettings();
     var initSetttings = InitializationSettings(
@@ -172,36 +173,26 @@ class _SplashScreenState extends State<SplashScreen> {
         onSelectNotification: onSelectNotification);
 
     _firebaseMessaging.getToken().then((value) => print("TOKEN $value"));
+  */
+    notificationPlugin
+        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationPlugin.setOnNotificationClick(onNotificationClick);
+
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
         Platform.isAndroid
-            ? showNotification(message['notification'])
-            : showNotification(message['aps']['alert']);
+            ? notificationPlugin.showNotification(message['notification'])
+            : notificationPlugin.showNotification(message['aps']['alert']);
       },
-      onBackgroundMessage: myBackgroundMessageHandler,
+      //onBackgroundMessage: myBackgroundMessageHandler,
       onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: ${message.containsKey("body")}");
-        if(message["data"]["n_type"] == "order")
-        {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
-        }
-        else
-        {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
-        }
+        print("onLaunch: ${message}");
+        redirectUser(message);
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: ${message["data"]["n_type"]}");
-        if(message["data"]["n_type"] == "order")
-        {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
-        }
-        else
-        {
-          print("BACKGROUND");
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
-        }
+        redirectUser(message);
       },
     );
     _firebaseMessaging.requestNotificationPermissions(
@@ -214,21 +205,38 @@ class _SplashScreenState extends State<SplashScreen> {
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
       print("Push Messaging token: $token");
-    });*/
+    });
     super.initState();
   }
 
-  Future onSelectNotification(String payload) {
+
+  onNotificationInLowerVersions(ReceivedNotification receivedNotification) {
+    print('Notification Received ${receivedNotification.id}');
+  }
+
+  onNotificationClick(String payload) {
+    print('Payload $payload');
     if(payload.contains("Order ref"))
     {
+      print("order redi");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
     }
-    else
-    {
-        print("FOREGROUND");
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+    else {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
     }
-
+  }
+  Future onSelectNotification(String payload) {
+    print("payy $payload");
+    if(payload.contains("Order ref"))
+    {
+      print("order redi");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+    }
+    else {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+    }
   }
 
   showNotification(message) async {
@@ -286,5 +294,18 @@ class _SplashScreenState extends State<SplashScreen> {
         startTime();
       }
     });
+   }
+
+   redirectUser(message) {
+     if(message["data"]["n_type"] == "order")
+     {
+       print("BACKGROUND ORDER");
+       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+     }
+     else
+     {
+       print("BACKGROUND");
+       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+     }
    }
 }
