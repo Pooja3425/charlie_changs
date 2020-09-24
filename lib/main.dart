@@ -41,23 +41,21 @@ Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
   if (message.containsKey('notification')) {
     // Handle notification message
     final dynamic notification = message['notification'];
-  }
-
-  // Or do other work.
+  }// Or do other work.
 }
 
 const kAndroidUserAgent =
     "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36";
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  //SystemChrome.latestStyle;
-  //SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
-  //SystemChrome.setEnabledSystemUIOverlays([]);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
   HttpOverrides.global = new MyHttpOverrides();
-  runApp(MultiProvider(
+  runApp(
+      MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ScrollModel()),
       ],
@@ -94,6 +92,7 @@ class MyApp extends StatelessWidget {
             }
           },
             child: MaterialApp(
+              navigatorKey: navigatorKey,
               title: 'Charlie changs',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
@@ -120,7 +119,7 @@ class MyApp extends StatelessWidget {
                 }
               },
 
-              home: SplashScreen(),
+              home: SplashScreen(navigatorKey),
             ),
           ),
         ),
@@ -129,6 +128,8 @@ class MyApp extends StatelessWidget {
   }
 }
 class SplashScreen extends StatefulWidget {
+  final GlobalKey<NavigatorState> navigatorKey;
+  SplashScreen(this.navigatorKey);
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -164,51 +165,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     getValues();
 
-   /* var initializationSettingsAndroid =
-    AndroidInitializationSettings('drawable/logo');
-    var initializationSettingsIOs = IOSInitializationSettings();
-    var initSetttings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOs);
-
-    flutterLocalNotificationsPlugin.initialize(initSetttings,
-        onSelectNotification: onSelectNotification);
-
-    _firebaseMessaging.getToken().then((value) => print("TOKEN $value"));
-  */
-    /*notificationPlugin
-        .setListenerForLowerVersions(onNotificationInLowerVersions);
-    notificationPlugin.setOnNotificationClick(onNotificationClick);
-
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        Platform.isAndroid
-            ? notificationPlugin.showNotification(message['notification'])
-            : notificationPlugin.showNotification(message['aps']['alert']);
-      },
-      //onBackgroundMessage: myBackgroundMessageHandler,
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: ${message}");
-        redirectUser(message);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: ${message["data"]["n_type"]}");
-        redirectUser(message);
-      },
-    );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(
-            sound: true, badge: true, alert: true, provisional: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      print("Push Messaging token: $token");
-    });*/
-
-    NotificationService().initialise(context);
+    NotificationService().initialise(context,widget.navigatorKey);
     super.initState();
   }
 

@@ -14,14 +14,15 @@ class  NotificationService {
   FlutterLocalNotificationsPlugin _fcl = FlutterLocalNotificationsPlugin();
 
   BuildContext context;
-
+  GlobalKey<NavigatorState> navigatorKey;
   StreamSubscription _iosSubscription;
 
-  Future initialise(BuildContext context) async {
+  Future initialise(BuildContext context,GlobalKey<NavigatorState> navigatorKey) async {
 
     //print("notifications init called");
 
     this.context = context;
+    this.navigatorKey = navigatorKey;
 
     if(Platform.isIOS){
       _iosSubscription = _fcm.onIosSettingsRegistered.listen((data){
@@ -66,19 +67,22 @@ class  NotificationService {
 
   }
 
-  checkData(Map<String , dynamic> message , BuildContext context){
+  checkData(Map<String , dynamic> message , BuildContext context) async{
 
     if(message['data'] != null){
       if(message['data']['n_type'] != null){
 
         if(message['data']['n_type'] =="order")
         {
-          print("BACKGROUND");
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+          print("Order BACKGROUND");
+          await navigatorKey.currentState.push(
+              MaterialPageRoute(builder: (_) =>  OrdersScreen(from: "bottom",))
+          );
         }
         else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+          print("update BACKGROUND");
+          await navigatorKey.currentState.push(
+              MaterialPageRoute(builder: (_) => BottomScreen(initPage: 3,),));
         }
 
       }
@@ -130,12 +134,14 @@ class  NotificationService {
 
         if(payload.contains("order"))
         {
-          print("order redi");
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrdersScreen(from: "bottom",),));
+          print("order redi FOREGROUND");
+          await navigatorKey.currentState.push(
+              MaterialPageRoute(builder: (_) => OrdersScreen(from: "bottom",),));
         }
         else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => BottomScreen(initPage: 3,),));
+          print("update FOREGROUND");
+          await navigatorKey.currentState.push(
+              MaterialPageRoute(builder: (_) => BottomScreen(initPage: 3,),));
         }
 
       }

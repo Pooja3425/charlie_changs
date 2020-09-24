@@ -167,30 +167,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     double currentScroll = scrollNotification.metrics.pixels;
     double delta = 180.0; // or something else..
    // print("SSS  ${maxScroll - minScroll} ");
-    /*if(currentScroll.toString().split(".")[0].length<=3 && currentScroll>300)
-    {
-      var timerInfo = Provider.of<ScrollModel>(context, listen: false);
-      timerInfo.setScroll(true);
-    }
-    if(currentScroll.toString().split(".")[0].length>4)
-      {
-        var timerInfo = Provider.of<ScrollModel>(context, listen: false);
-        timerInfo.setScroll(true);
-      }
-    else
-      {
-        var timerInfo = Provider.of<ScrollModel>(context, listen: false);
-        timerInfo.setScroll(false);
-      }*/
-
     var timerInfo = Provider.of<ScrollModel>(context, listen: false);
     timerInfo.setScroll(true);
   }
 
   @override
   Widget build(BuildContext context) {
-    final double itemHeight = (getHeight(context) - kToolbarHeight - 24) / 2.3;
+    final double itemHeight = (getHeight(context) - 70 - 24) / 2.10;
     final double itemWidth = getWidth(context) / 2;
+    print("grid aspect ${itemWidth/itemHeight}");
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return SafeArea(
       child: Scaffold(
@@ -585,7 +570,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                     content:  GridView.count(
                                       physics: NeverScrollableScrollPhysics(),
                                       crossAxisCount: 2,
-                                      childAspectRatio: (itemWidth / itemHeight),
+                                      childAspectRatio: 0.65,
                                       //controller: new ScrollController(keepScrollOffset: false),
                                       shrinkWrap: true,
                                       children: buildList(mMenuList,mCategoryList[index].name),
