@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:charliechang/models/scroll_model.dart';
+import 'package:charliechang/utils/NotificationService.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/string_constants.dart';
@@ -174,7 +175,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     _firebaseMessaging.getToken().then((value) => print("TOKEN $value"));
   */
-    notificationPlugin
+    /*notificationPlugin
         .setListenerForLowerVersions(onNotificationInLowerVersions);
     notificationPlugin.setOnNotificationClick(onNotificationClick);
 
@@ -205,7 +206,9 @@ class _SplashScreenState extends State<SplashScreen> {
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
       print("Push Messaging token: $token");
-    });
+    });*/
+
+    NotificationService().initialise(context);
     super.initState();
   }
 
