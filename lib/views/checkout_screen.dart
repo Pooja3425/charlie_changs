@@ -251,8 +251,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                     print("SIZEEE ${orderModelList[index].count}");
 
                                                     setState(() {
+                                                      //bloc.removeFromList(orderModelList[index]);
                                                       orderModelList[index].count--;
-                                                      if(bloc.getCartValue()<minCouponValue)
+                                                      if(itemTotal<minCouponValue)
                                                         {
                                                           discount =0;
                                                         }
@@ -961,7 +962,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   String payment_mode="2";
 
   callPlaceOrderAPI() async{
-
     var items = [];
     for(int i=0;i<orderModelList.length;i++) {
       var resBody = {};
@@ -999,7 +999,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     String data = body;
     print("REQUETS ${data.replaceAll("\\", "").replaceAll('"', "")}");
-    mAddOrderBloc=AddOrderBloc(data);
+    mAddOrderBloc=AddOrderBloc(data,"add_order");
     mAddOrderBloc.dataStream.listen((onData){
       mAddOrderResponse = onData.data;
       if(onData.status == Status.LOADING)
@@ -1020,6 +1020,47 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             print("MON ${mAddOrderResponse.rest_bobile}");
             navigationPage(mAddOrderResponse.ordercode,mAddOrderResponse.rest_bobile);
           }
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.dismissDialog(context);
+        String msg = jsonDecode(onData.message.replaceAll("Invalid Request:", "")).toString().split(":")[1].split(",")[0];
+        //CommonMethods.showShortToast(msg);
+        showWarningDialog(msg);
+
+      }
+    });
+  }
+
+
+  callSuccessOrderAPI(String orderCode) async{
+
+    final body = jsonEncode({
+      "ordercode":orderCode,
+      });
+
+    String data = body;
+    mAddOrderBloc=AddOrderBloc(data,"payment_resp_api");
+    mAddOrderBloc.dataStream.listen((onData){
+      mAddOrderResponse = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+        // CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        CommonMethods.dismissDialog(context);
+        if(mAddOrderResponse.status==0)
+        {
+          CommonMethods.showShortToast(mAddOrderResponse.msg);
+        }
+        else
+        {
+          bloc.clearCart();
+          print("MON ${mAddOrderResponse.rest_bobile}");
+          navigationPage(mAddOrderResponse.ordercode,mAddOrderResponse.rest_bobile);
+        }
       }
       else if(onData.status == Status.ERROR)
       {
@@ -1135,7 +1176,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 //payment is successful.
         flutterWebviewPlugin.close();
 
-        //callPlaceOrderAPI();
+        callSuccessOrderAPI(ordercode);
       } else {
 
         Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentFailScreen(),));
@@ -1150,6 +1191,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   OnlinePaymentBloc mOnlinePaymentBloc;
   OnlinePaymentResponse mOnlinePaymentResponse;
 
+  String ordercode;
   callOnlinePaymentAPI() async
   {
     print("Online");
@@ -1201,10 +1243,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
         flutterWebviewPlugin.close();
         print("${mOnlinePaymentResponse.paymentUrl}");
-//Let's open the url in webview.
+
+        //Let's open the url in webview.
         flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl,
             userAgent: kAndroidUserAgent);
           setState(() {
+            ordercode= mOnlinePaymentResponse.ordercode;
             isWebviewopen = true;
           });
       /*  CommonMethods.dismissDialog(context);
@@ -1241,7 +1285,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
     return true;
   }
-  int minCouponValue;
+  int minCouponValue=0;
   ApplyCouponBloc mApplyCouponBloc;
   ApplyCouponReponse mApplyCouponReponse;
   callCouponAPI() async{
@@ -1514,9 +1558,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       else if(onData.status == Status.ERROR)
       {
         CommonMethods.dismissDialog(context);
-
         CommonMethods.showShortToast(onData.message);
-
       }
     });
   }

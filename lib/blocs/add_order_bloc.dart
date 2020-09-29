@@ -15,17 +15,17 @@ class AddOrderBloc{
   Stream<Response<AddOrderResponse>> get dataStream =>
       _regDataController.stream;
 
-  AddOrderBloc(var bodyData) {
+  AddOrderBloc(var bodyData,String url) {
     _regDataController = StreamController<Response<AddOrderResponse>>();
     _addOrderRepository = AddOrderRepository();
     _isStreaming = true;
-    fetchRegisterData(bodyData);
+    fetchRegisterData(bodyData, url);
   }
 
-  fetchRegisterData(var bodyData) async {
+  fetchRegisterData(var bodyData,String url) async {
     dataSink.add(Response.loading('Placing your order...'));
     try {
-      AddOrderResponse regRes = await _addOrderRepository.fetchResponse(bodyData);
+      AddOrderResponse regRes = await _addOrderRepository.fetchResponse(bodyData,url);
       if (_isStreaming) dataSink.add(Response.completed(regRes));
     } catch (e) {
       if (_isStreaming) dataSink.add(Response.error(e.toString()));

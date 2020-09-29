@@ -167,7 +167,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Delivered to ${widget.orderData.addressName.toUpperCase()}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
+                        Text("Delivered to ${widget.orderData.addressName==null?"":widget.orderData.addressName.toUpperCase()}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: notification_title_color),),
                         SizedBox(height: 8,),
                         Text("${widget.orderData.address1}"  "${widget.orderData.address2}",style: TextStyle(fontSize: 12,color: notification_title_color),),
                       ],
