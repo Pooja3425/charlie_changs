@@ -311,7 +311,8 @@ class _OtpScreenState extends State<OtpScreen> {
               CommonMethods.setPreference(context, COUPON_CODE, verifyOtpRes.couponCode);
               CommonMethods.setPreference(context, COMPLETE_PROFILE, verifyOtpRes.completeProfile);
               CommonMethods.setPreference(context, PHONE_NUMBER, widget.mobile);
-              navigateToHome();
+              checkAddress();
+             // navigateToHome();
             }
 
 
@@ -366,5 +367,23 @@ class _OtpScreenState extends State<OtpScreen> {
       return false;
     }
     return true;
+  }
+
+   checkAddress() async{
+     SharedPreferences preferences = await SharedPreferences.getInstance();
+     if(preferences.getString(DELIVERY_PICKUP)==null)
+       {
+         navigateToAddAddress();
+       }
+     else
+       {
+         navigateToHome();
+       }
+   }
+  void navigateToAddAddress() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddressBookScreen(from: "complete",)),
+    );
   }
 }

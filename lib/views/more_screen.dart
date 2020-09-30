@@ -1,6 +1,7 @@
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/size_constants.dart';
+import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/about_screen.dart';
 import 'package:charliechang/views/points_screen.dart';
 import 'package:charliechang/views/profile_screen.dart';
@@ -176,6 +177,11 @@ class _MoreScreenState extends State<MoreScreen> {
                                   onTap: () {
                                     Navigator.of(context).pop(false);
                                     CommonMethods.clearSharedPrefs("token");
+                                    CommonMethods.clearSharedPrefs(DELIVERY_ADDRESS);
+                                    CommonMethods.clearSharedPrefs(DELIVERY_ADDRESS_HASH);
+                                    CommonMethods.clearSharedPrefs(PICKUP_ADDRESS);
+                                    CommonMethods.clearSharedPrefs(PICKUP_ADDRESS_HASH);
+                                    CommonMethods.clearSharedPrefs(DELIVERY_PICKUP);
                                     Navigator.of(context).pushReplacementNamed('/LoginScreen');
                                     },
                                   child: Text(

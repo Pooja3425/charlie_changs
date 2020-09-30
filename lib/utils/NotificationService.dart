@@ -32,7 +32,7 @@ class  NotificationService {
       _fcm.requestNotificationPermissions(IosNotificationSettings());
 
     }
-    //_checkToken();
+    getDeToken().then((value) => print("Token $value"));
 
     _fcm.configure(
 
@@ -98,7 +98,7 @@ class  NotificationService {
 
   _initLocalNotification(){
 
-    var android = AndroidInitializationSettings('mipmap/ic_launcher');
+    var android = AndroidInitializationSettings('drawable/logo');
     var ios = IOSInitializationSettings();
     var platform = InitializationSettings(android , ios);
 
