@@ -92,7 +92,7 @@ class _ReferScreenState extends State<ReferScreen> {
                                     InkWell(
 
                                         onTap:() {
-                                          share();
+                                          share(coupon_code);
                                         },
                                         child: Image.asset("assets/images/upload.png",height: 20,))
                                   ],
@@ -181,12 +181,12 @@ class _ReferScreenState extends State<ReferScreen> {
       ),
     );
   }
-  Future<void> share() async {
+  Future<void> share(String coupon_code) async {
     await FlutterShare.share(
-        title: 'Example share',
-        text: 'Example share text',
-        linkUrl: 'https://flutter.dev/',
-        chooserTitle: 'Example Chooser Title'
+        title: "Charlie Chang's",
+        text: "Hey there! Order best Oriental & Chinese food from Charlie Chang's & get 1000 loyalty points on your 1st successful order. Use code -"+coupon_code,
+       // linkUrl: 'https://flutter.dev/',
+        chooserTitle: 'Share coupon code'
     );
   }
 

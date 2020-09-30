@@ -143,6 +143,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   String reward_id_selected="";
   List _dates = [];
   bool isEmpty = false;
+  bool isPaymentFail = false;
   bool isPointsCalled=true;
   @override
   void initState() {
@@ -193,12 +194,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       onWillPop: isWebviewopen ? exitPayDialog:goBack,
       child: SafeArea(
         child: Scaffold(
-          appBar: isEmpty?PreferredSize(child: Container(height: 0,), preferredSize: Size.fromHeight(0)):pickup_delivery =="1"?deliveryAppBar():pickupAppBar(),
-          bottomNavigationBar: isEmpty?Container(height: 0,):bottomUI(),
+          appBar: isEmpty||isPaymentFail?PreferredSize(child: Container(height: 0,), preferredSize: Size.fromHeight(0)):pickup_delivery =="1"?deliveryAppBar():pickupAppBar(),
+          bottomNavigationBar: isEmpty||isPaymentFail?Container(height: 0,):bottomUI(),
           body: SingleChildScrollView(
             child: Container(
               width: getWidth(context),
-              child: isEmpty?EmptyCart():Column(
+              child: isPaymentFail?paymentFail():isEmpty?EmptyCart():Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   CommonMethods().thickHorizontalLine(context),
@@ -248,12 +249,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                 orderModelList[index].count >0? IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
                                                   if(orderModelList[index].count!=1)
                                                   {
-                                                    print("SIZEEE ${orderModelList[index].count}");
+
 
                                                     setState(() {
                                                       //bloc.removeFromList(orderModelList[index]);
                                                       orderModelList[index].count--;
-                                                      if(itemTotal<minCouponValue)
+                                                      print("SIZEEE ${bloc.getCartValue()}  $minCouponValue");
+                                                      if(bloc.getCartValue()<minCouponValue)
                                                         {
                                                           discount =0;
                                                         }
@@ -1178,8 +1180,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
         callSuccessOrderAPI(ordercode);
       } else {
-
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentFailScreen(),));
+        flutterWebviewPlugin.close();
+        setState(() {
+          isPaymentFail = true;
+        });
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentFailScreen(),));
 //payment failed or pending.
       }
     } else {
@@ -1187,6 +1192,57 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
+  Widget paymentFail()
+  {
+    return Container(
+      color: switch_bg,
+      width: getWidth(context),
+      height: getHeight(context),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            color: button_color,
+            width: getWidth(context),
+            height: getHeight(context)/2-30,
+            alignment: Alignment.center,
+
+          ),
+          Positioned(
+              top: getHeight(context)/2-205,
+              //left: getWidth(context)/2,
+              child: Container(
+                width: getWidth(context),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("OOPS!",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.white),),
+                    Text("Your payment didn’t go through!",style: TextStyle(fontSize: 15,color: Colors.white),),
+                    SizedBox(height: 30,),
+                    Image.asset("assets/images/thanks_img.png",width: 119,height: 138,),
+                    SizedBox(height: 40,),
+
+                    Text("Call Us On",style: TextStyle(color: hint_text_color,fontSize: 12),),
+                    Text("+91-8308800820",style: TextStyle(color: hint_text_color,fontSize: 15,fontWeight: FontWeight.bold),),
+                    SizedBox(height: 40,),
+                    RaisedButton(
+                      onPressed: ()=>Navigator.pop(context),
+                      disabledColor: button_color,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(3.3))),
+                      child: InkWell(
+                          onTap: (){
+                            flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl);
+                            setState(() {
+                              isPaymentFail=false;
+                            });
+                          },
+                          child: Text("Try Again",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),color: button_color,)
+                  ],
+                ),
+              ))
+        ],
+      ),
+    );
+  }
 
   OnlinePaymentBloc mOnlinePaymentBloc;
   OnlinePaymentResponse mOnlinePaymentResponse;
@@ -1258,8 +1314,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       else if(onData.status == Status.ERROR)
       {
         CommonMethods.dismissDialog(context);
-
-        CommonMethods.showShortToast(onData.message);
+        String msg = jsonDecode(onData.message.replaceAll("Invalid Request:", "")).toString().split(":")[1].split(",")[0];
+        //CommonMethods.showShortToast(msg);
+        showWarningDialog(msg);
+       // CommonMethods.showShortToast(onData.message);
 
       }
     });

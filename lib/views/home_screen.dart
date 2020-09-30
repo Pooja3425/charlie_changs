@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   Widget build(BuildContext context) {
     final double itemHeight = (getHeight(context) - 70 - 24) / 2.10;
     final double itemWidth = getWidth(context) / 2;
-    print("grid aspect ${itemWidth/itemHeight}");
+    //print("grid aspect ${itemWidth/itemHeight}");
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return SafeArea(
       child: Scaffold(
@@ -874,9 +874,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
     DateTime close1 = dateFormat.parse("22:30");
     close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, close1.hour, close1.minute);
-   // print("time  $currentTime ${currentTime.isAfter(open) } ${currentTime.isAfter(open1)} ${currentTime.isAfter(close)}  ${currentTime.isBefore(close1)}");
-
-  //  print("Temp size ${mTempList.length}");
+   /* if((currentTime.isAfter(open) && currentTime.isBefore(close)) || (currentTime.isAfter(open1) && currentTime.isBefore(close1))) {
+      print("onn");
+    }
+    else{
+      print("off");
+    }*/
     return List.generate(/*mMenuList.length*/mTempList.length, (index) {
       return Container(
         child: Column(
@@ -929,7 +932,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         fontSize: 12),
                   ),
 
-                  mTempList[index].count ==0?InkWell(
+                  currentTime.isAfter(open) && currentTime.isBefore(close) || currentTime.isAfter(open1) && currentTime.isBefore(close1)?  mTempList[index].count ==0?InkWell(
                     onTap: (){
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                       addToCart(mTempList[index]);
@@ -998,6 +1001,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         })
                       ],
                     ),
+                  ):Container(
+                    width: 80,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(3)),
+                        color: Colors.grey),
+                    child: Center(
+                        child: Text(
+                          "Add",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12),
+                        )),
                   ),
                 ],
                 mainAxisAlignment:

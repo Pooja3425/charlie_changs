@@ -540,6 +540,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       "address2":_controllerAddressLine2.text,
       "area_id": dropdownValue.areaid,
       "id":widget.data.id,
+      "pincode":_controllerPincode.text,
       "landmark":_controllerLandmark.text,
       "note":_controllerInstruction.text,
       "is_primary":""
