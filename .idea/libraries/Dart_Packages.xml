@@ -44,6 +44,13 @@
             </list>
           </value>
         </entry>
+        <entry key="carousel_pro">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_pro-1.0.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="charcode">
           <value>
             <list>
@@ -550,6 +557,7 @@
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/badges-1.1.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/bloc_pattern-2.5.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.0.0/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_pro-1.0.0/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.3/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.12/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-0.4.9/lib" />

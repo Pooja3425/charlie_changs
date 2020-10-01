@@ -38,6 +38,11 @@ class CartListBloc extends BlocBase {
     return provider.calculateTotal();
   }
 
+  double getRemoveValue()
+  {
+    return provider.removeValTotal() ;
+  }
+
   double getTax()
   {
     return provider.calculateTax();

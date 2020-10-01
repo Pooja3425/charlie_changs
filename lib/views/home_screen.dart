@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc_pattern/bloc_pattern.dart' as blocPattern;
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/blocs/category_bloc.dart';
@@ -27,6 +28,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/rendering.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
+import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -177,6 +179,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     final double itemWidth = getWidth(context) / 2;
     //print("grid aspect ${itemWidth/itemHeight}");
     final double statusBarHeight = MediaQuery.of(context).padding.top;
+
+    DateFormat dateFormat = new DateFormat.Hm();
+
+    DateTime currentTime = DateTime.now();
+    DateTime open = dateFormat.parse("10:30");
+    open = new DateTime(currentTime.year, currentTime.month, currentTime.day, open.hour, open.minute);
+
+    DateTime open1 = dateFormat.parse("19:00");
+    open1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, open1.hour, open1.minute);
+
+    DateTime close = dateFormat.parse("14:30");
+    close = new DateTime(currentTime.year, currentTime.month, currentTime.day, close.hour, close.minute);
+
+    DateTime close1 = dateFormat.parse("22:30");
+    close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, close1.hour, close1.minute);
     return SafeArea(
       child: Scaffold(
         floatingActionButton:Consumer<ScrollModel>(
@@ -189,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
           },
         ),
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(80),
+          preferredSize: Size.fromHeight(100),
           child: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
@@ -201,118 +218,142 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                   left: 20.0,
                   right: 20.0,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      width: getWidth(context)/2+30,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            status?"Pickup from":DELIVER_TO,
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: hint_text_color,
-                                fontFamily: "Manrope",
-                                fontWeight: FontWeight.w300),
-                          ),
-                          InkWell(
-                            onTap: (){
-                              if(status)
-                                {
-                                  //1 = pickup  0=delivery
-                                 // CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
-                                }
-                              else
-                                {
-                                 // CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
-                                }
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    child: Text(
-                                      status?pickupAddressName: deliveryAddressName,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.visible,
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: text_color,
-                                          fontFamily: "Manrope",
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Align(
-                                      alignment: Alignment.center,
-                                      child: Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.grey,
-                                      ))
-                                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          width: getWidth(context)/2+30,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                status?"Pickup from":DELIVER_TO,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: hint_text_color,
+                                    fontFamily: "Manrope",
+                                    fontWeight: FontWeight.w300),
                               ),
-                            ),
+                              InkWell(
+                                onTap: (){
+                                  if(status)
+                                    {
+                                      //1 = pickup  0=delivery
+                                     // CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
+                                    }
+                                  else
+                                    {
+                                     // CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
+                                    }
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text(
+                                          status?pickupAddressName: deliveryAddressName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.visible,
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: text_color,
+                                              fontFamily: "Manrope",
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Align(
+                                          alignment: Alignment.center,
+                                          child: Icon(
+                                            Icons.keyboard_arrow_down,
+                                            color: Colors.grey,
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          height: 35,
+                          width: 100,
+                          child: CustomSwitch(
+                            activeColor: switch_bg,
+                            activeText: "Pickup",
+                            inactiveText: "Delivery",
+                            inactiveColor: switch_bg,
+                            activeTextColor: fab_color,
+                            inactiveTextColor: fab_color,
+                            value: status,
+                            onChanged: (value) {
+                              print("VALUE : $value");
+                              setState(() {
+                                status = value;
+                                if(value==true)
+                                {
+                                  CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
+                                  CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
+                                  print("dataa T${bloc.getCartCount()}");
+                                  if(bloc.getCartCount()==0)
+                                    {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
+                                    }
+                                  else
+                                    {
+                                      showWarningDialog("p");
+                                    }
+                                }
+                                else
+                                {
+                                  CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
+                                  CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
+                                  print("dataa F ${bloc.getCartCount()}");
+                                  if(bloc.getCartCount() == 0)
+                                    {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
+                                    }
+                                  else
+                                    {
+                                      showWarningDialog("d");
+                                    }
+                                }
+
+                                getDeliveryAddress();
+                              });
+
+                            },
+                          ),
+                        )
+                      ],
                     ),
-                    Container(
-                      height: 35,
-                      width: 100,
-                      child: CustomSwitch(
-                        activeColor: switch_bg,
-                        activeText: "Pickup",
-                        inactiveText: "Delivery",
-                        inactiveColor: switch_bg,
-                        activeTextColor: fab_color,
-                        inactiveTextColor: fab_color,
-                        value: status,
-                        onChanged: (value) {
-                          print("VALUE : $value");
-                          setState(() {
-                            status = value;
-                            if(value==true)
-                            {
-                              CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
-                              CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
-                              print("dataa T${bloc.getCartCount()}");
-                              if(bloc.getCartCount()==0)
-                                {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
-                                }
-                              else
-                                {
-                                  showWarningDialog("p");
-                                }
-                            }
-                            else
-                            {
-                              CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
-                              CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
-                              print("dataa F ${bloc.getCartCount()}");
-                              if(bloc.getCartCount() == 0)
-                                {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
-                                }
-                              else
-                                {
-                                  showWarningDialog("d");
-                                }
-                            }
-
-                            getDeliveryAddress();
-                          });
-
-                        },
-                      ),
-                    )
+                    SizedBox(height: 10,),
+                    currentTime.isAfter(open) && currentTime.isBefore(close) || currentTime.isAfter(open1) && currentTime.isBefore(close1)?Container(
+                      height: 25,
+                      width: getWidth(context),
+                      child:Marquee(
+                        text: " OUTLET CLOSED NOW. | ORDER TIMINGS : 12:00 PM TO 02:30 PM AND 07:00 PM TO 10:30 PM",
+                        style: TextStyle(fontWeight: FontWeight.bold,color: fab_color),
+                        scrollAxis: Axis.horizontal,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        blankSpace: 20.0,
+                        velocity: 100.0,
+                        pauseAfterRound: Duration(seconds: 1),
+                        startPadding: 10.0,
+                        accelerationDuration: Duration(seconds: 1),
+                        accelerationCurve: Curves.linear,
+                        decelerationDuration: Duration(milliseconds: 500),
+                        decelerationCurve: Curves.easeOut,
+                      )
+                    ):Container()
                   ],
                 ),
               ),
@@ -343,7 +384,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
               width: getWidth(context),
               child: Column(
                 children: <Widget>[
-                  GFCarousel(
+                  /*GFCarousel(
                     scrollDirection: Axis.horizontal,
                     autoPlay: true,
                     //autoPlayAnimationDuration: Duration(seconds: 1),
@@ -384,6 +425,39 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         index;
                       });
                     },
+                  ),*/
+                  SizedBox(
+                      height: 280.0,
+                      width: getWidth(context),
+                      child: Carousel(
+                        images: sliderList.map(
+                              (url) {
+                            return InkWell(
+                              onTap: (){
+                                if(url.title.contains("referral") || url.title.contains("refer") )
+                                {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ReferScreen(),));
+                                }
+                              },
+                              child: Container(
+                                //margin: EdgeInsets.all(8.0),
+                                child: ClipRRect(
+                                  //borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                  child: Image.network(IMAGE_BASE_URL+url.imagePath,
+                                      fit: BoxFit.cover, width: getWidth(context)),
+                                ),
+                              ),
+                            );
+                          },
+                        ).toList(),
+                        dotSize: 4.0,
+                        dotSpacing: 15.0,
+                        dotColor: Colors.grey,
+                        autoplayDuration: Duration(seconds: 5),
+                        indicatorBgPadding: 5.0,
+                        dotBgColor: Colors.transparent,
+                        borderRadius: true,
+                      )
                   ),
                   Container(
                     width: getWidth(context),
@@ -932,7 +1006,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         fontSize: 12),
                   ),
 
-                  currentTime.isAfter(open) && currentTime.isBefore(close) || currentTime.isAfter(open1) && currentTime.isBefore(close1)?  mTempList[index].count ==0?InkWell(
+                  /*currentTime.isAfter(open) && currentTime.isBefore(close) || currentTime.isAfter(open1) && currentTime.isBefore(close1)?*/  mTempList[index].count ==0?InkWell(
                     onTap: (){
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                       addToCart(mTempList[index]);
@@ -1001,7 +1075,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         })
                       ],
                     ),
-                  ):Container(
+                  )/*:Container(
                     width: 80,
                     height: 30,
                     decoration: BoxDecoration(
@@ -1015,7 +1089,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                               color: Colors.black,
                               fontSize: 12),
                         )),
-                  ),
+                  ),*/
                 ],
                 mainAxisAlignment:
                 MainAxisAlignment.spaceBetween,
@@ -1035,9 +1109,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     DateTime currentTime = DateTime.now();
     DateTime open = dateFormat.parse("10:30");
     open = new DateTime(currentTime.year, currentTime.month, currentTime.day, open.hour, open.minute);
+
+    DateTime open1 = dateFormat.parse("19:00");
+    open1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, open1.hour, open1.minute);
+
     DateTime close = dateFormat.parse("14:30");
     close = new DateTime(currentTime.year, currentTime.month, currentTime.day, close.hour, close.minute);
-   // print("time $open");
+
+    DateTime close1 = dateFormat.parse("22:30");
+    close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, close1.hour, close1.minute);
 
     return List.generate(/*mMenuList.length*/mTempList.length, (index) {
       return Container(
@@ -1108,7 +1188,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                           color: icon_color,
                           fontSize: 12),
                     ),
-                    mTempList[index].count ==0?InkWell(
+                    currentTime.isAfter(open) && currentTime.isBefore(close) || currentTime.isAfter(open1) && currentTime.isBefore(close1)? mTempList[index].count ==0?InkWell(
                       onTap: (){
                         //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                         addToCart(mTempList[index]);
@@ -1116,13 +1196,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         //bloc.addToCart(index);
                         widget.callback1();
                         widget.func1('ADD');
-                        setState(() {
-                          //
-                          // mMenuList[index].count ++;
-                        });
-                        // _settingModalBottomSheet(context);
                       },
-                      child: currentTime.isBefore(open)||currentTime.isAfter(close)?Container(
+                      child: Container(
                         width: 80,
                         height: 30,
                         decoration: BoxDecoration(
@@ -1136,21 +1211,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                   color: Colors.white,
                                   fontSize: 12),
                             )),
-                      ):Container(
-                        width: 80,
-                        height: 30,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(3)),
-                            color: Colors.grey),
-                        child: Center(
-                            child: Text(
-                              "Add",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12),
-                            )),
-                      ),
+                      )
                     ):Container(
                       height: 30,
                       decoration: BoxDecoration(
@@ -1194,6 +1255,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                           })
                         ],
                       ),
+                    ):Container(
+                      width: 80,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(3)),
+                          color: Colors.grey),
+                      child: Center(
+                          child: Text(
+                            "Add",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12),
+                          )),
                     ),
                   ],
                   mainAxisAlignment:

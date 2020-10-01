@@ -38,6 +38,13 @@ class CartProvider {
     return totalCartValue;
   }
 
+  double removeValTotal() {
+    totalCartValue = 0;
+    totalCartValue = calculateTotal();
+    print("REMOVE TOTAL $totalCartValue");
+    return totalCartValue;
+  }
+
   double totalTaxValue;
   double calculateTax() {
     totalTaxValue = 0;

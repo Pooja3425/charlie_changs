@@ -238,23 +238,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                 borderRadius: BorderRadius.all(Radius.circular(3.3))),
                                             child: Row(
                                               children: <Widget>[
-                                                /*IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
-                                                  if(orderModelList[index].count!=1)
-                                                  {
-                                                    setState(() {
-                                                      orderModelList[index].count--;
-                                                    });
-                                                  }
-                                                }),*/
+
                                                 orderModelList[index].count >0? IconButton(icon: Icon(Icons.remove,color: button_color,size: 15,), onPressed: (){
                                                   if(orderModelList[index].count!=1)
                                                   {
-
-
                                                     setState(() {
-                                                      //bloc.removeFromList(orderModelList[index]);
-                                                      orderModelList[index].count--;
-                                                      print("SIZEEE ${bloc.getCartValue()}  $minCouponValue");
+                                                            print("REMOVE ITEM ${bloc.getCartValue()}  $minCouponValue");
+                                                            orderModelList[index].count--;
                                                       if(bloc.getCartValue()<minCouponValue)
                                                         {
                                                           discount =0;
@@ -263,8 +253,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                   }
                                                   else
                                                   {
-                                                    removeFromList(orderModelList[index]);
-                                                    print("SIZEE ${orderModelList.length}");
+                                                    orderModelList[index].count--;
+                                                    bloc.getRemoveValue();
+                                                    bloc.removeFromList(orderModelList[index]);
+                                                    bloc.getCartValue();
+                                                    print("SIZEE ${bloc.getRemoveValue()}  ${bloc.getCartValue()}");
                                                     if(orderModelList.length ==0)
                                                       {
                                                         setState(() {
@@ -1653,21 +1646,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
          }
        else
          {
-           Map<String, dynamic> jsonParsed = responseJson["select_points"];
+           if(responseJson["select_points"].toString()!="[]")
+             {
+               Map<String, dynamic> jsonParsed = responseJson["select_points"];
 
-           jsonParsed.keys.forEach((String key){
-             print("bbb $key");
-             _dates.add(key);
-           });
+               jsonParsed.keys.forEach((String key){
+                 print("bbb $key");
+                 _dates.add(key);
+               });
 
-           for(int i=0; i<_dates.length; i++){
-             print(jsonParsed[_dates[i]]);
+               for(int i=0; i<_dates.length; i++){
+                 print(jsonParsed[_dates[i]]);
 
-             final PointsDropdown points = PointsDropdown(key: _dates[i],value:jsonParsed[_dates[i]] );
-             setState(() {
-               loyaltyPointsList.add(points);
-             });
-           }
+                 final PointsDropdown points = PointsDropdown(key: _dates[i],value:jsonParsed[_dates[i]] );
+                 setState(() {
+                   loyaltyPointsList.add(points);
+                 });
+               }
+             }
+
          }
 
 
