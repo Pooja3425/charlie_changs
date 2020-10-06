@@ -63,6 +63,10 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
+        <activity
+            android:name="com.flutter_webview_plugin.WebviewActivity"
+            android:parentActivityName="com.brandzgarage.charliechang.MainActivity" />
+
         <service android:name="io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

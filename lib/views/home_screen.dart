@@ -104,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     _IsSearching=false;
     sliderList.add(slider.Data(imagePath: ""));
   //  status= false;
+
     getDeliveryAddress();
     if(_isInternetAvailable)
       {
@@ -180,20 +181,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     //print("grid aspect ${itemWidth/itemHeight}");
     final double statusBarHeight = MediaQuery.of(context).padding.top;
 
-    DateFormat dateFormat = new DateFormat.Hm();
-
-    DateTime currentTime = DateTime.now();
-    DateTime open = dateFormat.parse("10:30");
-    open = new DateTime(currentTime.year, currentTime.month, currentTime.day, open.hour, open.minute);
-
-    DateTime open1 = dateFormat.parse("19:00");
-    open1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, open1.hour, open1.minute);
-
-    DateTime close = dateFormat.parse("14:30");
-    close = new DateTime(currentTime.year, currentTime.month, currentTime.day, close.hour, close.minute);
-
-    DateTime close1 = dateFormat.parse("22:30");
-    close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, close1.hour, close1.minute);
     return SafeArea(
       child: Scaffold(
         floatingActionButton:Consumer<ScrollModel>(
@@ -206,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
           },
         ),
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
+          preferredSize: isRestaurantOpen? Size.fromHeight(70):Size.fromHeight(90),
           child: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
@@ -335,25 +322,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         )
                       ],
                     ),
-                    SizedBox(height: 10,),
-                    currentTime.isAfter(open) && currentTime.isBefore(close) || currentTime.isAfter(open1) && currentTime.isBefore(close1)?Container(
-                      height: 25,
-                      width: getWidth(context),
-                      child:Marquee(
-                        text: " OUTLET CLOSED NOW. | ORDER TIMINGS : 12:00 PM TO 02:30 PM AND 07:00 PM TO 10:30 PM",
-                        style: TextStyle(fontWeight: FontWeight.bold,color: fab_color),
-                        scrollAxis: Axis.horizontal,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        blankSpace: 20.0,
-                        velocity: 100.0,
-                        pauseAfterRound: Duration(seconds: 1),
-                        startPadding: 10.0,
-                        accelerationDuration: Duration(seconds: 1),
-                        accelerationCurve: Curves.linear,
-                        decelerationDuration: Duration(milliseconds: 500),
-                        decelerationCurve: Curves.easeOut,
-                      )
-                    ):Container()
+                   isRestaurantOpen? SizedBox(height: 1,):SizedBox(height: 10,),
+                    isRestaurantOpen?
+                    Container():Container(
+                        height: 25,
+                        width: getWidth(context),
+                        child:Marquee(
+                          text: "OUTLET CLOSED NOW. | ORDER TIMINGS : 12:00 PM TO 02:30 PM AND 07:00 PM TO 10:30 PM",
+                          style: TextStyle(fontWeight: FontWeight.bold,color: fab_color),
+                          scrollAxis: Axis.horizontal,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          blankSpace: 20.0,
+                          velocity: 100.0,
+                          pauseAfterRound: Duration(seconds: 1),
+                          startPadding: 10.0,
+                          accelerationDuration: Duration(seconds: 1),
+                          accelerationCurve: Curves.linear,
+                          decelerationDuration: Duration(milliseconds: 500),
+                          decelerationCurve: Curves.easeOut,
+                        )
+                    )
                   ],
                 ),
               ),
@@ -934,20 +922,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
              mTempList.add(mMenuList[i]);
            }
       }
-    DateFormat dateFormat = new DateFormat.Hm();
 
-    DateTime currentTime = DateTime.now();
-    DateTime open = dateFormat.parse("10:30");
-    open = new DateTime(currentTime.year, currentTime.month, currentTime.day, open.hour, open.minute);
-
-    DateTime open1 = dateFormat.parse("19:00");
-    open1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, open1.hour, open1.minute);
-
-    DateTime close = dateFormat.parse("14:30");
-    close = new DateTime(currentTime.year, currentTime.month, currentTime.day, close.hour, close.minute);
-
-    DateTime close1 = dateFormat.parse("22:30");
-    close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, close1.hour, close1.minute);
    /* if((currentTime.isAfter(open) && currentTime.isBefore(close)) || (currentTime.isAfter(open1) && currentTime.isBefore(close1))) {
       print("onn");
     }
@@ -1006,7 +981,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         fontSize: 12),
                   ),
 
-                  /*currentTime.isAfter(open) && currentTime.isBefore(close) || currentTime.isAfter(open1) && currentTime.isBefore(close1)?*/  mTempList[index].count ==0?InkWell(
+                  /*isRestaurantOpen?*/  mTempList[index].count ==0?InkWell(
                     onTap: (){
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                       addToCart(mTempList[index]);
@@ -1104,21 +1079,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
   List<Widget> buildSearchList(List<Menu> mTempList)
   {
-    DateFormat dateFormat = new DateFormat.Hm();
-
-    DateTime currentTime = DateTime.now();
-    DateTime open = dateFormat.parse("10:30");
-    open = new DateTime(currentTime.year, currentTime.month, currentTime.day, open.hour, open.minute);
-
-    DateTime open1 = dateFormat.parse("19:00");
-    open1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, open1.hour, open1.minute);
-
-    DateTime close = dateFormat.parse("14:30");
-    close = new DateTime(currentTime.year, currentTime.month, currentTime.day, close.hour, close.minute);
-
-    DateTime close1 = dateFormat.parse("22:30");
-    close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, close1.hour, close1.minute);
-
     return List.generate(/*mMenuList.length*/mTempList.length, (index) {
       return Container(
         child: Center(
@@ -1132,20 +1092,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                     aspectRatio: 7/6,
                     child: InkWell(
                       onTap: (){
-                        /*if(isStretched)
-                          {
-                            setState(() {
-                              isStretched = false;
-                            });
-                          }
-                        else
-                          {
-                            setState(() {
-                              isStretched = true;
-                            });
-                          }
-                        _runExpandCheck();
-                        print("vall $isStretched");*/
+
                       },
                       child: Image.network(
                         IMAGE_BASE_URL+mTempList[index].image,
@@ -1188,12 +1135,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                           color: icon_color,
                           fontSize: 12),
                     ),
-                    currentTime.isAfter(open) && currentTime.isBefore(close) || currentTime.isAfter(open1) && currentTime.isBefore(close1)? mTempList[index].count ==0?InkWell(
+                    isRestaurantOpen? mTempList[index].count ==0?InkWell(
                       onTap: (){
                         //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                         addToCart(mTempList[index]);
-
-                        //bloc.addToCart(index);
                         widget.callback1();
                         widget.func1('ADD');
                       },
@@ -1376,11 +1321,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
       mCategoryRespose = onData.data;
       if(onData.status == Status.LOADING)
       {
+        CommonMethods.showLoaderDialog(context,onData.message);
         //CommonMethods.displayProgressDialog(onData.message,context);
       }
       else if(onData.status == Status.COMPLETED)
       {
-        //CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         if(mounted)
           {
             setState(() {
@@ -1400,7 +1346,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
       }
       else if(onData.status == Status.ERROR)
       {
-        // CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(onData.message);
       }
     });
@@ -1418,22 +1364,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
       mMenuResponse = onData.data;
       if(onData.status == Status.LOADING)
       {
-        //CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
       }
       else if(onData.status == Status.COMPLETED)
       {
-        //CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         setState(() {
           isMenuCalled= true;
           mMenuList = mMenuResponse.menu;
-
-
+          setRestaurantTiming();
         });
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
       }
       else if(onData.status == Status.ERROR)
       {
-        // CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(onData.message);
       }
     });
@@ -1553,6 +1498,41 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
          }
      );
    }
+
+   bool isRestaurantOpen = true;
+  bool setRestaurantTiming() {
+    DateFormat dateFormat = new DateFormat.Hms();
+    print("OPEN ${mMenuResponse.timings[0].mcloseTime}");
+    DateTime currentTime = DateTime.now();
+    DateTime open = dateFormat.parse(mMenuResponse.timings[0].mstartTime.toString());
+    open = new DateTime(currentTime.year, currentTime.month, currentTime.day, open.hour, open.minute);
+
+    DateTime open1 = dateFormat.parse(mMenuResponse.timings[0].estartTime.toString());
+    open1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, open1.hour, open1.minute);
+
+    DateTime close = dateFormat.parse(mMenuResponse.timings[0].mcloseTime.toString());
+    close = new DateTime(currentTime.year, currentTime.month, currentTime.day, close.hour, close.minute);
+
+    DateTime close1 = dateFormat.parse(mMenuResponse.timings[0].ecloseTime.toString());
+    close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day, close1.hour, close1.minute);
+
+    if(currentTime.isAfter(open) && currentTime.isBefore(close) || currentTime.isAfter(open1) && currentTime.isBefore(close1))
+      {
+        print("IFF True");
+        setState(() {
+          isRestaurantOpen = true;
+        });
+        return true;
+      }
+    else
+      {
+        print("IFF False");
+        setState(() {
+          isRestaurantOpen = false;
+        });
+        return false;
+      }
+  }
 }
 
 

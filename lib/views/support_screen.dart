@@ -205,7 +205,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                   SizedBox(height: 10,),
                                   Text("House Number 844, After Gauri Petrol Pump, Porvorim, Goa 403051",style: TextStyle(color: icon_color),),
                                   SizedBox(height: 10,),
-                                  Text("+91 - 8308800820  |  info@charliechangs.in",style: TextStyle(color: notification_title_color),),
+                                  Text("+91 - 8308800833  |  info@charliechangs.in",style: TextStyle(color: notification_title_color),),
                                   SizedBox(height: 10,),
                                 ],
                               ),
@@ -283,6 +283,7 @@ class _SupportScreenState extends State<SupportScreen> {
        }
        else if(onData.status == Status.COMPLETED)
        {
+         _controllerSupport.clear();
          CommonMethods.dismissDialog(context);
          CommonMethods.showShortToast(mSupportResponse.msg);
          //navigationPage();

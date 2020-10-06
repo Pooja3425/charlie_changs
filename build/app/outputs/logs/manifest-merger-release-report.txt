@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-48:12
-INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-48:12
-INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-48:12
-INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-48:12
+ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-51:12
+INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-51:12
+INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-51:12
+INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-51:12
 MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:2:1-20:12
 MERGED from [com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.firebase:firebase-analytics:17.5.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/5336b43c636cc10e51396d735065facd/firebase-analytics-17.5.0/AndroidManifest.xml:2:1-9:12
@@ -64,20 +64,20 @@ MERGED from [androidx.documentfile:documentfile:1.0.0] /home/asmss102/.gradle/ca
 MERGED from [androidx.print:print:1.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/54892eee929906e169d64ad24cacecaf/print-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/770f717051af90386c0a172c9ad2275d/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/6495dbd7f5fd0643b0d70ffa2e3be2d3/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
-INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-48:12
-INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-48:12
-INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-48:12
+INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-51:12
+INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-51:12
+INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-51:12
 	package
 		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:2:5-44
 		INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml
 		INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-48:12
+		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-51:12
 		INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-48:12
+		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:1-51:12
 		INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:1:11-69
@@ -122,7 +122,7 @@ MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.5.0] /h
 	android:name
 		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:11:22-65
 application
-ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:12:5-47:19
+ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:12:5-50:19
 MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:7:5-18:19
 MERGED from [:firebase_messaging] /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:7:5-18:19
 MERGED from [com.google.firebase:firebase-messaging:20.1.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/a21f84ab78ead390f87407de2c38ead7/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:22:5-42:19
@@ -235,6 +235,12 @@ ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charli
 		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:45:13-30
 	android:name
 		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:44:13-44
+activity#com.flutter_webview_plugin.WebviewActivity
+ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:47:9-48:57
+	android:parentActivityName
+		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:48:13-55
+	android:name
+		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:47:19-76
 uses-sdk
 INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml

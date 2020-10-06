@@ -116,7 +116,7 @@ class _BottomScreenState extends State<BottomScreen> {
           child: new PageView(
            // physics: NeverScrollableScrollPhysics(),
             children: [
-              new HomeScreen(
+              new  HomeScreen(
                 callback1: () {
                   showBadge = true;
                   setState(() {});

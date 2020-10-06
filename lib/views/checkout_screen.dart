@@ -60,6 +60,8 @@ final Set<JavascriptChannel> jsChannels = [
 
 
 class PayScreen extends StatelessWidget {
+  final flutterWebViewPlugin = FlutterWebviewPlugin();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -75,7 +77,7 @@ class PayScreen extends StatelessWidget {
                 javascriptChannels: jsChannels,
                 mediaPlaybackRequiresUserGesture: false,
                 appBar: AppBar(
-                  title: const Text('Widget WebView'),
+                  title: const Text(''),
                 ),
                 withZoom: false,
                 withLocalStorage: true,
@@ -87,7 +89,6 @@ class PayScreen extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   )
                 ),
-
               ),
             );
           },
@@ -144,18 +145,28 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   List _dates = [];
   bool isEmpty = false;
   bool isPaymentFail = false;
+  bool isSuccessApiCalled = false;
   bool isPointsCalled=true;
   @override
   void initState() {
 
+    // Add a listener to on destroy WebView, so you can make came actions.
+    _onDestroy = flutterWebviewPlugin.onDestroy.listen((_) {
+      if (mounted) {
+        // Actions like show a info toast.
+      }
+    });
       getOrderType();
       print("CART COUNT ${bloc.getCartValue()}");
     _connectivity = new Connectivity();
     _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
+
       flutterWebviewPlugin.onUrlChanged.listen((String url) {
+        print("URLLL $url");
         if (mounted) {
           if (url.contains(
               'https://charliechangs.in/thankyou')) {
+
             Uri uri = Uri.parse(url);
 //Take the payment_id parameter of the url.
             String paymentRequestId = uri.queryParameters['payment_id'];
@@ -188,12 +199,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     super.initState();
   }
   int total=0;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+// On destroy stream
+  StreamSubscription _onDestroy;
+  @override
+  void dispose() {
+    _onDestroy.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: isWebviewopen ? exitPayDialog:goBack,
       child: SafeArea(
         child: Scaffold(
+          key: _scaffoldKey,
           appBar: isEmpty||isPaymentFail?PreferredSize(child: Container(height: 0,), preferredSize: Size.fromHeight(0)):pickup_delivery =="1"?deliveryAppBar():pickupAppBar(),
           bottomNavigationBar: isEmpty||isPaymentFail?Container(height: 0,):bottomUI(),
           body: SingleChildScrollView(
@@ -253,24 +273,29 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                   }
                                                   else
                                                   {
-                                                    orderModelList[index].count--;
-                                                    bloc.getRemoveValue();
-                                                    bloc.removeFromList(orderModelList[index]);
-                                                    bloc.getCartValue();
+                                                     setState(() {
+                                                       bloc.removeFromList(orderModelList[index]);
+                                                       if(orderModelList.length ==0)
+                                                       {
+                                                         setState(() {
+                                                           isEmpty = true;
+                                                         });
+                                                       }
+                                                     });
                                                     print("SIZEE ${bloc.getRemoveValue()}  ${bloc.getCartValue()}");
-                                                    if(orderModelList.length ==0)
-                                                      {
-                                                        setState(() {
-                                                          isEmpty = true;
-                                                        });
-                                                       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(initPage: 2,),));
-                                                      }
+
                                                   }
                                                 }):Container(),
                                                 Text("${orderModelList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
                                                 IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
                                                   setState(() {
                                                     orderModelList[index].count++;
+                                                    if(isCouponApplied)
+                                                      {
+                                                        discount=0;
+                                                        discountAmount="";
+                                                        CommonMethods.showShortToast("Coupon has been removed please apply cooupon again");
+                                                      }
                                                     // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
                                                   });
                                                 })
@@ -416,29 +441,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
   Widget specialOffersUI()
   {
-    /*return ListView.builder(
-        shrinkWrap: true,
-        itemCount: 2,
-        itemBuilder: ((context,index){
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(30.0,5,30,5),
-        child: Container(
-          width: getWidth(context),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text("Chicken Soup"),
-              Container(width: 65,height: 30,
-              decoration: BoxDecoration(
-                color: fab_color,
-                borderRadius: BorderRadius.all(Radius.circular(3))
-              ),
-              child: Center(child: Text("Add",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),)),)
-            ],
-          ),
-        ),
-      );
-    }));*/
     return Container(child: Padding(
       padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
       child: Text("No offers available. Continue ordering to be eligible for surprise CC offers.",style: TextStyle(color: fab_color),),
@@ -1030,6 +1032,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   callSuccessOrderAPI(String orderCode) async{
 
+    setState(() {
+      isSuccessApiCalled = true;
+    });
     final body = jsonEncode({
       "ordercode":orderCode,
       });
@@ -1157,12 +1162,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   _checkPaymentStatus(String id) async {
     var response = await http.get(
-        Uri.encodeFull("https://www.instamojo.com/api/1.1/payments/$id/"),
+        //Uri.encodeFull("https://www.instamojo.com/api/1.1/payments/$id/"),
+        Uri.encodeFull("https://test.instamojo.com/api/1.1/payments/$id/"),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded",
-          "X-Api-Key": "dfe6f3c4b461cecd7370e4d71212b450",
-          "X-Auth-Token": "tc38184743fe1b1978708960ed15ec6de"
+          //original key
+          /*"X-Api-Key": "dfe6f3c4b461cecd7370e4d71212b450",
+          "X-Auth-Token": "tc38184743fe1b1978708960ed15ec6de"*/
+          // test key
+          "X-Api-Key": "test_ba7b1358c28a4a61f1687270c6c",
+          "X-Auth-Token": "test_4552674a5d9717da7e586441905"
         });
     var realResponse = json.decode(response.body);
     print("SUCC $realResponse");
@@ -1170,8 +1180,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       if (realResponse["payment"]['status'] == 'Credit') {
 //payment is successful.
         flutterWebviewPlugin.close();
-
-        callSuccessOrderAPI(ordercode);
+        if(!isSuccessApiCalled)
+          {
+            callSuccessOrderAPI(ordercode);
+          }
       } else {
         flutterWebviewPlugin.close();
         setState(() {
@@ -1294,8 +1306,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         print("${mOnlinePaymentResponse.paymentUrl}");
 
         //Let's open the url in webview.
-        flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl,
-            userAgent: kAndroidUserAgent);
+        flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl/*"https://test.instamojo.com/@dipak_4d8a6/bf25a6b0e91146479d71b5b002d1ab5d"*/,
+            /*userAgent: kAndroidUserAgent*/);
           setState(() {
             ordercode= mOnlinePaymentResponse.ordercode;
             isWebviewopen = true;
@@ -1337,6 +1349,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return true;
   }
   int minCouponValue=0;
+  bool isCouponApplied = false;
   ApplyCouponBloc mApplyCouponBloc;
   ApplyCouponReponse mApplyCouponReponse;
   callCouponAPI() async{
@@ -1364,6 +1377,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         if(mApplyCouponReponse.error=="1")
           {
             setState(() {
+              FocusScope.of(context).unfocus();
+              controllerCoupon.clear();
+              isCouponApplied = true;
               discount = 0;
               discountAmount ="Rs. 0 discount applied";
             });
@@ -1371,6 +1387,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         else
           {
             setState(() {
+              FocusScope.of(context).unfocus();
+              controllerCoupon.clear();
               minCouponValue = int.parse(mApplyCouponReponse.min_cart_val);
               discount = mApplyCouponReponse.discount.toDouble() ;
               discountAmount ="Rs. ${mApplyCouponReponse.discount} discount applied";
@@ -1756,7 +1774,4 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
     );
   }
-
-
-
 }
