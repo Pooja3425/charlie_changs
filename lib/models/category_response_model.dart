@@ -1,5 +1,5 @@
 class CategoryRespose {
-  String status;
+  int status;
   List<Data> data;
 
   CategoryRespose({this.status, this.data});
@@ -25,15 +25,15 @@ class CategoryRespose {
 }
 
 class Data {
-  String cid;
+  String sid;
   String name;
   String image;
   String status;
 
-  Data({this.cid, this.name, this.image, this.status});
+  Data({this.sid, this.name, this.image, this.status});
 
   Data.fromJson(Map<String, dynamic> json) {
-    cid = json['cid'];
+    sid = json['sid'];
     name = json['name'];
     image = json['image'];
     status = json['status'];
@@ -41,7 +41,7 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cid'] = this.cid;
+    data['sid'] = this.sid;
     data['name'] = this.name;
     data['image'] = this.image;
     data['status'] = this.status;

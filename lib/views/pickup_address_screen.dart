@@ -188,7 +188,6 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
       MaterialPageRoute(builder: (context) => BottomScreen()),
     );
   }
-
   Widget appBar(BuildContext context,String title)
   {
     return Container(

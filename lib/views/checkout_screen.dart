@@ -22,6 +22,7 @@ import 'package:charliechang/models/menu_response_model.dart';
 import 'package:charliechang/models/online_payment_response.dart';
 import 'package:charliechang/models/order_model.dart';
 import 'package:charliechang/models/redeem_otp_response.dart';
+import 'package:charliechang/models/special_offers_model.dart';
 import 'package:charliechang/networking/CustomException.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/utils/color_constants.dart';
@@ -68,7 +69,7 @@ class PayScreen extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/': (_) => new CheckoutScreen(),
+          '/': (_) => const CheckoutScreen(),
           '/widget': (_) {
             return SafeArea(
               child: WebviewScaffold(
@@ -98,6 +99,7 @@ class PayScreen extends StatelessWidget {
   }
 }
 class CheckoutScreen extends StatefulWidget {
+  const CheckoutScreen();
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
 }
@@ -114,6 +116,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   final controllerCoupon = TextEditingController();
   final controllerRedeem = TextEditingController();
+  final controllerComment = TextEditingController();
 
   void onConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
@@ -143,6 +146,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   };
   String reward_id_selected="";
   List _dates = [];
+  List _special_offers = [];
   bool isEmpty = false;
   bool isPaymentFail = false;
   bool isSuccessApiCalled = false;
@@ -265,11 +269,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                     setState(() {
                                                             print("REMOVE ITEM ${bloc.getCartValue()}  $minCouponValue");
                                                             orderModelList[index].count--;
-                                                      if(bloc.getCartValue()<minCouponValue)
-                                                        {
-                                                          discount =0;
-                                                        }
                                                     });
+                                                    if(bloc.getCartValue()<minCouponValue || isCouponApplied)
+                                                    {
+                                                      setState(() {
+                                                        isCouponApplied = false;
+                                                        discount = 0;
+                                                        discountAmount ="";
+                                                        couponCode="";
+                                                      });
+                                                      CommonMethods.showShortToast("Coupon has been removed please apply cooupon again");
+                                                    }
                                                   }
                                                   else
                                                   {
@@ -290,14 +300,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                 IconButton(icon: Icon(Icons.add,color: button_color,size: 15,), onPressed: (){
                                                   setState(() {
                                                     orderModelList[index].count++;
-                                                    if(isCouponApplied)
-                                                      {
-                                                        discount=0;
-                                                        discountAmount="";
-                                                        CommonMethods.showShortToast("Coupon has been removed please apply cooupon again");
-                                                      }
-                                                    // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
+                                                     // orderModelList[index].price = orderModelList[index].price*orderModelList[index].count;
                                                   });
+                                                  if(isCouponApplied)
+                                                  {
+                                                    setState(() {
+                                                      isCouponApplied = false;
+                                                      discount=0;
+                                                      discountAmount="";
+                                                      couponCode="";
+                                                    });
+                                                    CommonMethods.showShortToast("Coupon has been removed please apply cooupon again");
+                                                  }
                                                 })
                                               ],
                                             ),
@@ -321,7 +335,40 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                     },
                   ),
-                  SizedBox(height: 10,),
+                  //SizedBox(height: 10,),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: specialOfferCartList.length,
+                      itemBuilder: (context,index){
+                      return Padding(
+                        padding: const EdgeInsets.only(left:30.0,right: 30),
+                        child: Container(
+                          width: getWidth(context),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20,bottom: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  child: Text("${specialOfferCartList[index].name}",style: TextStyle(fontSize: 12,color: notification_title_color)),
+                                  width: getWidth(context)/2-70,
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 100,
+                                  color: Colors.transparent,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right:20.0),
+                                  child: Text("Rs ${0}",style: TextStyle(fontSize: 12,color: notification_title_color)),
+                                )
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                  }),
                   Padding(
                     padding: const EdgeInsets.only(left:30.0,right: 30.0),
                     child: Column(
@@ -439,12 +486,61 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
     );
   }
+  List<SpecialOffers> specialOfferCartList=new List();
   Widget specialOffersUI()
   {
-    return Container(child: Padding(
+    return specialOffersList.length==0?Container(child: Padding(
       padding: const EdgeInsets.fromLTRB(30.0,20,30,20),
       child: Text("No offers available. Continue ordering to be eligible for surprise CC offers.",style: TextStyle(color: fab_color),),
-    ),);
+    ),):ListView.builder(
+        shrinkWrap: true,
+        itemCount: specialOffersList.length,
+        itemBuilder: (context,index){
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height:35,
+          child: Padding(
+            padding: const EdgeInsets.only(left:30.0,right: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  specialOffersList[index].name,
+                  maxLines: 2,
+                  style: TextStyle(fontSize: 12,color: icon_color),
+                ),
+                specialOffersList[index].isApplied?FlatButton(
+                  onPressed: (){
+                    setState(() {
+                      specialOfferCartList.clear();
+                      specialOffersList[index].isApplied=false;
+                    });
+                  },
+                  child: Text("Added",style: TextStyle(color: Colors.black),),
+                  disabledColor: Colors.black26,color: Colors.black26,):FlatButton(
+                  onPressed: (){
+                    if(specialOfferCartList.length==0)
+                      {
+                        setState(() {
+                          specialOfferCartList.add(specialOffersList[index]);
+                          specialOffersList[index].isApplied=true;
+                        });
+                      }
+                    else
+                      {
+                        CommonMethods.showShortToast("You can avail only one item for free please remove previous item");
+                      }
+
+                  },
+                  child: Text("Add",style: TextStyle(color: Colors.white),),
+                  disabledColor: fab_color,color: fab_color,)
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
   Widget redeemUI()
   {
@@ -795,8 +891,47 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   PointsDropdown dropdownReedem;
   Widget deliveryUI(){
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-
+        CommonMethods().thickHorizontalLine(context),
+        SizedBox(height: 5,),
+        Padding(
+          padding: const EdgeInsets.only(left:20.0,right: 20),
+          child: Text("Delivery Instructions",style: TextStyle(fontSize: 13),),
+        ),
+        SizedBox(height: 5,),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20.0,10.0,20.0,10.0),
+          child: Container(
+            width: getWidth(context),
+            height: 40,
+            decoration: BoxDecoration(
+                border: Border.all(color: input_border_color,width: 1.0),
+                borderRadius: BorderRadius.all(Radius.circular(3.3))
+            ),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 8.0),
+                child: TextField(
+                  keyboardType: TextInputType.text,
+                  maxLength: 10,
+                  textInputAction: TextInputAction.done,
+                  controller: controllerComment,
+                  style: TextStyle(
+                    fontSize: 12,
+                    // color: heading_color,
+                      fontWeight: FontWeight.w300),
+                  decoration: InputDecoration(
+                      hintText: "Instructions (optional)",
+                      hintStyle: TextStyle(fontSize: 12),
+                      //contentPadding: EdgeInsets.only(bottom: 3),
+                      border: InputBorder.none,
+                      counterText: ''),
+                ),
+              ),
+            ),
+          ),
+        ),
         CommonMethods().thickHorizontalLine(context),
         Container(
           width: getWidth(context),
@@ -986,11 +1121,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
         final body = jsonEncode({"del_area":pickup_delivery =="1"?preferences.getString(DELIVERY_ADDRESS_HASH):preferences.getString(PICKUP_ADDRESS_HASH),
           "deliver_pickup":preferences.getString(DELIVERY_PICKUP),
-          "coupon_code":controllerCoupon.text,
+          "coupon_code":couponCode,
           "payment_mode":payment_mode,
           "is_mobile":"0",
           "reward_id_selected":reward_id_selected,
-          "notes":"do not proceed test order from development team",
+          "notes":"${controllerComment.text}",
+          "net_payable":"${bloc.getCartValue()+bloc.getTax()-discount}",
           "items":json.decode(orderItems)});
 
 
@@ -1014,6 +1150,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         else
           {
             bloc.clearCart();
+
             print("MON ${mAddOrderResponse.rest_bobile}");
             navigationPage(mAddOrderResponse.ordercode,mAddOrderResponse.rest_bobile);
           }
@@ -1030,13 +1167,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
 
-  callSuccessOrderAPI(String orderCode) async{
+  callSuccessOrderAPI(String orderCode, String status, String payment_id) async{
 
     setState(() {
       isSuccessApiCalled = true;
     });
     final body = jsonEncode({
       "ordercode":orderCode,
+      "status":status,
+      "payment_id":payment_id
       });
 
     String data = body;
@@ -1057,6 +1196,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         }
         else
         {
+          setState(() {
+            isWebviewopen = false;
+          });
           bloc.clearCart();
           print("MON ${mAddOrderResponse.rest_bobile}");
           navigationPage(mAddOrderResponse.ordercode,mAddOrderResponse.rest_bobile);
@@ -1068,7 +1210,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         String msg = jsonDecode(onData.message.replaceAll("Invalid Request:", "")).toString().split(":")[1].split(",")[0];
         //CommonMethods.showShortToast(msg);
         showWarningDialog(msg);
-
       }
     });
   }
@@ -1182,11 +1323,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         flutterWebviewPlugin.close();
         if(!isSuccessApiCalled)
           {
-            callSuccessOrderAPI(ordercode);
+
+            String status = realResponse["payment"]['status'];
+            String payment_id = realResponse["payment"]['payment_id'];
+
+            callSuccessOrderAPI(ordercode,status,payment_id);
           }
       } else {
         flutterWebviewPlugin.close();
         setState(() {
+          isWebviewopen= false;
           isPaymentFail = true;
         });
         //Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentFailScreen(),));
@@ -1256,7 +1402,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   callOnlinePaymentAPI() async
   {
     print("Online");
-    var resBody = {};
+    /*var resBody = {};
     var items = [];
     for(int i=0;i<orderModelList.length;i++)
     {
@@ -1275,19 +1421,38 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         resBody["name"]=orderModelList[i].name;
         items.add(resBody);
       }
+    }*/
+
+    var items = [];
+    for(int i=0;i<orderModelList.length;i++) {
+      var resBody = {};
+      if (orderModelList[i].count > 1) {
+        print("COUNT ${orderModelList[i].count}");
+        for (int j = 0; j < orderModelList[i].count; j++) {
+          print("vv${orderModelList[i].name }");
+          resBody["hash"] = orderModelList[i].hash;
+          resBody["name"] = orderModelList[i].name;
+          items.add(resBody);
+        }
+      }
+      else if (orderModelList[i].count == 1) {
+        print("EEE ${orderModelList[i].name}");
+        resBody["hash"] = orderModelList[i].hash;
+        resBody["name"] = orderModelList[i].name;
+        items.add(resBody);
+      }
     }
-
-
     String orderItems = json.encode(items);
-
+    print("ONLINE $orderItems");
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final body = jsonEncode({"del_area":pickup_delivery =="1"?preferences.getString(DELIVERY_ADDRESS_HASH):preferences.getString(PICKUP_ADDRESS_HASH),
       "deliver_pickup":preferences.getString(DELIVERY_PICKUP),
-      "coupon_code":"",
+      "coupon_code":couponCode,
       "payment_mode":payment_mode,
       "reward_id_selected":reward_id_selected,
-      "notes":"do not proceed test order from development team",
+      "notes":"${controllerComment.text}",
       "is_mobile":"0",
+      "net_payable":"${bloc.getCartValue()+bloc.getTax()-discount}",
       "items":json.decode(orderItems)});
 
     mOnlinePaymentBloc=OnlinePaymentBloc(body);
@@ -1352,6 +1517,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   bool isCouponApplied = false;
   ApplyCouponBloc mApplyCouponBloc;
   ApplyCouponReponse mApplyCouponReponse;
+  String couponCode;
   callCouponAPI() async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final body = jsonEncode(
@@ -1377,9 +1543,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         if(mApplyCouponReponse.error=="1")
           {
             setState(() {
+              couponCode = controllerCoupon.text;
               FocusScope.of(context).unfocus();
               controllerCoupon.clear();
-              isCouponApplied = true;
+              isCouponApplied = false;
+              couponCode="";
               discount = 0;
               discountAmount ="Rs. 0 discount applied";
             });
@@ -1387,6 +1555,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         else
           {
             setState(() {
+              isCouponApplied = true;
+              couponCode = controllerCoupon.text;
               FocusScope.of(context).unfocus();
               controllerCoupon.clear();
               minCouponValue = int.parse(mApplyCouponReponse.min_cart_val);
@@ -1634,6 +1804,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   http.Response response;
   List<PointsDropdown> loyaltyPointsList =new List();
+  List<SpecialOffers> specialOffersList =new List();
   void callDropdownAPI() async {
 
     final String _baseUrl = "https://charliechangs.in/api/";
@@ -1647,7 +1818,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     };
     final body = jsonEncode(
         {
-          "number":prefs.getString(PHONE_NUMBER)/*"8554063733"*/,
+          "number":/*prefs.getString(PHONE_NUMBER)*//*"8554063733"*/"9850570777",
         });
 
     print('Parms MOBILE ${prefs.getString(PHONE_NUMBER)}');
@@ -1682,10 +1853,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                  });
                }
              }
+           if(responseJson["special_offer"]!="[]")
+             {
+               Map<String, dynamic> jsonParsed = responseJson["special_offer"];
+
+               jsonParsed.keys.forEach((String key){
+                 print("bbb $key ${_special_offers.length}");
+                 _special_offers.add(key);
+               });
+
+               for(int i=0; i<_special_offers.length; i++){
+                 print(jsonParsed[_special_offers[i]]);
+
+                 final SpecialOffers points = SpecialOffers(name: jsonParsed[_special_offers[i]].toString()
+                     ,price: jsonParsed[_special_offers[i]].toString(),id: jsonParsed[_special_offers[i]].toString(),isApplied: false );
+                 if(i % 3==0)
+                   {
+                     setState(() {
+                       specialOffersList.add(points);
+                     });
+                   }
+               }
+             }
 
          }
-
-
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }

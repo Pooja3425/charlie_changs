@@ -488,8 +488,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                       child: Center(
                                         child: Image.network(
                                           IMAGE_BASE_URL+mCategoryList[index].image,
-                                          width: 30,
-                                          height: 30,
+                                          width: 35,
+                                          height: 35,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -916,7 +916,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     List<Menu> mTempList =new List();
     for(int i=0;i<mMenuList.length;i++)
       {
-         if(mMenuList[i].category == cat)
+         if(mMenuList[i].superCategory.contains(cat))
            {
              //print("CCC ${category}");
              mTempList.add(mMenuList[i]);
@@ -1335,7 +1335,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
               category = "";
               if(hashKey !=null)
               {
-
                 getMenuAPI();
               }
 
