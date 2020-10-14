@@ -24,7 +24,7 @@ class CategoryBloc
   }
 
   fetchData() async {
-    dataSink.add(Response.loading('Getting categores...'));
+    dataSink.add(Response.loading('Getting categories...'));
     try {
       CategoryRespose regRes = await _categoryRepository.fetchResponse();
       if (_isStreaming) dataSink.add(Response.completed(regRes));

@@ -642,6 +642,7 @@ drawable common_google_signin_btn_text_light_normal
 drawable common_google_signin_btn_text_light_normal_background
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
+drawable ic_launcher_background
 drawable launch_background
 drawable logo
 drawable notification_action_background
@@ -900,6 +901,8 @@ layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
 layout toast_custom
 mipmap ic_launcher
+mipmap ic_launcher_foreground
+mipmap ic_launcher_round
 raw piece_of_cake
 string abc_action_bar_home_description
 string abc_action_bar_up_description

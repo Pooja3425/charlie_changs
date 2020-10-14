@@ -43,8 +43,8 @@
 25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 25-->[androidx.core:core:1.2.0] /home/asmss102/.gradle/caches/transforms-2/files-2.1/158de9519577c7ffb49592b2f543b9bc/core-1.2.0/AndroidManifest.xml:24:18-86
 26        android:debuggable="true"
-27        android:icon="@drawable/logo"
-27-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:15:9-38
+27        android:icon="@mipmap/ic_launcher"
+27-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:15:9-43
 28        android:label="Charlie Chang&apos;s" >
 28-->/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:14:9-38
 29        <activity

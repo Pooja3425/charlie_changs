@@ -278,11 +278,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                         discountAmount ="";
                                                         couponCode="";
                                                       });
-                                                      CommonMethods.showShortToast("Coupon has been removed please apply cooupon again");
+                                                      CommonMethods.showShortToast("Coupon has been removed please apply coupon again");
                                                     }
                                                   }
                                                   else
                                                   {
+                                                    if(bloc.getCartValue()<minCouponValue || isCouponApplied)
+                                                    {
+                                                      setState(() {
+                                                        isCouponApplied = false;
+                                                        discount = 0;
+                                                        discountAmount ="";
+                                                        couponCode="";
+                                                      });
+                                                      CommonMethods.showShortToast("Coupon has been removed please apply coupon again");
+                                                    }
                                                      setState(() {
                                                        bloc.removeFromList(orderModelList[index]);
                                                        if(orderModelList.length ==0)
@@ -290,10 +300,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                          setState(() {
                                                            isEmpty = true;
                                                          });
+
                                                        }
                                                      });
                                                     print("SIZEE ${bloc.getRemoveValue()}  ${bloc.getCartValue()}");
-
                                                   }
                                                 }):Container(),
                                                 Text("${orderModelList[index].count}",style: TextStyle(color: button_color,fontSize: 13),),
@@ -310,7 +320,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       discountAmount="";
                                                       couponCode="";
                                                     });
-                                                    CommonMethods.showShortToast("Coupon has been removed please apply cooupon again");
+                                                    CommonMethods.showShortToast("Coupon has been removed please apply coupon again");
                                                   }
                                                 })
                                               ],
@@ -460,6 +470,28 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               setState(() {
                                 dropdownValueReedem = newValue;
                               });
+                                if(newValue=="Redeem CC Points")
+                                  {
+                                    if(isCouponApplied || isSpecialOfferApplied)
+                                      {
+                                        showWarningDialogOffer("cc");
+                                      }
+                                  }
+                              if(newValue=="Apply coupon code")
+                              {
+                                if(isRedeemCalled || isSpecialOfferApplied)
+                                {
+                                  showWarningDialogOffer("a");
+                                }
+                              }
+
+                              if(newValue=="Special Offers")
+                              {
+                                if(isRedeemCalled || isCouponApplied)
+                                {
+                                  showWarningDialogOffer("s");
+                                }
+                              }
                             },
                             items: <String>['Redeem CC Points','Apply coupon code','Special Offers']
                                 .map<DropdownMenuItem<String>>((String value) {
@@ -487,6 +519,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
   List<SpecialOffers> specialOfferCartList=new List();
+  bool isSpecialOfferApplied=false;
   Widget specialOffersUI()
   {
     return specialOffersList.length==0?Container(child: Padding(
@@ -513,6 +546,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 specialOffersList[index].isApplied?FlatButton(
                   onPressed: (){
                     setState(() {
+                      isSpecialOfferApplied = false;
                       specialOfferCartList.clear();
                       specialOffersList[index].isApplied=false;
                     });
@@ -523,8 +557,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     if(specialOfferCartList.length==0)
                       {
                         setState(() {
+                          isSpecialOfferApplied = true;
                           specialOfferCartList.add(specialOffersList[index]);
                           specialOffersList[index].isApplied=true;
+                          print("SPECIAL KEY ===>${specialOfferCartList[0].key}");
                         });
                       }
                     else
@@ -754,8 +790,45 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget pickupUI()
   {
     return Column(
-      children: <Widget>[
-
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[CommonMethods().thickHorizontalLine(context),
+        SizedBox(height: 5,),
+        Padding(
+          padding: const EdgeInsets.only(left:20.0,right: 20),
+          child: Text("Delivery Instructions",style: TextStyle(fontSize: 13),),
+        ),
+        SizedBox(height: 5,),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20.0,10.0,20.0,10.0),
+          child: Container(
+            width: getWidth(context),
+            height: 40,
+            decoration: BoxDecoration(
+                border: Border.all(color: input_border_color,width: 1.0),
+                borderRadius: BorderRadius.all(Radius.circular(3.3))
+            ),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 8.0),
+                child: TextField(
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                  controller: controllerComment,
+                  style: TextStyle(
+                      fontSize: 12,
+                      // color: heading_color,
+                      fontWeight: FontWeight.w300),
+                  decoration: InputDecoration(
+                      hintText: "Instructions (optional)",
+                      hintStyle: TextStyle(fontSize: 12),
+                      //contentPadding: EdgeInsets.only(bottom: 3),
+                      border: InputBorder.none,
+                      counterText: ''),
+                ),
+              ),
+            ),
+          ),
+        ),
         CommonMethods().thickHorizontalLine(context),
         Container(
           width: getWidth(context),
@@ -914,7 +987,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 padding: const EdgeInsets.only(left:8.0,right: 8.0),
                 child: TextField(
                   keyboardType: TextInputType.text,
-                  maxLength: 10,
                   textInputAction: TextInputAction.done,
                   controller: controllerComment,
                   style: TextStyle(
@@ -1087,6 +1159,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
     String orderItems = json.encode(items);
     print("SSS ${json.decode(orderItems)}");
+
+    var specialItems=[];
+    var resBodyS = {};
+    resBodyS["price"] = specialOfferCartList[0].price;
+    resBodyS["name"] = specialOfferCartList[0].name;
+    resBodyS["pos_item_id"] = specialOfferCartList[0].id;
+    specialItems.add(resBodyS);
+    print("DATA SPECIAL===>${json.encode(specialItems)}");
   }
 
   AddOrderBloc mAddOrderBloc;
@@ -1114,7 +1194,22 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
     }
 
+    /*"name": "Free Mongolian Chicken",
+    "price": 0,
+    "pos_item_id": "5c404fcca92ffade252c31b3"*/
 
+    var specialItems=[];
+    if(isSpecialOfferApplied)
+      {
+        var resBodyS = {};
+        resBodyS["price"] = specialOfferCartList[0].price;
+        resBodyS["name"] = specialOfferCartList[0].name;
+        resBodyS["pos_item_id"] = specialOfferCartList[0].id;
+        specialItems.add(resBodyS);
+        print("DATA SPECIAL===>${json.encode(specialItems)}");
+
+      }
+    String specialItemsS = json.encode(specialItems);
     String orderItems = json.encode(items);
     print("SSS ${json.decode(orderItems)}");
 
@@ -1124,10 +1219,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           "coupon_code":couponCode,
           "payment_mode":payment_mode,
           "is_mobile":"0",
-          "reward_id_selected":reward_id_selected,
+          "reward_id_selected":isRedeemCalled?reward_id_selected:isSpecialOfferApplied?specialOfferCartList[0].key:"",
           "notes":"${controllerComment.text}",
           "net_payable":"${bloc.getCartValue()+bloc.getTax()-discount}",
-          "items":json.decode(orderItems)});
+          "items":json.decode(orderItems),
+          "is_special_offer":isSpecialOfferApplied?"1":"0",
+          "special_offer_items":json.decode(specialItemsS)
+        });
 
 
     String data = body;
@@ -1168,7 +1266,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
 
   callSuccessOrderAPI(String orderCode, String status, String payment_id) async{
-
     setState(() {
       isSuccessApiCalled = true;
     });
@@ -1214,6 +1311,63 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     });
   }
 
+  showWarningDialogOffer(String from) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context){
+          return WillPopScope(
+            onWillPop: (){},
+            child: AlertDialog(
+              contentPadding: EdgeInsets.only(top: 0,bottom: 0,right: 20,left: 20),
+              title: Text("Warning",style: TextStyle(color: fab_color),),
+              content: Padding(
+                padding: const EdgeInsets.only(top:8.0),
+                child: Text("You already have applied an offer applying this offer may remove previously applied method"),
+              ),
+              actions: <Widget>[FlatButton(onPressed: () {
+                Navigator.of(context).pop();
+                //bloc.clearCart();
+                if(from =="cc")
+                  {
+                    setState(() {
+                      discount=0.0;
+                      discountAmount="";
+                      couponCode="";
+                      isSpecialOfferApplied=false;
+                      specialOfferCartList.clear();
+                      specialOffersList[0].isApplied=false;
+                      isCouponApplied=false;
+                    });
+                  }
+
+                if(from =="s")
+                {
+                  setState(() {
+                    discount=0.0;
+                    discountAmount="";
+                    couponCode="";
+                    isCouponApplied=false;
+                    isRedeemCalled= false;
+                  });
+                }
+
+                if(from =="a")
+                {
+                  setState(() {
+                    isSpecialOfferApplied=false;
+                    isRedeemCalled=false;
+                    specialOfferCartList.clear();
+                    specialOffersList[0].isApplied=false;
+                  });
+                }
+              }, child: Text("Ok",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),))
+              ],
+            ),
+          );
+        }
+    );
+  }
   showWarningDialog(String from) {
     showDialog(
         context: context,
@@ -1402,26 +1556,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   callOnlinePaymentAPI() async
   {
     print("Online");
-    /*var resBody = {};
-    var items = [];
-    for(int i=0;i<orderModelList.length;i++)
-    {
-      if(orderModelList[i].count>1)
-      {
-        for(int j=0;j<orderModelList[i].count;j++)
-        {
-          resBody["hash"]=orderModelList[i].hash;
-          resBody["name"]=orderModelList[i].name;
-          items.add(resBody);
-        }
-      }
-      else
-      {
-        resBody["hash"]=orderModelList[i].hash;
-        resBody["name"]=orderModelList[i].name;
-        items.add(resBody);
-      }
-    }*/
 
     var items = [];
     for(int i=0;i<orderModelList.length;i++) {
@@ -1444,6 +1578,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
     String orderItems = json.encode(items);
     print("ONLINE $orderItems");
+
+    var specialItems=[];
+    if(isSpecialOfferApplied)
+    {
+      var resBodyS = {};
+      resBodyS["price"] = specialOfferCartList[0].price;
+      resBodyS["name"] = specialOfferCartList[0].name;
+      resBodyS["pos_item_id"] = specialOfferCartList[0].id;
+      specialItems.add(resBodyS);
+      print("DATA SPECIAL===>${json.encode(specialItems)}");
+
+    }
+    String specialItemsS = json.encode(specialItems);
+
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final body = jsonEncode({"del_area":pickup_delivery =="1"?preferences.getString(DELIVERY_ADDRESS_HASH):preferences.getString(PICKUP_ADDRESS_HASH),
       "deliver_pickup":preferences.getString(DELIVERY_PICKUP),
@@ -1453,7 +1601,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       "notes":"${controllerComment.text}",
       "is_mobile":"0",
       "net_payable":"${bloc.getCartValue()+bloc.getTax()-discount}",
-      "items":json.decode(orderItems)});
+      "items":json.decode(orderItems),
+      "is_special_offer":isSpecialOfferApplied?"1":"0",
+      "special_offer_items":json.decode(specialItemsS)
+    });
 
     mOnlinePaymentBloc=OnlinePaymentBloc(body);
     mOnlinePaymentBloc.dataStream.listen((onData){
@@ -1677,6 +1828,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
+  bool isCCpointsApplied = false;
   LoyaltyPointsBloc mLoyaltyPointsBloc;
   LoyaltyPointsResponse mLoyaltyPointsResponse;
    callPointsAPI() {
@@ -1701,6 +1853,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           else
             {
               setState(() {
+
                 redeemPoints = mLoyaltyPointsResponse.points;
               });
 
@@ -1818,7 +1971,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     };
     final body = jsonEncode(
         {
-          "number":/*prefs.getString(PHONE_NUMBER)*//*"8554063733"*/"9850570777",
+          "number":prefs.getString(PHONE_NUMBER)/*"8554063733"*//*"9850570777"*/,
         });
 
     print('Parms MOBILE ${prefs.getString(PHONE_NUMBER)}');
@@ -1853,27 +2006,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                  });
                }
              }
-           if(responseJson["special_offer"]!="[]")
+           if(responseJson["special_offer"].toString()!="[]")
              {
-               Map<String, dynamic> jsonParsed = responseJson["special_offer"];
+               //Map<String, dynamic> jsonParsed = responseJson["special_offer"];
 
-               jsonParsed.keys.forEach((String key){
-                 print("bbb $key ${_special_offers.length}");
-                 _special_offers.add(key);
-               });
-
-               for(int i=0; i<_special_offers.length; i++){
-                 print(jsonParsed[_special_offers[i]]);
-
-                 final SpecialOffers points = SpecialOffers(name: jsonParsed[_special_offers[i]].toString()
-                     ,price: jsonParsed[_special_offers[i]].toString(),id: jsonParsed[_special_offers[i]].toString(),isApplied: false );
-                 if(i % 3==0)
-                   {
-                     setState(() {
-                       specialOffersList.add(points);
-                     });
-                   }
-               }
+               var rest = responseJson["special_offer"] as List ;
+                print(rest);
+                for(int i=0;i<rest.length;i++)
+                  {
+                    print("SPE ==>${rest[i]["pos_item_id"]}");
+                    final SpecialOffers points = SpecialOffers(
+                          name: rest[i]["dish_name"].toString(),
+                          price:rest[i]["price"] .toString(),id: rest[i]["pos_item_id"].toString(),key: rest[i]["id"].toString(),isApplied: false );
+                    specialOffersList.add(points);
+                  }
              }
 
          }
@@ -1920,6 +2066,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
     return true;
   }
+
+
 
   Widget EmptyCart()
   {

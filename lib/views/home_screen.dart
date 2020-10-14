@@ -328,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         height: 25,
                         width: getWidth(context),
                         child:Marquee(
-                          text: "OUTLET CLOSED NOW. | ORDER TIMINGS : 12:00 PM TO 02:30 PM AND 07:00 PM TO 10:30 PM",
+                          text: "OUTLET CLOSED NOW. ORDER TIMINGS : 12:00 PM TO 02:30 PM AND 07:00 PM TO 10:30 PM",
                           style: TextStyle(fontWeight: FontWeight.bold,color: fab_color),
                           scrollAxis: Axis.horizontal,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -486,12 +486,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                             Radius.circular(3.3),
                                           )),
                                       child: Center(
-                                        child: Image.network(
+                                        child: mCategoryList.length>0?Image.network(
                                           IMAGE_BASE_URL+mCategoryList[index].image,
                                           width: 35,
                                           height: 35,
                                           fit: BoxFit.cover,
-                                        ),
+                                        ):Container(),
                                       ),
                                     ),
                                     SizedBox(
@@ -499,7 +499,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                     ),
                                     Flexible(
                                       child: Text(
-                                        mCategoryList[index].name,
+                                        mCategoryList[index].name.split(".")[1],
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
@@ -625,7 +625,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                     header:  Padding(
                                       padding: const EdgeInsets.only(top: 15.0, bottom: 1.0),
                                       child: Text(
-                                        "${mCategoryList[index].name}",
+                                        "${mCategoryList[index].name.split(".")[1]}",
                                         style: TextStyle(color: fab_color,fontWeight: FontWeight.bold),
                                       ),
                                     ),

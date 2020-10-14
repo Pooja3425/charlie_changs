@@ -27,7 +27,7 @@
     <application
         android:name="com.brandzgarage.charliechang.Application"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-        android:icon="@drawable/logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="Charlie Chang&apos;s" >
         <activity
             android:name="com.brandzgarage.charliechang.MainActivity"

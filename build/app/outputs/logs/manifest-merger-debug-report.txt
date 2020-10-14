@@ -181,7 +181,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/asmss
 	android:label
 		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:14:9-38
 	android:icon
-		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:15:9-38
+		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:15:9-43
 	android:name
 		ADDED from /home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/android/app/src/main/AndroidManifest.xml:13:9-36
 activity#com.brandzgarage.charliechang.MainActivity
