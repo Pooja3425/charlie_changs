@@ -243,7 +243,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               padding: CommonMethods.textFieldPadding,
                               child: TextField(
                                 keyboardType: TextInputType.emailAddress,
-                                maxLength: 15,
                                 focusNode: focusEmail,
                                 controller: _controllerEmail,
                                 textCapitalization: TextCapitalization.words,

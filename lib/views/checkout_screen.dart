@@ -1457,14 +1457,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   _checkPaymentStatus(String id) async {
     var response = await http.get(
-        //Uri.encodeFull("https://www.instamojo.com/api/1.1/payments/$id/"),
-        Uri.encodeFull("https://test.instamojo.com/api/1.1/payments/$id/"),
+        Uri.encodeFull("https://www.instamojo.com/api/1.1/payments/$id/"),
+        //Uri.encodeFull("https://test.instamojo.com/api/1.1/payments/$id/"),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded",
+
+    /*protected $api_key = '9d8a8ce6ac9f6f42792a7e403a915de6';
+    protected $auth_token ='4886bf4f24632581c2821a7e7094fe90';*/
           //original key
-          "X-Api-Key": "dfe6f3c4b461cecd7370e4d71212b450",
-          "X-Auth-Token": "tc38184743fe1b1978708960ed15ec6de"
+          "X-Api-Key": "9d8a8ce6ac9f6f42792a7e403a915de6",
+          "X-Auth-Token": "4886bf4f24632581c2821a7e7094fe90"
           // test key
           /*"X-Api-Key": "test_ba7b1358c28a4a61f1687270c6c",
           "X-Auth-Token": "test_4552674a5d9717da7e586441905"*/
@@ -1617,17 +1620,26 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
       else if(onData.status == Status.COMPLETED)
       {
+        CommonMethods.dismissDialog(context);
 
         flutterWebviewPlugin.close();
         print("${mOnlinePaymentResponse.paymentUrl}");
 
-        //Let's open the url in webview.
-        flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl/*"https://test.instamojo.com/@dipak_4d8a6/bf25a6b0e91146479d71b5b002d1ab5d"*/,
-            /*userAgent: kAndroidUserAgent*/);
-          setState(() {
-            ordercode= mOnlinePaymentResponse.ordercode;
-            isWebviewopen = true;
-          });
+        if(mOnlinePaymentResponse.paymentUrl!=null)
+          {
+            //Let's open the url in webview.
+            flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl/*"https://test.instamojo.com/@dipak_4d8a6/bf25a6b0e91146479d71b5b002d1ab5d"*/,
+              /*userAgent: kAndroidUserAgent*/);
+            setState(() {
+              ordercode= mOnlinePaymentResponse.ordercode;
+              isWebviewopen = true;
+            });
+          }
+        else
+          {
+            CommonMethods.showShortToast("Problem in online payment please select COD or try after some time");
+          }
+
       /*  CommonMethods.dismissDialog(context);
         CommonMethods.showShortToast(mOnlinePaymentResponse.msg);
         navigationPage();*/

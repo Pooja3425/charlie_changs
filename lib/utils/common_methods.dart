@@ -106,17 +106,22 @@ class CommonMethods
 
 
  static showLoaderDialog(BuildContext context,String message){
-    AlertDialog alert=AlertDialog(
+    AlertDialog alert=
+    AlertDialog(
       content: new Row(
         children: [
           CircularProgressIndicator(backgroundColor: button_color,valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),),
           Container(margin: EdgeInsets.only(left: 7),child:Text(message)),
         ],),
     );
-    showDialog(barrierDismissible: false,
+    showDialog(
+      barrierDismissible: false,
       context:context,
       builder:(BuildContext context){
-        return alert;
+        return WillPopScope(
+            onWillPop: () {},
+            child: alert,
+          );
       },
     );
   }
