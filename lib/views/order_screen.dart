@@ -275,12 +275,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
     var outputFormat = DateFormat("dd-MM-yyyy");
     var timeFormat = DateFormat("dd-MM-yyyy hh:mm aa");
 
-
-    int year = int.parse(orders.deliveryDate.split("-")[0]);
-    int mn = int.parse(orders.deliveryDate.split("-")[1]);
-    int dt = int.parse(orders.deliveryDate.split("-")[2]);
-    int hr = int.parse(orders.deliveryTime.split(":")[0]);
-    int min = int.parse(orders.deliveryTime.split(":")[1]);
+    String order_date = orders.order_date_time.split(" ")[0];
+    String order_time = orders.order_date_time.split(" ")[1];
+  //  print("TIME==> $order_time");
+    int year = int.parse(order_date.split("-")[0]);
+    int mn = int.parse(order_date.split("-")[1]);
+    int dt = int.parse(order_date.split("-")[2]);
+    int hr = int.parse(order_time.split(":")[0]);
+    int min = int.parse(order_time.split(":")[1]);
     var date = outputFormat.format(DateTime(year,mn,dt));
     var time = timeFormat.format(DateTime(year,mn,dt,hr,min));
     String deliveryTime = time.split(" ")[1]+" "+time.split(" ")[2];
