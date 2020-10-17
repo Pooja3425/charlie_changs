@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_share/flutter_share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReferScreen extends StatefulWidget {
@@ -182,12 +181,13 @@ class _ReferScreenState extends State<ReferScreen> {
     );
   }
   Future<void> share(String coupon_code) async {
-    await FlutterShare.share(
-        title: "Charlie Chang's",
-        text: "Hey there! Order best Oriental & Chinese food from Charlie Chang's & get 1000 loyalty points on your 1st successful order. Use code -"+coupon_code,
-       // linkUrl: 'https://flutter.dev/',
-        chooserTitle: 'Share coupon code'
-    );
+//    await FlutterShare.share(
+//        title: "Charlie Chang's",
+//        text: "Hey there! Order best Oriental & Chinese food from Charlie Chang's & get 1000 loyalty points on your 1st successful order. Use code -"+coupon_code,
+//       // linkUrl: 'https://flutter.dev/',
+//        chooserTitle: 'Share coupon code'
+//    );
+  // ios
   }
 
    getCoupon() async{
