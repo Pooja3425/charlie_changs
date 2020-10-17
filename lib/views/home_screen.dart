@@ -956,7 +956,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         fontSize: 12),
                   ),
 
-                  isRestaurantOpen?  mTempList[index].count ==0?InkWell(
+                  /*isRestaurantOpen?*/  mTempList[index].count ==0?InkWell(
                     onTap: (){
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                       addToCart(mTempList[index]);
@@ -1025,7 +1025,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         })
                       ],
                     ),
-                  ):Container(
+                  )/*:Container(
                     width: 80,
                     height: 30,
                     decoration: BoxDecoration(
@@ -1039,7 +1039,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                               color: Colors.black,
                               fontSize: 12),
                         )),
-                  ),
+                  ),*/
                 ],
                 mainAxisAlignment:
                 MainAxisAlignment.spaceBetween,
