@@ -194,6 +194,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                   CommonMethods.setPreference(context, DELIVERY_ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
                                   CommonMethods.setPreference(context, DELIVERY_PICKUP, "1");
                                   CommonMethods.setPreference(context, DELIVERY_ADDRESS, mCustomerAddressList[index].address1+" "+ mCustomerAddressList[index].address2);
+                                  CommonMethods.setPreference(context, DELIVERY_ADDRESS_ID, mCustomerAddressList[index].id);
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CheckoutScreen()));
                                 }
                                 else
@@ -201,6 +202,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                     CommonMethods.setPreference(context, DELIVERY_ADDRESS_NAME, mCustomerAddressList[index].addressName);
                                     CommonMethods.setPreference(context, DELIVERY_ADDRESS_HASH, mCustomerAddressList[index].hash.toString());
                                     CommonMethods.setPreference(context, DELIVERY_PICKUP, "1");
+                                    CommonMethods.setPreference(context, DELIVERY_ADDRESS_ID, mCustomerAddressList[index].id);
                                     CommonMethods.setPreference(context, DELIVERY_ADDRESS, mCustomerAddressList[index].address1+" "+ mCustomerAddressList[index].address2);
                                     navigationPage();
                                    // Navigator.pop(context);

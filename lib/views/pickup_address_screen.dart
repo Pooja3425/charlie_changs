@@ -84,6 +84,7 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
             CommonMethods.setPreference(context, PICKUP_ADDRESS_NAME, mDeliveryLocationsList[i].name);
             CommonMethods.setPreference(context, PICKUP_ADDRESS_HASH, mDeliveryLocationsList[i].hash.toString());
             CommonMethods.setPreference(context, PICKUP_ADDRESS, mDeliveryLocationsList[i].address);
+            CommonMethods.setPreference(context, PICKUP_ADDRESS_ID, mDeliveryLocationsList[i].id);
             CommonMethods.setPreference(context, DELIVERY_PICKUP, "2");
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CheckoutScreen()));
           }
@@ -92,6 +93,7 @@ class _PickupAddressScreenState extends State<PickupAddressScreen> {
             CommonMethods.setPreference(context, PICKUP_ADDRESS_NAME, mDeliveryLocationsList[i].name);
             CommonMethods.setPreference(context, PICKUP_ADDRESS_HASH, mDeliveryLocationsList[i].hash.toString());
             CommonMethods.setPreference(context, PICKUP_ADDRESS, mDeliveryLocationsList[i].address);
+            CommonMethods.setPreference(context, PICKUP_ADDRESS_ID, mDeliveryLocationsList[i].id);
             CommonMethods.setPreference(context, DELIVERY_PICKUP, "2");
 
             print("ickup hash ${mDeliveryLocationsList[i].hash}");

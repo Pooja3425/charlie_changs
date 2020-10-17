@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:charliechang/blocs/outlets_bloc.dart';
 import 'package:charliechang/blocs/support_bloc.dart';
+import 'package:charliechang/models/outlets_model.dart';
 import 'package:charliechang/models/support_response_model.dart';
 import 'package:charliechang/networking/Repsonse.dart';
 import 'package:charliechang/repository/support_repository.dart';
@@ -11,6 +13,7 @@ import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:store_redirect/store_redirect.dart';
 
@@ -33,6 +36,14 @@ class _SupportScreenState extends State<SupportScreen> {
     // CommonMeathods.showShortToast(widget.otp);
     _connectivity = new Connectivity();
     _subscription = _connectivity.onConnectivityChanged.listen(onConnectivityChange);
+    if(_isInternetAvailable)
+      {
+        callOutletsService();
+      }
+    else
+      {
+        CommonMethods.showLongToast(CHECK_INTERNET);
+      }
     super.initState();
   }
 
@@ -192,7 +203,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                   Text("Connect with us",style: TextStyle(color: notification_title_color,fontSize: 16,fontWeight: FontWeight.bold),),
                                   SizedBox(height: 20,),
                                   CommonMethods.horizontalLine(context),
-                                  SizedBox(height: 20,),
+                                  /*SizedBox(height: 20,),
                                   Text("Caranzalem Outlet",style: TextStyle(color: notification_title_color,fontSize: 14,fontWeight: FontWeight.bold),),
                                   SizedBox(height: 10,),
                                   Text("Model's Millennium Vistas, Shop 1, Caranzalem, Goa - 403002 (Opp. Harley Davidson's Showroom)",style: TextStyle(color: notification_title_color),),
@@ -206,7 +217,14 @@ class _SupportScreenState extends State<SupportScreen> {
                                   Text("House Number 844, After Gauri Petrol Pump, Porvorim, Goa 403051",style: TextStyle(color: icon_color),),
                                   SizedBox(height: 10,),
                                   Text("+91 - 8308800833  |  info@charliechangs.in",style: TextStyle(color: notification_title_color),),
-                                  SizedBox(height: 10,),
+                                  SizedBox(height: 10,),*/
+                                  ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                      itemCount: mOutletsList.length,
+                                      itemBuilder: (context,index){
+                                    return outletsRow(mOutletsList[index]);
+                                  })
                                 ],
                               ),
                             ),
@@ -267,6 +285,25 @@ class _SupportScreenState extends State<SupportScreen> {
     );
   }
 
+  Widget outletsRow(Data data)
+  {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 20,),
+          Text("${data.outletName}",style: TextStyle(color: notification_title_color,fontSize: 14,fontWeight: FontWeight.bold),),
+          SizedBox(height: 10,),
+          Text("${data.outletAddress}",style: TextStyle(color: notification_title_color),),
+          SizedBox(height: 10,),
+          Text("+91 - ${data.outletMobile}  |  ${data.outletEmail}",style: TextStyle(color: notification_title_color),),
+          SizedBox(height: 20,),
+          CommonMethods.horizontalLine(context),
+        ],
+      ),
+    );
+  }
+
   double rating_val;
   SupportBloc mSupportBloc;
   SupportResponse mSupportResponse;
@@ -305,4 +342,34 @@ class _SupportScreenState extends State<SupportScreen> {
        }
      return true;
   }
+
+  List<Data> mOutletsList= new List();
+    OutletsBloc mOutletsBloc;
+   OutletsResponse mOutletsResponse;
+   callOutletsService() async{
+
+     mOutletsBloc=OutletsBloc();
+     mOutletsBloc.dataStream.listen((onData){
+       mOutletsResponse = onData.data;
+       if(onData.status == Status.LOADING)
+       {
+         CommonMethods.showLoaderDialog(context, "Loading");
+       }
+       else if(onData.status == Status.COMPLETED)
+       {
+         CommonMethods.dismissDialog(context);
+         setState(() {
+           mOutletsList = mOutletsResponse.data;
+
+
+         });
+
+       }
+       else if(onData.status == Status.ERROR)
+       {
+          CommonMethods.dismissDialog(context);
+         CommonMethods.showShortToast(onData.message);
+       }
+     });
+   }
 }

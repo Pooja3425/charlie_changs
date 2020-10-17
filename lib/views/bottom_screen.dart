@@ -175,7 +175,7 @@ class _BottomScreenState extends State<BottomScreen> {
                     'assets/images/offers.png', height: 15,
                     width: 15,color: _page==1?fab_color:icon_color,),
                   title: new Text(
-                    "offers",style: TextStyle(color: _page==1?fab_color:icon_color,fontSize: 12),
+                    "Offers",style: TextStyle(color: _page==1?fab_color:icon_color,fontSize: 12),
 
                   )),
               new BottomNavigationBarItem(

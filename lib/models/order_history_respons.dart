@@ -47,6 +47,7 @@ class Data {
   String cityname;
   String restArea;
   String cseName;
+  String order_date_time;
   List<OrderItems> orderItems;
 
   Data(
@@ -72,6 +73,7 @@ class Data {
         this.cityname,
         this.restArea,
         this.cseName,
+        this.order_date_time,
         this.orderItems});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -97,6 +99,7 @@ class Data {
     cityname = json['cityname'];
     restArea = json['rest_area'];
     cseName = json['cse_name'].toString();
+    order_date_time = json['order_date_time'].toString();
     if (json['order_items'] != null) {
       orderItems = new List<OrderItems>();
       json['order_items'].forEach((v) {
@@ -129,6 +132,7 @@ class Data {
     data['cityname'] = this.cityname;
     data['rest_area'] = this.restArea;
     data['cse_name'] = this.cseName.toString();
+    data['order_date_time'] = this.order_date_time.toString();
     if (this.orderItems != null) {
       data['order_items'] = this.orderItems.map((v) => v.toJson()).toList();
     }

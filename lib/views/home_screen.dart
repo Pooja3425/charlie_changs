@@ -6,9 +6,12 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/blocs/category_bloc.dart';
+import 'package:charliechang/blocs/customer_address_bloc.dart';
+import 'package:charliechang/blocs/delivery_loactions_bloc.dart';
 import 'package:charliechang/blocs/menu_bloc.dart';
 import 'package:charliechang/blocs/slider_bloc.dart';
 import 'package:charliechang/models/category_response_model.dart';
+import 'package:charliechang/models/delivery_locations_response_model.dart';
 import 'package:charliechang/models/food_item_model.dart';
 import 'package:charliechang/models/icon_menu_model.dart';
 import 'package:charliechang/models/menu_response_model.dart';
@@ -35,6 +38,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'switch_ui.dart';
 import 'package:charliechang/models/slider_response.dart' as slider;
+import 'package:charliechang/models/customer_address_response_model.dart' as custAddress;
 import 'package:flutter/material.dart' hide NestedScrollView;
 
 class HomeScreen extends StatefulWidget {
@@ -105,9 +109,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     sliderList.add(slider.Data(imagePath: ""));
   //  status= false;
 
-    getDeliveryAddress();
+
     if(_isInternetAvailable)
       {
+        getDeliveryAddress();
         getCategoriesAPI();
         callSliderApi();
       }
@@ -287,6 +292,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 status = value;
                                 if(value==true)
                                 {
+                                  var timerInfo = Provider.of<ScrollModel>(context, listen: false);
+                                  timerInfo.setOrderType(true);
                                   CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
                                   CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
                                   print("dataa T${bloc.getCartCount()}");
@@ -301,6 +308,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 }
                                 else
                                 {
+                                  var timerInfo = Provider.of<ScrollModel>(context, listen: false);
+                                  timerInfo.setOrderType(false);
                                   CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
                                   CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
                                   print("dataa F ${bloc.getCartCount()}");
@@ -314,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                     }
                                 }
 
-                                getDeliveryAddress();
+                                //getDeliveryAddress();
                               });
 
                             },
@@ -372,48 +381,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
               width: getWidth(context),
               child: Column(
                 children: <Widget>[
-                  /*GFCarousel(
-                    scrollDirection: Axis.horizontal,
-                    autoPlay: true,
-                    //autoPlayAnimationDuration: Duration(seconds: 1),
-                    pagerSize: 8,
-                    reverse: false,
-                    pauseAutoPlayOnTouch: Duration(seconds: 5),
-                    activeIndicator: Colors.white,
-                    passiveIndicator: Colors.transparent.withOpacity(0.5),
-                    viewportFraction: 1.0,
-                    autoPlayInterval: Duration(seconds: 5),
-                    enableInfiniteScroll: true,
-                    height: 280,
-                    // aspectRatio: 10,
-                    enlargeMainPage: false,
-                    pagination: true,
-                    items: sliderList.map(
-                          (url) {
-                        return InkWell(
-                          onTap: (){
-                            if(url.title.contains("referral") || url.title.contains("refer") )
-                            {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => ReferScreen(),));
-                            }
-                          },
-                          child: Container(
-                            //margin: EdgeInsets.all(8.0),
-                            child: ClipRRect(
-                              //borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              child: Image.network(IMAGE_BASE_URL+url.imagePath,
-                                  fit: BoxFit.cover, width: getWidth(context)),
-                            ),
-                          ),
-                        );
-                      },
-                    ).toList(),
-                    onPageChanged: (index) {
-                      setState(() {
-                        index;
-                      });
-                    },
-                  ),*/
                   SizedBox(
                       height: 280.0,
                       width: getWidth(context),
@@ -959,10 +926,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                   left: 5, top: 10),
               child: Container(
                 height:35,
-                child: Text(
-                  mTempList[index].name,
-                  maxLines: 2,
-                  style: TextStyle(fontSize: 12,color: icon_color),
+                child: Row(
+                  children: <Widget>[
+                    Flexible(
+                      child: Text(
+                        mTempList[index].name,
+                        maxLines: 2,
+                        style: TextStyle(fontSize: 12,color: icon_color),
+                      ),
+                    ),
+                    /*SizedBox(width: 10,),
+                    mTempList[index].isNonveg=="1"?Container(width: 10,height: 10,decoration: BoxDecoration(shape: BoxShape.circle,color: fab_color),):Container(width: 10,height: 10,decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),)*/
+                  ],
                 ),
               ),
             ),
@@ -981,7 +956,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         fontSize: 12),
                   ),
 
-                  /*isRestaurantOpen?*/  mTempList[index].count ==0?InkWell(
+                  isRestaurantOpen?  mTempList[index].count ==0?InkWell(
                     onTap: (){
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                       addToCart(mTempList[index]);
@@ -1050,7 +1025,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         })
                       ],
                     ),
-                  )/*:Container(
+                  ):Container(
                     width: 80,
                     height: 30,
                     decoration: BoxDecoration(
@@ -1064,7 +1039,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                               color: Colors.black,
                               fontSize: 12),
                         )),
-                  ),*/
+                  ),
                 ],
                 mainAxisAlignment:
                 MainAxisAlignment.spaceBetween,
@@ -1114,10 +1089,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                     left: 5, top: 10),
                 child: Container(
                   height:40,
-                  child: Text(
-                    mTempList[index].name,
-                    maxLines: 2,
-                    style: TextStyle(fontSize: 12,color: icon_color),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        mTempList[index].name,
+                        maxLines: 2,
+                        style: TextStyle(fontSize: 12,color: icon_color),
+                      ),
+                      /*SizedBox(width: 10,),
+                      mTempList[index].isNonveg=="1"?Container(width: 10,height: 10,decoration: BoxDecoration(shape: BoxShape.circle,color: fab_color),):Container(width: 10,height: 10,decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),)*/
+                    ],
                   ),
                 ),
               ),
@@ -1427,7 +1408,103 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
       });
     }
     print("VALUE $status");
+    if(status)
+      {
+        callDeliveryLocationsAPI(preferences.getString(PICKUP_ADDRESS_ID));
+      }
+    else
+      {
+        //String delivery_id = preferences.getString(DELIVERY_ADDRESS_ID);
+        callAddress(preferences.getString(DELIVERY_ADDRESS_ID));
 
+      }
+  }
+
+  CustomerAddressBloc mCustomerAddressBloc;
+  custAddress.CustomerAddressRespose mCustomerAddressRespose;
+  List<custAddress.Data> mCustomerAddressList ;
+  callAddress(delivery_id)
+  {
+    mCustomerAddressList = new List();
+    mCustomerAddressBloc=CustomerAddressBloc();
+    mCustomerAddressBloc.dataStream.listen((onData){
+      mCustomerAddressRespose = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+        //CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context,onData.message);
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        //CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
+
+           for(int i=0;i<mCustomerAddressRespose.data.length;i++)
+             {
+               print("in adresss service${delivery_id}");
+               if(delivery_id == mCustomerAddressRespose.data[i].id)
+                 {
+
+                   setState(() {
+                     CommonMethods.setPreference(context, DELIVERY_ADDRESS_HASH, mCustomerAddressRespose.data[i].hash);
+                   });
+                 }
+             }
+        //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
+
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        //CommonMethods.hideDialog();
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(onData.message);
+
+      }
+    });
+  }
+
+
+  DeliveryLocationsBloc mDeliveryLocationsBloc;
+  DeliveryLocationsResponse mDeliveryLocationsResponse;
+  void callDeliveryLocationsAPI(pickup_d) {
+    mDeliveryLocationsBloc=DeliveryLocationsBloc();
+    mDeliveryLocationsBloc.dataStream.listen((onData){
+      mDeliveryLocationsResponse = onData.data;
+      if(onData.status == Status.LOADING)
+      {
+        //CommonMethods.displayProgressDialog(onData.message,context);
+        CommonMethods.showLoaderDialog(context, "Loading");
+      }
+      else if(onData.status == Status.COMPLETED)
+      {
+        CommonMethods.dismissDialog(context);
+        for(int i=0;i<mDeliveryLocationsResponse.pickup.length;i++)
+          {
+            if(pickup_d == mDeliveryLocationsResponse.pickup[i].id)
+              {
+                CommonMethods.setPreference(context, PICKUP_ADDRESS_HASH, mDeliveryLocationsResponse.pickup[i].hash);
+              }
+          }
+        /*setState(() {
+          for(int i=0;i<mDeliveryLocationsResponse.delivery.length;i++)
+            {
+              if(mDeliveryLocationsResponse.delivery[i].name =="Porvorim" || mDeliveryLocationsResponse.delivery[i].name =="Caranzalem")
+                {
+                  mDeliveryLocationsList.add(mDeliveryLocationsResponse.delivery[i]);
+                }
+            }
+          print("SIZEE ${mDeliveryLocationsList.length}");
+         // mDeliveryLocationsList = mDeliveryLocationsResponse.delivery;
+        });*/
+        //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
+
+      }
+      else if(onData.status == Status.ERROR)
+      {
+        CommonMethods.dismissDialog(context);
+        CommonMethods.showShortToast(onData.message);
+      }
+    });
   }
 
   SliderBloc mSliderBloc;
