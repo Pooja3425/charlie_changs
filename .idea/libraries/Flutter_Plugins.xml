@@ -15,6 +15,9 @@
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_share-1.0.2+1" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/store_redirect-1.0.2" />
       <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-1.4.4+4" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.2.0" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.5.0+1" />
+      <root url="file://$USER_HOME$/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_crashlytics-0.2.1+1" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

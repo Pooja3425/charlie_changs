@@ -7,7 +7,10 @@ import 'package:charliechang/utils/NotificationService.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
 import 'package:charliechang/utils/string_constants.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -48,18 +51,31 @@ const kAndroidUserAgent =
     "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36";
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
 
+final _kShouldTestAsyncErrorOnInit = false;
+
+// Toggle this for testing Crashlytics in your app locally.
+final _kTestingCrashlytics = true;
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
   HttpOverrides.global = new MyHttpOverrides();
-  runApp(
-      MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => ScrollModel()),
-      ],
-      child: MyApp()));
+
+  runZonedGuarded(() {
+    runApp(
+        MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (context) => ScrollModel()),
+            ],
+            child: MyApp()));
+  }, (error, stackTrace) {
+    print('runZonedGuarded: Caught error in my root zone.');
+    FirebaseCrashlytics.instance.recordError(error, stackTrace);
+  });
+
+
 }
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -68,9 +84,22 @@ class MyHttpOverrides extends HttpOverrides{
       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   String selectedUrl = 'https://flutter.io';
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeFlutterFireFuture = _initializeFlutterFire();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -84,20 +113,20 @@ class MyApp extends StatelessWidget {
         child: ChangeNotifierProvider(
           create: (context) => ScrollModel(),
           child: GestureDetector(
-          onTap: () {
-            FocusScopeNode currentFocus = FocusScope.of(context);
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
 
-            if (!currentFocus.hasPrimaryFocus) {
-              currentFocus.unfocus();
-            }
-          },
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
             child: MaterialApp(
               navigatorKey: navigatorKey,
               title: 'Charlie changs',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
-                primarySwatch: colorCustom,
-                fontFamily: "Manrope"
+                  primarySwatch: colorCustom,
+                  fontFamily: "Manrope"
 
               ),
               routes: <String, WidgetBuilder>{
@@ -126,7 +155,44 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> _initializeFlutterFireFuture;
+
+  Future<void> _testAsyncErrorOnInit() async {
+    Future<void>.delayed(const Duration(seconds: 2), () {
+      final List<int> list = <int>[];
+      print(list[100]);
+    });
+  }
+  // Define an async function to initialize FlutterFire
+  Future<void> _initializeFlutterFire() async {
+    // Wait for Firebase to initialize
+    await Firebase.initializeApp();
+
+    if (_kTestingCrashlytics) {
+      // Force enable crashlytics collection enabled if we're testing it.
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    } else {
+      // Else only enable it in non-debug builds.
+      // You could additionally extend this to allow users to opt-in.
+      await FirebaseCrashlytics.instance
+          .setCrashlyticsCollectionEnabled(!kDebugMode);
+    }
+
+    // Pass all uncaught errors to Crashlytics.
+    Function originalOnError = FlutterError.onError;
+    FlutterError.onError = (FlutterErrorDetails errorDetails) async {
+      await FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+      // Forward to original handler.
+      originalOnError(errorDetails);
+    };
+
+    if (_kShouldTestAsyncErrorOnInit) {
+      await _testAsyncErrorOnInit();
+    }
+  }
 }
+
 class SplashScreen extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   SplashScreen(this.navigatorKey);

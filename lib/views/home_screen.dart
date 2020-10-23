@@ -956,7 +956,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         fontSize: 12),
                   ),
 
-                  isRestaurantOpen?  mTempList[index].count ==0?InkWell(
+                  !isRestaurantOpen?  mTempList[index].count ==0?InkWell(
                     onTap: (){
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                       addToCart(mTempList[index]);
@@ -1467,6 +1467,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   DeliveryLocationsBloc mDeliveryLocationsBloc;
   DeliveryLocationsResponse mDeliveryLocationsResponse;
   void callDeliveryLocationsAPI(pickup_d) {
+    print("IN PICKUP $pickup_d");
     mDeliveryLocationsBloc=DeliveryLocationsBloc();
     mDeliveryLocationsBloc.dataStream.listen((onData){
       mDeliveryLocationsResponse = onData.data;
@@ -1482,6 +1483,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
           {
             if(pickup_d == mDeliveryLocationsResponse.pickup[i].id)
               {
+                print("IN PICKUP IF $pickup_d");
                 CommonMethods.setPreference(context, PICKUP_ADDRESS_HASH, mDeliveryLocationsResponse.pickup[i].hash);
               }
           }

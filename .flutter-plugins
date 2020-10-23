@@ -2,6 +2,9 @@
 connectivity=/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-0.4.9/
 connectivity_for_web=/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_for_web-0.3.1/
 connectivity_macos=/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_macos-0.1.0+3/
+firebase_core=/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.5.0+1/
+firebase_core_web=/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.2.0/
+firebase_crashlytics=/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_crashlytics-0.2.1+1/
 firebase_messaging=/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-6.0.16/
 flutter_local_notifications=/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-1.4.4+4/
 flutter_share=/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_share-1.0.2+1/

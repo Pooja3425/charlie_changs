@@ -3272,35 +3272,36 @@ public final class R {
     public static final int abc_shareactionprovider_share_with=0x7f0d0018;
     public static final int abc_shareactionprovider_share_with_application=0x7f0d0019;
     public static final int abc_toolbar_collapse_description=0x7f0d001a;
-    public static final int common_google_play_services_enable_button=0x7f0d001b;
-    public static final int common_google_play_services_enable_text=0x7f0d001c;
-    public static final int common_google_play_services_enable_title=0x7f0d001d;
-    public static final int common_google_play_services_install_button=0x7f0d001e;
-    public static final int common_google_play_services_install_text=0x7f0d001f;
-    public static final int common_google_play_services_install_title=0x7f0d0020;
-    public static final int common_google_play_services_notification_channel_name=0x7f0d0021;
-    public static final int common_google_play_services_notification_ticker=0x7f0d0022;
-    public static final int common_google_play_services_unknown_issue=0x7f0d0023;
-    public static final int common_google_play_services_unsupported_text=0x7f0d0024;
-    public static final int common_google_play_services_update_button=0x7f0d0025;
-    public static final int common_google_play_services_update_text=0x7f0d0026;
-    public static final int common_google_play_services_update_title=0x7f0d0027;
-    public static final int common_google_play_services_updating_text=0x7f0d0028;
-    public static final int common_google_play_services_wear_update_text=0x7f0d0029;
-    public static final int common_open_on_phone=0x7f0d002a;
-    public static final int common_signin_button_text=0x7f0d002b;
-    public static final int common_signin_button_text_long=0x7f0d002c;
-    public static final int default_web_client_id=0x7f0d002d;
-    public static final int fcm_fallback_notification_channel_label=0x7f0d002e;
-    public static final int firebase_database_url=0x7f0d002f;
-    public static final int gcm_defaultSenderId=0x7f0d0030;
-    public static final int google_api_key=0x7f0d0031;
-    public static final int google_app_id=0x7f0d0032;
-    public static final int google_crash_reporting_api_key=0x7f0d0033;
-    public static final int google_storage_bucket=0x7f0d0034;
-    public static final int project_id=0x7f0d0035;
-    public static final int search_menu_title=0x7f0d0036;
-    public static final int status_bar_notification_info_overflow=0x7f0d0037;
+    public static final int com_crashlytics_android_build_id=0x7f0d001b;
+    public static final int common_google_play_services_enable_button=0x7f0d001c;
+    public static final int common_google_play_services_enable_text=0x7f0d001d;
+    public static final int common_google_play_services_enable_title=0x7f0d001e;
+    public static final int common_google_play_services_install_button=0x7f0d001f;
+    public static final int common_google_play_services_install_text=0x7f0d0020;
+    public static final int common_google_play_services_install_title=0x7f0d0021;
+    public static final int common_google_play_services_notification_channel_name=0x7f0d0022;
+    public static final int common_google_play_services_notification_ticker=0x7f0d0023;
+    public static final int common_google_play_services_unknown_issue=0x7f0d0024;
+    public static final int common_google_play_services_unsupported_text=0x7f0d0025;
+    public static final int common_google_play_services_update_button=0x7f0d0026;
+    public static final int common_google_play_services_update_text=0x7f0d0027;
+    public static final int common_google_play_services_update_title=0x7f0d0028;
+    public static final int common_google_play_services_updating_text=0x7f0d0029;
+    public static final int common_google_play_services_wear_update_text=0x7f0d002a;
+    public static final int common_open_on_phone=0x7f0d002b;
+    public static final int common_signin_button_text=0x7f0d002c;
+    public static final int common_signin_button_text_long=0x7f0d002d;
+    public static final int default_web_client_id=0x7f0d002e;
+    public static final int fcm_fallback_notification_channel_label=0x7f0d002f;
+    public static final int firebase_database_url=0x7f0d0030;
+    public static final int gcm_defaultSenderId=0x7f0d0031;
+    public static final int google_api_key=0x7f0d0032;
+    public static final int google_app_id=0x7f0d0033;
+    public static final int google_crash_reporting_api_key=0x7f0d0034;
+    public static final int google_storage_bucket=0x7f0d0035;
+    public static final int project_id=0x7f0d0036;
+    public static final int search_menu_title=0x7f0d0037;
+    public static final int status_bar_notification_info_overflow=0x7f0d0038;
   }
   public static final class style {
     public static final int AlertDialog_AppCompat=0x7f0e0000;
@@ -10467,28 +10468,7 @@ public final class R {
      * <p>This symbol is the offset where the {@link android.R.attr#textFontWeight}
      * attribute's value can be found in the {@link #TextAppearance} array.
      *
-     * <p>May be a reference to another resource, in the form
-     * "<code>@[+][<i>package</i>:]<i>type</i>/<i>name</i></code>" or a theme
-     * attribute in the form
-     * "<code>?[<i>package</i>:]<i>type</i>/<i>name</i></code>".
-     * <p>May be a string value, using '\\;' to escape characters such as
-     * '\\n' or '\\uxxxx' for a unicode character;
      * <p>May be an integer value, such as "<code>100</code>".
-     * <p>May be a boolean value, such as "<code>true</code>" or
-     * "<code>false</code>".
-     * <p>May be a color value, in the form of "<code>#<i>rgb</i></code>",
-     * "<code>#<i>argb</i></code>", "<code>#<i>rrggbb</i></code>", or
-     * "<code>#<i>aarrggbb</i></code>".
-     * <p>May be a floating point value, such as "<code>1.2</code>".
-     * <p>May be a dimension value, which is a floating point number appended with a
-     * unit such as "<code>14.5sp</code>".
-     * Available units are: px (pixels), dp (density-independent pixels),
-     * sp (scaled pixels based on preferred font size), in (inches), and
-     * mm (millimeters).
-     * <p>May be a fractional value, which is a floating point number appended with
-     * either % or %p, such as "<code>14.5%</code>".
-     * The % suffix always means a percentage of the base size;
-     * the optional %p suffix provides a size relative to some parent container.
      *
      * @attr name android:textFontWeight
      */
