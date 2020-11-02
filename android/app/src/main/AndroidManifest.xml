@@ -46,6 +46,8 @@
 
         <activity android:name="com.flutter_webview_plugin.WebviewActivity"
             android:parentActivityName=".MainActivity"/>
-
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
     </application>
 </manifest>

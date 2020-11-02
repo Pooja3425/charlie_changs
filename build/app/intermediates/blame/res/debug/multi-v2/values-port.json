@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-port\\values-port.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/values-port/values-port.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\values-port\\values-port.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

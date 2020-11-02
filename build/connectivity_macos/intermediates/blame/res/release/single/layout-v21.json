@@ -1,18 +1,18 @@
 [
     {
-        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity_macos/intermediates/res/merged/release/layout-v21/notification_template_icon_group.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/layout-v21/notification_template_icon_group.xml"
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\connectivity_macos\\intermediates\\res\\merged\\release\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\layout-v21\\notification_template_icon_group.xml"
     },
     {
-        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity_macos/intermediates/res/merged/release/layout-v21/notification_action.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/layout-v21/notification_action.xml"
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\connectivity_macos\\intermediates\\res\\merged\\release\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\layout-v21\\notification_template_custom_big.xml"
     },
     {
-        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity_macos/intermediates/res/merged/release/layout-v21/notification_template_custom_big.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/layout-v21/notification_template_custom_big.xml"
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\connectivity_macos\\intermediates\\res\\merged\\release\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\layout-v21\\notification_action_tombstone.xml"
     },
     {
-        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/connectivity_macos/intermediates/res/merged/release/layout-v21/notification_action_tombstone.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/layout-v21/notification_action_tombstone.xml"
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\connectivity_macos\\intermediates\\res\\merged\\release\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\layout-v21\\notification_action.xml"
     }
 ]

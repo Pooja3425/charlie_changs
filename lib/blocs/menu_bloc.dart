@@ -16,17 +16,17 @@ class MenuBloc
   Stream<Response<MenuResponse>> get dataStream =>
       _regDataController.stream;
 
-  MenuBloc(var bodyData) {
+  MenuBloc(var bodyData,String url) {
     _regDataController = StreamController<Response<MenuResponse>>();
     _menuReository = MenuReository();
     _isStreaming = true;
-    fetchData(bodyData);
+    fetchData(bodyData,url);
   }
 
-  fetchData(var bodyData) async {
+  fetchData(var bodyData,String url) async {
     dataSink.add(Response.loading('Loading...'));
     try {
-      MenuResponse regRes = await _menuReository.fetchResponse(bodyData);
+      MenuResponse regRes = await _menuReository.fetchResponse(bodyData,url);
       if (_isStreaming) dataSink.add(Response.completed(regRes));
     } catch (e) {
       if (_isStreaming) dataSink.add(Response.error(e.toString()));

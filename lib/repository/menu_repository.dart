@@ -4,8 +4,9 @@ import 'package:charliechang/networking/ApiProvider.dart';
 class MenuReository
 {
   ApiProvider _provider = ApiProvider();
-  Future<MenuResponse> fetchResponse(var bodyData) async {
-    final response = await _provider.postToken("shop/menu",bodyData);
+  Future<MenuResponse> fetchResponse(var bodyData,String url) async {
+    // final response = await _provider.postToken("shop/menu",bodyData);
+    final response = await _provider.postToken(url,bodyData);
     return MenuResponse.fromJson(response);
   }
 }

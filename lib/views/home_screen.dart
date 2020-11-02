@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc_pattern/bloc_pattern.dart' as blocPattern;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
@@ -24,6 +25,7 @@ import 'package:charliechang/utils/string_constants.dart';
 import 'package:charliechang/views/address_book_screen.dart';
 import 'package:charliechang/views/checkout_screen.dart';
 import 'package:charliechang/views/demo.dart';
+import 'package:charliechang/views/login_screen.dart';
 import 'package:charliechang/views/pickup_address_screen.dart';
 import 'package:charliechang/views/pickup_checkout_screen.dart';
 import 'package:charliechang/views/refer_screen.dart';
@@ -52,7 +54,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   String dropdownValue = "Home";
-  bool status;
+  bool status=false;
   //List<IconModel> mIconModelList = new List();
   List<String> mImageList = new List();
   List<String> mImageListSlider = new List();
@@ -223,27 +225,41 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text(
-                                status?"Pickup from":DELIVER_TO,
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: hint_text_color,
-                                    fontFamily: "Manrope",
-                                    fontWeight: FontWeight.w300),
-                              ),
+                          Consumer<ScrollModel>(
+                          builder: (context,data,child)
+                          {
+                           // print("DATAA of DElivery==> ${data.getOrderType()}");
+                            return  Text(
+                              data.getOrderType()?"Pickup from":DELIVER_TO,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: hint_text_color,
+                                  fontFamily: "Manrope",
+                                  fontWeight: FontWeight.w300),
+                            );
+                          }),
+
                               InkWell(
                                 onTap: (){
-                                  if(status)
+                                  if(token!=null)
                                     {
-                                      //1 = pickup  0=delivery
-                                     // CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
+                                      if(status)
+                                      {
+                                        //1 = pickup  0=delivery
+                                        // CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
+                                      }
+                                      else
+                                      {
+                                        // CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
+                                      }
                                     }
-                                  else
-                                    {
-                                     // CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
-                                    }
+                                  else{
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                                    //Navigator.of(context).pushReplacementNamed('/LoginScreen');
+                                  }
+
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -251,16 +267,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Container(
-                                        child: Text(
-                                          status?pickupAddressName: deliveryAddressName,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.visible,
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              color: text_color,
-                                              fontFamily: "Manrope",
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                                        child: Consumer<ScrollModel>(
+                                          builder: (context,data,child)
+                                          {
+                                            return Text(
+                                              data.getOrderType()?pickupAddressName: deliveryAddressName,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.visible,
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: text_color,
+                                                  fontFamily: "Manrope",
+                                                  fontWeight: FontWeight.bold),
+                                            );
+                                          },
+                                        )
                                       ),
                                       Align(
                                           alignment: Alignment.center,
@@ -278,56 +299,85 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         Container(
                           height: 35,
                           width: 100,
-                          child: CustomSwitch(
-                            activeColor: switch_bg,
-                            activeText: "Pickup",
-                            inactiveText: "Delivery",
-                            inactiveColor: switch_bg,
-                            activeTextColor: fab_color,
-                            inactiveTextColor: fab_color,
-                            value: status,
-                            onChanged: (value) {
-                              print("VALUE : $value");
-                              setState(() {
-                                status = value;
-                                if(value==true)
-                                {
-                                  var timerInfo = Provider.of<ScrollModel>(context, listen: false);
-                                  timerInfo.setOrderType(true);
-                                  CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
-                                  CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
-                                  print("dataa T${bloc.getCartCount()}");
-                                  if(bloc.getCartCount()==0)
-                                    {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
-                                    }
+                          child:Consumer<ScrollModel>(
+                            builder: (context, data, child)
+                            {
+                            //  print("SSSS==>${data.getOrderType()}");
+                              return  CustomSwitch(
+                                activeColor: switch_bg,
+                                activeText: "Pickup",
+                                inactiveText: "Delivery",
+                                inactiveColor: switch_bg,
+                                activeTextColor: fab_color,
+                                inactiveTextColor: fab_color,
+                                value: data.getOrderType(),
+                                onChanged: (value) {
+                                  print("VALUE : $value");
+                                  setState(() {
+                                    status = value;
+                                  });
+                                  if(value==true) {
+
+                                    var timerInfo = Provider.of<ScrollModel>(
+                                        context, listen: false);
+                                    timerInfo.setOrderType(true);
+                                    CommonMethods.setPreference(
+                                        context, TOGGLE_VALUE, "1");
+                                    CommonMethods.setPreferenceBool(
+                                        context, TOGGLE_VALUE_BOOL, value);
+                                  }
                                   else
                                     {
-                                      showWarningDialog("p");
+                                      var timerInfo = Provider.of<ScrollModel>(context, listen: false);
+                                      timerInfo.setOrderType(false);
+                                      CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
+                                      CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
                                     }
-                                }
-                                else
-                                {
-                                  var timerInfo = Provider.of<ScrollModel>(context, listen: false);
-                                  timerInfo.setOrderType(false);
-                                  CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
-                                  CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
-                                  print("dataa F ${bloc.getCartCount()}");
-                                  if(bloc.getCartCount() == 0)
-                                    {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
-                                    }
-                                  else
-                                    {
-                                      showWarningDialog("d");
-                                    }
-                                }
-
-                                //getDeliveryAddress();
-                              });
-
+                                    if(token!=null)
+                                      {
+                                        print("IN IFFF");
+                                        if(value==true)
+                                        {
+                                          /*var timerInfo = Provider.of<ScrollModel>(context, listen: false);
+                                          timerInfo.setOrderType(true);
+                                          CommonMethods.setPreference(context, TOGGLE_VALUE, "1");
+                                          CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);*/
+                                          print("dataa T${bloc.getCartCount()}");
+                                          if(bloc.getCartCount()==0)
+                                          {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => PickupAddressScreen()));
+                                          }
+                                          else
+                                          {
+                                            showWarningDialog("p");
+                                          }
+                                        }
+                                        else
+                                        {
+                                          /*var timerInfo = Provider.of<ScrollModel>(context, listen: false);
+                                          timerInfo.setOrderType(false);
+                                          CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
+                                          CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
+                                          print("dataa F ${bloc.getCartCount()}");*/
+                                          if(bloc.getCartCount() == 0)
+                                          {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
+                                          }
+                                          else
+                                          {
+                                            showWarningDialog("d");
+                                          }
+                                        }
+                                      }
+                                    else
+                                      {
+                                        print("IN ELSE");
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                                      }
+                                },
+                              );
                             },
-                          ),
+                          )/**/,
                         )
                       ],
                     ),
@@ -387,10 +437,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                       child: Carousel(
                         images: sliderList.map(
                               (url) {
+                               // print("UURL${url.imagePath}");
                             return InkWell(
                               onTap: (){
                                 if(url.title.contains("referral") || url.title.contains("refer") )
                                 {
+
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => ReferScreen(),));
                                 }
                               },
@@ -398,8 +450,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 //margin: EdgeInsets.all(8.0),
                                 child: ClipRRect(
                                   //borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                  child: Image.network(IMAGE_BASE_URL+url.imagePath,
-                                      fit: BoxFit.cover, width: getWidth(context)),
+                                  child: url.imagePath.length>0?CachedNetworkImage(
+                                    imageUrl: IMAGE_BASE_URL+url.imagePath,
+                                      fit: BoxFit.cover, width: getWidth(context),
+                                    placeholder: (BuildContext context, String url) => Container(
+                                      width: getWidth(context)/2-60,
+                                      height: getWidth(context)/2-80,
+                                      color: Colors.white,
+                                    ),
+                                  ):Container()/*Image.network(IMAGE_BASE_URL+url.imagePath,
+                                      fit: BoxFit.cover, width: getWidth(context)),*/
                                 ),
                               ),
                             );
@@ -567,7 +627,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-
                         _IsSearching?  Container(
                             width: getWidth(context),
                             margin: EdgeInsets.only(top: 20),
@@ -580,7 +639,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                               shrinkWrap: true,
                               children: buildSearchList(_searchList),
                             ):Center(child: Text("No such item found"),)
-
                         ): mMenuList.length>0?ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap:true,
@@ -906,13 +964,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                 child: Card(
                   child: AspectRatio(
                     aspectRatio: 7/6,
-                    child: Image.network(
+                    child: CachedNetworkImage(
+                      imageUrl: IMAGE_BASE_URL+mTempList[index].image,
+                      width: getWidth(context)/2-60,
+                      height: getWidth(context)/2-80,
+                      placeholder: (BuildContext context, String url) => Container(
+                        width: getWidth(context)/2-60,
+                        height: getWidth(context)/2-80,
+                        color: Colors.white,
+                      ),
+                    ),
+                    )/*Image.network(
                       IMAGE_BASE_URL+mTempList[index].image,
                       fit: BoxFit.cover,
                       width: getWidth(context)/2-60,
                       height: getWidth(context)/2-80,
-                    ),
-                  ),
+                    )*/
+                  ,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                           Radius.circular(3.3))),
@@ -956,15 +1024,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         fontSize: 12),
                   ),
 
-                  !isRestaurantOpen?  mTempList[index].count ==0?InkWell(
-                    onTap: (){
+                  isRestaurantOpen?  mTempList[index].count ==0?InkWell(
+                    onTap: () async{
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
-                      addToCart(mTempList[index]);
-                      mTempList[index].count++;
-                      //bloc.addToCart(index);
-                      widget.callback1();
-                      widget.func1('ADD');
-                      setState(() {});
+                      SharedPreferences preference = await SharedPreferences.getInstance();
+                      var token = preferences.getString("token");
+                      if(token== null)
+                        {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                        }
+                      else
+                        {
+                          addToCart(mTempList[index]);
+                          mTempList[index].count++;
+                          //bloc.addToCart(index);
+                          widget.callback1();
+                          widget.func1('ADD');
+                          setState(() {});
+                        }
+
                       // _settingModalBottomSheet(context);
                     },
                     child: Container(
@@ -1297,7 +1375,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   CategoryBloc mCategoryBloc;
   CategoryRespose mCategoryRespose;
   void getCategoriesAPI() {
-      mCategoryBloc=CategoryBloc();
+    if(token==null)
+      {
+        mCategoryBloc=CategoryBloc("super_category_list_common");
+      }
+    else{
+      mCategoryBloc=CategoryBloc("super_category_list");
+    }
+
       mCategoryBloc.dataStream.listen((onData){
       mCategoryRespose = onData.data;
       if(onData.status == Status.LOADING)
@@ -1314,10 +1399,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
               mCategoryList = mCategoryRespose.data;
               // hashKey = mCategoryRespose.data[0].hashCode.toString();
               category = "";
-              if(hashKey !=null)
-              {
+              if(token==null)
+                {
+                  deliveryAddressName = mCategoryRespose.dafaultRest.name;
+                }
+
+             /* if(hashKey !=null)
+              {*/
                 getMenuAPI();
-              }
+              //}
 
             });
           }
@@ -1339,7 +1429,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   List<FoodItem> foodList = new List();
   getMenuAPI() {
       final body = jsonEncode({"hash":hashKey,"category":category});
-      mMenuBloc=MenuBloc(body);
+      if(token==null)
+        {
+          mMenuBloc=MenuBloc(body,"shop/menu_common");
+        }
+      else{
+        mMenuBloc=MenuBloc(body,"shop/menu");
+      }
+
       mMenuBloc.dataStream.listen((onData){
       mMenuResponse = onData.data;
       if(onData.status == Status.LOADING)
@@ -1363,61 +1460,85 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
       }
     });
   }
-    SharedPreferences preferences;
+   SharedPreferences preferences;
+   var token;
    getDeliveryAddress() async{
     print("get address");
     preferences = await SharedPreferences.getInstance();
     setState(() {
-      if(preferences.getString(DELIVERY_PICKUP) =="1")
-        {
-          deliveryAddressName = preferences.get(DELIVERY_ADDRESS_NAME);
-          hashKey = preferences.get(DELIVERY_ADDRESS_HASH);
+      token = preferences.getString("token");
+    });
 
-        }
+    setState(() {
+      if(preferences.getString(DELIVERY_PICKUP) =="1")
+      {
+        deliveryAddressName = preferences.get(DELIVERY_ADDRESS_NAME);
+        hashKey = preferences.get(DELIVERY_ADDRESS_HASH);
+
+      }
       else
+      {
+        if(preferences.get(PICKUP_ADDRESS_NAME)!=null)
         {
-          if(preferences.get(PICKUP_ADDRESS_NAME)!=null)
-          {
-            pickupAddressName = preferences.get(PICKUP_ADDRESS_NAME);
-          }
-          hashKey = preferences.get(PICKUP_ADDRESS_HASH);
+          pickupAddressName = preferences.get(PICKUP_ADDRESS_NAME);
         }
+        hashKey = preferences.get(PICKUP_ADDRESS_HASH);
+      }
       print("HASS $hashKey ${preferences.get(TOGGLE_VALUE)}");
     });
 
-    if(preferences.get(TOGGLE_VALUE) !=null)
-    {
-      if(preferences.get(TOGGLE_VALUE)=="0")
-      {
-        print("Zero");
-        setState(() {
-          status = false; //delivery
-        });
-      }
-      else
-      {
-        print("One");
-        setState(() {
-          status = true; //pickup
-        });
-      }
-    }
-    else{
-      setState(() {
-        status=false;
-      });
-    }
-    print("VALUE $status");
-    if(status)
-      {
-        callDeliveryLocationsAPI(preferences.getString(PICKUP_ADDRESS_ID));
-      }
-    else
-      {
-        //String delivery_id = preferences.getString(DELIVERY_ADDRESS_ID);
-        callAddress(preferences.getString(DELIVERY_ADDRESS_ID));
 
-      }
+     if(preferences.getString(TOGGLE_VALUE)==null)
+       {
+         var timerInfo = Provider.of<ScrollModel>(context, listen: false);
+         timerInfo.setOrderType(false);
+         print("VALUE TOGG IF ${preferences.getString(TOGGLE_VALUE)}");
+       }
+     else{
+       print("VALUE TOGG ELSE ${preferences.getString(TOGGLE_VALUE)}");
+
+
+       if(preferences.get(TOGGLE_VALUE) !=null)
+       {
+         if(preferences.get(TOGGLE_VALUE)=="0")
+         {
+           print("Zero");
+           setState(() {
+             status = false; //delivery
+           });
+         }
+         else
+         {
+           print("One");
+           setState(() {
+             status = true; //pickup
+           });
+         }
+       }
+       else{
+         setState(() {
+           status=false;
+         });
+       }
+       if(status)
+       {
+         callDeliveryLocationsAPI(preferences.getString(PICKUP_ADDRESS_ID));
+       }
+
+       else
+       {
+         //String delivery_id = preferences.getString(DELIVERY_ADDRESS_ID);
+         callAddress(preferences.getString(DELIVERY_ADDRESS_ID));
+
+       }
+     }
+
+
+    /* }
+   else{
+     var timerInfo = Provider.of<ScrollModel>(context, listen: false);
+     timerInfo.setOrderType(false);
+   }*/
   }
 
   CustomerAddressBloc mCustomerAddressBloc;
@@ -1515,7 +1636,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
   callSliderApi() async
   {
-    mSliderBloc=SliderBloc();
+    if(token==null)
+      {
+        mSliderBloc=SliderBloc("get_carousal_common");
+      }
+    else{
+      mSliderBloc=SliderBloc("get_carousal");
+    }
+
     mSliderBloc.dataStream.listen((onData){
       mSliderResponse = onData.data;
       //print(onData.status);

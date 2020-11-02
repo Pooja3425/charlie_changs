@@ -64,6 +64,10 @@
             android:name="com.flutter_webview_plugin.WebviewActivity"
             android:parentActivityName="com.brandzgarage.charliechang.MainActivity" />
 
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
+
         <service
             android:name="com.google.firebase.components.ComponentDiscoveryService"
             android:directBootAware="true"

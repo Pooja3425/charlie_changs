@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/incremental/mergeReleaseResources/merged.dir/values-kk/values-kk.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-kk\\values-kk.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/values-kk/values-kk.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\values-kk\\values-kk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/values-kk/values-kk.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\values-kk\\values-kk.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -33,10 +33,10 @@
             ]
         },
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/res/merged/release/values-kk/values-kk.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\release\\values-kk\\values-kk.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/values-kk/values-kk.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\values-kk\\values-kk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -46,7 +46,7 @@
                     }
                 },
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/values-kk/values-kk.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\values-kk\\values-kk.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

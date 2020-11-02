@@ -1,22 +1,22 @@
 [
     {
-        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/fluttertoast/intermediates/res/merged/release/drawable/notification_tile_bg.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/drawable/notification_tile_bg.xml"
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\fluttertoast\\intermediates\\res\\merged\\release\\drawable\\notification_icon_background.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\drawable\\notification_icon_background.xml"
     },
     {
-        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/fluttertoast/intermediates/res/merged/release/drawable/notification_bg.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/drawable/notification_bg.xml"
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\fluttertoast\\intermediates\\res\\merged\\release\\drawable\\toast_bg.xml",
+        "source": "F:\\flutter_windows_1.22.2-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\fluttertoast-4.0.1\\android\\src\\main\\res\\drawable\\toast_bg.xml"
     },
     {
-        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/fluttertoast/intermediates/res/merged/release/drawable/toast_bg.xml",
-        "source": "/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-4.0.1/android/src/main/res/drawable/toast_bg.xml"
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\fluttertoast\\intermediates\\res\\merged\\release\\drawable\\notification_bg_low.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\drawable\\notification_bg_low.xml"
     },
     {
-        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/fluttertoast/intermediates/res/merged/release/drawable/notification_icon_background.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/drawable/notification_icon_background.xml"
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\fluttertoast\\intermediates\\res\\merged\\release\\drawable\\notification_bg.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\drawable\\notification_bg.xml"
     },
     {
-        "merged": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/fluttertoast/intermediates/res/merged/release/drawable/notification_bg_low.xml",
-        "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/drawable/notification_bg_low.xml"
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\fluttertoast\\intermediates\\res\\merged\\release\\drawable\\notification_tile_bg.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\drawable\\notification_tile_bg.xml"
     }
 ]

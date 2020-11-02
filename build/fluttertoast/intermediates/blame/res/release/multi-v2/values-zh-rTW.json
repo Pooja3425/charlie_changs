@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/fluttertoast/intermediates/res/merged/release/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\fluttertoast\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-zh-rTW\\values-zh-rTW.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/values-zh-rTW/values-zh-rTW.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\values-zh-rTW\\values-zh-rTW.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -16,10 +16,10 @@
             ]
         },
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/fluttertoast/intermediates/incremental/mergeReleaseResources/merged.dir/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\fluttertoast\\intermediates\\res\\merged\\release\\values-zh-rTW\\values-zh-rTW.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/values-zh-rTW/values-zh-rTW.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\values-zh-rTW\\values-zh-rTW.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

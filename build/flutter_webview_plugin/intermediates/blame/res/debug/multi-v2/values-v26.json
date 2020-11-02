@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/incremental/mergeDebugResources/merged.dir/values-v26/values-v26.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\values-v26\\values-v26.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/values-v26/values-v26.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\values-v26\\values-v26.xml",
                     "from": {
                         "startLines": "2,3,4,8,12,16",
                         "startColumns": "4,4,4,4,4,4",
@@ -17,10 +17,10 @@
             ]
         },
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_webview_plugin/intermediates/res/merged/debug/values-v26/values-v26.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v26\\values-v26.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/423ddb4916efa34ee0aaf7bc1499bd6c/appcompat-1.1.0/res/values-v26/values-v26.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\values-v26\\values-v26.xml",
                     "from": {
                         "startLines": "2,3,4,8,12,16",
                         "startColumns": "4,4,4,4,4,4",

@@ -16,17 +16,17 @@ class SliderBloc
   Stream<Response<SliderResponse>> get dataStream =>
       _regDataController.stream;
 
-  SliderBloc() {
+  SliderBloc(String url) {
     _regDataController = StreamController<Response<SliderResponse>>();
     _sliderRespository = SliderRespository();
     _isStreaming = true;
-    fetchData();
+    fetchData(url);
   }
 
-  fetchData() async {
+  fetchData(String url) async {
     dataSink.add(Response.loading('Loading...'));
     try {
-      SliderResponse regRes = await _sliderRespository.fetchResponse();
+      SliderResponse regRes = await _sliderRespository.fetchResponse(url);
       if (_isStreaming) dataSink.add(Response.completed(regRes));
     } catch (e) {
       if (_isStreaming) dataSink.add(Response.error(e.toString()));

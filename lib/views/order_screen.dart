@@ -426,7 +426,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
     }
     final body = jsonEncode({"hash":hashKey,"category":""});
-    mMenuBloc=MenuBloc(body);
+    mMenuBloc=MenuBloc(body,"shop/menu");
     mMenuBloc.dataStream.listen((onData){
       mMenuResponse = onData.data;
       if(onData.status == Status.LOADING)

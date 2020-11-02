@@ -4,28 +4,28 @@
 4    package="com.flutter_webview_plugin" >
 5
 6    <uses-sdk android:minSdkVersion="16" />
-6-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml
+6-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml
 7
 8    <application>
-8-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml:5:5-16:19
+8-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml:5:5-16:19
 9        <provider
-9-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml:6:9-15:20
+9-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml:6:9-15:20
 10            android:name="androidx.core.content.FileProvider"
-10-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml:7:13-62
+10-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml:7:13-62
 11            android:authorities="dollar_openBracket_applicationId_closeBracket.fileprovider"
-11-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml:8:13-64
+11-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml:8:13-64
 12            android:exported="false"
-12-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml:9:13-37
+12-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml:9:13-37
 13            android:grantUriPermissions="true"
-13-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml:10:13-47
+13-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml:10:13-47
 14            tools:replace="android:authorities" >
-14-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml:11:13-48
+14-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml:11:13-48
 15            <meta-data
-15-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml:12:13-14:53
+15-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml:12:13-14:53
 16                android:name="android.support.FILE_PROVIDER_PATHS"
-16-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml:13:17-67
+16-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml:13:17-67
 17                android:resource="@xml/filepaths" />
-17-->/home/asmss102/Downloads/flutter_linux_1.17.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/android/src/main/AndroidManifest.xml:14:17-50
+17-->F:\flutter_windows_1.22.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_webview_plugin-0.3.11\android\src\main\AndroidManifest.xml:14:17-50
 18        </provider>
 19    </application>
 20

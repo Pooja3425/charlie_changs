@@ -16,17 +16,17 @@ class CategoryBloc
   Stream<Response<CategoryRespose>> get dataStream =>
       _regDataController.stream;
 
-  CategoryBloc() {
+  CategoryBloc(String url) {
     _regDataController = StreamController<Response<CategoryRespose>>();
     _categoryRepository = CategoryRepository();
     _isStreaming = true;
-    fetchData();
+    fetchData(url);
   }
 
-  fetchData() async {
+  fetchData(String url) async {
     dataSink.add(Response.loading('Getting categories...'));
     try {
-      CategoryRespose regRes = await _categoryRepository.fetchResponse();
+      CategoryRespose regRes = await _categoryRepository.fetchResponse(url);
       if (_isStreaming) dataSink.add(Response.completed(regRes));
     } catch (e) {
       if (_isStreaming) dataSink.add(Response.error(e.toString()));

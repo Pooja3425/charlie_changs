@@ -12,6 +12,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OffersScreen extends StatefulWidget {
   @override
@@ -35,7 +36,8 @@ class _OffersScreenState extends State<OffersScreen> {
       print("INIT MOUN");
       if(_isInternetAvailable)
       {
-        callCouponAPI();
+        checkLogin();
+
       }
       else
       {
@@ -241,4 +243,13 @@ class _OffersScreenState extends State<OffersScreen> {
     Navigator.pop(context);
 
   }
+
+   checkLogin() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var token = preferences.getString("token");
+    if(token!=null)
+      {
+        callCouponAPI();
+      }
+   }
 }

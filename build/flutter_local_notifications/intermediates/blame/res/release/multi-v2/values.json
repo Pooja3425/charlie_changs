@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_local_notifications/intermediates/incremental/mergeReleaseResources/merged.dir/values/values.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_local_notifications\\intermediates\\res\\merged\\release\\values\\values.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/158de9519577c7ffb49592b2f543b9bc/core-1.2.0/res/values/values.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\81c7d086557122b4f5f1c4cbe5e9b49d\\core-1.2.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,83,84,88,89,90,91,98,141,173,210",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/337dd304541e0bb569be8f7e4b87879a/media-1.1.0/res/values/values.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\84386dd4e643abb58e5cb8d891d58fa5\\media-1.1.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -42,10 +42,10 @@
             ]
         },
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/flutter_local_notifications/intermediates/res/merged/release/values/values.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_local_notifications\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/158de9519577c7ffb49592b2f543b9bc/core-1.2.0/res/values/values.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\81c7d086557122b4f5f1c4cbe5e9b49d\\core-1.2.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,83,84,88,89,90,91,98,141,173,210",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -64,7 +64,7 @@
                     }
                 },
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/337dd304541e0bb569be8f7e4b87879a/media-1.1.0/res/values/values.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\84386dd4e643abb58e5cb8d891d58fa5\\media-1.1.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",

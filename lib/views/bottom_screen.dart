@@ -11,6 +11,7 @@ import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:charliechang/views/cart_screen.dart';
 import 'package:charliechang/views/checkout_screen.dart';
+import 'package:charliechang/views/login_screen.dart';
 import 'package:charliechang/views/offers_screen.dart';
 import 'package:charliechang/views/order_detail_screen.dart';
 import 'package:charliechang/views/updates_screen.dart';
@@ -88,15 +89,28 @@ class _BottomScreenState extends State<BottomScreen> {
     }
     else if (page == 1) {
       appBarTitle = 'Announcements';
+      if(token==null)
+        goToLogin();
     }
     else if (page == 2) {
-      appBarTitle = 'Personal Profile';
-      if(count>0)
+      //appBarTitle = 'Personal Profile';
+      if(token==null)
+        goToLogin();
+      else if (count>0)
       goToCheckout();
     }
     else if (page == 3) {
       print("updates $page");
-      appBarTitle = 'Sync Cases';
+     // appBarTitle = 'Sync Cases';
+      if(token==null)
+        goToLogin();
+    }
+
+    else if (page == 4) {
+      print("updates $page");
+      // appBarTitle = 'Sync Cases';
+      if(token==null)
+        goToLogin();
     }
     _pageController.animateToPage(page,
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
@@ -271,6 +285,14 @@ class _BottomScreenState extends State<BottomScreen> {
       Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutScreen(),));
     }
   }
+
+  goToLogin()
+  {
+    if(mounted)
+    {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
+    }
+  }
   Future<bool> exitDialog() {
     showDialog(
         barrierDismissible: true,
@@ -336,9 +358,11 @@ class _BottomScreenState extends State<BottomScreen> {
         });
   }
 
+  var token;
    getCartValue() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
+      token = prefs.getString("token");
       //badgeData = int.parse(prefs.getString(CART_COUNT));
     });
    }

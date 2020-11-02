@@ -58,9 +58,11 @@ final _kTestingCrashlytics = true;
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+  await Firebase.initializeApp();
   HttpOverrides.global = new MyHttpOverrides();
 
   runZonedGuarded(() {
@@ -98,6 +100,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _initializeFlutterFireFuture = _initializeFlutterFire();
+
+    if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+      // Collection is enabled.
+      print("ENABLED");
+    }
   }
 
   @override
@@ -176,8 +183,10 @@ class _MyAppState extends State<MyApp> {
       // Else only enable it in non-debug builds.
       // You could additionally extend this to allow users to opt-in.
       await FirebaseCrashlytics.instance
-          .setCrashlyticsCollectionEnabled(!kDebugMode);
+          .setCrashlyticsCollectionEnabled(kDebugMode);
     }
+    print("DEBUG $kDebugMode");
+    FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
 
     // Pass all uncaught errors to Crashlytics.
     Function originalOnError = FlutterError.onError;
@@ -214,7 +223,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed('/LoginScreen');
+    Navigator.of(context).pushReplacementNamed('/BottomScreen');
     //Navigator.of(context).pushReplacementNamed('/OtpScreen');
   }
 

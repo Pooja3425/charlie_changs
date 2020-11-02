@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/incremental/mergeReleaseResources/merged.dir/values-as/values-as.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\firebase_messaging\\intermediates\\res\\merged\\release\\values-as\\values-as.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/12f58499fe5a189f89b9025446125583/jetified-play-services-basement-17.0.0/res/values-as/values.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\acd39fdef5c0107de3992e87b6d2a826\\jetified-play-services-basement-17.0.0\\res\\values-as\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -21,24 +21,7 @@
                     }
                 },
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/res/values-as/values.xml",
-                    "from": {
-                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
-                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-                        "startOffsets": "245,351,536,657,765,954,1074,1213,1351,1553,1659,1839,1961,2152,2331,2417,2509",
-                        "endColumns": "105,184,120,107,188,119,138,137,201,105,179,121,190,178,85,91,111",
-                        "endOffsets": "350,535,656,764,953,1073,1212,1350,1552,1658,1838,1960,2151,2330,2416,2508,2620"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,215,400,525,637,826,950,1093,1420,1622,1732,1912,2038,2229,2412,2502,2598",
-                        "endColumns": "109,184,124,111,188,123,142,141,201,109,179,125,190,182,89,95,115",
-                        "endOffsets": "210,395,520,632,821,945,1088,1230,1617,1727,1907,2033,2224,2407,2497,2593,2709"
-                    }
-                },
-                {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/c4c163fb818a797929242f430f80837c/jetified-firebase-messaging-20.0.1/res/values-as/values.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\f6b6f2a6e1adccbaa99d8a784e6b01d5\\jetified-firebase-messaging-20.0.1\\res\\values-as\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -55,7 +38,24 @@
                     }
                 },
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/values-as/values-as.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\9b30d51d40ed8427f02fccb93860b0ab\\play-services-base-17.0.0\\res\\values-as\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "245,351,536,657,765,954,1074,1213,1351,1553,1659,1839,1961,2152,2331,2417,2509",
+                        "endColumns": "105,184,120,107,188,119,138,137,201,105,179,121,190,178,85,91,111",
+                        "endOffsets": "350,535,656,764,953,1073,1212,1350,1552,1658,1838,1960,2151,2330,2416,2508,2620"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,215,400,525,637,826,950,1093,1420,1622,1732,1912,2038,2229,2412,2502,2598",
+                        "endColumns": "109,184,124,111,188,123,142,141,201,109,179,125,190,182,89,95,115",
+                        "endOffsets": "210,395,520,632,821,945,1088,1230,1617,1727,1907,2033,2224,2407,2497,2593,2709"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\values-as\\values-as.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -74,10 +74,10 @@
             ]
         },
         {
-            "outputFile": "/home/asmss102/Desktop/WORK_SPACE/practice/Brandzgarage/changs/charlie_changs/build/firebase_messaging/intermediates/res/merged/release/values-as/values-as.xml",
+            "outputFile": "F:\\practice\\new_charlie\\charlie_changs\\build\\firebase_messaging\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-as\\values-as.xml",
             "map": [
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/12f58499fe5a189f89b9025446125583/jetified-play-services-basement-17.0.0/res/values-as/values.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\acd39fdef5c0107de3992e87b6d2a826\\jetified-play-services-basement-17.0.0\\res\\values-as\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -94,24 +94,7 @@
                     }
                 },
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/12172bd92333b24a6ca38dc2aa663cea/play-services-base-17.0.0/res/values-as/values.xml",
-                    "from": {
-                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
-                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-                        "startOffsets": "245,351,536,657,765,954,1074,1213,1351,1553,1659,1839,1961,2152,2331,2417,2509",
-                        "endColumns": "105,184,120,107,188,119,138,137,201,105,179,121,190,178,85,91,111",
-                        "endOffsets": "350,535,656,764,953,1073,1212,1350,1552,1658,1838,1960,2151,2330,2416,2508,2620"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,215,400,525,637,826,950,1093,1420,1622,1732,1912,2038,2229,2412,2502,2598",
-                        "endColumns": "109,184,124,111,188,123,142,141,201,109,179,125,190,182,89,95,115",
-                        "endOffsets": "210,395,520,632,821,945,1088,1230,1617,1727,1907,2033,2224,2407,2497,2593,2709"
-                    }
-                },
-                {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/c4c163fb818a797929242f430f80837c/jetified-firebase-messaging-20.0.1/res/values-as/values.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\f6b6f2a6e1adccbaa99d8a784e6b01d5\\jetified-firebase-messaging-20.0.1\\res\\values-as\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -128,7 +111,24 @@
                     }
                 },
                 {
-                    "source": "/home/asmss102/.gradle/caches/transforms-2/files-2.1/765d948781557ca60ad60520b9d583b2/core-1.1.0/res/values-as/values-as.xml",
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\9b30d51d40ed8427f02fccb93860b0ab\\play-services-base-17.0.0\\res\\values-as\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "245,351,536,657,765,954,1074,1213,1351,1553,1659,1839,1961,2152,2331,2417,2509",
+                        "endColumns": "105,184,120,107,188,119,138,137,201,105,179,121,190,178,85,91,111",
+                        "endOffsets": "350,535,656,764,953,1073,1212,1350,1552,1658,1838,1960,2151,2330,2416,2508,2620"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,215,400,525,637,826,950,1093,1420,1622,1732,1912,2038,2229,2412,2502,2598",
+                        "endColumns": "109,184,124,111,188,123,142,141,201,109,179,125,190,182,89,95,115",
+                        "endOffsets": "210,395,520,632,821,945,1088,1230,1617,1727,1907,2033,2224,2407,2497,2593,2709"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\values-as\\values-as.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

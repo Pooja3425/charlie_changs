@@ -60,7 +60,7 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
               width: getWidth(context),
               height: getHeight(context)-172,
               padding: EdgeInsets.only(top: 15),
-              child: mNotificationList.length>0?ListView.builder(
+              child: mNotificationList!=null && mNotificationList.length>0?ListView.builder(
                 shrinkWrap: true,
                 itemCount: mNotificationList.length,
                 itemBuilder: (context,index){
@@ -120,6 +120,7 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
       else if(onData.status == Status.COMPLETED)
       {
         //CommonMethods.dismissDialog(context);
+        if(mNotificationList!=null)
           setState(() {
             mNotificationList = mNotificationResponse.data;
           });

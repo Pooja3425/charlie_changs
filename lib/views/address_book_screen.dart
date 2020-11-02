@@ -214,9 +214,9 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text(mCustomerAddressList[index].addressName,style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold),),
+                                    Text(mCustomerAddressList[index].addressName!=null?mCustomerAddressList[index].addressName:"",style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold),),
                                     SizedBox(height: 10,),
-                                    Text(mCustomerAddressList[index].address1+" "+mCustomerAddressList[index].address2,style: TextStyle(fontSize: 12,color: notification_title_color),),
+                                    Text(mCustomerAddressList[index].address1!=null&&mCustomerAddressList[index].address2!=null?mCustomerAddressList[index].address1+" "+mCustomerAddressList[index].address2:"",style: TextStyle(fontSize: 12,color: notification_title_color),),
                                     SizedBox(height: 10,),
                                   ],
                                 ),
