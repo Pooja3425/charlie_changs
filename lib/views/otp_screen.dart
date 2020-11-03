@@ -13,6 +13,7 @@ import 'package:charliechang/views/address_book_screen.dart';
 import 'package:charliechang/views/bottom_screen.dart';
 import 'package:charliechang/views/complete_profile_screen.dart';
 import 'package:charliechang/views/home_screen.dart';
+import 'package:charliechang/views/pickup_address_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -347,11 +348,15 @@ class _OtpScreenState extends State<OtpScreen> {
        }
      else
        {
-         Navigator.pushReplacement(
-           context,
-           MaterialPageRoute(builder: (context) => AddressBookScreen(from: "otp",) ),
-         );
-       }
+         print("TOGGLE VALLL==>${prefs.getString(TOGGLE_VALUE)}");
+
+             Navigator.pushReplacement(
+               context,
+               MaterialPageRoute(builder: (context) => AddressBookScreen(from: "otp",) ),
+             );
+           }
+
+
 
 
   }
@@ -371,10 +376,19 @@ class _OtpScreenState extends State<OtpScreen> {
 
    checkAddress() async{
      SharedPreferences preferences = await SharedPreferences.getInstance();
-     if(preferences.getString(DELIVERY_PICKUP)==null)
-       {
+     if(preferences.getString(DELIVERY_PICKUP)==null) {
+       print("TOGGLE${preferences.getString(TOGGLE_VALUE)}");
+       if (preferences.getString(TOGGLE_VALUE) == "1") {
+         Navigator.pushReplacement(
+           context,
+           MaterialPageRoute(
+               builder: (context) => PickupAddressScreen(from: "otp",)),
+         );
+       }
+       else {
          navigateToAddAddress();
        }
+     }
      else
        {
          navigateToHome();

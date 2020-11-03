@@ -228,7 +228,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                           Consumer<ScrollModel>(
                           builder: (context,data,child)
                           {
-                           // print("DATAA of DElivery==> ${data.getOrderType()}");
                             return  Text(
                               data.getOrderType()?"Pickup from":DELIVER_TO,
                               style: TextStyle(
@@ -312,7 +311,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 inactiveTextColor: fab_color,
                                 value: data.getOrderType(),
                                 onChanged: (value) {
-                                  print("VALUE : $value");
                                   setState(() {
                                     status = value;
                                   });
@@ -1488,7 +1486,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     });
 
 
-     if(preferences.getString(TOGGLE_VALUE)==null)
+     if(preferences.getString("token")==null)
        {
          var timerInfo = Provider.of<ScrollModel>(context, listen: false);
          timerInfo.setOrderType(false);
@@ -1496,7 +1494,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
        }
      else{
        print("VALUE TOGG ELSE ${preferences.getString(TOGGLE_VALUE)}");
-
 
        if(preferences.get(TOGGLE_VALUE) !=null)
        {
@@ -1524,12 +1521,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
        {
          callDeliveryLocationsAPI(preferences.getString(PICKUP_ADDRESS_ID));
        }
-
        else
        {
          //String delivery_id = preferences.getString(DELIVERY_ADDRESS_ID);
          callAddress(preferences.getString(DELIVERY_ADDRESS_ID));
-
        }
      }
 
@@ -1542,7 +1537,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   }
 
   CustomerAddressBloc mCustomerAddressBloc;
-  custAddress.CustomerAddressRespose mCustomerAddressRespose;
+  custAddress.CustomerAddressRespose mCustomerAddressRespose = new custAddress.CustomerAddressRespose();
   List<custAddress.Data> mCustomerAddressList ;
   callAddress(delivery_id)
   {
@@ -1559,18 +1554,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
       {
         //CommonMethods.hideDialog();
         CommonMethods.dismissDialog(context);
+          if(mCustomerAddressRespose.data!=null)
+            {
+              for(int i=0;i<mCustomerAddressRespose.data.length;i++)
+              {
+                print("in adresss service${delivery_id}");
+                if(delivery_id == mCustomerAddressRespose.data[i].id)
+                {
 
-           for(int i=0;i<mCustomerAddressRespose.data.length;i++)
-             {
-               print("in adresss service${delivery_id}");
-               if(delivery_id == mCustomerAddressRespose.data[i].id)
-                 {
+                  setState(() {
+                    CommonMethods.setPreference(context, DELIVERY_ADDRESS_HASH, mCustomerAddressRespose.data[i].hash);
+                  });
+                }
+              }
+            }
 
-                   setState(() {
-                     CommonMethods.setPreference(context, DELIVERY_ADDRESS_HASH, mCustomerAddressRespose.data[i].hash);
-                   });
-                 }
-             }
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
 
       }
@@ -1586,7 +1584,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
 
   DeliveryLocationsBloc mDeliveryLocationsBloc;
-  DeliveryLocationsResponse mDeliveryLocationsResponse;
+  DeliveryLocationsResponse mDeliveryLocationsResponse = new DeliveryLocationsResponse();
   void callDeliveryLocationsAPI(pickup_d) {
     print("IN PICKUP $pickup_d");
     mDeliveryLocationsBloc=DeliveryLocationsBloc();
@@ -1600,26 +1598,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
       else if(onData.status == Status.COMPLETED)
       {
         CommonMethods.dismissDialog(context);
-        for(int i=0;i<mDeliveryLocationsResponse.pickup.length;i++)
+        if(mDeliveryLocationsResponse.pickup!=null)
           {
-            if(pickup_d == mDeliveryLocationsResponse.pickup[i].id)
+            for(int i=0;i<mDeliveryLocationsResponse.pickup.length;i++)
+            {
+              if(pickup_d == mDeliveryLocationsResponse.pickup[i].id)
               {
                 print("IN PICKUP IF $pickup_d");
                 CommonMethods.setPreference(context, PICKUP_ADDRESS_HASH, mDeliveryLocationsResponse.pickup[i].hash);
               }
-          }
-        /*setState(() {
-          for(int i=0;i<mDeliveryLocationsResponse.delivery.length;i++)
-            {
-              if(mDeliveryLocationsResponse.delivery[i].name =="Porvorim" || mDeliveryLocationsResponse.delivery[i].name =="Caranzalem")
-                {
-                  mDeliveryLocationsList.add(mDeliveryLocationsResponse.delivery[i]);
-                }
             }
-          print("SIZEE ${mDeliveryLocationsList.length}");
-         // mDeliveryLocationsList = mDeliveryLocationsResponse.delivery;
-        });*/
-        //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
+          }
 
       }
       else if(onData.status == Status.ERROR)

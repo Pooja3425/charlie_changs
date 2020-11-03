@@ -19,7 +19,11 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
 
   @override
   void initState() {
-    notificationAPI();
+    if(mounted)
+      {
+        notificationAPI();
+      }
+
     super.initState();
   }
   @override
@@ -55,12 +59,12 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
               width: getWidth(context),
               color: switch_bg,
             ),
-            Container(
+            mNotificationList!=null?Container(
               color: Colors.white,
               width: getWidth(context),
               height: getHeight(context)-172,
               padding: EdgeInsets.only(top: 15),
-              child: mNotificationList!=null && mNotificationList.length>0?ListView.builder(
+              child:  mNotificationList.length>0?ListView.builder(
                 shrinkWrap: true,
                 itemCount: mNotificationList.length,
                 itemBuilder: (context,index){
@@ -98,7 +102,7 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
               Center(
                 child: Text("No Notification",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
               ),
-            )
+            ):Container()
           ],
         ),
       ),
@@ -110,6 +114,7 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
   List<Data> mNotificationList = new List();
   notificationAPI()
   {
+    mNotificationList = new List();
     mNotificationBloc=NotificationBloc();
     mNotificationBloc.dataStream.listen((onData){
       mNotificationResponse = onData.data;
@@ -120,10 +125,14 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
       else if(onData.status == Status.COMPLETED)
       {
         //CommonMethods.dismissDialog(context);
-        if(mNotificationList!=null)
-          setState(() {
-            mNotificationList = mNotificationResponse.data;
-          });
+        if(mounted)
+          {
+            if(mNotificationList!=null)
+              setState(() {
+                mNotificationList = mNotificationResponse.data;
+              });
+          }
+
       }
       else if(onData.status == Status.ERROR)
       {
