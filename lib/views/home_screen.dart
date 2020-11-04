@@ -55,6 +55,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   String dropdownValue = "Home";
   bool status=false;
+  var toggle_value;
   //List<IconModel> mIconModelList = new List();
   List<String> mImageList = new List();
   List<String> mImageListSlider = new List();
@@ -98,6 +99,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   }
   @override
   void initState() {
+    getDeliveryAddress();
     controller = AutoScrollController(
         viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
         axis: scrollDirection,
@@ -114,7 +116,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
     if(_isInternetAvailable)
       {
-        getDeliveryAddress();
         getCategoriesAPI();
         callSliderApi();
       }
@@ -225,23 +226,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                          Consumer<ScrollModel>(
-                          builder: (context,data,child)
-                          {
-                            return  Text(
-                              data.getOrderType()?"Pickup from":DELIVER_TO,
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: hint_text_color,
-                                  fontFamily: "Manrope",
-                                  fontWeight: FontWeight.w300),
-                            );
-                          }),
-
+                          Text(
+                          status
+                              ? "Pickup from"
+                              : DELIVER_TO,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: hint_text_color,
+                                    fontFamily: "Manrope",
+                                    fontWeight: FontWeight.w300),
+                              ),
                               InkWell(
                                 onTap: (){
                                   if(token!=null)
                                     {
+                                      print("STATTT $status");
                                       if(status)
                                       {
                                         //1 = pickup  0=delivery
@@ -266,20 +265,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Container(
-                                        child: Consumer<ScrollModel>(
-                                          builder: (context,data,child)
-                                          {
-                                            return Text(
-                                              data.getOrderType()?pickupAddressName: deliveryAddressName,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.visible,
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: text_color,
-                                                  fontFamily: "Manrope",
-                                                  fontWeight: FontWeight.bold),
-                                            );
-                                          },
+                                        child:Text(
+                                          status?pickupAddressName: deliveryAddressName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.visible,
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: text_color,
+                                              fontFamily: "Manrope",
+                                              fontWeight: FontWeight.bold),
                                         )
                                       ),
                                       Align(
@@ -315,14 +309,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                     status = value;
                                   });
                                   if(value==true) {
+                                    if(token==null)
+                                      {
+                                        var timerInfo = Provider.of<ScrollModel>(
+                                            context, listen: false);
+                                        timerInfo.setOrderType(false);
+                                        CommonMethods.setPreference(
+                                            context, TOGGLE_VALUE, "1");
+                                        CommonMethods.setPreferenceBool(
+                                            context, TOGGLE_VALUE_BOOL, value);
+                                      }
+                                    else
+                                      {
 
-                                    var timerInfo = Provider.of<ScrollModel>(
-                                        context, listen: false);
-                                    timerInfo.setOrderType(true);
-                                    CommonMethods.setPreference(
-                                        context, TOGGLE_VALUE, "1");
-                                    CommonMethods.setPreferenceBool(
-                                        context, TOGGLE_VALUE_BOOL, value);
+                                        var timerInfo = Provider.of<ScrollModel>(
+                                            context, listen: false);
+                                        timerInfo.setOrderType(true);
+                                        CommonMethods.setPreference(
+                                            context, TOGGLE_VALUE, "1");
+                                        CommonMethods.setPreferenceBool(
+                                            context, TOGGLE_VALUE_BOOL, value);
+                                      }
                                   }
                                   else
                                     {
@@ -511,12 +518,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                             Radius.circular(3.3),
                                           )),
                                       child: Center(
-                                        child: mCategoryList.length>0?Image.network(
+                                        child:mCategoryList[index].image!=null&& mCategoryList.length>0?CachedNetworkImage(imageUrl: IMAGE_BASE_URL+mCategoryList[index].image,
+                                          placeholder: (context,url)=>Container(),
+                                          width: 35,
+                                          height: 35,
+                                          fit: BoxFit.cover, )/*Image.network(
                                           IMAGE_BASE_URL+mCategoryList[index].image,
                                           width: 35,
                                           height: 35,
                                           fit: BoxFit.cover,
-                                        ):Container(),
+                                        )*/:Container(),
                                       ),
                                     ),
                                     SizedBox(
@@ -1145,12 +1156,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                       onTap: (){
 
                       },
-                      child: Image.network(
-                        IMAGE_BASE_URL+mTempList[index].image,
+                      child: mTempList[index].image!=null?CachedNetworkImage(
+                        imageUrl:IMAGE_BASE_URL+mTempList[index].image,
                         fit: BoxFit.cover,
                         width: getWidth(context)/2-60,
                         height: getWidth(context)/2-80,
-                      ),
+                      ):Container(),
                     ),
                   ),
                   shape: RoundedRectangleBorder(
@@ -1491,6 +1502,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
          var timerInfo = Provider.of<ScrollModel>(context, listen: false);
          timerInfo.setOrderType(false);
          print("VALUE TOGG IF ${preferences.getString(TOGGLE_VALUE)}");
+         setState(() {
+           status=false;
+         });
        }
      else{
        print("VALUE TOGG ELSE ${preferences.getString(TOGGLE_VALUE)}");

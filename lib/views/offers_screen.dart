@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:charliechang/blocs/coupon_list_bloc.dart';
 import 'package:charliechang/models/coupons_list_response.dart';
 import 'package:charliechang/networking/Repsonse.dart';
@@ -113,7 +114,7 @@ class _OffersScreenState extends State<OffersScreen> {
                           children: <Widget>[
                             Container(
                                 width: getWidth(context),
-                                child: Image.network(IMAGE_BASE_URL+mCouponsList[index].coupanImage,height: 150,fit: BoxFit.cover,)),
+                                child: CachedNetworkImage(imageUrl:IMAGE_BASE_URL+mCouponsList[index].coupanImage,height: 150,fit: BoxFit.cover,)),
 
                             Padding(
                               padding: const EdgeInsets.only(right:20.0,left: 20.0),

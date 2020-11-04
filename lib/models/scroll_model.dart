@@ -7,7 +7,7 @@ class ScrollModel extends ChangeNotifier{
   bool orderType = false;
   bool getValue() => isScrolling;
   void setScroll(bool val) {
-    // This call tells the widgets that are listening to this model to rebuild.
+    // This call tells th'e widgets that are listening to this model to rebuild.
     isScrolling = val;
 
     notifyListeners();

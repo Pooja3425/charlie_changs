@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:charliechang/blocs/notification_bloc.dart';
 import 'package:charliechang/models/notification_response.dart';
 import 'package:charliechang/networking/Repsonse.dart';
@@ -81,7 +82,7 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          mNotificationList[index].image!=null?Image.network(IMAGE_BASE_URL+"${mNotificationList[index].image}",width: getWidth(context),height: 200,fit: BoxFit.cover,):Container(),
+                          mNotificationList[index].image!=null?CachedNetworkImage(imageUrl:IMAGE_BASE_URL+"${mNotificationList[index].image}",width: getWidth(context),height: 200,fit: BoxFit.cover,):Container(),
                           SizedBox(height: 15,),
                           Text("${mNotificationList[index].title}", style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold,fontFamily: "Manrope"),),
                           SizedBox(height: 15,),
