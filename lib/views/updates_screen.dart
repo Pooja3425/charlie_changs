@@ -82,7 +82,9 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          mNotificationList[index].image!=null?CachedNetworkImage(imageUrl:IMAGE_BASE_URL+"${mNotificationList[index].image}",width: getWidth(context),height: 200,fit: BoxFit.cover,):Container(),
+                          mNotificationList[index].image!=null?CachedNetworkImage(imageUrl:IMAGE_BASE_URL+"${mNotificationList[index].image}",width: getWidth(context),height: 200,fit: BoxFit.cover,
+                            errorWidget: (context,url,error)=>Container(),
+                          placeholder: (context,url)=>Container(),):Container(),
                           SizedBox(height: 15,),
                           Text("${mNotificationList[index].title}", style: TextStyle(fontSize: 15,color: notification_title_color,fontWeight: FontWeight.bold,fontFamily: "Manrope"),),
                           SizedBox(height: 15,),

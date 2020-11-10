@@ -112,12 +112,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     _IsSearching=false;
     sliderList.add(slider.Data(imagePath: ""));
   //  status= false;
-
-
     if(_isInternetAvailable)
       {
-        getCategoriesAPI();
         callSliderApi();
+
+        Future.delayed(Duration(seconds: 1), () {
+
+        });
       }
     else
       {
@@ -226,9 +227,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                          Text(
-                          status
-                              ? "Pickup from"
+                              Text(
+                              status!=null && status ? "Pickup from"
                               : DELIVER_TO,
                                 style: TextStyle(
                                     fontSize: 12,
@@ -359,11 +359,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                         }
                                         else
                                         {
-                                          /*var timerInfo = Provider.of<ScrollModel>(context, listen: false);
-                                          timerInfo.setOrderType(false);
-                                          CommonMethods.setPreference(context, TOGGLE_VALUE, "0");
-                                          CommonMethods.setPreferenceBool(context, TOGGLE_VALUE_BOOL, value);
-                                          print("dataa F ${bloc.getCartCount()}");*/
                                           if(bloc.getCartCount() == 0)
                                           {
                                             Navigator.push(context, MaterialPageRoute(builder: (context) => AddressBookScreen()));
@@ -463,6 +458,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                       height: getWidth(context)/2-80,
                                       color: Colors.white,
                                     ),
+                                    errorWidget: (context,url,error)=>Container(),
                                   ):Container()/*Image.network(IMAGE_BASE_URL+url.imagePath,
                                       fit: BoxFit.cover, width: getWidth(context)),*/
                                 ),
@@ -520,6 +516,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                       child: Center(
                                         child:mCategoryList[index].image!=null&& mCategoryList.length>0?CachedNetworkImage(imageUrl: IMAGE_BASE_URL+mCategoryList[index].image,
                                           placeholder: (context,url)=>Container(),
+                                          errorWidget: (context,url,error)=>Container(),
                                           width: 35,
                                           height: 35,
                                           fit: BoxFit.cover, )/*Image.network(
@@ -977,6 +974,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                       imageUrl: IMAGE_BASE_URL+mTempList[index].image,
                       width: getWidth(context)/2-60,
                       height: getWidth(context)/2-80,
+                      fit: BoxFit.cover,
+                      errorWidget: (BuildContext context,String url,error)=>Container(),
                       placeholder: (BuildContext context, String url) => Container(
                         width: getWidth(context)/2-60,
                         height: getWidth(context)/2-80,
@@ -1161,6 +1160,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         fit: BoxFit.cover,
                         width: getWidth(context)/2-60,
                         height: getWidth(context)/2-80,
+                        errorWidget: (BuildContext context,String url,error)=>Container(),
+                        placeholder: (context,url)=>Container(),
                       ):Container(),
                     ),
                   ),
@@ -1459,6 +1460,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
           isMenuCalled= true;
           mMenuList = mMenuResponse.menu;
           setRestaurantTiming();
+
         });
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
       }
@@ -1660,6 +1662,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
        if(mounted)
          {
            CommonMethods.dismissDialog(context);
+           getCategoriesAPI();
            setState(() {
              sliderList.clear();
              sliderList=mSliderResponse.data;

@@ -38,7 +38,6 @@ class _OffersScreenState extends State<OffersScreen> {
       if(_isInternetAvailable)
       {
         checkLogin();
-
       }
       else
       {
@@ -114,7 +113,10 @@ class _OffersScreenState extends State<OffersScreen> {
                           children: <Widget>[
                             Container(
                                 width: getWidth(context),
-                                child: CachedNetworkImage(imageUrl:IMAGE_BASE_URL+mCouponsList[index].coupanImage,height: 150,fit: BoxFit.cover,)),
+                                child: CachedNetworkImage(imageUrl:IMAGE_BASE_URL+mCouponsList[index].coupanImage,
+                                  height: 150,fit: BoxFit.cover,
+                                  placeholder: (context,url)=>Container(),
+                                  errorWidget: (context,url,error)=>Container(),)),
 
                             Padding(
                               padding: const EdgeInsets.only(right:20.0,left: 20.0),

@@ -33,7 +33,8 @@ class ApiProvider {
     var token = prefs.getString("token");
     Map<String , String> headers = {
       'Accept':'application/json',
-      'Authorization':token
+      'Authorization':token,
+      "Connection": "keep-alive",
     };
 
     var responseJson;
@@ -50,7 +51,7 @@ class ApiProvider {
 
   Future<dynamic> post(String url,var bodyData) async {
     var responseJson;
-    Map<String,String> headers = {'Content-Type':'application/json'};
+    Map<String,String> headers = {'Content-Type':'application/json',"Connection": "keep-alive",};
     print("URL ${_baseUrl+url}  ${bodyData} ");
     try {
       final response = await http.post(_baseUrl + url,body: bodyData,headers: headers);
@@ -111,7 +112,8 @@ class ApiProvider {
     var token = prefs.getString("token");
     Map<String , String> headers = {
       'Accept':'application/json',
-      'Authorization':token
+      'Authorization':token,
+      "Connection": "keep-alive",
     };
     print("HEEE ${headers} ${bodyData} ${_baseUrl+url}");
 
