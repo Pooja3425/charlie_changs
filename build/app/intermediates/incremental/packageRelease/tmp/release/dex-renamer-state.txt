@@ -1,0 +1,4 @@
+#Wed Nov 11 19:17:31 IST 2020
+base.0=F\:\\practice\\new_charlie\\charlie_changs\\build\\app\\intermediates\\transforms\\r8\\release\\0\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

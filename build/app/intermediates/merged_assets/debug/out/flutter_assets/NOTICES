@@ -4734,6 +4734,7 @@ url_launcher_platform_interface
 
 --------------------------------------------------------------------------------
 connectivity_for_web
+flutter_image
 
 Copyright 2016, the Flutter project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without

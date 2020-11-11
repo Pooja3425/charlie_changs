@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\firebase_core\\intermediates\\res\\merged\\release\\color\\common_google_signin_btn_text_light.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\9b30d51d40ed8427f02fccb93860b0ab\\play-services-base-17.0.0\\res\\color\\common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\firebase_core\\intermediates\\res\\merged\\release\\color\\common_google_signin_btn_tint.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\9b30d51d40ed8427f02fccb93860b0ab\\play-services-base-17.0.0\\res\\color\\common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\firebase_core\\intermediates\\res\\merged\\release\\color\\common_google_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\9b30d51d40ed8427f02fccb93860b0ab\\play-services-base-17.0.0\\res\\color\\common_google_signin_btn_text_dark.xml"
+    }
+]

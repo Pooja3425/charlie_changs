@@ -31,6 +31,7 @@ import 'package:charliechang/views/pickup_checkout_screen.dart';
 import 'package:charliechang/views/refer_screen.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_image/network.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 import 'package:marquee/marquee.dart';
@@ -114,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   //  status= false;
     if(_isInternetAvailable)
       {
-        callSliderApi();
+       callSliderApi();
 
         Future.delayed(Duration(seconds: 1), () {
 
@@ -970,7 +971,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                 child: Card(
                   child: AspectRatio(
                     aspectRatio: 7/6,
-                    child: CachedNetworkImage(
+                    child:Image(
+                      image: NetworkImageWithRetry(IMAGE_BASE_URL +mTempList[index].image,
+                            scale: 0.85),  // NetworkImageWithRetry
+                        fit: BoxFit.fill,
+                        errorBuilder: (context,obg,url)=>Container(),
+                    ),  /* CachedNetworkImage(
                       imageUrl: IMAGE_BASE_URL+mTempList[index].image,
                       width: getWidth(context)/2-60,
                       height: getWidth(context)/2-80,
@@ -981,7 +987,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         height: getWidth(context)/2-80,
                         color: Colors.white,
                       ),
-                    ),
+                    ),*/
                     )/*Image.network(
                       IMAGE_BASE_URL+mTempList[index].image,
                       fit: BoxFit.cover,
@@ -1155,14 +1161,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                       onTap: (){
 
                       },
-                      child: mTempList[index].image!=null?CachedNetworkImage(
+                      child: mTempList[index].image!=null?Image(
+                        image: NetworkImageWithRetry(IMAGE_BASE_URL +mTempList[index].image,
+                            scale: 0.85),  // NetworkImageWithRetry
+                        fit: BoxFit.fill,
+                        errorBuilder: (context,obg,url)=>Container(),
+                      )/*CachedNetworkImage(
                         imageUrl:IMAGE_BASE_URL+mTempList[index].image,
                         fit: BoxFit.cover,
                         width: getWidth(context)/2-60,
                         height: getWidth(context)/2-80,
                         errorWidget: (BuildContext context,String url,error)=>Container(),
                         placeholder: (context,url)=>Container(),
-                      ):Container(),
+                      )*/:Container(),
                     ),
                   ),
                   shape: RoundedRectangleBorder(
