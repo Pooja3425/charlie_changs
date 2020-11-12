@@ -80,7 +80,7 @@ class PayScreen extends StatelessWidget {
                 appBar: AppBar(
                   title: const Text(''),
                 ),
-                withZoom: false,
+                withZoom: true,
                 withLocalStorage: true,
                 hidden: true,
                 initialChild: Container(
@@ -1538,7 +1538,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(3.3))),
                       child: InkWell(
                           onTap: (){
-                            flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl);
+                            flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl,withZoom: true,
+                              rect: new Rect.fromLTWH(
+                                0.0,
+                                0.0,
+                                MediaQuery.of(context).size.width,
+                                MediaQuery.of(context).size.height,
+                              ),
+                            );
                             setState(() {
                               isPaymentFail=false;
                             });
@@ -1628,7 +1635,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         if(mOnlinePaymentResponse.paymentUrl!=null)
           {
             //Let's open the url in webview.
-            flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl/*"https://test.instamojo.com/@dipak_4d8a6/bf25a6b0e91146479d71b5b002d1ab5d"*/,
+            flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl,
+                rect: new Rect.fromLTWH(
+                  0.0,
+                  0.0,
+                  MediaQuery.of(context).size.width,
+                  MediaQuery.of(context).size.height,
+                )
+                /*"https://test.instamojo.com/@dipak_4d8a6/bf25a6b0e91146479d71b5b002d1ab5d"*/,
               /*userAgent: kAndroidUserAgent*/);
             setState(() {
               ordercode= mOnlinePaymentResponse.ordercode;
@@ -1805,7 +1819,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           InkWell(
                               onTap: (){
                                 flutterWebviewPlugin.close();
-                                flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl);
+                                flutterWebviewPlugin.launch(mOnlinePaymentResponse.paymentUrl,
+                                    rect: new Rect.fromLTWH(
+                                      0.0,
+                                      0.0,
+                                      MediaQuery.of(context).size.width,
+                                      MediaQuery.of(context).size.height,
+                                    ));
                                 Navigator.of(context).pop(false);
                                 setState(() {
                                   isWebviewopen=true;
