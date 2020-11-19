@@ -56,14 +56,23 @@ final _kShouldTestAsyncErrorOnInit = false;
 // Toggle this for testing Crashlytics in your app locally.
 final _kTestingCrashlytics = true;
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..maxConnectionsPerHost = 5;
+  }
+}
+
 void main() async{
+  HttpOverrides.global = new MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
   await Firebase.initializeApp();
-  HttpOverrides.global = new MyHttpOverrides();
+
 
   runZonedGuarded(() {
     runApp(
@@ -78,13 +87,6 @@ void main() async{
   });
 
 
-}
-class MyHttpOverrides extends HttpOverrides{
-  @override
-  HttpClient createHttpClient(SecurityContext context){
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
-  }
 }
 
 class MyApp extends StatefulWidget {

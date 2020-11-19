@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:bloc_pattern/bloc_pattern.dart' as blocPattern;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -30,6 +31,7 @@ import 'package:charliechang/views/pickup_address_screen.dart';
 import 'package:charliechang/views/pickup_checkout_screen.dart';
 import 'package:charliechang/views/refer_screen.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:dynamic_url_image_cache/dynamic_url_image_cache.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_image/network.dart';
 import 'package:getwidget/getwidget.dart';
@@ -39,6 +41,7 @@ import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'switch_ui.dart';
 import 'package:charliechang/models/slider_response.dart' as slider;
 import 'package:charliechang/models/customer_address_response_model.dart' as custAddress;
@@ -451,16 +454,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 //margin: EdgeInsets.all(8.0),
                                 child: ClipRRect(
                                   //borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                  child: url.imagePath.length>0?CachedNetworkImage(
-                                    imageUrl: IMAGE_BASE_URL+url.imagePath,
-                                      fit: BoxFit.cover, width: getWidth(context),
-                                    placeholder: (BuildContext context, String url) => Container(
-                                      width: getWidth(context)/2-60,
-                                      height: getWidth(context)/2-80,
-                                      color: Colors.white,
-                                    ),
-                                    errorWidget: (context,url,error)=>Container(),
-                                  ):Container()/*Image.network(IMAGE_BASE_URL+url.imagePath,
+                                  child: url.imagePath.length>0? Image.network(IMAGE_BASE_URL+url.imagePath,
+                                      fit: BoxFit.cover, width: getWidth(context)):Container()/*Image.network(IMAGE_BASE_URL+url.imagePath,
                                       fit: BoxFit.cover, width: getWidth(context)),*/
                                 ),
                               ),
@@ -661,7 +656,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                         style: TextStyle(color: fab_color,fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                    content:  GridView.count(
+                                    content: /*StreamBuilder(
+                                      stream: mMenuBloc.fetchData(jsonEncode({"hash":hashKey,"category":category}), "shop/menu_common"),
+                                      builder: (context,snapshot){
+                                        if(snapshot.hasData)
+                                          {
+                                            return GridView.count(
+                                              physics: NeverScrollableScrollPhysics(),
+                                              crossAxisCount: 2,
+                                              childAspectRatio: 0.65,
+                                              //controller: new ScrollController(keepScrollOffset: false),
+                                              shrinkWrap: true,
+                                              children: buildList(mMenuList,mCategoryList[index].name),
+                                            );
+                                          }
+
+                                        return Center(child: CircularProgressIndicator());
+                                      },
+                                    )*/ GridView.count(
                                       physics: NeverScrollableScrollPhysics(),
                                       crossAxisCount: 2,
                                       childAspectRatio: 0.65,
@@ -971,12 +983,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                 child: Card(
                   child: AspectRatio(
                     aspectRatio: 7/6,
-                    child:Image(
+                    child:/*Image(
+                      image: DynamicUrlImageCache(
+                       // imageId: "sd"+Random().nextInt(1000).toString(),
+                        imageUrl: IMAGE_BASE_URL+mTempList[index].image,
+                      ),
+                    )*/
+                    FadeInImage.memoryNetwork(
+                      //placeholder: 'assets/images/tranperant_img.png',
+                      placeholder: kTransparentImage,
+                      image: IMAGE_BASE_URL +mTempList[index].image,
+                      fit: BoxFit.cover,
+                    )
+                    /*Image(
                       image: NetworkImageWithRetry(IMAGE_BASE_URL +mTempList[index].image,
-                            scale: 0.85),  // NetworkImageWithRetry
+                            scale: 0.85,),  // NetworkImageWithRetry
                         fit: BoxFit.fill,
+
                         errorBuilder: (context,obg,url)=>Container(),
-                    ),  /* CachedNetworkImage(
+                    ),*/  /* CachedNetworkImage(
                       imageUrl: IMAGE_BASE_URL+mTempList[index].image,
                       width: getWidth(context)/2-60,
                       height: getWidth(context)/2-80,
@@ -1161,11 +1186,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                       onTap: (){
 
                       },
-                      child: mTempList[index].image!=null?Image(
-                        image: NetworkImageWithRetry(IMAGE_BASE_URL +mTempList[index].image,
-                            scale: 0.85),  // NetworkImageWithRetry
-                        fit: BoxFit.fill,
-                        errorBuilder: (context,obg,url)=>Container(),
+                      child: mTempList[index].image!=null? FadeInImage.assetNetwork(
+                        placeholder: 'assets/images/tranperant_img.png',
+                        image: IMAGE_BASE_URL +mTempList[index].image,
+                        fit: BoxFit.cover,
                       )/*CachedNetworkImage(
                         imageUrl:IMAGE_BASE_URL+mTempList[index].image,
                         fit: BoxFit.cover,
@@ -1448,7 +1472,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   List<Menu> mMenuList = new List();
 
   List<FoodItem> foodList = new List();
-  getMenuAPI() {
+  getMenuAPI() async{
       final body = jsonEncode({"hash":hashKey,"category":category});
       if(token==null)
         {

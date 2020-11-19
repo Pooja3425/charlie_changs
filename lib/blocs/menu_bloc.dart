@@ -22,7 +22,6 @@ class MenuBloc
     _isStreaming = true;
     fetchData(bodyData,url);
   }
-
   fetchData(var bodyData,String url) async {
     dataSink.add(Response.loading('Loading...'));
     try {

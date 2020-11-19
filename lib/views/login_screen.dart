@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:charliechang/blocs/register_bloc.dart';
 import 'package:charliechang/models/register_response_model.dart';
@@ -39,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return WillPopScope(
       onWillPop: goBack,
       child: Scaffold(
+
         body: SingleChildScrollView(
           child: Container(
             width: getWidth(context),
@@ -49,7 +51,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   width: getWidth(context),
                   height: getHeight(context)/2,
-                  child: Image.asset("assets/images/reg_img.png",fit: BoxFit.cover,),
+                  child: Stack(
+                    children: [
+
+                      Image.asset("assets/images/reg_img.png",fit: BoxFit.cover,width: double.infinity,),
+                      Platform.isIOS?Positioned(
+                          top: 50,
+                          left: 15,
+                          child: InkWell(
+                              onTap: ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => BottomScreen()),),
+                              child: Icon(Icons.arrow_back_ios_sharp,color: Colors.black,size: 30,))):Container(),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left:30.0,right: 30.0),

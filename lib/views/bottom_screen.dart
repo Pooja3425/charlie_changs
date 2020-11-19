@@ -128,7 +128,7 @@ class _BottomScreenState extends State<BottomScreen> {
         body: Container(
           height: getHeight(context),
           child: new PageView(
-           // physics: NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             children: [
               new  HomeScreen(
                 callback1: () {
@@ -173,6 +173,7 @@ class _BottomScreenState extends State<BottomScreen> {
             canvasColor: const Color(0xFFFFFFFF),
           ), // sets the inactive color of the `BottomNavigationBar`
           child: new BottomNavigationBar(
+
             selectedItemColor: fab_color,
             unselectedItemColor: icon_color,
             type: BottomNavigationBarType.fixed,
