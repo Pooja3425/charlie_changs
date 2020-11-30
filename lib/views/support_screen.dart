@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:store_redirect/store_redirect.dart';
-
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 class SupportScreen extends StatefulWidget {
   @override
   _SupportScreenState createState() => _SupportScreenState();
@@ -296,7 +296,16 @@ class _SupportScreenState extends State<SupportScreen> {
           SizedBox(height: 10,),
           Text("${data.outletAddress}",style: TextStyle(color: notification_title_color),),
           SizedBox(height: 10,),
-          Text("+91 - ${data.outletMobile}  |  ${data.outletEmail}",style: TextStyle(color: notification_title_color),),
+          Row(
+            children: [
+              InkWell(
+                onTap: ()=>UrlLauncher.launch("tel://${data.outletMobile}"),
+                  child: Text("+91 - ${data.outletMobile}  | ",style: TextStyle(color: notification_title_color),)),
+              InkWell(
+                  onTap: ()=>UrlLauncher.launch("mailto://${data.outletEmail}"),
+                  child: Text( "${data.outletEmail}",style: TextStyle(color: notification_title_color),)),
+            ],
+          ),
           SizedBox(height: 20,),
           CommonMethods.horizontalLine(context),
         ],

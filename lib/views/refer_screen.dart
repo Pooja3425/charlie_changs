@@ -185,7 +185,7 @@ class _ReferScreenState extends State<ReferScreen> {
     await FlutterShare.share(
         title: "Charlie Chang's",
         text: "Hey there! Order best Oriental & Chinese food from Charlie Chang's & get 1000 loyalty points on your 1st successful order. Use code -"+coupon_code,
-       // linkUrl: 'https://flutter.dev/',
+        linkUrl: 'bit.ly/charliechangsapp',
         chooserTitle: 'Share coupon code'
     );
   }

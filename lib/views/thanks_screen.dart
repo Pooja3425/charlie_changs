@@ -4,6 +4,7 @@ import 'package:charliechang/utils/size_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'bottom_screen.dart';
 import 'order_screen.dart';
 
 class ThanksScreen extends StatefulWidget {
@@ -20,12 +21,14 @@ class _ThanksScreenState extends State<ThanksScreen> {
       onWillPop: navigateToHome,
       child: SafeArea(
         child: Scaffold(
+
           body: Container(
             color: switch_bg,
             width: getWidth(context),
             height: getHeight(context),
             child: Stack(
               children: <Widget>[
+
                 Container(
                   color: button_color,
                   width: getWidth(context),
@@ -67,7 +70,13 @@ class _ThanksScreenState extends State<ThanksScreen> {
                             child: Text("Track Order",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),color: button_color,)
                         ],
                       ),
-                    ))
+                    )),
+                Positioned(
+                    top: 30,
+                    left: 20,
+                    child: InkWell(
+                        onTap: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(),)),
+                        child: Icon(Icons.arrow_back_ios_sharp,color: Colors.white,))),
               ],
             ),
           ),
