@@ -286,6 +286,23 @@ class _PointsScreenState extends State<PointsScreen> {
                           Flexible(child: Text("2000 points are worth Rs. 200*",style: TextStyle(color: Colors.black),)),
                         ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top:8.0),
+                            child: Container(
+                              width: 7,
+                              height: 7,
+                              decoration: BoxDecoration(shape: BoxShape.circle,color: fab_color),
+                            ),
+                          ),
+                          SizedBox(width: 5,),
+                          Text("Enter OTP.",style: TextStyle(color: Colors.black),),
+                        ],
+                      ),
+                      SizedBox(height: 8,),
                     ],
                   ),
                 ),

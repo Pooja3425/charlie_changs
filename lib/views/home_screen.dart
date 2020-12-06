@@ -101,6 +101,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
    _subscription.cancel();
     super.dispose();
   }
+
+
+  String day;
   @override
   void initState() {
     getDeliveryAddress();
@@ -115,6 +118,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     mImageListSlider.add("assets/images/image.png");
     _IsSearching=false;
     sliderList.add(slider.Data(imagePath: ""));
+    var now = new DateTime.now();
+    print("WEEk DAYYY ${DateFormat('EEEE').format(now)}");
+    day = DateFormat('EEEE').format(now);
+
   //  status= false;
     if(_isInternetAvailable)
       {
@@ -206,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
           },
         ),
         appBar: PreferredSize(
-          preferredSize: isRestaurantOpen? Size.fromHeight(70):Size.fromHeight(90),
+          preferredSize: day!="Monday"&&isRestaurantOpen? Size.fromHeight(70):Size.fromHeight(90),
           child: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
@@ -385,8 +392,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         )
                       ],
                     ),
-                   isRestaurantOpen? SizedBox(height: 1,):SizedBox(height: 10,),
-                    isRestaurantOpen?
+                    day!="Monday"&& isRestaurantOpen? SizedBox(height: 1,):SizedBox(height: 10,),
+                    day!="Monday"&&isRestaurantOpen?
                     Container():Container(
                         height: 25,
                         width: getWidth(context),
@@ -1063,7 +1070,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         fontSize: 12),
                   ),
 
-                  isRestaurantOpen?  mTempList[index].count ==0?InkWell(
+                  day!="Monday"&&isRestaurantOpen?  mTempList[index].count ==0?InkWell(
                     onTap: () async{
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                       SharedPreferences preference = await SharedPreferences.getInstance();
@@ -1239,7 +1246,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                           color: icon_color,
                           fontSize: 12),
                     ),
-                    isRestaurantOpen? mTempList[index].count ==0?InkWell(
+                    day!="Monday"&& isRestaurantOpen? mTempList[index].count ==0?InkWell(
                       onTap: (){
                         //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                         addToCart(mTempList[index]);
