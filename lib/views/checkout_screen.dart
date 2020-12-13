@@ -1917,7 +1917,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final body = jsonEncode(
         {
-          "number":/*preferences.getString(PHONE_NUMBER)*/"8554063733",
+          "number":preferences.getString(PHONE_NUMBER)/*"8554063733"*/,
         });
     mRedeemOTPBloc=RedeemOTPBloc(body);
     mRedeemOTPBloc.dataStream.listen((onData){

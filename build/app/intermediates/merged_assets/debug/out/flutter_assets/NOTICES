@@ -1114,6 +1114,7 @@ async
 collection
 convert
 crypto
+mime
 stream_channel
 typed_data
 
@@ -12030,6 +12031,7 @@ SOFTWARE.
 
 --------------------------------------------------------------------------------
 path_provider
+share
 
 Copyright 2017, the Flutter project authors. All rights reserved.
 

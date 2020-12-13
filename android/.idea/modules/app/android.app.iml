@@ -102,7 +102,7 @@
     <orderEntry type="library" name="Gradle: androidx.loader:loader:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.activity:activity:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.customview:customview:1.0.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: androidx.core:core:1.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.core:core:1.3.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-runtime:2.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.savedstate:savedstate:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata:2.0.0@aar" level="project" />
@@ -142,6 +142,7 @@
     <orderEntry type="module" module-name="android.connectivity" />
     <orderEntry type="module" module-name="android.store_redirect" />
     <orderEntry type="module" module-name="android.shared_preferences" />
+    <orderEntry type="module" module-name="android.share" />
     <orderEntry type="module" module-name="android.firebase_core" />
   </component>
 </module>

@@ -461,7 +461,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                 //margin: EdgeInsets.all(8.0),
                                 child: ClipRRect(
                                   //borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                  child: url.imagePath.length>0? Image.network(IMAGE_BASE_URL+url.imagePath,
+                                  child: url.imagePath.length>0? CachedNetworkImage(imageUrl: IMAGE_BASE_URL+url.imagePath,
                                       fit: BoxFit.cover, width: getWidth(context)):Container()/*Image.network(IMAGE_BASE_URL+url.imagePath,
                                       fit: BoxFit.cover, width: getWidth(context)),*/
                                 ),
@@ -1070,7 +1070,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         fontSize: 12),
                   ),
 
-                  day!="Monday"&&isRestaurantOpen?  mTempList[index].count ==0?InkWell(
+                  day!="Monday"&&!isRestaurantOpen?  mTempList[index].count ==0?InkWell(
                     onTap: () async{
                       //final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
                       SharedPreferences preference = await SharedPreferences.getInstance();

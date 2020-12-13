@@ -41,7 +41,7 @@
 24        android:name="com.brandzgarage.charliechang.Application"
 24-->F:\practice\new_charlie\charlie_changs\android\app\src\main\AndroidManifest.xml:13:9-36
 25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-25-->[androidx.core:core:1.2.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\81c7d086557122b4f5f1c4cbe5e9b49d\core-1.2.0\AndroidManifest.xml:24:18-86
+25-->[androidx.core:core:1.3.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\28c01776a2bfe987c690c002544ab090\core-1.3.1\AndroidManifest.xml:24:18-86
 26        android:debuggable="true"
 27        android:icon="@mipmap/ic_launcher"
 27-->F:\practice\new_charlie\charlie_changs\android\app\src\main\AndroidManifest.xml:15:9-43
@@ -223,125 +223,143 @@
 122-->[:url_launcher] F:\practice\new_charlie\charlie_changs\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-37
 123            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 123-->[:url_launcher] F:\practice\new_charlie\charlie_changs\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-71
-124        <!--
-125             FirebaseMessagingService performs security checks at runtime,
-126             but set to not exported to explicitly avoid allowing another app to call it.
-127        -->
-128        <service
-128-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\3df385e379c19de80dcd128ae4fe1c7c\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:28:9-34:19
-129            android:name="com.google.firebase.messaging.FirebaseMessagingService"
-129-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\3df385e379c19de80dcd128ae4fe1c7c\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:29:13-82
-130            android:exported="false" >
-130-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\3df385e379c19de80dcd128ae4fe1c7c\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:30:13-37
-131            <intent-filter android:priority="-500" >
-131-->[:firebase_messaging] F:\practice\new_charlie\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:29
-132                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-132-->[:firebase_messaging] F:\practice\new_charlie\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-78
-132-->[:firebase_messaging] F:\practice\new_charlie\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:25-75
-133            </intent-filter>
-134        </service>
-135
-136        <receiver
-136-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:37:9-44:20
-137            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
-137-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:38:13-78
-138            android:exported="true"
-138-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:39:13-36
-139            android:permission="com.google.android.c2dm.permission.SEND" >
-139-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:40:13-73
-140            <intent-filter>
-140-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:41:13-43:29
-141                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-141-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:42:17-81
-141-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:42:25-78
-142            </intent-filter>
-143        </receiver>
-144
-145        <provider
-145-->[com.google.firebase:firebase-common:19.3.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\670f2539f316d41b9bc744467ac7aa75\jetified-firebase-common-19.3.0\AndroidManifest.xml:26:9-30:39
-146            android:name="com.google.firebase.provider.FirebaseInitProvider"
-146-->[com.google.firebase:firebase-common:19.3.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\670f2539f316d41b9bc744467ac7aa75\jetified-firebase-common-19.3.0\AndroidManifest.xml:27:13-77
-147            android:authorities="com.brandzgarage.charliechang.firebaseinitprovider"
-147-->[com.google.firebase:firebase-common:19.3.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\670f2539f316d41b9bc744467ac7aa75\jetified-firebase-common-19.3.0\AndroidManifest.xml:28:13-72
-148            android:exported="false"
-148-->[com.google.firebase:firebase-common:19.3.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\670f2539f316d41b9bc744467ac7aa75\jetified-firebase-common-19.3.0\AndroidManifest.xml:29:13-37
-149            android:initOrder="100" />
-149-->[com.google.firebase:firebase-common:19.3.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\670f2539f316d41b9bc744467ac7aa75\jetified-firebase-common-19.3.0\AndroidManifest.xml:30:13-36
-150
-151        <activity
-151-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
-152            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-152-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:24:13-79
-153            android:exported="false"
-153-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:25:13-37
-154            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-154-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:26:13-72
-155
-156        <receiver
-156-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:29:9-33:20
-157            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
-157-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:30:13-85
-158            android:enabled="true"
-158-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:31:13-35
-159            android:exported="false" >
-159-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:32:13-37
-160        </receiver>
-161
-162        <service
-162-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:35:9-38:40
-163            android:name="com.google.android.gms.measurement.AppMeasurementService"
-163-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:36:13-84
-164            android:enabled="true"
-164-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:37:13-35
-165            android:exported="false" />
-165-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:38:13-37
-166        <service
-166-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:39:9-43:72
-167            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
-167-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:40:13-87
+124
+125        <provider
+125-->[:share] F:\practice\new_charlie\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-16:20
+126            android:name="io.flutter.plugins.share.ShareFileProvider"
+126-->[:share] F:\practice\new_charlie\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-70
+127            android:authorities="com.brandzgarage.charliechang.flutter.share_provider"
+127-->[:share] F:\practice\new_charlie\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-74
+128            android:exported="false"
+128-->[:share] F:\practice\new_charlie\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-37
+129            android:grantUriPermissions="true" >
+129-->[:share] F:\practice\new_charlie\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-47
+130            <meta-data
+130-->[:flutter_webview_plugin] F:\practice\new_charlie\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-17:53
+131                android:name="android.support.FILE_PROVIDER_PATHS"
+131-->[:flutter_webview_plugin] F:\practice\new_charlie\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:16:17-67
+132                android:resource="@xml/flutter_share_file_paths" />
+132-->[:flutter_webview_plugin] F:\practice\new_charlie\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:17:17-50
+133        </provider>
+134        <!--
+135             FirebaseMessagingService performs security checks at runtime,
+136             but set to not exported to explicitly avoid allowing another app to call it.
+137        -->
+138        <service
+138-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\3df385e379c19de80dcd128ae4fe1c7c\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:28:9-34:19
+139            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+139-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\3df385e379c19de80dcd128ae4fe1c7c\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:29:13-82
+140            android:exported="false" >
+140-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\3df385e379c19de80dcd128ae4fe1c7c\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:30:13-37
+141            <intent-filter android:priority="-500" >
+141-->[:firebase_messaging] F:\practice\new_charlie\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:29
+142                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+142-->[:firebase_messaging] F:\practice\new_charlie\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-78
+142-->[:firebase_messaging] F:\practice\new_charlie\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:25-75
+143            </intent-filter>
+144        </service>
+145
+146        <receiver
+146-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:37:9-44:20
+147            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+147-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:38:13-78
+148            android:exported="true"
+148-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:39:13-36
+149            android:permission="com.google.android.c2dm.permission.SEND" >
+149-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:40:13-73
+150            <intent-filter>
+150-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:41:13-43:29
+151                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+151-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:42:17-81
+151-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:42:25-78
+152            </intent-filter>
+153        </receiver>
+154
+155        <provider
+155-->[com.google.firebase:firebase-common:19.3.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\670f2539f316d41b9bc744467ac7aa75\jetified-firebase-common-19.3.0\AndroidManifest.xml:26:9-30:39
+156            android:name="com.google.firebase.provider.FirebaseInitProvider"
+156-->[com.google.firebase:firebase-common:19.3.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\670f2539f316d41b9bc744467ac7aa75\jetified-firebase-common-19.3.0\AndroidManifest.xml:27:13-77
+157            android:authorities="com.brandzgarage.charliechang.firebaseinitprovider"
+157-->[com.google.firebase:firebase-common:19.3.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\670f2539f316d41b9bc744467ac7aa75\jetified-firebase-common-19.3.0\AndroidManifest.xml:28:13-72
+158            android:exported="false"
+158-->[com.google.firebase:firebase-common:19.3.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\670f2539f316d41b9bc744467ac7aa75\jetified-firebase-common-19.3.0\AndroidManifest.xml:29:13-37
+159            android:initOrder="100" />
+159-->[com.google.firebase:firebase-common:19.3.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\670f2539f316d41b9bc744467ac7aa75\jetified-firebase-common-19.3.0\AndroidManifest.xml:30:13-36
+160
+161        <activity
+161-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
+162            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+162-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:24:13-79
+163            android:exported="false"
+163-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:25:13-37
+164            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+164-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:26:13-72
+165
+166        <receiver
+166-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:29:9-33:20
+167            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+167-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:30:13-85
 168            android:enabled="true"
-168-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:41:13-35
-169            android:exported="false"
-169-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:42:13-37
-170            android:permission="android.permission.BIND_JOB_SERVICE" />
-170-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:43:13-69
+168-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:31:13-35
+169            android:exported="false" >
+169-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:32:13-37
+170        </receiver>
 171
-172        <meta-data
-172-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\acd39fdef5c0107de3992e87b6d2a826\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
-173            android:name="com.google.android.gms.version"
-173-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\acd39fdef5c0107de3992e87b6d2a826\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
-174            android:value="@integer/google_play_services_version" />
-174-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\acd39fdef5c0107de3992e87b6d2a826\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
-175
+172        <service
+172-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:35:9-38:40
+173            android:name="com.google.android.gms.measurement.AppMeasurementService"
+173-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:36:13-84
+174            android:enabled="true"
+174-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:37:13-35
+175            android:exported="false" />
+175-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:38:13-37
 176        <service
-176-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:29:9-35:19
-177            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-177-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:30:13-103
-178            android:exported="false" >
-178-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:31:13-37
-179            <meta-data
-179-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:32:13-34:39
-180                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-180-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:33:17-94
-181                android:value="cct" />
-181-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:34:17-36
-182        </service>
-183        <service
-183-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:26:9-30:19
-184            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
-184-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:27:13-117
-185            android:exported="false"
-185-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:28:13-37
-186            android:permission="android.permission.BIND_JOB_SERVICE" >
-186-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:29:13-69
-187        </service>
-188
-189        <receiver
-189-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:32:9-34:40
-190            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-190-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:33:13-132
-191            android:exported="false" />
-191-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:34:13-37
-192    </application>
-193
-194</manifest>
+176-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:39:9-43:72
+177            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+177-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:40:13-87
+178            android:enabled="true"
+178-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:41:13-35
+179            android:exported="false"
+179-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:42:13-37
+180            android:permission="android.permission.BIND_JOB_SERVICE" />
+180-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:43:13-69
+181
+182        <meta-data
+182-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\acd39fdef5c0107de3992e87b6d2a826\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
+183            android:name="com.google.android.gms.version"
+183-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\acd39fdef5c0107de3992e87b6d2a826\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
+184            android:value="@integer/google_play_services_version" />
+184-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\acd39fdef5c0107de3992e87b6d2a826\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
+185
+186        <service
+186-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:29:9-35:19
+187            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+187-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:30:13-103
+188            android:exported="false" >
+188-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:31:13-37
+189            <meta-data
+189-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:32:13-34:39
+190                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+190-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:33:17-94
+191                android:value="cct" />
+191-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:34:17-36
+192        </service>
+193        <service
+193-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:26:9-30:19
+194            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+194-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:27:13-117
+195            android:exported="false"
+195-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:28:13-37
+196            android:permission="android.permission.BIND_JOB_SERVICE" >
+196-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:29:13-69
+197        </service>
+198
+199        <receiver
+199-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:32:9-34:40
+200            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+200-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:33:13-132
+201            android:exported="false" />
+201-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\CAPRICON\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:34:13-37
+202    </application>
+203
+204</manifest>
