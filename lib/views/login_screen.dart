@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           left: 15,
                           child: InkWell(
                               onTap: ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => BottomScreen()),),
-                              child: Icon(Icons.arrow_back_ios_sharp,color: Colors.black,size: 30,))):Container(),
+                              child: Icon(Icons.arrow_back_ios,color: Colors.black,size: 30,))):Container(),
                     ],
                   ),
                 ),

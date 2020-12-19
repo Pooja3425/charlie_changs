@@ -1,26 +1,26 @@
 [
     {
-        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
-        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+        "merged": "E:\\Applications_Flutter\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\AMAN BAFNA\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\drawable-v21\\abc_btn_colored_material.xml"
     },
     {
-        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_btn_colored_material.xml",
-        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\drawable-v21\\abc_btn_colored_material.xml"
+        "merged": "E:\\Applications_Flutter\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\AMAN BAFNA\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\drawable-v21\\abc_edit_text_material.xml"
     },
     {
-        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\notification_action_background.xml",
-        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\drawable-v21\\notification_action_background.xml"
+        "merged": "E:\\Applications_Flutter\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_list_divider_material.xml",
+        "source": "C:\\Users\\AMAN BAFNA\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\drawable-v21\\abc_list_divider_material.xml"
     },
     {
-        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_dialog_material_background.xml",
-        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\drawable-v21\\abc_dialog_material_background.xml"
+        "merged": "E:\\Applications_Flutter\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\AMAN BAFNA\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     },
     {
-        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
-        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\drawable-v21\\abc_edit_text_material.xml"
+        "merged": "E:\\Applications_Flutter\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\AMAN BAFNA\\.gradle\\caches\\transforms-2\\files-2.1\\c39990ab165b5aa541e19700c5b1be99\\core-1.1.0\\res\\drawable-v21\\notification_action_background.xml"
     },
     {
-        "merged": "F:\\practice\\new_charlie\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_list_divider_material.xml",
-        "source": "C:\\Users\\CAPRICON\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\drawable-v21\\abc_list_divider_material.xml"
+        "merged": "E:\\Applications_Flutter\\charlie_changs\\build\\flutter_webview_plugin\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\AMAN BAFNA\\.gradle\\caches\\transforms-2\\files-2.1\\279979536d164723186597d1d0af7a4e\\appcompat-1.1.0\\res\\drawable-v21\\abc_dialog_material_background.xml"
     }
 ]

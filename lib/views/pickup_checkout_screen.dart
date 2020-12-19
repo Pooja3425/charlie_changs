@@ -174,7 +174,6 @@ class _PickupCheckoutScreenState extends State<PickupCheckoutScreen> {
                             ),
                           ),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.only(top:8.0,left:20),
                           child: Text("Rs 300 discount applied",style: TextStyle(color: hint_text_color,fontSize: 12),),

@@ -35,7 +35,7 @@ import 'views/silver_app_demo.dart';
 import 'views/thanks_screen.dart';
 
 Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
-  print("in background");
+  // print("in background");
   if (message.containsKey('data')) {
     // Handle data message
     final dynamic data = message['data'];
@@ -124,7 +124,6 @@ class _MyAppState extends State<MyApp> {
           child: GestureDetector(
             onTap: () {
               FocusScopeNode currentFocus = FocusScope.of(context);
-
               if (!currentFocus.hasPrimaryFocus) {
                 currentFocus.unfocus();
               }
@@ -213,7 +212,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-
   startTime() async {
     var _duration = new Duration(seconds: 2);
     return new Timer(_duration, navigationPage);
@@ -241,7 +239,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     getValues();
-
     NotificationService().initialise(context,widget.navigatorKey);
     super.initState();
   }

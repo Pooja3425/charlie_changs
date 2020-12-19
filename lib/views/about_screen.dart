@@ -1,3 +1,4 @@
+import 'package:charliechang/networking/ApiProvider.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/size_constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +16,7 @@ class _AboutScreenState extends State<AboutScreen> {
     return MaterialApp(
       routes: {
         "/": (_) =>  new WebviewScaffold(
-          url: "https://charliechangs.in/about",
+          url: "${ApiProvider.BASE_URL}about",
           appBar:appBar(context, "About")
         ),
       },

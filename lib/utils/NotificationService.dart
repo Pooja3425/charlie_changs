@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:charliechang/views/bottom_screen.dart';
 import 'package:charliechang/views/order_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -10,7 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class  NotificationService {
 
-  final FirebaseMessaging _fcm = FirebaseMessaging();
+    final FirebaseMessaging _fcm = FirebaseMessaging();
   FlutterLocalNotificationsPlugin _fcl = FlutterLocalNotificationsPlugin();
 
   BuildContext context;
@@ -32,19 +31,20 @@ class  NotificationService {
       _fcm.requestNotificationPermissions(IosNotificationSettings());
 
     }
+
     getDeToken().then((value) => print("Token $value"));
 
     _fcm.configure(
 
       onMessage: (Map<String , dynamic> message) async {
-        print("on message : $message");
+          // print("on message : $message");
 
         _showLocalNoti(message);
       },
 
       onLaunch: (Map<String , dynamic> message) async {
 
-        print("on Laung : $message");
+        // print("on Laung : $message");
 
         checkData(message, context);
 
@@ -52,12 +52,11 @@ class  NotificationService {
 
       onResume: (Map<String , dynamic> message) async {
 
-        print("on resure = == == == = === ==  : $message");
+        // print("on resure = == == == = === ==  : $message");
 
         checkData(message, context);
 
       },
-
 
       //onBackgroundMessage: myBackgroundMessageHandler
 
@@ -74,13 +73,13 @@ class  NotificationService {
 
         if(message['data']['n_type'] =="order")
         {
-          print("Order BACKGROUND");
+          // print("Order BACKGROUND");
           await navigatorKey.currentState.push(
               MaterialPageRoute(builder: (_) =>  OrdersScreen(from: "bottom",))
           );
         }
         else {
-          print("update BACKGROUND");
+          // print("update BACKGROUND");
           await navigatorKey.currentState.push(
               MaterialPageRoute(builder: (_) => BottomScreen(initPage: 3,),));
         }
@@ -91,22 +90,17 @@ class  NotificationService {
   }
 
   Future<String> getDeToken(){
-
     return _fcm.getToken();
-
   }
 
   _initLocalNotification(){
-
     var android = AndroidInitializationSettings('drawable/logo');
     var ios = IOSInitializationSettings();
     var platform = InitializationSettings(android , ios);
-
     _fcl.initialize(platform , onSelectNotification: onSelectNotification);
   }
 
   _showLocalNoti(message) async {
-
     var android = AndroidNotificationDetails(
       "channel_id" , "CHANNEL NAME" , "channel desc"
     );
@@ -119,27 +113,23 @@ class  NotificationService {
     _fcl.show(id, "${message['notification']['title']}",
         "${message['notification']['body']}", platfrom , payload: message['data']['n_type'].toString());
 
-
   }
-
 
   Future onSelectNotification(String payload) async {
 
 
-    print("payload is == $payload");
+    // print("payload is == $payload");
 
     if(payload != null){
-
       if(payload.isNotEmpty){
-
         if(payload.contains("order"))
         {
-          print("order redi FOREGROUND");
+          // print("order redi FOREGROUND");
           await navigatorKey.currentState.push(
               MaterialPageRoute(builder: (_) => OrdersScreen(from: "bottom",),));
         }
         else {
-          print("update FOREGROUND");
+          // print("update FOREGROUND");
           await navigatorKey.currentState.push(
               MaterialPageRoute(builder: (_) => BottomScreen(initPage: 3,),));
         }

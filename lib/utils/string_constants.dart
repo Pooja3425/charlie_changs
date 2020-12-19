@@ -21,4 +21,3 @@ final String DELIVERY_ADDRESS_ID = "DELIVERY_ADDRESS_ID";
 final String CART_COUNT = "CART_COUNT";
 final String IMAGE_BASE_URL = "https://charliechangs.in/";
 final String CHECK_INTERNET = "Check your internet connection";
-final String _baseUrl = "https://charliechangs.in/api/";

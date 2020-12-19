@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:charliechang/blocs/register_bloc.dart';
 import 'package:charliechang/blocs/verify_otp_bloc.dart';
 import 'package:charliechang/models/register_response_model.dart';

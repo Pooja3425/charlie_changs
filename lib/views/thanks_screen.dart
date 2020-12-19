@@ -76,7 +76,7 @@ class _ThanksScreenState extends State<ThanksScreen> {
                     left: 20,
                     child: InkWell(
                         onTap: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomScreen(),)),
-                        child: Icon(Icons.arrow_back_ios_sharp,color: Colors.white,))),
+                        child: Icon(Icons.arrow_back_ios,color: Colors.white,))),
               ],
             ),
           ),

@@ -38,7 +38,7 @@ dependencies:
   bloc_pattern:
   rxdart:
   provider: ^3.0.0
-#  flutter_webview_plugin: ^0.3.11
+  #  flutter_webview_plugin: ^0.3.11
   flutter_webview_plugin: ^0.3.9
 
   #maps_launcher: ^1.2.1
