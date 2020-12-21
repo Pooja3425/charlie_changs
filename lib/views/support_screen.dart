@@ -302,7 +302,9 @@ class _SupportScreenState extends State<SupportScreen> {
                 onTap: ()=>UrlLauncher.launch("tel://${data.outletMobile}"),
                   child: Text("+91 - ${data.outletMobile}  | ",style: TextStyle(color: notification_title_color),)),
               InkWell(
-                  onTap: ()=>UrlLauncher.launch("mailto://${data.outletEmail}"),
+                  onTap: ()=>UrlLauncher.launch(
+                      "mailto:${data.outletEmail}"
+                 ),
                   child: Text( "${data.outletEmail}",style: TextStyle(color: notification_title_color),)),
             ],
           ),

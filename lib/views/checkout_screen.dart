@@ -1856,7 +1856,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     var response = await http.get(
 
         // Uri.encodeFull("${ApiProvider.instaMojoLiveUrl}$id/"),
-        Uri.encodeFull("${ApiProvider.instaMojoTestUrl}$id/"),
+        Uri.encodeFull("${ApiProvider.instaMojoLiveUrl}$id/"),
 
         headers: {
           "Accept": "application/json",
@@ -1867,8 +1867,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           // "X-Api-Key": "9d8a8ce6ac9f6f42792a7e403a915de6",
           // "X-Auth-Token": "4886bf4f24632581c2821a7e7094fe90"
           // test key
-          "X-Api-Key": ApiProvider.TEST_X_API_KEY,
-          "X-Auth-Token": ApiProvider.TEST_X_AUTH_TOKEN
+          "X-Api-Key": ApiProvider.LIVE_X_API_KEY,
+          "X-Auth-Token": ApiProvider.LIVE_X_AUTH_TOKEN
         });
     var realResponse = json.decode(response.body);
     print("SUCC $realResponse");
