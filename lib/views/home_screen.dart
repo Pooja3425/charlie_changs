@@ -5,7 +5,6 @@ import 'dart:math';
 import 'package:bloc_pattern/bloc_pattern.dart' as blocPattern;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:charliechang/blocs/cart_bloc.dart';
 import 'package:charliechang/blocs/cartlistBloc.dart';
 import 'package:charliechang/blocs/category_bloc.dart';
 import 'package:charliechang/blocs/customer_address_bloc.dart';
@@ -60,7 +59,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   String dropdownValue = "Home";
-  String mBannerStartTime='',mBannerEndTime='',eBannerStartTime='',eBannerEndTime='';
+  bool isRestaurantLive = true;
+  String mBannerStartTime = '',
+      mBannerEndTime = '',
+      eBannerStartTime = '',
+      eBannerEndTime = '';
 
   bool status = false;
   var toggle_value;
@@ -108,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  String day;
+  // String day;
 
   @override
   void initState() {
@@ -127,9 +130,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _IsSearching = false;
     sliderList.add(slider.Data(imagePath: ""));
     var now = new DateTime.now();
-    print("WEEk DAYYY ${DateFormat('EEEE').format(now)}");
-    day = DateFormat('EEEE').format(now);
-    print('$day');
+    // day = DateFormat('EEEE').format(now);
     if (_isInternetAvailable) {
       callSliderApi();
       Future.delayed(Duration(seconds: 1), () {});
@@ -221,9 +222,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           },
         ),
         appBar: PreferredSize(
-          preferredSize: day != "Monday" && isRestaurantOpen
-              ? Size.fromHeight(70)
-              : Size.fromHeight(90),
+          preferredSize:
+              isRestaurantLive ? Size.fromHeight(70) : Size.fromHeight(90),
           child: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
@@ -409,14 +409,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         )
                       ],
                     ),
-                    day != "Monday" && isRestaurantOpen
+                    isRestaurantLive
                         ? SizedBox(
                             height: 1,
                           )
                         : SizedBox(
                             height: 10,
                           ),
-                    day != "Monday" && isRestaurantOpen
+                    isRestaurantLive
                         ? Container()
                         : Container(
                             height: 25,
@@ -1119,7 +1119,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     "Rs " + mTempList[index].price,
                     style: TextStyle(color: icon_color, fontSize: 12),
                   ),
-                  day != "Monday" && isRestaurantOpen
+                  isRestaurantLive
                       ? mTempList[index].count == 0
                           ? InkWell(
                               onTap: () async {
@@ -1127,6 +1127,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 SharedPreferences preference =
                                     await SharedPreferences.getInstance();
                                 var token = preferences.getString("token");
+
                                 if (token == null) {
                                   Navigator.push(
                                       context,
@@ -1302,7 +1303,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       "Rs " + mTempList[index].price,
                       style: TextStyle(color: icon_color, fontSize: 12),
                     ),
-                    day != "Monday" && isRestaurantOpen
+                    isRestaurantLive
                         ? mTempList[index].count == 0
                             ? InkWell(
                                 onTap: () {
@@ -1572,6 +1573,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   getMenuAPI() async {
     final body = jsonEncode({"hash": hashKey, "category": category});
+    print('bodyy $body token $token');
     if (token == null) {
       mMenuBloc = MenuBloc(body, "shop/menu_common");
     } else {
@@ -1587,10 +1589,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         setState(() {
           isMenuCalled = true;
           mMenuList = mMenuResponse.menu;
-
-
           bool isRestOpen = setRestaurantTiming();
-          // print('$isRestOpen isRestOpen>>>>');
+          print('$isRestOpen isRestOpen>>>>');
           if (!isRestOpen) {
             setState(() {
               mBannerStartTime = mMenuResponse.timings[0].mstartTime ?? "";
@@ -1599,7 +1599,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               eBannerEndTime = mMenuResponse.timings[0].ecloseTime ?? "";
             });
           }
-          print('isRestaurantOpen $isRestaurantOpen');
         });
         //CommonMethods.showShortToast(mDeliveryLocationsResponse.);
       } else if (onData.status == Status.ERROR) {
@@ -1618,7 +1617,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     setState(() {
       token = preferences.getString("token");
     });
-
     setState(() {
       if (preferences.getString(DELIVERY_PICKUP) == "1") {
         deliveryAddressName = preferences.get(DELIVERY_ADDRESS_NAME);
@@ -1822,48 +1820,59 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         });
   }
 
-  bool isRestaurantOpen = true;
-
   bool setRestaurantTiming() {
-    DateFormat dateFormat = new DateFormat.Hms();
+    // DateFormat dateFormat = new DateFormat.Hms();
+    //
+    // print("morning startTime ${mMenuResponse.timings[0].mstartTime}");
+    // print("morning closeTime ${mMenuResponse.timings[0].mcloseTime}");
+    // print("eve startTime ${mMenuResponse.timings[0].estartTime}");
+    // print("eve closeTime ${mMenuResponse.timings[0].ecloseTime}");
+    //
+    // DateTime currentTime = DateTime.now();
+    // DateTime open =
+    //     dateFormat.parse(mMenuResponse.timings[0].mstartTime.toString());
+    // open = new DateTime(currentTime.year, currentTime.month, currentTime.day,
+    //     open.hour, open.minute);
+    //
+    // DateTime open1 =
+    //     dateFormat.parse(mMenuResponse.timings[0].estartTime.toString());
+    // open1 = new DateTime(currentTime.year, currentTime.month, currentTime.day,
+    //     open1.hour, open1.minute);
+    //
+    // DateTime close =
+    //     dateFormat.parse(mMenuResponse.timings[0].mcloseTime.toString());
+    // close = new DateTime(currentTime.year, currentTime.month, currentTime.day,
+    //     close.hour, close.minute);
+    //
+    // DateTime close1 =
+    //     dateFormat.parse(mMenuResponse.timings[0].ecloseTime.toString());
+    // close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day,
+    //     close1.hour, close1.minute);
 
-    print("mstartTime ${mMenuResponse.timings[0].mstartTime}");
-    print("mcloseTime ${mMenuResponse.timings[0].mcloseTime}");
-    print("estartTime ${mMenuResponse.timings[0].estartTime}");
-    print("ecloseTime ${mMenuResponse.timings[0].ecloseTime}");
-
-    DateTime currentTime = DateTime.now();
-    DateTime open =
-        dateFormat.parse(mMenuResponse.timings[0].mstartTime.toString());
-    open = new DateTime(currentTime.year, currentTime.month, currentTime.day,
-        open.hour, open.minute);
-
-    DateTime open1 =
-        dateFormat.parse(mMenuResponse.timings[0].estartTime.toString());
-    open1 = new DateTime(currentTime.year, currentTime.month, currentTime.day,
-        open1.hour, open1.minute);
-
-    DateTime close =
-        dateFormat.parse(mMenuResponse.timings[0].mcloseTime.toString());
-    close = new DateTime(currentTime.year, currentTime.month, currentTime.day,
-        close.hour, close.minute);
-
-    DateTime close1 =
-        dateFormat.parse(mMenuResponse.timings[0].ecloseTime.toString());
-    close1 = new DateTime(currentTime.year, currentTime.month, currentTime.day,
-        close1.hour, close1.minute);
-
-    if (currentTime.isAfter(open) && currentTime.isBefore(close) ||
-        currentTime.isAfter(open1) && currentTime.isBefore(close1)) {
-      print("IFF True");
+    // if (currentTime.isAfter(open) && currentTime.isBefore(close) ||
+    //     currentTime.isAfter(open1) && currentTime.isBefore(close1)) {
+    //   print("IFF True");
+    //   setState(() {
+    //     isRestaurantOpen = true;
+    //   });
+    //   return true;
+    // } else {
+    //   print("IFF False");
+    //   setState(() {
+    //     isRestaurantOpen = false;
+    //   });
+    //   return false;
+    // }
+    print('mMenuResponse.isLive ${mMenuResponse.isLive}');
+    int isLive = mMenuResponse.isLive ?? 0;
+    if (isLive == 1) {
       setState(() {
-        isRestaurantOpen = true;
+        isRestaurantLive = true;
       });
       return true;
     } else {
-      print("IFF False");
       setState(() {
-        isRestaurantOpen = false;
+        isRestaurantLive = false;
       });
       return false;
     }
