@@ -6,6 +6,7 @@ import 'package:charliechang/models/scroll_model.dart';
 import 'package:charliechang/utils/NotificationService.dart';
 import 'package:charliechang/utils/color_constants.dart';
 import 'package:charliechang/utils/common_methods.dart';
+import 'package:charliechang/utils/notification.dart';
 import 'package:charliechang/utils/string_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -19,7 +20,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'blocs/cart_bloc.dart';
 import 'blocs/cartlistBloc.dart';
-import 'utils/notification.dart';
 import 'views/address_book_screen.dart';
 import 'views/bottom_screen.dart';
 import 'views/home_screen.dart';
@@ -277,9 +277,9 @@ class _SplashScreenState extends State<SplashScreen> {
     var android = AndroidNotificationDetails(
         'id', 'channel ', 'description',
         // sound: "piece_of_cake",
-        priority: Priority.High, importance: Importance.Max);
+        priority: Priority.high, importance: Importance.max);
     var iOS = IOSNotificationDetails();
-    var platform = new NotificationDetails(android, iOS);
+    var platform = new NotificationDetails(android:android, iOS:iOS);
     await flutterLocalNotificationsPlugin.show(
         0, '${message["title"]}', '${message["body"]}', platform,
         payload: '${message["body"]}');

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'package:charliechang/views/bottom_screen.dart';
@@ -6,6 +7,41 @@ import 'package:charliechang/views/order_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+
+Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
+
+  var rng = new Random();
+  int id = rng.nextInt(40);
+
+  FlutterLocalNotificationsPlugin _fcl = FlutterLocalNotificationsPlugin();
+
+  var android = AndroidInitializationSettings('mipmap/ic_launcher');
+  var ios = IOSInitializationSettings();
+  var platform = InitializationSettings(android:android , iOS:ios);
+
+  _fcl.initialize(platform);
+
+  //Map<String , dynamic> dataMap = jsonDecode(message['data']);
+
+  var androidd = AndroidNotificationDetails(
+    "$id" , "CHANNEL $id" , "channel desc",
+    //styleInformation: BigTextStyleInformation(dataMap['body'])
+  );
+  var ioss = IOSNotificationDetails();
+  var platfrom = NotificationDetails(android:androidd , iOS:ioss);
+
+
+  _fcl.show(id, "${message['notification']['title']}",
+      "${message['notification']['body']}", platfrom , payload: message['data']['n_type'].toString());
+
+
+  // _fcl.show(id, "${dataMap['title']}",
+  //     "${dataMap['body']}", platfrom , payload: dataMap['n_type'].toString());
+
+}
+
+
 
 class  NotificationService {
 
@@ -18,7 +54,7 @@ class  NotificationService {
 
   Future initialise(BuildContext context,GlobalKey<NavigatorState> navigatorKey) async {
 
-    //print("notifications init called");
+    print("notifications init calleddddddddddddddddddddddd");
 
     this.context = context;
     this.navigatorKey = navigatorKey;
@@ -37,8 +73,7 @@ class  NotificationService {
     _fcm.configure(
 
       onMessage: (Map<String , dynamic> message) async {
-          // print("on message : $message");
-
+        print("on message : $message");
         _showLocalNoti(message);
       },
 
@@ -58,7 +93,7 @@ class  NotificationService {
 
       },
 
-      //onBackgroundMessage: myBackgroundMessageHandler
+      onBackgroundMessage: myBackgroundMessageHandler
 
     );
 
@@ -96,7 +131,7 @@ class  NotificationService {
   _initLocalNotification(){
     var android = AndroidInitializationSettings('drawable/logo');
     var ios = IOSInitializationSettings();
-    var platform = InitializationSettings(android , ios);
+    var platform = InitializationSettings(android: android , iOS : ios);
     _fcl.initialize(platform , onSelectNotification: onSelectNotification);
   }
 
@@ -105,13 +140,19 @@ class  NotificationService {
       "channel_id" , "CHANNEL NAME" , "channel desc"
     );
     var ios = IOSNotificationDetails();
-    var platfrom = NotificationDetails(android , ios);
+    var platfrom = NotificationDetails(android: android , iOS : ios);
 
     var rng = new Random();
     int id = rng.nextInt(40);
 
+    // print("type of data ${message['data'].runtimeType}");
+    //Map<String , dynamic> dataMap = jsonDecode(message['data']);
+
     _fcl.show(id, "${message['notification']['title']}",
         "${message['notification']['body']}", platfrom , payload: message['data']['n_type'].toString());
+
+    // _fcl.show(id, "${dataMap['title']}",
+    //     "${dataMap['body']}", platfrom , payload: dataMap['n_type'].toString());
 
   }
 

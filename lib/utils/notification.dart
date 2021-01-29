@@ -35,7 +35,9 @@ class NotificationPlugin {
       },
     );
     initializationSettings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+        android: initializationSettingsAndroid ,
+        iOS : initializationSettingsIOS,
+    );
   }
   _requestIOSPermission() {
     flutterLocalNotificationsPlugin
@@ -63,15 +65,15 @@ class NotificationPlugin {
       'CHANNEL_ID',
       'CHANNEL_NAME',
       "CHANNEL_DESCRIPTION",
-      importance: Importance.Max,
-      priority: Priority.High,
+      importance: Importance.max,
+      priority: Priority.high,
       playSound: true,
       timeoutAfter: 5000,
       styleInformation: DefaultStyleInformation(true, true),
     );
     var iosChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics =
-    NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
+    NotificationDetails(android:androidChannelSpecifics, iOS:iosChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
       0,
       'Test Title',
@@ -94,6 +96,7 @@ class NotificationPlugin {
   }
 }
 NotificationPlugin notificationPlugin = NotificationPlugin._();
+
 class ReceivedNotification {
   final int id;
   final String title;
