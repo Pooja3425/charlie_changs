@@ -32,7 +32,7 @@ class  NotificationService {
 
     }
 
-    getDeToken().then((value) => print("Token $value"));
+    // getDeToken().then((value) => print("Token $value"));
 
     _fcm.configure(
 

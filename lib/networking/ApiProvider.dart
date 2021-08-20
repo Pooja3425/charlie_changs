@@ -16,28 +16,28 @@ import 'dart:convert';
 class ApiProvider {
 
   //DEV
-  final String _baseUrl = "https://charliechangs.in/dev/api/";
-  static const String BASE_URL_FOR_WEB = "https://charliechangs.in/dev/";
-  static const String BASE_URL = "https://charliechangs.in/dev/api/";
+  // final String _baseUrl = "https://charliechangs.in/dev/api/";
+  // static const String BASE_URL_FOR_WEB = "https://charliechangs.in/dev/";
+  // static const String BASE_URL = "https://charliechangs.in/dev/api/";
 
   //LIVE
-  // final String _baseUrl = "https://charliechangs.in/api/";
-  // static const String BASE_URL_FOR_WEB = "https://charliechangs.in/";
-  // static const String BASE_URL = "https://charliechangs.in/api/";
+  final String _baseUrl = "https://charliechangs.in/api/";
+  static const String BASE_URL_FOR_WEB = "https://charliechangs.in/";
+  static const String BASE_URL = "https://charliechangs.in/api/";
 
   //Test Env Token and Api key for instaMojo url on checkout_screen
-  static const String X_API_KEY = "test_ba7b1358c28a4a61f1687270c6c";
-  static const String X_AUTH_TOKEN = "test_4552674a5d9717da7e586441905";
+  // static const String X_API_KEY = "test_ba7b1358c28a4a61f1687270c6c";
+  // static const String X_AUTH_TOKEN = "test_4552674a5d9717da7e586441905";
 
   //Live Env Token and Api key for instaMojo url on checkout_screen
-  // static const String X_API_KEY = "9d8a8ce6ac9f6f42792a7e403a915de6";
-  // static const String X_AUTH_TOKEN = "4886bf4f24632581c2821a7e7094fe90";
+  static const String X_API_KEY = "9d8a8ce6ac9f6f42792a7e403a915de6";
+  static const String X_AUTH_TOKEN = "4886bf4f24632581c2821a7e7094fe90";
 
   //Dev
-  static const String instaMojoPaymentUrl = "https://test.instamojo.com/api/1.1/payments/";
+  // static const String instaMojoPaymentUrl = "https://test.instamojo.com/api/1.1/payments/";
 
   //Live
-  // static const String instaMojoPaymentUrl = "https://www.instamojo.com/api/1.1/payments/";
+  static const String instaMojoPaymentUrl = "https://www.instamojo.com/api/1.1/payments/";
 
   Future<dynamic> get(String url) async {
     var responseJson;

@@ -295,10 +295,9 @@ class _OtpScreenState extends State<OtpScreen> {
       else if(onData.status == Status.COMPLETED)
       {
           CommonMethods.dismissDialog(context);
-
+          print(verifyOtpRes.toJson().toString() + 'verifyOtpRes');
           if(verifyOtpRes.completeProfile =="0")
             {
-
               CommonMethods.showShortToast(verifyOtpRes.msg);
               CommonMethods.setPreference(context, "token", verifyOtpRes.token);
               CommonMethods.setPreference(context, COUPON_CODE, verifyOtpRes.couponCode);

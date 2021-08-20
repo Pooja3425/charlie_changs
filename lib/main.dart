@@ -102,10 +102,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _initializeFlutterFireFuture = _initializeFlutterFire();
-
     if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
       // Collection is enabled.
       print("ENABLED");
+    }else{
+      print("DISABLED");
     }
   }
 
@@ -196,6 +197,7 @@ class _MyAppState extends State<MyApp> {
       // Forward to original handler.
       originalOnError(errorDetails);
     };
+
 
     if (_kShouldTestAsyncErrorOnInit) {
       await _testAsyncErrorOnInit();

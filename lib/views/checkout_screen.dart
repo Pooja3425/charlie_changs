@@ -1855,8 +1855,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   _checkPaymentStatus({String id, @required String reward_id_selected}) async {
     var response = await http.get(
 
-        // Uri.encodeFull("${ApiProvider.instaMojoLiveUrl}$id/"),
-        Uri.encodeFull("${ApiProvider.instaMojoLiveUrl}$id/"),
+        Uri.encodeFull("${ApiProvider.instaMojoPaymentUrl}$id/"),
 
         headers: {
           "Accept": "application/json",
@@ -1867,8 +1866,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           // "X-Api-Key": "9d8a8ce6ac9f6f42792a7e403a915de6",
           // "X-Auth-Token": "4886bf4f24632581c2821a7e7094fe90"
           // test key
-          "X-Api-Key": ApiProvider.LIVE_X_API_KEY,
-          "X-Auth-Token": ApiProvider.LIVE_X_AUTH_TOKEN
+          "X-Api-Key": ApiProvider.X_API_KEY,
+          "X-Auth-Token": ApiProvider.X_AUTH_TOKEN
         });
     var realResponse = json.decode(response.body);
     print("SUCC $realResponse");
@@ -2078,6 +2077,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         CommonMethods.dismissDialog(context);
 
         flutterWebviewPlugin.close();
+        print('mOnlinePaymentResponse - ${mOnlinePaymentResponse.toJson()}');
         print("paymentUrl - ${mOnlinePaymentResponse.paymentUrl}");
 
         if (mOnlinePaymentResponse.paymentUrl != null) {
@@ -2422,7 +2422,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   List<PointsDropdown> loyaltyPointsList = new List();
   List<SpecialOffers> specialOffersList = new List();
 
-  void callDropdownAPI() async {
+  void  callDropdownAPI() async {
     String uri = '${ApiProvider.BASE_URL}user/getloyaltypoint';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token");

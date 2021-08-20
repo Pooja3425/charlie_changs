@@ -1,7 +1,7 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.brandzgarage.charliechang"
-4    android:versionCode="3"
+4    android:versionCode="7"
 5    android:versionName="1.0.2" >
 6
 7    <uses-sdk
@@ -37,7 +37,7 @@
 21-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:26:22-107
 22
 23    <application
-23-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:12:5-52:19
+23-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:12:5-55:19
 24        android:name="com.brandzgarage.charliechang.Application"
 24-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:13:9-36
 25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -45,321 +45,400 @@
 26        android:debuggable="true"
 27        android:icon="@mipmap/ic_launcher"
 27-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:15:9-43
-28        android:label="Charlie Chang&apos;s" >
+28        android:label="Charlie Chang&apos;s"
 28-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:14:9-38
-29        <activity
-29-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:16:9-32:20
-30            android:name="com.brandzgarage.charliechang.MainActivity"
-30-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:17:13-41
-31            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-31-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:20:13-163
-32            android:hardwareAccelerated="true"
-32-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:21:13-47
-33            android:launchMode="singleTop"
-33-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:18:13-43
-34            android:theme="@style/LaunchTheme"
-34-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:19:13-47
-35            android:windowSoftInputMode="adjustResize" >
-35-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:22:13-55
-36            <intent-filter>
-36-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:23:13-26:29
-37                <action android:name="android.intent.action.MAIN" />
-37-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:24:17-68
-37-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:24:25-66
-38
-39                <category android:name="android.intent.category.LAUNCHER" />
-39-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:25:17-76
-39-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:25:27-74
-40            </intent-filter>
-41            <intent-filter>
-41-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:28:13-31:29
-42                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
-42-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:29:17-69
-42-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:29:25-66
-43
-44                <category android:name="android.intent.category.DEFAULT" />
-44-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:30:17-76
-44-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:30:27-73
-45            </intent-filter>
-46        </activity>
-47
-48        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
-48-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:34:9-106
-48-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:34:19-103
-49        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver" >
-49-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:35:9-39:20
-49-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:35:19-107
-50            <intent-filter>
-50-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:36:13-38:29
-51                <action android:name="android.intent.action.BOOT_COMPLETED" />
-51-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:37:17-86
-51-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:37:25-76
-52            </intent-filter>
-53        </receiver>
-54
-55        <!--
-56             Don't delete the meta-data below.
-57             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-58        -->
-59        <meta-data
-59-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:43:9-45:33
-60            android:name="flutterEmbedding"
-60-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:44:13-44
-61            android:value="2" />
-61-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:45:13-30
-62
-63        <activity
-63-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:47:9-48:57
-64            android:name="com.flutter_webview_plugin.WebviewActivity"
-64-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:47:19-76
-65            android:parentActivityName="com.brandzgarage.charliechang.MainActivity" />
-65-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:48:13-55
-66
-67        <meta-data
-67-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:49:9-51:37
-68            android:name="firebase_crashlytics_collection_enabled"
-68-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:50:13-67
-69            android:value="false" />
-69-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:51:13-34
-70
-71        <service
-71-->[:firebase_crashlytics] E:\Applications_Flutter\charlie_changs\build\firebase_crashlytics\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-12:19
-72            android:name="com.google.firebase.components.ComponentDiscoveryService"
-72-->[:firebase_crashlytics] E:\Applications_Flutter\charlie_changs\build\firebase_crashlytics\intermediates\library_manifest\debug\AndroidManifest.xml:8:18-89
-73            android:directBootAware="true"
-73-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\3ae9d6801436541785d0951de87b4b3b\jetified-firebase-common-19.3.0\AndroidManifest.xml:34:13-43
-74            android:exported="false" >
-74-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9c4a137b62fa3a3a986b535274ac70be\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:37:13-37
-75            <meta-data
-75-->[:firebase_crashlytics] E:\Applications_Flutter\charlie_changs\build\firebase_crashlytics\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
-76                android:name="com.google.firebase.components:io.flutter.plugins.firebase.crashlytics.FlutterFirebaseAppRegistrar"
-76-->[:firebase_crashlytics] E:\Applications_Flutter\charlie_changs\build\firebase_crashlytics\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-130
-77                android:value="com.google.firebase.components.ComponentRegistrar" />
-77-->[:firebase_crashlytics] E:\Applications_Flutter\charlie_changs\build\firebase_crashlytics\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
-78            <meta-data
-78-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-16:85
-79                android:name="com.google.firebase.components:io.flutter.plugins.firebasemessaging.FlutterFirebaseAppRegistrar"
-79-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:15:17-127
-80                android:value="com.google.firebase.components.ComponentRegistrar" />
-80-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:16:17-82
-81            <meta-data
-81-->[:firebase_core] E:\Applications_Flutter\charlie_changs\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
-82                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
-82-->[:firebase_core] E:\Applications_Flutter\charlie_changs\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-124
-83                android:value="com.google.firebase.components.ComponentRegistrar" />
-83-->[:firebase_core] E:\Applications_Flutter\charlie_changs\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
-84            <meta-data
-84-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9c4a137b62fa3a3a986b535274ac70be\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:38:13-40:85
-85                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
-85-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9c4a137b62fa3a3a986b535274ac70be\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:39:17-119
-86                android:value="com.google.firebase.components.ComponentRegistrar" />
-86-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9c4a137b62fa3a3a986b535274ac70be\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:40:17-82
-87            <meta-data
-87-->[com.google.android.gms:play-services-measurement-api:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\4bb44a08bc21a77bcf04cb2f7adc0ceb\play-services-measurement-api-17.5.0\AndroidManifest.xml:30:13-32:85
-88                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
-88-->[com.google.android.gms:play-services-measurement-api:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\4bb44a08bc21a77bcf04cb2f7adc0ceb\play-services-measurement-api-17.5.0\AndroidManifest.xml:31:17-139
-89                android:value="com.google.firebase.components.ComponentRegistrar" />
-89-->[com.google.android.gms:play-services-measurement-api:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\4bb44a08bc21a77bcf04cb2f7adc0ceb\play-services-measurement-api-17.5.0\AndroidManifest.xml:32:17-82
-90            <meta-data
-90-->[com.google.firebase:firebase-crashlytics:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\216b91e3fabb1b6a7eb79d3006282915\firebase-crashlytics-17.0.0\AndroidManifest.xml:16:13-18:85
-91                android:name="com.google.firebase.components:com.google.firebase.crashlytics.CrashlyticsRegistrar"
-91-->[com.google.firebase:firebase-crashlytics:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\216b91e3fabb1b6a7eb79d3006282915\firebase-crashlytics-17.0.0\AndroidManifest.xml:17:17-115
-92                android:value="com.google.firebase.components.ComponentRegistrar" />
-92-->[com.google.firebase:firebase-crashlytics:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\216b91e3fabb1b6a7eb79d3006282915\firebase-crashlytics-17.0.0\AndroidManifest.xml:18:17-82
-93            <meta-data
-93-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:32:13-34:85
-94                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
-94-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:33:17-96
-95                android:value="com.google.firebase.components.ComponentRegistrar" />
-95-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:34:17-82
-96            <meta-data
-96-->[com.google.firebase:firebase-installations:16.3.2] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\45757fdd4cf5c83613c1e9d0b4246963\firebase-installations-16.3.2\AndroidManifest.xml:17:13-19:85
-97                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
-97-->[com.google.firebase:firebase-installations:16.3.2] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\45757fdd4cf5c83613c1e9d0b4246963\firebase-installations-16.3.2\AndroidManifest.xml:18:17-127
-98                android:value="com.google.firebase.components.ComponentRegistrar" />
-98-->[com.google.firebase:firebase-installations:16.3.2] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\45757fdd4cf5c83613c1e9d0b4246963\firebase-installations-16.3.2\AndroidManifest.xml:19:17-82
-99            <meta-data
-99-->[com.google.firebase:firebase-datatransport:17.0.3] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\382397838431aeb6dca998e344bfdf45\firebase-datatransport-17.0.3\AndroidManifest.xml:28:13-30:85
-100                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
-100-->[com.google.firebase:firebase-datatransport:17.0.3] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\382397838431aeb6dca998e344bfdf45\firebase-datatransport-17.0.3\AndroidManifest.xml:29:17-115
-101                android:value="com.google.firebase.components.ComponentRegistrar" />
-101-->[com.google.firebase:firebase-datatransport:17.0.3] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\382397838431aeb6dca998e344bfdf45\firebase-datatransport-17.0.3\AndroidManifest.xml:30:17-82
-102        </service>
-103
-104        <provider
-104-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:9:9-18:20
-105            android:name="androidx.core.content.FileProvider"
-105-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-62
-106            android:authorities="com.brandzgarage.charliechang.fileprovider"
-106-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-64
-107            android:exported="false"
-107-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-37
-108            android:grantUriPermissions="true" >
-108-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-47
-109            <meta-data
-109-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-17:53
-110                android:name="android.support.FILE_PROVIDER_PATHS"
-110-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:16:17-67
-111                android:resource="@xml/filepaths" />
-111-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:17:17-50
-112        </provider>
-113
-114        <service android:name="io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService" >
-114-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-12:19
-114-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:8:18-101
-115            <intent-filter>
-115-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:29
-116                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-116-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-78
-116-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:25-75
-117            </intent-filter>
-118        </service>
-119
-120        <activity
-120-->[:url_launcher] E:\Applications_Flutter\charlie_changs\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-11:74
-121            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
-121-->[:url_launcher] E:\Applications_Flutter\charlie_changs\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-74
-122            android:exported="false"
-122-->[:url_launcher] E:\Applications_Flutter\charlie_changs\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-37
-123            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-123-->[:url_launcher] E:\Applications_Flutter\charlie_changs\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-71
+29        android:supportsRtl="true" >
+29-->[com.facebook.android:facebook-android-sdk:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\5b2bc552d0842ea7913de42328f3183b\facebook-android-sdk-8.1.0\AndroidManifest.xml:28:18-44
+30        <activity
+30-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:16:9-32:20
+31            android:name="com.brandzgarage.charliechang.MainActivity"
+31-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:17:13-41
+32            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+32-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:20:13-163
+33            android:hardwareAccelerated="true"
+33-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:21:13-47
+34            android:launchMode="singleTop"
+34-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:18:13-43
+35            android:theme="@style/LaunchTheme"
+35-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:19:13-47
+36            android:windowSoftInputMode="adjustResize" >
+36-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:22:13-55
+37            <intent-filter>
+37-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:23:13-26:29
+38                <action android:name="android.intent.action.MAIN" />
+38-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:24:17-68
+38-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:24:25-66
+39
+40                <category android:name="android.intent.category.LAUNCHER" />
+40-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:25:17-76
+40-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:25:27-74
+41            </intent-filter>
+42            <intent-filter>
+42-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:28:13-31:29
+43                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+43-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:29:17-69
+43-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:29:25-66
+44
+45                <category android:name="android.intent.category.DEFAULT" />
+45-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:30:17-76
+45-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:30:27-73
+46            </intent-filter>
+47        </activity>
+48
+49        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+49-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:34:9-106
+49-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:34:19-103
+50        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver" >
+50-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:35:9-39:20
+50-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:35:19-107
+51            <intent-filter>
+51-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:36:13-38:29
+52                <action android:name="android.intent.action.BOOT_COMPLETED" />
+52-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:37:17-86
+52-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:37:25-76
+53            </intent-filter>
+54        </receiver>
+55
+56        <meta-data
+56-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:41:9-107
+57            android:name="com.facebook.sdk.ApplicationId"
+57-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:41:20-65
+58            android:value="@string/facebook_app_id" />
+58-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:41:66-105
+59
+60        <!--
+61             Don't delete the meta-data below.
+62             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+63        -->
+64        <meta-data
+64-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:46:9-48:33
+65            android:name="flutterEmbedding"
+65-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:47:13-44
+66            android:value="2" />
+66-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:48:13-30
+67
+68        <activity
+68-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:50:9-51:57
+69            android:name="com.flutter_webview_plugin.WebviewActivity"
+69-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:50:19-76
+70            android:parentActivityName="com.brandzgarage.charliechang.MainActivity" />
+70-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:51:13-55
+71
+72        <meta-data
+72-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:52:9-54:37
+73            android:name="firebase_crashlytics_collection_enabled"
+73-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:53:13-67
+74            android:value="false" />
+74-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:54:13-34
+75
+76        <service
+76-->[:firebase_crashlytics] E:\Applications_Flutter\charlie_changs\build\firebase_crashlytics\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-12:19
+77            android:name="com.google.firebase.components.ComponentDiscoveryService"
+77-->[:firebase_crashlytics] E:\Applications_Flutter\charlie_changs\build\firebase_crashlytics\intermediates\library_manifest\debug\AndroidManifest.xml:8:18-89
+78            android:directBootAware="true"
+78-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\141f3a985bfb0ef5e1fa424afa1a1958\jetified-firebase-common-19.3.0\AndroidManifest.xml:34:13-43
+79            android:exported="false" >
+79-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\a9fd38532e86e9c9081b74fa5b5a5436\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:37:13-37
+80            <meta-data
+80-->[:firebase_crashlytics] E:\Applications_Flutter\charlie_changs\build\firebase_crashlytics\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+81                android:name="com.google.firebase.components:io.flutter.plugins.firebase.crashlytics.FlutterFirebaseAppRegistrar"
+81-->[:firebase_crashlytics] E:\Applications_Flutter\charlie_changs\build\firebase_crashlytics\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-130
+82                android:value="com.google.firebase.components.ComponentRegistrar" />
+82-->[:firebase_crashlytics] E:\Applications_Flutter\charlie_changs\build\firebase_crashlytics\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+83            <meta-data
+83-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-16:85
+84                android:name="com.google.firebase.components:io.flutter.plugins.firebasemessaging.FlutterFirebaseAppRegistrar"
+84-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:15:17-127
+85                android:value="com.google.firebase.components.ComponentRegistrar" />
+85-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:16:17-82
+86            <meta-data
+86-->[:firebase_core] E:\Applications_Flutter\charlie_changs\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+87                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+87-->[:firebase_core] E:\Applications_Flutter\charlie_changs\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-124
+88                android:value="com.google.firebase.components.ComponentRegistrar" />
+88-->[:firebase_core] E:\Applications_Flutter\charlie_changs\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+89            <meta-data
+89-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\a9fd38532e86e9c9081b74fa5b5a5436\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:38:13-40:85
+90                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+90-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\a9fd38532e86e9c9081b74fa5b5a5436\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:39:17-119
+91                android:value="com.google.firebase.components.ComponentRegistrar" />
+91-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\a9fd38532e86e9c9081b74fa5b5a5436\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:40:17-82
+92            <meta-data
+92-->[com.google.android.gms:play-services-measurement-api:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\4bb44a08bc21a77bcf04cb2f7adc0ceb\play-services-measurement-api-17.5.0\AndroidManifest.xml:30:13-32:85
+93                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+93-->[com.google.android.gms:play-services-measurement-api:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\4bb44a08bc21a77bcf04cb2f7adc0ceb\play-services-measurement-api-17.5.0\AndroidManifest.xml:31:17-139
+94                android:value="com.google.firebase.components.ComponentRegistrar" />
+94-->[com.google.android.gms:play-services-measurement-api:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\4bb44a08bc21a77bcf04cb2f7adc0ceb\play-services-measurement-api-17.5.0\AndroidManifest.xml:32:17-82
+95            <meta-data
+95-->[com.google.firebase:firebase-crashlytics:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\216b91e3fabb1b6a7eb79d3006282915\firebase-crashlytics-17.0.0\AndroidManifest.xml:16:13-18:85
+96                android:name="com.google.firebase.components:com.google.firebase.crashlytics.CrashlyticsRegistrar"
+96-->[com.google.firebase:firebase-crashlytics:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\216b91e3fabb1b6a7eb79d3006282915\firebase-crashlytics-17.0.0\AndroidManifest.xml:17:17-115
+97                android:value="com.google.firebase.components.ComponentRegistrar" />
+97-->[com.google.firebase:firebase-crashlytics:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\216b91e3fabb1b6a7eb79d3006282915\firebase-crashlytics-17.0.0\AndroidManifest.xml:18:17-82
+98            <meta-data
+98-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:32:13-34:85
+99                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+99-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:33:17-96
+100                android:value="com.google.firebase.components.ComponentRegistrar" />
+100-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:34:17-82
+101            <meta-data
+101-->[com.google.firebase:firebase-installations:16.3.2] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\45757fdd4cf5c83613c1e9d0b4246963\firebase-installations-16.3.2\AndroidManifest.xml:17:13-19:85
+102                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+102-->[com.google.firebase:firebase-installations:16.3.2] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\45757fdd4cf5c83613c1e9d0b4246963\firebase-installations-16.3.2\AndroidManifest.xml:18:17-127
+103                android:value="com.google.firebase.components.ComponentRegistrar" />
+103-->[com.google.firebase:firebase-installations:16.3.2] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\45757fdd4cf5c83613c1e9d0b4246963\firebase-installations-16.3.2\AndroidManifest.xml:19:17-82
+104            <meta-data
+104-->[com.google.firebase:firebase-datatransport:17.0.3] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\382397838431aeb6dca998e344bfdf45\firebase-datatransport-17.0.3\AndroidManifest.xml:28:13-30:85
+105                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+105-->[com.google.firebase:firebase-datatransport:17.0.3] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\382397838431aeb6dca998e344bfdf45\firebase-datatransport-17.0.3\AndroidManifest.xml:29:17-115
+106                android:value="com.google.firebase.components.ComponentRegistrar" />
+106-->[com.google.firebase:firebase-datatransport:17.0.3] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\382397838431aeb6dca998e344bfdf45\firebase-datatransport-17.0.3\AndroidManifest.xml:30:17-82
+107        </service>
+108
+109        <provider
+109-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:9:9-18:20
+110            android:name="androidx.core.content.FileProvider"
+110-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-62
+111            android:authorities="com.brandzgarage.charliechang.fileprovider"
+111-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-64
+112            android:exported="false"
+112-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-37
+113            android:grantUriPermissions="true" >
+113-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-47
+114            <meta-data
+114-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-17:53
+115                android:name="android.support.FILE_PROVIDER_PATHS"
+115-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:16:17-67
+116                android:resource="@xml/filepaths" />
+116-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:17:17-50
+117        </provider>
+118
+119        <service android:name="io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService" >
+119-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-12:19
+119-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:8:18-101
+120            <intent-filter>
+120-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:29
+121                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+121-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-78
+121-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:25-75
+122            </intent-filter>
+123        </service>
 124
-125        <provider
-125-->[:share] E:\Applications_Flutter\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-16:20
-126            android:name="io.flutter.plugins.share.ShareFileProvider"
-126-->[:share] E:\Applications_Flutter\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-70
-127            android:authorities="com.brandzgarage.charliechang.flutter.share_provider"
-127-->[:share] E:\Applications_Flutter\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-74
-128            android:exported="false"
-128-->[:share] E:\Applications_Flutter\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-37
-129            android:grantUriPermissions="true" >
-129-->[:share] E:\Applications_Flutter\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-47
-130            <meta-data
-130-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-17:53
-131                android:name="android.support.FILE_PROVIDER_PATHS"
-131-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:16:17-67
-132                android:resource="@xml/flutter_share_file_paths" />
-132-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:17:17-50
-133        </provider>
-134        <!--
-135             FirebaseMessagingService performs security checks at runtime,
-136             but set to not exported to explicitly avoid allowing another app to call it.
-137        -->
-138        <service
-138-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9c4a137b62fa3a3a986b535274ac70be\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:28:9-34:19
-139            android:name="com.google.firebase.messaging.FirebaseMessagingService"
-139-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9c4a137b62fa3a3a986b535274ac70be\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:29:13-82
-140            android:exported="false" >
-140-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9c4a137b62fa3a3a986b535274ac70be\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:30:13-37
-141            <intent-filter android:priority="-500" >
-141-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:29
-142                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-142-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-78
-142-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:25-75
-143            </intent-filter>
-144        </service>
-145
-146        <receiver
-146-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:37:9-44:20
-147            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
-147-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:38:13-78
-148            android:exported="true"
-148-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:39:13-36
-149            android:permission="com.google.android.c2dm.permission.SEND" >
-149-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:40:13-73
-150            <intent-filter>
-150-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:41:13-43:29
-151                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-151-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:42:17-81
-151-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:42:25-78
-152            </intent-filter>
-153        </receiver>
-154
-155        <provider
-155-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\3ae9d6801436541785d0951de87b4b3b\jetified-firebase-common-19.3.0\AndroidManifest.xml:26:9-30:39
-156            android:name="com.google.firebase.provider.FirebaseInitProvider"
-156-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\3ae9d6801436541785d0951de87b4b3b\jetified-firebase-common-19.3.0\AndroidManifest.xml:27:13-77
-157            android:authorities="com.brandzgarage.charliechang.firebaseinitprovider"
-157-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\3ae9d6801436541785d0951de87b4b3b\jetified-firebase-common-19.3.0\AndroidManifest.xml:28:13-72
-158            android:exported="false"
-158-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\3ae9d6801436541785d0951de87b4b3b\jetified-firebase-common-19.3.0\AndroidManifest.xml:29:13-37
-159            android:initOrder="100" />
-159-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\3ae9d6801436541785d0951de87b4b3b\jetified-firebase-common-19.3.0\AndroidManifest.xml:30:13-36
-160
-161        <activity
-161-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
-162            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-162-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:24:13-79
+125        <activity
+125-->[:url_launcher] E:\Applications_Flutter\charlie_changs\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-11:74
+126            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+126-->[:url_launcher] E:\Applications_Flutter\charlie_changs\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-74
+127            android:exported="false"
+127-->[:url_launcher] E:\Applications_Flutter\charlie_changs\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-37
+128            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+128-->[:url_launcher] E:\Applications_Flutter\charlie_changs\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-71
+129
+130        <provider
+130-->[:share] E:\Applications_Flutter\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-16:20
+131            android:name="io.flutter.plugins.share.ShareFileProvider"
+131-->[:share] E:\Applications_Flutter\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-70
+132            android:authorities="com.brandzgarage.charliechang.flutter.share_provider"
+132-->[:share] E:\Applications_Flutter\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-74
+133            android:exported="false"
+133-->[:share] E:\Applications_Flutter\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-37
+134            android:grantUriPermissions="true" >
+134-->[:share] E:\Applications_Flutter\charlie_changs\build\share\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-47
+135            <meta-data
+135-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-17:53
+136                android:name="android.support.FILE_PROVIDER_PATHS"
+136-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:16:17-67
+137                android:resource="@xml/flutter_share_file_paths" />
+137-->[:flutter_webview_plugin] E:\Applications_Flutter\charlie_changs\build\flutter_webview_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:17:17-50
+138        </provider>
+139        <!--
+140             FirebaseMessagingService performs security checks at runtime,
+141             but set to not exported to explicitly avoid allowing another app to call it.
+142        -->
+143        <service
+143-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\a9fd38532e86e9c9081b74fa5b5a5436\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:28:9-34:19
+144            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+144-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\a9fd38532e86e9c9081b74fa5b5a5436\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:29:13-82
+145            android:exported="false" >
+145-->[com.google.firebase:firebase-messaging:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\a9fd38532e86e9c9081b74fa5b5a5436\jetified-firebase-messaging-20.1.7\AndroidManifest.xml:30:13-37
+146            <intent-filter android:priority="-500" >
+146-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:29
+147                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+147-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-78
+147-->[:firebase_messaging] E:\Applications_Flutter\charlie_changs\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:25-75
+148            </intent-filter>
+149        </service>
+150
+151        <receiver
+151-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:37:9-44:20
+152            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+152-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:38:13-78
+153            android:exported="true"
+153-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:39:13-36
+154            android:permission="com.google.android.c2dm.permission.SEND" >
+154-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:40:13-73
+155            <intent-filter>
+155-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:41:13-43:29
+156                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+156-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:42:17-81
+156-->[com.google.firebase:firebase-iid:20.1.7] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\bb5afda1061c98f900f30b3b65f87356\firebase-iid-20.1.7\AndroidManifest.xml:42:25-78
+157            </intent-filter>
+158        </receiver>
+159
+160        <provider
+160-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\141f3a985bfb0ef5e1fa424afa1a1958\jetified-firebase-common-19.3.0\AndroidManifest.xml:26:9-30:39
+161            android:name="com.google.firebase.provider.FirebaseInitProvider"
+161-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\141f3a985bfb0ef5e1fa424afa1a1958\jetified-firebase-common-19.3.0\AndroidManifest.xml:27:13-77
+162            android:authorities="com.brandzgarage.charliechang.firebaseinitprovider"
+162-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\141f3a985bfb0ef5e1fa424afa1a1958\jetified-firebase-common-19.3.0\AndroidManifest.xml:28:13-72
 163            android:exported="false"
-163-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:25:13-37
-164            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-164-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:26:13-72
+163-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\141f3a985bfb0ef5e1fa424afa1a1958\jetified-firebase-common-19.3.0\AndroidManifest.xml:29:13-37
+164            android:initOrder="100" />
+164-->[com.google.firebase:firebase-common:19.3.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\141f3a985bfb0ef5e1fa424afa1a1958\jetified-firebase-common-19.3.0\AndroidManifest.xml:30:13-36
 165
-166        <receiver
-166-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:29:9-33:20
-167            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
-167-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:30:13-85
-168            android:enabled="true"
-168-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:31:13-35
-169            android:exported="false" >
-169-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:32:13-37
-170        </receiver>
-171
-172        <service
-172-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:35:9-38:40
-173            android:name="com.google.android.gms.measurement.AppMeasurementService"
-173-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:36:13-84
-174            android:enabled="true"
-174-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:37:13-35
-175            android:exported="false" />
-175-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:38:13-37
-176        <service
-176-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:39:9-43:72
-177            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
-177-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:40:13-87
-178            android:enabled="true"
-178-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:41:13-35
-179            android:exported="false"
-179-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:42:13-37
-180            android:permission="android.permission.BIND_JOB_SERVICE" />
-180-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:43:13-69
-181
-182        <meta-data
-182-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d712182f80bdd2fef454c231fa7b4a7d\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
-183            android:name="com.google.android.gms.version"
-183-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d712182f80bdd2fef454c231fa7b4a7d\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
-184            android:value="@integer/google_play_services_version" />
-184-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d712182f80bdd2fef454c231fa7b4a7d\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
-185
-186        <service
-186-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:29:9-35:19
-187            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-187-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:30:13-103
-188            android:exported="false" >
-188-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:31:13-37
-189            <meta-data
-189-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:32:13-34:39
-190                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-190-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:33:17-94
-191                android:value="cct" />
-191-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:34:17-36
-192        </service>
-193        <service
-193-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:26:9-30:19
-194            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
-194-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:27:13-117
-195            android:exported="false"
-195-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:28:13-37
-196            android:permission="android.permission.BIND_JOB_SERVICE" >
-196-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:29:13-69
-197        </service>
-198
-199        <receiver
-199-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:32:9-34:40
-200            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-200-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:33:13-132
-201            android:exported="false" />
-201-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:34:13-37
-202    </application>
-203
-204</manifest>
+166        <activity
+166-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
+167            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+167-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:24:13-79
+168            android:exported="false"
+168-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:25:13-37
+169            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+169-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9b30d51d40ed8427f02fccb93860b0ab\play-services-base-17.0.0\AndroidManifest.xml:26:13-72
+170
+171        <receiver
+171-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:29:9-33:20
+172            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+172-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:30:13-85
+173            android:enabled="true"
+173-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:31:13-35
+174            android:exported="false" >
+174-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:32:13-37
+175        </receiver>
+176
+177        <service
+177-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:35:9-38:40
+178            android:name="com.google.android.gms.measurement.AppMeasurementService"
+178-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:36:13-84
+179            android:enabled="true"
+179-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:37:13-35
+180            android:exported="false" />
+180-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:38:13-37
+181        <service
+181-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:39:9-43:72
+182            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+182-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:40:13-87
+183            android:enabled="true"
+183-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:41:13-35
+184            android:exported="false"
+184-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:42:13-37
+185            android:permission="android.permission.BIND_JOB_SERVICE" />
+185-->[com.google.android.gms:play-services-measurement:17.5.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\e7d7673dbf86f58283b10aa7b26617ad\play-services-measurement-17.5.0\AndroidManifest.xml:43:13-69
+186
+187        <meta-data
+187-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9e5342248df39156e965b02625f11e4f\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
+188            android:name="com.google.android.gms.version"
+188-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9e5342248df39156e965b02625f11e4f\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
+189            android:value="@integer/google_play_services_version" />
+189-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\9e5342248df39156e965b02625f11e4f\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
+190
+191        <activity
+191-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:30:9-33:66
+192            android:name="com.facebook.FacebookActivity"
+192-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:31:13-57
+193            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+193-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:32:13-96
+194            android:theme="@style/com_facebook_activity_theme" />
+194-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:33:13-63
+195        <activity android:name="com.facebook.CustomTabMainActivity" />
+195-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:34:9-71
+195-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:34:19-68
+196        <activity
+196-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:35:9-49:20
+197            android:name="com.facebook.CustomTabActivity"
+197-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:36:13-58
+198            android:exported="true" >
+198-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:37:13-36
+199            <intent-filter>
+199-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:39:13-48:29
+200                <action android:name="android.intent.action.VIEW" />
+200-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:40:17-69
+200-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:40:25-66
+201
+202                <category android:name="android.intent.category.DEFAULT" />
+202-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:30:17-76
+202-->E:\Applications_Flutter\charlie_changs\android\app\src\main\AndroidManifest.xml:30:27-73
+203                <category android:name="android.intent.category.BROWSABLE" />
+203-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:43:17-78
+203-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:43:27-75
+204
+205                <data
+205-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:45:17-47:50
+206                    android:host="cct.com.brandzgarage.charliechang"
+206-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:46:21-56
+207                    android:scheme="fbconnect" />
+207-->[com.facebook.android:facebook-common:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\12157b8cb40d412db34b480f16744b4d\facebook-common-8.1.0\AndroidManifest.xml:47:21-47
+208            </intent-filter>
+209        </activity>
+210        <!--
+211         The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
+212         with the application context. This config is merged in with the host app's manifest,
+213         but there can only be one provider with the same authority activated at any given
+214         point; so if the end user has two or more different apps that use Facebook SDK, only the
+215         first one will be able to use the provider. To work around this problem, we use the
+216         following placeholder in the authority to identify each host application as if it was
+217         a completely different provider.
+218        -->
+219        <provider
+219-->[com.facebook.android:facebook-core:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d7943f8e083bc91fc9ca8cb5627179e0\jetified-facebook-core-8.1.0\AndroidManifest.xml:39:9-42:40
+220            android:name="com.facebook.internal.FacebookInitProvider"
+220-->[com.facebook.android:facebook-core:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d7943f8e083bc91fc9ca8cb5627179e0\jetified-facebook-core-8.1.0\AndroidManifest.xml:40:13-70
+221            android:authorities="com.brandzgarage.charliechang.FacebookInitProvider"
+221-->[com.facebook.android:facebook-core:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d7943f8e083bc91fc9ca8cb5627179e0\jetified-facebook-core-8.1.0\AndroidManifest.xml:41:13-72
+222            android:exported="false" />
+222-->[com.facebook.android:facebook-core:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d7943f8e083bc91fc9ca8cb5627179e0\jetified-facebook-core-8.1.0\AndroidManifest.xml:42:13-37
+223
+224        <receiver
+224-->[com.facebook.android:facebook-core:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d7943f8e083bc91fc9ca8cb5627179e0\jetified-facebook-core-8.1.0\AndroidManifest.xml:44:9-50:20
+225            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
+225-->[com.facebook.android:facebook-core:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d7943f8e083bc91fc9ca8cb5627179e0\jetified-facebook-core-8.1.0\AndroidManifest.xml:45:13-86
+226            android:exported="false" >
+226-->[com.facebook.android:facebook-core:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d7943f8e083bc91fc9ca8cb5627179e0\jetified-facebook-core-8.1.0\AndroidManifest.xml:46:13-37
+227            <intent-filter>
+227-->[com.facebook.android:facebook-core:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d7943f8e083bc91fc9ca8cb5627179e0\jetified-facebook-core-8.1.0\AndroidManifest.xml:47:13-49:29
+228                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
+228-->[com.facebook.android:facebook-core:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d7943f8e083bc91fc9ca8cb5627179e0\jetified-facebook-core-8.1.0\AndroidManifest.xml:48:17-95
+228-->[com.facebook.android:facebook-core:8.1.0] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\d7943f8e083bc91fc9ca8cb5627179e0\jetified-facebook-core-8.1.0\AndroidManifest.xml:48:25-92
+229            </intent-filter>
+230        </receiver>
+231
+232        <service
+232-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:29:9-35:19
+233            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+233-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:30:13-103
+234            android:exported="false" >
+234-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:31:13-37
+235            <meta-data
+235-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:32:13-34:39
+236                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+236-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:33:17-94
+237                android:value="cct" />
+237-->[com.google.android.datatransport:transport-backend-cct:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\17ea3883fcd826d7906169add7c6ddb2\transport-backend-cct-2.2.1\AndroidManifest.xml:34:17-36
+238        </service>
+239        <service
+239-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:26:9-30:19
+240            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+240-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:27:13-117
+241            android:exported="false"
+241-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:28:13-37
+242            android:permission="android.permission.BIND_JOB_SERVICE" >
+242-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:29:13-69
+243        </service>
+244
+245        <receiver
+245-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:32:9-34:40
+246            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+246-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:33:13-132
+247            android:exported="false" />
+247-->[com.google.android.datatransport:transport-runtime:2.2.1] C:\Users\AMAN BAFNA\.gradle\caches\transforms-2\files-2.1\186225073027877d245387d36422514f\transport-runtime-2.2.1\AndroidManifest.xml:34:13-37
+248    </application>
+249
+250</manifest>

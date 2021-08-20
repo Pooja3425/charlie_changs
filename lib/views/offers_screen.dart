@@ -49,17 +49,11 @@ class _OffersScreenState extends State<OffersScreen> {
 
   void onConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
-      setState(() {
         _isInternetAvailable = false;
-      });
     } else {
-      setState(() {
         _isInternetAvailable = true;
-      });
     }
   }
-
-
 
   //BuildContext context;
   @override
