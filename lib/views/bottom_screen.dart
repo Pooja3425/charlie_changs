@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:badges/badges.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
@@ -27,21 +28,6 @@ import 'home_screen.dart';
 import 'more_screen.dart';
 import 'order_screen.dart';
 
-
-Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
-  print("in background");
-  if (message.containsKey('data')) {
-    // Handle data message
-    final dynamic data = message['data'];
-  }
-
-  if (message.containsKey('notification')) {
-    // Handle notification message
-    final dynamic notification = message['notification'];
-  }
-
-  // Or do other work.
-}
 
 class BottomScreen extends StatefulWidget {
   int initPage;
